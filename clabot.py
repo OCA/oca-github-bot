@@ -8,11 +8,11 @@ import json
 import pprint
 import os
 import sys
-import json
 import requests
 from urllib.parse import unquote
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from requests.auth import HTTPBasicAuth
+from erppeek import Client
 
 config = None
 GITHUB_BASE_URL = 'https://api.github.com'
@@ -65,8 +65,18 @@ class PullRequestHandler(GithubHookHandler):
             Connect to odoo backend to verify if the user have signed
             the OCA CLA
         """
-        return False
-    
+        odoo_server = 'http://%s:%i' % 
+            (config['clabot']['odoo_host'], config['clabot']['odoo_port'])
+        odoo_db = config['clabot']['odoo_database']
+        odoo_user = config['clabot']['odoo_user']
+        odoo_password = config['clabot']['odoo_password']
+        client = Client(odoo_server, odoo_db, odoo_user, odoo_password) 
+        user_ids = client.search(
+            'res.partner',
+            [('x_github_login','=',user),('category_id','=','cla')]
+        )
+        return len(user_ids) > 0
+
     def handle_payload(self, event):
         
         if event['action'] not in ('opened','synchronize'):
