@@ -66,7 +66,7 @@ class PullRequestHandler(GithubHookHandler):
             the OCA CLA
         """
         odoo_server = 'http://%s:%i' % 
-            (config['clabot']['odoo_host'], config['clabot']['odoo_port'])
+            (config['clabot']['odoo_host'], int(config['clabot']['odoo_port']))
         odoo_db = config['clabot']['odoo_database']
         odoo_user = config['clabot']['odoo_user']
         odoo_password = config['clabot']['odoo_password']
