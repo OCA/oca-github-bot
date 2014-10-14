@@ -79,7 +79,6 @@ class PullRequestHandler(GithubHookHandler):
         odoo_password = config['clabot']['odoo_password']
         odoo_cla_categ = config['clabot']['odoo_cla_categ']
         odoo_github_login_field = config['clabot']['odoo_github_login_field']
-        return False
 
         client = Client(odoo_server, odoo_db, odoo_user, odoo_password)
 
@@ -88,8 +87,8 @@ class PullRequestHandler(GithubHookHandler):
                 (odoo_github_login_field, '=', user),
                 ('category_id', '=', odoo_cla_categ),
             ]
-            user_ids = client.search('res.partner', condition)
-            return False
+            if not client.search('res.partner', condition):
+                return False
 
         return True
 
