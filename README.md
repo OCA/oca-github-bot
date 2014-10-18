@@ -2,7 +2,7 @@ ak-oca-clabot
 =============
 
 Sends a comment on GitHub Pull Request if
-the author has not signed de OCA CLA.
+the author has not signed the OCA CLA.
 
 Requirements:
  - Python 3
