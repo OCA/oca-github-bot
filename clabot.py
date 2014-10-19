@@ -20,7 +20,7 @@ GITHUB_BASE_URL = 'https://api.github.com'
 
 class GithubHookHandler(BaseHTTPRequestHandler):
 
-    github_allowed_events = []
+    _github_allowed_events = []
 
     def _validate_signature(self, repo, data, hub_signature):
         digest_type, signature = hub_signature.split('=')
@@ -45,12 +45,12 @@ class GithubHookHandler(BaseHTTPRequestHandler):
 
         try:
             post_data = self.rfile.read(content_length)
-            if content_type == 'application/x-www-form-urlencoded':
+            if content_type == 'application/json':
+                json_data = post_data.decode('utf-8')
+            elif content_type == 'application/x-www-form-urlencoded':
                 json_data = re.sub(
                     '^payload=', '', unquote(post_data.decode('utf-8'))
                 )
-            elif content_type == 'application/json':
-                json_data = post_data.decode('utf-8')
             else:
                 raise ValueError('Invalid Content-Type')
 
