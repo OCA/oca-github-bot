@@ -5,6 +5,7 @@ import configparser
 import hashlib
 import hmac
 import json
+import re
 import pprint
 from urllib.parse import unquote
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -34,6 +35,7 @@ class GithubHookHandler(BaseHTTPRequestHandler):
     def do_POST(self):
 
         content_length = int(self.headers['Content-Length'] or 0)
+        content_type = self.headers['Content-Type']
         hub_signature = self.headers['X-Hub-Signature']
         github_event = self.headers['X-GitHub-Event']
 
@@ -41,9 +43,17 @@ class GithubHookHandler(BaseHTTPRequestHandler):
             self.send_response(400)
             return
 
-        post_data = self.rfile.read(content_length)
         try:
-            json_data = unquote(post_data.decode('utf-8'))[8:]
+            post_data = self.rfile.read(content_length)
+            if content_type == 'application/x-www-form-urlencoded':
+                json_data = re.sub(
+                    '^payload=', '', unquote(post_data.decode('utf-8'))
+                )
+            elif content_type == 'application/json':
+                json_data = post_data.decode('utf-8')
+            else:
+                raise ValueError('Invalid Content-Type')
+
             payload = json.loads(json_data)
             repo = payload['repository']['name']
         except:
@@ -68,13 +78,8 @@ class PullRequestHandler(GithubHookHandler):
             the OCA CLA
         """
 
-        odoo_server = 'http://%s:%i' % (
-            config['odoo_host'],
-            int(config['odoo_port'])
-        )
-
         client = Client(
-            odoo_server,
+            config['odoo_host'],
             config['odoo_database'],
             config['odoo_user'],
             config['odoo_password']
