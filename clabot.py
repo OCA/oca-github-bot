@@ -27,7 +27,12 @@ class GithubHookHandler(BaseHTTPRequestHandler):
         if digest_type != 'sha1':
             return False
 
-        secret = config['token_%s' % repo]
+        token_key = 'token_' + repo
+        if token_key in config:
+            secret = config[token_key]
+        else:
+            secret = config['default_token']
+
         mac = hmac.new(
             bytes(secret, 'utf-8'), msg=data, digestmod=hashlib.sha1)
         return hmac.compare_digest(mac.hexdigest(), signature)
