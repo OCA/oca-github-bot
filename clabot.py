@@ -69,8 +69,10 @@ class GithubHookHandler(BaseHTTPRequestHandler):
             self.send_response(401)
             return
 
-        self.handle_payload(payload)
-        self.send_response(200)
+        if self.handle_payload(payload):
+            self.send_response(200)
+        else:
+            self.send_response(400)
 
 
 class PullRequestHandler(GithubHookHandler):
@@ -103,8 +105,7 @@ class PullRequestHandler(GithubHookHandler):
     def handle_payload(self, event):
 
         if event['action'] not in ('opened', 'synchronize'):
-            self.send_response(400)
-            return
+            return False
 
         login = config['github_login']
         password = config['github_password']
@@ -141,6 +142,8 @@ class PullRequestHandler(GithubHookHandler):
                 data=json.dumps(data),
                 auth=HTTPBasicAuth(login, password)
             )
+
+        return True
 
 if __name__ == '__main__':
 
