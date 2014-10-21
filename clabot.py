@@ -14,9 +14,6 @@ import requests
 from requests.auth import HTTPBasicAuth
 from erppeek import Client
 
-config = None
-GITHUB_BASE_URL = 'https://api.github.com'
-
 
 class GithubHookHandler(BaseHTTPRequestHandler):
 
@@ -27,6 +24,7 @@ class GithubHookHandler(BaseHTTPRequestHandler):
         if digest_type != 'sha1':
             return False
 
+        config = self.server.config
         token_key = 'token_' + repo
         if token_key in config:
             secret = config[token_key]
@@ -85,6 +83,8 @@ class PullRequestHandler(GithubHookHandler):
             the OCA CLA
         """
 
+        config = self.server.config
+
         client = Client(
             config['odoo_host'],
             config['odoo_database'],
@@ -107,6 +107,8 @@ class PullRequestHandler(GithubHookHandler):
         if event['action'] not in ('opened', 'synchronize'):
             return False
 
+        config = self.server.config
+        base_url = config['github_base_url']
         login = config['github_login']
         password = config['github_password']
 
@@ -118,7 +120,7 @@ class PullRequestHandler(GithubHookHandler):
         path = path.format(owner=owner, repo=repo, number=number)
         params = {'per_page': 250}  # maximum allowed
         res = requests.get(
-            GITHUB_BASE_URL + path,
+            base_url + path,
             params=params,
             auth=HTTPBasicAuth(login, password)
         )
@@ -138,27 +140,36 @@ class PullRequestHandler(GithubHookHandler):
             data = {'body': cla_message}
 
             res = requests.post(
-                GITHUB_BASE_URL + path,
+                base_url + path,
                 data=json.dumps(data),
                 auth=HTTPBasicAuth(login, password)
             )
 
         return True
 
+
+def run(config):
+
+    config = config['clabot']
+    server_address = (config['interface'], int(config['port']))
+    server = HTTPServer(server_address, PullRequestHandler)
+    server.config = config
+
+    print('CLA bot listening on %s:%i' % server_address)
+    server.serve_forever()
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Minimal CLA bot server')
-    parser.add_argument("config_file", help="configuration ini file", type=str)
+    parser.add_argument(
+        'config_file',
+        help='server.configuration ini file',
+        type=str
+    )
     args = parser.parse_args()
 
     config = configparser.ConfigParser()
     config.read(args.config_file)
-    config = config['clabot']
 
-    interface = config['interface']
-    port = int(config['port'])
-
-    server = HTTPServer((interface, port), PullRequestHandler)
-
-    print('CLA bot listening on %s:%i' % (interface, port))
-    server.serve_forever()
+    run(config)
