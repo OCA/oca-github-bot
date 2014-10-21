@@ -164,7 +164,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Minimal CLA bot server')
     parser.add_argument(
         'config_file',
-        help='server.configuration ini file',
+        help='Configuration ini file',
         type=str
     )
     args = parser.parse_args()
