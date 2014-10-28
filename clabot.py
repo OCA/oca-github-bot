@@ -26,9 +26,10 @@ class GithubHookHandler(BaseHTTPRequestHandler):
 
         config = self.server.config
         token_key = 'token_' + repo
+        secret = None
         if token_key in config:
             secret = config[token_key]
-        else:
+        if not secret:
             secret = config['default_token']
 
         mac = hmac.new(
@@ -77,13 +78,9 @@ class PullRequestHandler(GithubHookHandler):
 
     _github_allowed_events = ['pull_request']
 
-    def _have_signed_cla(self, users):
-        """
-            Connect to odoo backend to verify if the users have signed
-            the OCA CLA
-        """
-
+    def _get_users_not_signed_cla(self, users):
         config = self.server.config
+        users_no_sign = []
 
         client = Client(
             config['odoo_host'],
@@ -91,16 +88,14 @@ class PullRequestHandler(GithubHookHandler):
             config['odoo_user'],
             config['odoo_password']
         )
-
         for user in users:
             condition = [
                 (config['odoo_github_login_field'], '=', user),
                 ('category_id', '=', config['odoo_cla_categ']),
             ]
             if not client.search('res.partner', condition):
-                return False
-
-        return True
+                users_no_sign.append(user)
+        return users_no_sign
 
     def handle_payload(self, event):
 
@@ -125,18 +120,20 @@ class PullRequestHandler(GithubHookHandler):
             auth=HTTPBasicAuth(login, password)
         )
         commits = res.json()
+        user = event['pull_request']['user']['login']
         users = [c['author']['login'] for c in commits]
         users = list(set(users))
+        users_no_sign = self._get_users_not_signed_cla(users)
 
-        if not self._have_signed_cla(users):
-            # Send CLA comment
-
+        if users_no_sign:
             path = '/repos/{owner}/{repo}/issues/{number}/comments'
             path = path.format(owner=owner, repo=repo, number=number)
 
             user = event['pull_request']['user']['login']
-
-            cla_message = config['cla_message'].format(user=user)
+            users = ''
+            for user in users_no_sign:
+                users += '+ @%s \n' % user
+            cla_message = config['cla_message'].format(user=user, users=users)
             data = {'body': cla_message}
 
             res = requests.post(
@@ -144,7 +141,6 @@ class PullRequestHandler(GithubHookHandler):
                 data=json.dumps(data),
                 auth=HTTPBasicAuth(login, password)
             )
-
         return True
 
 
