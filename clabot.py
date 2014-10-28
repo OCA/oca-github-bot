@@ -142,9 +142,9 @@ class PullRequestHandler(GithubHookHandler):
             user = event['pull_request']['user']['login']
             users = ''
             for user in users_no_sign:
-                users += '+ @%s \n' % user
+                users += '+ @%s\n' % user
             for user in users_no_login:
-                users += '+ %s \n' % user
+                users += '+ %s\n' % user
 
             cla_message = config['cla_message'].format(
                 user=pull_user,
