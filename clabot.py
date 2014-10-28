@@ -120,12 +120,22 @@ class PullRequestHandler(GithubHookHandler):
             auth=HTTPBasicAuth(login, password)
         )
         commits = res.json()
-        user = event['pull_request']['user']['login']
-        users = [c['author']['login'] for c in commits]
-        users = list(set(users))
-        users_no_sign = self._get_users_not_signed_cla(users)
+        pull_user = event['pull_request']['user']['login']
+        users_login = []
+        users_no_login = []
+        for commit in commits:
+            if commit['committer']:
+                author = commit['committer']['login']
+                if author not in users_login:
+                    users_login.append(author)
+            else:
+                author = commit['commit']['author']['name']
+                if author not in users_no_login:
+                    users_no_login.append(author)
 
-        if users_no_sign:
+        users_no_sign = self._get_users_not_signed_cla(users_login)
+
+        if users_no_sign or users_no_login:
             path = '/repos/{owner}/{repo}/issues/{number}/comments'
             path = path.format(owner=owner, repo=repo, number=number)
 
@@ -133,7 +143,13 @@ class PullRequestHandler(GithubHookHandler):
             users = ''
             for user in users_no_sign:
                 users += '+ @%s \n' % user
-            cla_message = config['cla_message'].format(user=user, users=users)
+            for user in users_no_login:
+                users += '+ %s \n' % user
+
+            cla_message = config['cla_message'].format(
+                user=pull_user,
+                users=users,
+            )
             data = {'body': cla_message}
 
             res = requests.post(
