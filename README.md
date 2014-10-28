@@ -23,7 +23,7 @@ In clabot.ini:
  Follow these little steps to set up your CLA bot :
  + Set login and password of your bot's GitHub account
  + Set the different repositories' tokens you want to follow
- + Set Odoo's URL : e.g http://your-odoo.com
+ + Set Odoo's URL : e.g https://your-odoo.com
  + Set login, password of the bot's Odoo account
  + Set Odoo's database to use
  + Set the name of the category_id (in res.partner) that you want to check in Odoo's database : e.g cla
