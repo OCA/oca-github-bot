@@ -14,6 +14,11 @@ import requests
 from requests.auth import HTTPBasicAuth
 from erppeek import Client
 
+try:
+    compare_digest = hmac.compare_digest
+except AttributeError:
+    compare_digest = lambda a, b: a == b
+
 
 class GithubHookHandler(BaseHTTPRequestHandler):
 
@@ -34,7 +39,8 @@ class GithubHookHandler(BaseHTTPRequestHandler):
 
         mac = hmac.new(
             bytes(secret, 'utf-8'), msg=data, digestmod=hashlib.sha1)
-        return hmac.compare_digest(mac.hexdigest(), signature)
+
+        return compare_digest(mac.hexdigest(), signature)
 
     def do_POST(self):
 
@@ -91,7 +97,9 @@ class PullRequestHandler(GithubHookHandler):
         for user in users:
             condition = [
                 (config['odoo_github_login_field'], '=', user),
-                ('category_id', '=', config['odoo_cla_categ']),
+                '|',
+                ('category_id', '=', config['odoo_icla_categ']),
+                ('parent_id.category_id', '=', config['odoo_ecla_categ']),
             ]
             if not client.search('res.partner', condition):
                 users_no_sign.append(user)
