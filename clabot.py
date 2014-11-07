@@ -108,7 +108,7 @@ class PullRequestHandler(GithubHookHandler):
     def handle_payload(self, event):
 
         if event['action'] not in ('opened', 'synchronize'):
-            return False
+            return True
 
         config = self.server.config
         base_url = config['github_base_url']
