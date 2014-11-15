@@ -26,10 +26,10 @@ class GithubHookHandler(BaseHTTPRequestHandler):
 
     def _validate_signature(self, repo, data, hub_signature):
 
-        if not hub_signature:
+        if not hub_signature or '=' not in hub_signature:
             return False
 
-        digest_type, signature = hub_signature.split('=')
+        digest_type, signature = hub_signature.split('=', 1)
         if digest_type != 'sha1':
             return False
 
