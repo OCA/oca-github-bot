@@ -26,11 +26,10 @@ class GithubHookHandler(BaseHTTPRequestHandler):
 
     def _validate_signature(self, repo, data, hub_signature):
 
-        if not hub_signature or '=' not in hub_signature:
-            return False
-
-        digest_type, signature = hub_signature.split('=', 1)
-        if digest_type != 'sha1':
+        m = re.search('^sha1=(.*)', hub_signature or '')
+        if m:
+            signature = m.group(1)
+        else:
             return False
 
         config = self.server.config
@@ -133,19 +132,17 @@ class PullRequestHandler(GithubHookHandler):
         )
         commits = res.json()
         pull_user = event['pull_request']['user']['login']
-        users_login = []
-        users_no_login = []
+        users_login = set()
+        users_no_login = set()
         for commit in commits:
             if commit['committer']:
                 author = commit['committer']['login']
-                if author not in users_login:
-                    users_login.append(author)
+                users_login.add(author)
             else:
                 author = commit['commit']['author']['name']
-                if author not in users_no_login:
-                    users_no_login.append(author)
+                users_no_login.add(author)
 
-        users_no_sign = self._get_users_not_signed_cla(users_login)
+        users_no_sign = self._get_users_not_signed_cla(list(users_login))
 
         if users_no_sign or users_no_login:
             path = '/repos/{owner}/{repo}/issues/{number}/comments'
