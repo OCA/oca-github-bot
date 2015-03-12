@@ -286,7 +286,7 @@ class PullRequestHandler(GithubHookHandler):
                 _logger.debug('notification:message:' + message)
                 return
 
-            data = {'body': cla_message}
+            data = {'body': message}
             requests.post(
                 base_url + path,
                 data=json.dumps(data),
