@@ -1,0 +1,51 @@
+version: '2'
+services:
+  queue:
+    image: redis:4-alpine
+    restart: always
+    volumes:
+      - ./data/queue:/data
+  bot:
+    build: .
+    links:
+      - queue
+    ports:
+      - 8080:8080
+    env_file:
+      - ./environment
+    restart: always
+    command: python -m oca_github_bot
+    depends_on:
+      - queue
+  worker:
+    build: .
+    links:
+      - queue
+    env_file:
+      - ./environment
+    restart: always
+    command: celery worker --concurrency=1 --app=oca_github_bot.queue.app --loglevel=INFO
+    depends_on:
+      - queue
+  beat:
+    build: .
+    links:
+      - queue
+    env_file:
+      - ./environment
+    restart: always
+    command: celery beat --app=oca_github_bot.queue.app
+    depends_on:
+      - queue
+  monitor:
+    build: .
+    links:
+      - queue
+    ports:
+      - 5555:5555
+    env_file:
+      - ./environment
+    restart: always
+    command: flower --app=oca_github_bot.queue.app
+    depends_on:
+      - queue

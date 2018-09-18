@@ -1,0 +1,20 @@
+sudo: false
+language: python
+
+python:
+  - "3.6"
+
+matrix:
+  include:
+    - python: 3.6
+      env: TOXENV=check_readme
+
+install:
+  - pip install tox-travis
+  - pip install codecov
+
+script:
+  - tox
+
+after_success:
+  - codecov
