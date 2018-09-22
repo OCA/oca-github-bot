@@ -2,6 +2,6 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 
-class TestEvent:
+class EventMock:
     def __init__(self, data):
         self.data = data
