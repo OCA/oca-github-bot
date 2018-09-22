@@ -9,6 +9,8 @@ matrix:
   include:
     - python: 3.6
       env: TOXENV=check_readme
+    - python: 3.6
+      env: TOXENV=pre_commit
 
 install:
   - pip install tox-travis
