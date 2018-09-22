@@ -3,3 +3,4 @@
 
 from . import heartbeat
 from . import main_branch_bot
+from . import tag_ready_to_merge
