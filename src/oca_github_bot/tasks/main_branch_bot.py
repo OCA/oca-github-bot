@@ -8,4 +8,5 @@ _logger = getLogger(__name__)
 
 @task()
 def main_branch_bot(org, repo, branch):
-    _logger.info("*** main_branch_bot", org, repo, branch)
+    # TODO
+    pass

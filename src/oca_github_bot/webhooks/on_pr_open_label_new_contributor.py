@@ -14,4 +14,5 @@ async def on_pr_open_label_new_contributor(event, gh, *args, **kwargs):
     Whenever a PR is opened, set label "new contributor"
     if the author has less than 4 commits in OCA repositories.
     """
+    # TODO
     pass
