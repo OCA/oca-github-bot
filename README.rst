@@ -11,6 +11,11 @@ This will make it easier to review changes, as well as monitor and manage
 these operations, compared to the current situations where these functions
 are spread across cron jobs and ad-hoc scripts.
 
+**Table of contents**
+
+.. contents::
+   :local:
+
 Features
 ========
 
@@ -117,3 +122,16 @@ Contributors
 ============
 
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
+
+Maintainers
+===========
+
+This module is maintained by the OCA.
+
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
