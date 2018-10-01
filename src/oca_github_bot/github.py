@@ -2,6 +2,7 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 from contextlib import contextmanager
+from celery.exceptions import Retry
 import logging
 import os
 import shutil
@@ -30,12 +31,16 @@ def repository(org, repo):
 
 def gh_call(func, *args, **kwargs):
     """Intercept GitHub call to wait when the API rate limit is reached."""
-    # TODO
-    return func(*args, **kwargs)
-
-
-class BranchNotFoundError(RuntimeError):
-    pass
+    try:
+        return func(*args, **kwargs)
+    except github3.exceptions.ForbiddenError as e:
+        if not e.response.headers.get("X-RateLimit-Remaining", 1):
+            raise Retry(
+                message="Retry task after rate limit reset",
+                exc=e,
+                when=e.response.headers.get("X-RateLimit-Reset"),
+            )
+        raise
 
 
 @contextmanager
