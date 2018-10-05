@@ -18,6 +18,6 @@ ODOO_PASSWORD = os.environ.get("ODOO_PASSWORD")
 
 REDIS_URI = os.environ.get("REDIS_URI", "redis://localhost")
 
-SENTRY_DSN = "https://99fc59617eae4e1e98a3ef2d1a6a3f16@sentry.io/1281903"
+SENTRY_DSN = os.environ.get("SENTRY_DSN")
 
 DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
