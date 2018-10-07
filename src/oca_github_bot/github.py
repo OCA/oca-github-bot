@@ -43,6 +43,10 @@ def gh_call(func, *args, **kwargs):
         raise
 
 
+class BranchNotFoundError(RuntimeError):
+    pass
+
+
 @contextmanager
 def temporary_clone(org, repo, branch):
     """ context manager that clones a git branch and cd to it, with cache """
@@ -89,6 +93,8 @@ def temporary_clone(org, repo, branch):
         cwd = os.getcwd()
         os.chdir(tempdir)
         try:
+            subprocess.check_call(["git", "config", "user.name", config.GIT_NAME])
+            subprocess.check_call(["git", "config", "user.email", config.GIT_EMAIL])
             yield
         finally:
             os.chdir(cwd)
