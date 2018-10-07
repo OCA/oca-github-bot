@@ -1,14 +1,31 @@
-FROM python:3.6-stretch
+FROM ubuntu:18.04
+MAINTAINER Odoo Community Association (OCA)
 
-WORKDIR /usr/src/app
+COPY ./container/install /tmp/install
+RUN set -x \
+  && /tmp/install/pre-install.sh \
+  && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    python3-venv \
+    git \
+  && /tmp/install/gosu.sh
 
-RUN adduser --system oca-github-bot
+#  && /tmp/install/post-install-clean.sh \
+#  && rm -r /tmp/install
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# isolate from system python libraries
+RUN python3 -m venv /app
+ENV PATH=/app/bin:$PATH
 
-COPY . .
-RUN pip install -e .
+RUN mkdir /app/tmp
+COPY requirements.txt /app/tmp
+RUN pip install --no-cache-dir -r /app/tmp/requirements.txt
+COPY . /app/tmp
+RUN pip install -e /app/tmp
 
-USER oca-github-bot
-WORKDIR /home/oca-github-bot
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
+COPY ./container/entrypoint.sh /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
