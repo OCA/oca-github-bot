@@ -3,8 +3,7 @@
 
 import logging
 
-from tools.oca_projects import MAIN_BRANCHES
-
+from ..config import PROTECTED_BRANCHES
 from ..router import router
 from ..tasks.delete_branch import delete_branch
 
@@ -24,5 +23,10 @@ async def on_pr_close_delete_branch(event, gh, *args, **kwargs):
     branch = event.data["pull_request"]["head"]["ref"]
     org, repo = event.data["repository"]["full_name"].split("/")
 
-    if not forked and merged and branch not in MAIN_BRANCHES and branch != "master":
+    if (
+        not forked
+        and merged
+        and branch not in PROTECTED_BRANCHES
+        and branch != "master"
+    ):
         delete_branch.delay(org, repo, branch)
