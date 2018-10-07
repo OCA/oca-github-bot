@@ -3,8 +3,7 @@
 
 import subprocess
 
-from tools.oca_projects import temporary_clone
-
+from ..github import temporary_clone
 from ..queue import task, getLogger
 
 _logger = getLogger(__name__)
@@ -12,7 +11,7 @@ _logger = getLogger(__name__)
 
 @task()
 def main_branch_bot(org, repo, branch, dry_run=False):
-    with temporary_clone(repo, branch):
+    with temporary_clone(org, repo, branch):
         _logger.info("oca-gen-addon-readme in %s/%s@%s", org, repo, branch)
         # generate README.rst
         gen_addon_readme_cmd = [
