@@ -29,7 +29,13 @@ Auto-delete pull request branch
 On push to main branches
 ------------------------
 
-...
+README.rst generator
+  For addons repositories, generate README.rst from readme fragments
+  in each addon directory, and push changes back to github.
+
+setup.py generator
+  For addons repositories, run setuptools-odoo-make-defaults, and push
+  changes back to github.
 
 Nightly
 -------
@@ -51,8 +57,6 @@ Hooks and tasks
 * include existing bots here:
 
   * CLA bot
-  * readme generator
-  * setup.py generator
   * wheel builder
   * pypi publisher?
   * GitHub team members maintenance
