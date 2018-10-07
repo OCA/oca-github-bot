@@ -5,14 +5,19 @@ services:
     restart: always
     volumes:
       - ./data/queue:/data
+    command: redis-server --appendonly yes
   bot:
     build: .
     links:
       - queue
     ports:
       - 8080:8080
+    environment:
+      - LOCAL_USER_ID
     env_file:
       - ./environment
+    volumes:
+      - ./data/cache:/home/oca-github-bot/.cache
     restart: always
     command: python -m oca_github_bot
     depends_on:
@@ -21,8 +26,12 @@ services:
     build: .
     links:
       - queue
+    environment:
+      - LOCAL_USER_ID
     env_file:
       - ./environment
+    volumes:
+      - ./data/cache:/home/oca-github-bot/.cache
     restart: always
     command: celery worker --concurrency=1 --app=oca_github_bot.queue.app --loglevel=INFO
     depends_on:
@@ -31,8 +40,12 @@ services:
     build: .
     links:
       - queue
+    environment:
+      - LOCAL_USER_ID
     env_file:
       - ./environment
+    volumes:
+      - ./data/cache:/home/oca-github-bot/.cache
     restart: always
     command: celery beat --app=oca_github_bot.queue.app
     depends_on:

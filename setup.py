@@ -23,6 +23,7 @@ setup(
         # aiohttp ang gitgethub for the webhook app
         "aiohttp",
         "gidgethub",
+        "appdirs",
         # GitHub client
         "github3.py",
         # celery and celery monitoring for the task queue
@@ -30,6 +31,8 @@ setup(
         "celery[redis]",
         # Sentry
         "raven",
+        # main branch bot needs setuptools-odoo-make-default
+        "setuptools-odoo",
     ],
     license="MIT",
     classifiers=[

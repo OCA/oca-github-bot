@@ -4,7 +4,7 @@
 #
 
 # redis URI to use for the celery task queue
-#REDIS_URI=redis://localhost:6379
+REDIS_URI=redis://queue
 
 #HTTP_HOST=0.0.0.0
 #HTTP_PORT=8080

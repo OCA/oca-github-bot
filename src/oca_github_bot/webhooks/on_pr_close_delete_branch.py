@@ -3,6 +3,7 @@
 
 import logging
 
+from ..config import PROTECTED_BRANCHES
 from ..router import router
 from ..tasks.delete_branch import delete_branch
 
@@ -19,8 +20,13 @@ async def on_pr_close_delete_branch(event, gh, *args, **kwargs):
     """
     forked = event.data["pull_request"]["head"]["repo"]["fork"]
     merged = event.data["pull_request"]["merged"]
+    branch = event.data["pull_request"]["head"]["ref"]
+    org, repo = event.data["repository"]["full_name"].split("/")
 
-    if not forked and merged:
-        branch = event.data["pull_request"]["head"]["ref"]
-        org, repo = event.data["repository"]["full_name"].split("/")
+    if (
+        not forked
+        and merged
+        and branch not in PROTECTED_BRANCHES
+        and branch != "master"
+    ):
         delete_branch.delay(org, repo, branch)
