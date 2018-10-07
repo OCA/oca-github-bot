@@ -5,6 +5,7 @@ services:
     restart: always
     volumes:
       - ./data/queue:/data
+    command: redis-server --appendonly yes
   bot:
     build: .
     links:
