@@ -30,7 +30,7 @@ jwcrypto==0.5.0
 kombu==4.2.1
 MarkupSafe==1.0
 multidict==4.4.2
--e git+https://github.com/OCA/maintainer-tools.git@master#egg=oca_maintainers_tools
+-e git+https://github.com/OCA/maintainer-tools.git@19d880bd490b1f7562e5a26160bc4d37c07e75a7#egg=oca_maintainers_tools
 pkginfo==1.4.2
 polib==1.1.0
 pycodestyle==2.4.0
