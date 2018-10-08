@@ -29,7 +29,10 @@ Auto-delete pull request branch
 On push to main branches
 ------------------------
 
-README.rst generator
+Repo addons table generator in README.md
+  For addons repositories, update the addons table in README.md.
+
+Addon README.rst generator
   For addons repositories, generate README.rst from readme fragments
   in each addon directory, and push changes back to github.
 
