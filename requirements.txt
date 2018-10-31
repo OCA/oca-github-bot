@@ -42,7 +42,7 @@ PyYAML==3.13
 raven==6.9.0
 readme-renderer==22.0
 redis==2.10.6
-requests==2.19.1
+requests==2.20.0
 requests-toolbelt==0.8.0
 setuptools-odoo==2.4.0
 setuptools-scm==3.1.0
