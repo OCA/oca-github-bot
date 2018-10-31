@@ -1,16 +1,16 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-from contextlib import contextmanager
-from celery.exceptions import Retry
 import logging
 import os
 import shutil
 import subprocess
 import tempfile
+from contextlib import contextmanager
 
 import appdirs
 import github3
+from celery.exceptions import Retry
 
 from . import config
 

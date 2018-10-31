@@ -117,13 +117,13 @@ Development
 ===========
 
 This project uses `black <https://github.com/ambv/black>`_
-as code formatting convention.
-To make sure, local coding convention are respected before
+as code formatting convention, as well as isort and flake8.
+To make sure local coding convention are respected before
 you commit, install
 `pre-commit <https://github.com/pre-commit/pre-commit>`_ and
 run ``pre-commit install`` after cloning the repository.
 
-To run tests, type ``tox``.
+To run tests, type ``tox``. Test are written with pytest.
 
 Contributors
 ============

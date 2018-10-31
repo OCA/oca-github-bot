@@ -3,5 +3,7 @@
 
 
 class EventMock:
+    __slots__ = ["data"]
+
     def __init__(self, data):
         self.data = data

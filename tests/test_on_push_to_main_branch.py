@@ -2,7 +2,6 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import pytest
-
 from oca_github_bot.webhooks import on_push_to_main_branch
 
 from .common import EventMock

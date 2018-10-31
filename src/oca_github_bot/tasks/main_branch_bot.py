@@ -4,7 +4,7 @@
 import subprocess
 
 from ..github import temporary_clone
-from ..queue import task, getLogger
+from ..queue import getLogger, task
 
 _logger = getLogger(__name__)
 

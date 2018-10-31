@@ -5,7 +5,6 @@ from celery.schedules import crontab
 
 from .queue import app
 
-
 app.conf.beat_schedule = {
     "heartbeat": {
         "task": "oca_github_bot.tasks.heartbeat.heartbeat",

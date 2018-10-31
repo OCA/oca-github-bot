@@ -3,7 +3,7 @@
 
 import logging
 
-from ..config import MAIN_BRANCH_BOT_EXCLUDED_REPOS, MAIN_BRANCH_BOT_BRANCHES
+from ..config import MAIN_BRANCH_BOT_BRANCHES, MAIN_BRANCH_BOT_EXCLUDED_REPOS
 from ..router import router
 from ..tasks.main_branch_bot import main_branch_bot
 

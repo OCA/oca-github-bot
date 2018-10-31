@@ -2,7 +2,6 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import pytest
-
 from oca_github_bot.webhooks import on_pr_close_delete_branch
 
 from .common import EventMock

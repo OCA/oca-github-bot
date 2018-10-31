@@ -5,7 +5,6 @@ import os
 
 import tools.config as oca_m_t_config
 
-
 HTTP_HOST = os.environ.get("HTTP_HOST")
 HTTP_PORT = int(os.environ.get("HTTP_PORT") or "8080")
 
