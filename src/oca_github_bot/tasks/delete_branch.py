@@ -16,4 +16,5 @@ def delete_branch(org, repo, branch, dry_run=False):
         if dry_run:
             _logger.info(f"DRY-RUN delete branch {branch} in {org}/{repo}")
         else:
+            _logger.info(f"deleting branch {branch} in {org}/{repo}")
             gh_call(gh_branch.delete)
