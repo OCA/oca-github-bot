@@ -31,8 +31,6 @@ setup(
         "celery[redis]",
         # Sentry
         "raven",
-        # main branch bot needs setuptools-odoo-make-default
-        "setuptools-odoo",
     ],
     license="MIT",
     classifiers=[

@@ -3,8 +3,6 @@
 
 import os
 
-import tools.config as oca_m_t_config
-
 HTTP_HOST = os.environ.get("HTTP_HOST")
 HTTP_PORT = int(os.environ.get("HTTP_PORT") or "8080")
 
@@ -24,7 +22,3 @@ REDIS_URI = os.environ.get("REDIS_URI", "redis://localhost")
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 
 DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
-
-MAIN_BRANCH_BOT_EXCLUDED_REPOS = oca_m_t_config.NOT_ADDONS
-MAIN_BRANCH_BOT_BRANCHES = ("8.0", "9.0", "10.0", "11.0", "12.0")
-PROTECTED_BRANCHES = oca_m_t_config.MAIN_BRANCHES + ("master",)
