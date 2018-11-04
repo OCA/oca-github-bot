@@ -9,5 +9,9 @@ app.conf.beat_schedule = {
     "heartbeat": {
         "task": "oca_github_bot.tasks.heartbeat.heartbeat",
         "schedule": crontab(minute="*/15"),
-    }
+    },
+    "main_branch_bot_all_repos": {
+        "task": "oca_github_bot.tasks.main_branch_bot.main_branch_bot_all_repos",
+        "schedule": crontab(hour="2", minute="30"),
+    },
 }
