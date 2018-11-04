@@ -93,8 +93,10 @@ def temporary_clone(org, repo, branch):
         cwd = os.getcwd()
         os.chdir(tempdir)
         try:
-            subprocess.check_call(["git", "config", "user.name", config.GIT_NAME])
-            subprocess.check_call(["git", "config", "user.email", config.GIT_EMAIL])
+            if config.GIT_NAME:
+                subprocess.check_call(["git", "config", "user.name", config.GIT_NAME])
+            if config.GIT_EMAIL:
+                subprocess.check_call(["git", "config", "user.email", config.GIT_EMAIL])
             yield
         finally:
             os.chdir(cwd)

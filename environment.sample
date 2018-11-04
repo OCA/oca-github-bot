@@ -12,9 +12,13 @@
 # GitHub webhook secret
 GITHUB_SECRET=
 # GitHub login the bot uses to perform GitHub activites
-#GITHUB_LOGIN=OCA-git-bot
+GITHUB_LOGIN=
 # GitHub oauth token
 GITHUB_TOKEN=
+# Git name and email used for creating commits (default: user git config,
+# needs to be set to to launch the docker composition)
+GIT_NAME=
+GIT_EMAIL=
 
 #ODOO_URL=https://odoo-community.org
 #ODOO_DB=odoo_community_v11
