@@ -29,6 +29,8 @@ setup(
         # celery and celery monitoring for the task queue
         "flower",
         "celery[redis]",
+        # Odoo
+        "odoorpc",
         # Sentry
         "raven",
     ],
