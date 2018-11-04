@@ -3,8 +3,10 @@
 
 import subprocess
 
+from .. import github, manifest
 from ..github import temporary_clone
 from ..queue import getLogger, task
+from ..version_branch import is_main_branch_bot_branch
 
 _logger = getLogger(__name__)
 
@@ -50,7 +52,11 @@ def _setuptools_odoo_make_default(org, repo, branch, dry_run):
 
 @task()
 def main_branch_bot(org, repo, branch, dry_run=False):
+    if not is_main_branch_bot_branch(branch):
+        return
     with temporary_clone(org, repo, branch):
+        if not manifest.is_addons_dir("."):
+            return
         # update addons table in README.md
         _gen_addons_table(org, repo, branch, dry_run)
         # generate README.rst
@@ -58,6 +64,16 @@ def main_branch_bot(org, repo, branch, dry_run=False):
         # generate/clean default setup.py
         _setuptools_odoo_make_default(org, repo, branch, dry_run)
         # push changes to git, if any
-        if not dry_run:
-            _logger.info("git push in %s/%s@%s\n", org, repo, branch)
+        if dry_run:
+            _logger.info(f"DRY-RUN git push in {org}/{repo}@{branch}")
+        else:
+            _logger.info(f"git push in {org}/{repo}@{branch}")
             subprocess.check_call(["git", "push", "origin", branch])
+
+
+@task()
+def main_branch_bot_all_repos(org, dry_run=False):
+    with github.login() as gh:
+        for repo in gh.repositories_by(org):
+            for branch in repo.branches():
+                main_branch_bot(org, repo.name, branch.name, dry_run)
