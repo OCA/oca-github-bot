@@ -57,6 +57,7 @@ def main_branch_bot(org, repo, branch, dry_run=False):
     with temporary_clone(org, repo, branch):
         if not manifest.is_addons_dir("."):
             return
+        _logger.info(f"main_branch_bot {org}/{repo}@{branch}")
         # update addons table in README.md
         _gen_addons_table(org, repo, branch, dry_run)
         # generate README.rst
