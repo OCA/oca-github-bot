@@ -4,7 +4,7 @@
 #
 
 # redis URI to use for the celery task queue
-REDIS_URI=redis://queue
+#REDIS_URI=redis://queue
 
 #HTTP_HOST=0.0.0.0
 #HTTP_PORT=8080
@@ -17,7 +17,7 @@ GITHUB_SECRET=
 GITHUB_TOKEN=
 
 #ODOO_URL=https://odoo-community.org
-#ODOO_DB=odoo_community11
+#ODOO_DB=odoo_community_v11
 ODOO_LOGIN=
 ODOO_PASSWORD=
 
