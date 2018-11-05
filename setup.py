@@ -29,10 +29,10 @@ setup(
         # celery and celery monitoring for the task queue
         "flower",
         "celery[redis]",
+        # Odoo
+        "odoorpc",
         # Sentry
         "raven",
-        # main branch bot needs setuptools-odoo-make-default
-        "setuptools-odoo",
     ],
     license="MIT",
     classifiers=[
