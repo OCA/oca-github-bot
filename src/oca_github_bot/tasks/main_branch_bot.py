@@ -77,4 +77,4 @@ def main_branch_bot_all_repos(org, dry_run=False):
     with github.login() as gh:
         for repo in gh.repositories_by(org):
             for branch in repo.branches():
-                main_branch_bot(org, repo.name, branch.name, dry_run)
+                main_branch_bot.delay(org, repo.name, branch.name, dry_run)
