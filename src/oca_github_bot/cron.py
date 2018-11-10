@@ -15,4 +15,9 @@ app.conf.beat_schedule = {
         "args": ("OCA",),
         "schedule": crontab(hour="2", minute="30"),
     },
+    "tag_ready_to_merge": {
+        "task": "oca_github_bot.tasks.tag_ready_to_merge.tag_ready_to_merge",
+        "args": ("OCA",),
+        "schedule": crontab(minute="0"),
+    },
 }

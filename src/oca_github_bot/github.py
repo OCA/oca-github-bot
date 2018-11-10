@@ -43,6 +43,14 @@ def gh_call(func, *args, **kwargs):
         raise
 
 
+def gh_date(d):
+    return d.isoformat()
+
+
+def gh_datetime(utc_dt):
+    return utc_dt.isoformat()[:19] + "+00:00"
+
+
 class BranchNotFoundError(RuntimeError):
     pass
 
