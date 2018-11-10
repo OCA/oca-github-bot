@@ -26,21 +26,19 @@ def tag_ready_to_merge(org, repo=None, dry_run=False):
     """Add the ``ready to merge`` tag to all PRs where conditions are met."""
     with github.login() as gh:
         max_created = datetime.utcnow() - MIN_PR_AGE
-        query = " ".join(
-            [
-                "type:pr",
-                "state:open",
-                "status:success",
-                "label:approved",
-                '-label:"ready to merge"',
-                f"created:<{gh_datetime(max_created)}",
-            ]
-        )
+        query = [
+            "type:pr",
+            "state:open",
+            "status:success",
+            "label:approved",
+            '-label:"ready to merge"',
+            f"created:<{gh_datetime(max_created)}",
+        ]
         if repo:
             query.append(f"repo:{org}/{repo}")
         else:
             query.append(f"org:{org}")
-        for issue in gh.search_issues(query):
+        for issue in gh.search_issues(" ".join(query)):
             if dry_run:
                 _logger.info(
                     f"DRY-RUN add {LABEL_READY_TO_MERGE} "
