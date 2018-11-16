@@ -19,10 +19,13 @@ RUN set -x \
 # the main branch bot needs several command line tools from in OCA/maintainer-tools
 RUN set -x \
   && python3 -m venv /ocamt \
-  && /ocamt/bin/pip install wheel \
+  && /ocamt/bin/pip install wheel
+RUN set -x \
   && /ocamt/bin/pip install git+https://github.com/OCA/maintainer-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
-  && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
+  && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/
+RUN set -x \
+  && /ocamt/bin/pip install setuptools-odoo>=2.4.1 \
   && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
 
 
