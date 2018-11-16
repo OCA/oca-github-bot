@@ -40,38 +40,20 @@ setup.py generator
   For addons repositories, run setuptools-odoo-make-defaults, and push
   changes back to github.
 
-Nightly
--------
+These actions are also run nightly on all repos.
 
-...
+On Pull Request review
+----------------------
+
+When there are two approvals, set the ``approved`` label.
+When the PR is at least 5 days old, set the ``ready to merge`` label.
 
 TODO (help wanted)
 ------------------
 
-Intrastructure
-^^^^^^^^^^^^^^
+See our open `issues <https://github.com/OCA/oca-github-bot/issues>`_,
+pick one and contribute!
 
-* In case several webhooks handle the same GitHub event,
-  avoid that one failing hook prevents others to run.
-
-Hooks and tasks
-^^^^^^^^^^^^^^^
-
-* include existing bots here:
-
-  * CLA bot
-  * wheel builder
-  * pypi publisher?
-  * GitHub team members maintenance
-
-* repository maintenance (see repo creation process - cfr OCA Board), eg
-
-  * travis settings
-  * some webhooks (although most webhooks can be put at org level)?
-
-* add a label on PR of new contributors
-* see also https://github.com/OCA/maintainer-tools/pull/346
-* ...
 
 Developing new features
 =======================
