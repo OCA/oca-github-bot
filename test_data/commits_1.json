@@ -1,0 +1,555 @@
+[
+  {
+    "sha": "2779e7b5064ec84df7f7af69cb39ff95e81a1f6d",
+    "node_id": "MDY6Q29tbWl0ODQ1NDAzNzY6Mjc3OWU3YjUwNjRlYzg0ZGY3ZjdhZjY5Y2IzOWZmOTVlODFhMWY2ZA==",
+    "commit": {
+      "author": {
+        "name": "Sergio Teruel Albert",
+        "email": "sergio.teruel@tecnativa.com",
+        "date": "2017-03-13T23:40:14Z"
+      },
+      "committer": {
+        "name": "santeri valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T14:17:51Z"
+      },
+      "message": "[9.0][ADD] stock_picking_sale_order_link: Allow navigate from picking to sale order",
+      "tree": {
+        "sha": "38f1ff6cde517e8ff6d1ed9014756caf33b56a3c",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/trees/38f1ff6cde517e8ff6d1ed9014756caf33b56a3c"
+      },
+      "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/commits/2779e7b5064ec84df7f7af69cb39ff95e81a1f6d",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/2779e7b5064ec84df7f7af69cb39ff95e81a1f6d",
+    "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/2779e7b5064ec84df7f7af69cb39ff95e81a1f6d",
+    "comments_url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/2779e7b5064ec84df7f7af69cb39ff95e81a1f6d/comments",
+    "author": {
+      "login": "sergio-teruel",
+      "id": 7689807,
+      "node_id": "MDQ6VXNlcjc2ODk4MDc=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/7689807?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sergio-teruel",
+      "html_url": "https://github.com/sergio-teruel",
+      "followers_url": "https://api.github.com/users/sergio-teruel/followers",
+      "following_url": "https://api.github.com/users/sergio-teruel/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sergio-teruel/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sergio-teruel/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sergio-teruel/subscriptions",
+      "organizations_url": "https://api.github.com/users/sergio-teruel/orgs",
+      "repos_url": "https://api.github.com/users/sergio-teruel/repos",
+      "events_url": "https://api.github.com/users/sergio-teruel/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sergio-teruel/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "3f030e08294c88be7855dc8eb71b083f14d33f41",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/3f030e08294c88be7855dc8eb71b083f14d33f41",
+        "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/3f030e08294c88be7855dc8eb71b083f14d33f41"
+      }
+    ]
+  },
+  {
+    "sha": "ed9d324ab543faeab4bfe65f59b5cb43a3703771",
+    "node_id": "MDY6Q29tbWl0ODQ1NDAzNzY6ZWQ5ZDMyNGFiNTQzZmFlYWI0YmZlNjVmNTliNWNiNDNhMzcwMzc3MQ==",
+    "commit": {
+      "author": {
+        "name": "OCA Transbot",
+        "email": "transbot@odoo-community.org",
+        "date": "2017-05-02T01:14:16Z"
+      },
+      "committer": {
+        "name": "santeri valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T14:17:51Z"
+      },
+      "message": "OCA Transbot updated translations from Transifex",
+      "tree": {
+        "sha": "21bd2cbeea21d292ac344f285943adf00f5b21a4",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/trees/21bd2cbeea21d292ac344f285943adf00f5b21a4"
+      },
+      "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/commits/ed9d324ab543faeab4bfe65f59b5cb43a3703771",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/ed9d324ab543faeab4bfe65f59b5cb43a3703771",
+    "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/ed9d324ab543faeab4bfe65f59b5cb43a3703771",
+    "comments_url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/ed9d324ab543faeab4bfe65f59b5cb43a3703771/comments",
+    "author": {
+      "login": "oca-transbot",
+      "id": 10069797,
+      "node_id": "MDQ6VXNlcjEwMDY5Nzk3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/10069797?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oca-transbot",
+      "html_url": "https://github.com/oca-transbot",
+      "followers_url": "https://api.github.com/users/oca-transbot/followers",
+      "following_url": "https://api.github.com/users/oca-transbot/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oca-transbot/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oca-transbot/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oca-transbot/subscriptions",
+      "organizations_url": "https://api.github.com/users/oca-transbot/orgs",
+      "repos_url": "https://api.github.com/users/oca-transbot/repos",
+      "events_url": "https://api.github.com/users/oca-transbot/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oca-transbot/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "2779e7b5064ec84df7f7af69cb39ff95e81a1f6d",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/2779e7b5064ec84df7f7af69cb39ff95e81a1f6d",
+        "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/2779e7b5064ec84df7f7af69cb39ff95e81a1f6d"
+      }
+    ]
+  },
+  {
+    "sha": "84b9d44f419901ef764f16a3e80fb85efb83c1f3",
+    "node_id": "MDY6Q29tbWl0ODQ1NDAzNzY6ODRiOWQ0NGY0MTk5MDFlZjc2NGYxNmEzZTgwZmI4NWVmYjgzYzFmMw==",
+    "commit": {
+      "author": {
+        "name": "oca-travis",
+        "email": "oca+oca-travis@odoo-community.org",
+        "date": "2018-06-23T23:15:09Z"
+      },
+      "committer": {
+        "name": "santeri valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T14:17:51Z"
+      },
+      "message": "[UPD] Update stock_picking_sale_order_link.pot",
+      "tree": {
+        "sha": "a80afc34ed9561e98ad7e619a4c2aab4d5ee26fa",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/trees/a80afc34ed9561e98ad7e619a4c2aab4d5ee26fa"
+      },
+      "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/commits/84b9d44f419901ef764f16a3e80fb85efb83c1f3",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/84b9d44f419901ef764f16a3e80fb85efb83c1f3",
+    "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/84b9d44f419901ef764f16a3e80fb85efb83c1f3",
+    "comments_url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/84b9d44f419901ef764f16a3e80fb85efb83c1f3/comments",
+    "author": {
+      "login": "oca-travis",
+      "id": 40197031,
+      "node_id": "MDQ6VXNlcjQwMTk3MDMx",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/40197031?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oca-travis",
+      "html_url": "https://github.com/oca-travis",
+      "followers_url": "https://api.github.com/users/oca-travis/followers",
+      "following_url": "https://api.github.com/users/oca-travis/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oca-travis/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oca-travis/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oca-travis/subscriptions",
+      "organizations_url": "https://api.github.com/users/oca-travis/orgs",
+      "repos_url": "https://api.github.com/users/oca-travis/repos",
+      "events_url": "https://api.github.com/users/oca-travis/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oca-travis/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "ed9d324ab543faeab4bfe65f59b5cb43a3703771",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/ed9d324ab543faeab4bfe65f59b5cb43a3703771",
+        "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/ed9d324ab543faeab4bfe65f59b5cb43a3703771"
+      }
+    ]
+  },
+  {
+    "sha": "df6fc26e73cf0edaefa397000f9fef625222627f",
+    "node_id": "MDY6Q29tbWl0ODQ1NDAzNzY6ZGY2ZmMyNmU3M2NmMGVkYWVmYTM5NzAwMGY5ZmVmNjI1MjIyNjI3Zg==",
+    "commit": {
+      "author": {
+        "name": "sergio.teruel",
+        "email": "sergio.teruel@tecnativa.com",
+        "date": "2018-09-24T11:31:07Z"
+      },
+      "committer": {
+        "name": "santeri valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T14:17:51Z"
+      },
+      "message": "[11.0][MIG] stock_picking_sale_order_link: Migration to v11.0",
+      "tree": {
+        "sha": "8272055013eda489433b6b3cd804f7c64996f00b",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/trees/8272055013eda489433b6b3cd804f7c64996f00b"
+      },
+      "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/commits/df6fc26e73cf0edaefa397000f9fef625222627f",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/df6fc26e73cf0edaefa397000f9fef625222627f",
+    "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/df6fc26e73cf0edaefa397000f9fef625222627f",
+    "comments_url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/df6fc26e73cf0edaefa397000f9fef625222627f/comments",
+    "author": {
+      "login": "sergio-teruel",
+      "id": 7689807,
+      "node_id": "MDQ6VXNlcjc2ODk4MDc=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/7689807?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sergio-teruel",
+      "html_url": "https://github.com/sergio-teruel",
+      "followers_url": "https://api.github.com/users/sergio-teruel/followers",
+      "following_url": "https://api.github.com/users/sergio-teruel/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sergio-teruel/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sergio-teruel/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sergio-teruel/subscriptions",
+      "organizations_url": "https://api.github.com/users/sergio-teruel/orgs",
+      "repos_url": "https://api.github.com/users/sergio-teruel/repos",
+      "events_url": "https://api.github.com/users/sergio-teruel/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sergio-teruel/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "84b9d44f419901ef764f16a3e80fb85efb83c1f3",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/84b9d44f419901ef764f16a3e80fb85efb83c1f3",
+        "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/84b9d44f419901ef764f16a3e80fb85efb83c1f3"
+      }
+    ]
+  },
+  {
+    "sha": "6396d92dd75336ac24baf95f263677bdd57732aa",
+    "node_id": "MDY6Q29tbWl0ODQ1NDAzNzY6NjM5NmQ5MmRkNzUzMzZhYzI0YmFmOTVmMjYzNjc3YmRkNTc3MzJhYQ==",
+    "commit": {
+      "author": {
+        "name": "oca-travis",
+        "email": "oca+oca-travis@odoo-community.org",
+        "date": "2018-09-25T12:21:20Z"
+      },
+      "committer": {
+        "name": "santeri valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T14:17:51Z"
+      },
+      "message": "[UPD] Update stock_picking_sale_order_link.pot",
+      "tree": {
+        "sha": "b2998617227fbc95c157a538aedc64667eafcb45",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/trees/b2998617227fbc95c157a538aedc64667eafcb45"
+      },
+      "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/commits/6396d92dd75336ac24baf95f263677bdd57732aa",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/6396d92dd75336ac24baf95f263677bdd57732aa",
+    "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/6396d92dd75336ac24baf95f263677bdd57732aa",
+    "comments_url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/6396d92dd75336ac24baf95f263677bdd57732aa/comments",
+    "author": {
+      "login": "oca-travis",
+      "id": 40197031,
+      "node_id": "MDQ6VXNlcjQwMTk3MDMx",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/40197031?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oca-travis",
+      "html_url": "https://github.com/oca-travis",
+      "followers_url": "https://api.github.com/users/oca-travis/followers",
+      "following_url": "https://api.github.com/users/oca-travis/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oca-travis/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oca-travis/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oca-travis/subscriptions",
+      "organizations_url": "https://api.github.com/users/oca-travis/orgs",
+      "repos_url": "https://api.github.com/users/oca-travis/repos",
+      "events_url": "https://api.github.com/users/oca-travis/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oca-travis/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "df6fc26e73cf0edaefa397000f9fef625222627f",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/df6fc26e73cf0edaefa397000f9fef625222627f",
+        "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/df6fc26e73cf0edaefa397000f9fef625222627f"
+      }
+    ]
+  },
+  {
+    "sha": "3c11ad2662238d8fe6d9b2935f701a846153526a",
+    "node_id": "MDY6Q29tbWl0ODQ1NDAzNzY6M2MxMWFkMjY2MjIzOGQ4ZmU2ZDliMjkzNWY3MDFhODQ2MTUzNTI2YQ==",
+    "commit": {
+      "author": {
+        "name": "OCA Git Bot",
+        "email": "oca-git-bot@odoo-community.org",
+        "date": "2018-09-26T03:35:40Z"
+      },
+      "committer": {
+        "name": "santeri valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T14:17:51Z"
+      },
+      "message": "[UPD] README.rst",
+      "tree": {
+        "sha": "700f687e06a0f7b6292af186ad1dad618714046e",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/trees/700f687e06a0f7b6292af186ad1dad618714046e"
+      },
+      "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/commits/3c11ad2662238d8fe6d9b2935f701a846153526a",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/3c11ad2662238d8fe6d9b2935f701a846153526a",
+    "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/3c11ad2662238d8fe6d9b2935f701a846153526a",
+    "comments_url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/3c11ad2662238d8fe6d9b2935f701a846153526a/comments",
+    "author": {
+      "login": "OCA-git-bot",
+      "id": 8723280,
+      "node_id": "MDQ6VXNlcjg3MjMyODA=",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8723280?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/OCA-git-bot",
+      "html_url": "https://github.com/OCA-git-bot",
+      "followers_url": "https://api.github.com/users/OCA-git-bot/followers",
+      "following_url": "https://api.github.com/users/OCA-git-bot/following{/other_user}",
+      "gists_url": "https://api.github.com/users/OCA-git-bot/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/OCA-git-bot/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/OCA-git-bot/subscriptions",
+      "organizations_url": "https://api.github.com/users/OCA-git-bot/orgs",
+      "repos_url": "https://api.github.com/users/OCA-git-bot/repos",
+      "events_url": "https://api.github.com/users/OCA-git-bot/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/OCA-git-bot/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "6396d92dd75336ac24baf95f263677bdd57732aa",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/6396d92dd75336ac24baf95f263677bdd57732aa",
+        "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/6396d92dd75336ac24baf95f263677bdd57732aa"
+      }
+    ]
+  },
+  {
+    "sha": "67deb065f8cd3cb412361f0ec10904683a3cfb48",
+    "node_id": "MDY6Q29tbWl0ODQ1NDAzNzY6NjdkZWIwNjVmOGNkM2NiNDEyMzYxZjBlYzEwOTA0NjgzYTNjZmI0OA==",
+    "commit": {
+      "author": {
+        "name": "Santeri Valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T16:55:23Z"
+      },
+      "committer": {
+        "name": "santeri valjakka",
+        "email": "santeri.valjakka@avoin.systems",
+        "date": "2018-11-15T17:13:51Z"
+      },
+      "message": "[MIG] stock_picking_sale_order_link: Migration to 12.0",
+      "tree": {
+        "sha": "592e5b6ae9c261a3e68172e4ebd6faf9a776cb67",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/trees/592e5b6ae9c261a3e68172e4ebd6faf9a776cb67"
+      },
+      "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/git/commits/67deb065f8cd3cb412361f0ec10904683a3cfb48",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/67deb065f8cd3cb412361f0ec10904683a3cfb48",
+    "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/67deb065f8cd3cb412361f0ec10904683a3cfb48",
+    "comments_url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/67deb065f8cd3cb412361f0ec10904683a3cfb48/comments",
+    "author": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "hegenator",
+      "id": 23723817,
+      "node_id": "MDQ6VXNlcjIzNzIzODE3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23723817?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hegenator",
+      "html_url": "https://github.com/hegenator",
+      "followers_url": "https://api.github.com/users/hegenator/followers",
+      "following_url": "https://api.github.com/users/hegenator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hegenator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hegenator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hegenator/subscriptions",
+      "organizations_url": "https://api.github.com/users/hegenator/orgs",
+      "repos_url": "https://api.github.com/users/hegenator/repos",
+      "events_url": "https://api.github.com/users/hegenator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hegenator/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "3c11ad2662238d8fe6d9b2935f701a846153526a",
+        "url": "https://api.github.com/repos/OCA/stock-logistics-workflow/commits/3c11ad2662238d8fe6d9b2935f701a846153526a",
+        "html_url": "https://github.com/OCA/stock-logistics-workflow/commit/3c11ad2662238d8fe6d9b2935f701a846153526a"
+      }
+    ]
+  }
+]
