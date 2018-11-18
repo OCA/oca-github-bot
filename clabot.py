@@ -63,6 +63,10 @@ SQL_DELETE_MISS_CACHE = '''
     DELETE FROM login_cla_ko WHERE login IN (%s)
 '''
 
+RE_WEBLATE_COMMIT_MSG = r'''^Translated using Weblate.*
+Translate-URL: https://translation\.odoo-community\.org/'''
+
+
 try:
     compare_digest = hmac.compare_digest
 except AttributeError:
@@ -261,6 +265,12 @@ class PullRequestHandler(GithubHookHandler):
         users_login = set()
         users_no_login = set()
         for commit in commits:
+            message = commit['commit']['message']
+            if re.match(RE_WEBLATE_COMMIT_MSG,
+                        message,
+                        re.S):
+                # don't enforce CLA check on translations
+                continue
             if commit['committer']:
                 author = commit['committer']['login']
                 users_login.add(author)
