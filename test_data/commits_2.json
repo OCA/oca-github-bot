@@ -1,0 +1,943 @@
+[
+  {
+    "sha": "1903e36cd0c100280833b4f2726a285da9afd0ba",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjE5MDNlMzZjZDBjMTAwMjgwODMzYjRmMjcyNmEyODVkYTlhZmQwYmE=",
+    "commit": {
+      "author": {
+        "name": "acysos",
+        "email": "info@acysos.com",
+        "date": "2014-12-03T23:44:49Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[ADD] product_manufacturer: add module removed in Odoo 8.0",
+      "tree": {
+        "sha": "079e4cc5227a85c73619b5d81760eb2f992c7ff3",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/079e4cc5227a85c73619b5d81760eb2f992c7ff3"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/1903e36cd0c100280833b4f2726a285da9afd0ba",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/1903e36cd0c100280833b4f2726a285da9afd0ba",
+    "html_url": "https://github.com/OCA/product-attribute/commit/1903e36cd0c100280833b4f2726a285da9afd0ba",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/1903e36cd0c100280833b4f2726a285da9afd0ba/comments",
+    "author": {
+      "login": "acysos",
+      "id": 1657112,
+      "node_id": "MDQ6VXNlcjE2NTcxMTI=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1657112?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/acysos",
+      "html_url": "https://github.com/acysos",
+      "followers_url": "https://api.github.com/users/acysos/followers",
+      "following_url": "https://api.github.com/users/acysos/following{/other_user}",
+      "gists_url": "https://api.github.com/users/acysos/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/acysos/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/acysos/subscriptions",
+      "organizations_url": "https://api.github.com/users/acysos/orgs",
+      "repos_url": "https://api.github.com/users/acysos/repos",
+      "events_url": "https://api.github.com/users/acysos/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/acysos/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "a260e973432568cd9a08ce10d564ca5d1d31e1b4",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/a260e973432568cd9a08ce10d564ca5d1d31e1b4",
+        "html_url": "https://github.com/OCA/product-attribute/commit/a260e973432568cd9a08ce10d564ca5d1d31e1b4"
+      }
+    ]
+  },
+  {
+    "sha": "9db032b5df817d6e7705292c8a096785e0aeb8ef",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjlkYjAzMmI1ZGY4MTdkNmU3NzA1MjkyYzhhMDk2Nzg1ZTBhZWI4ZWY=",
+    "commit": {
+      "author": {
+        "name": "Olar Alca [Vauxoo]",
+        "email": "oszckar@gmail.com",
+        "date": "2015-02-04T03:56:58Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[IMP] product_manufacturer: Several\n\n* New Field Added to store the URL of the product on the manufacturer page.\n* Added field manufacturer product URL to the product view.\n* README updated.",
+      "tree": {
+        "sha": "f9e3cf439680cf1864549155f16beecac7d2cfe2",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/f9e3cf439680cf1864549155f16beecac7d2cfe2"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/9db032b5df817d6e7705292c8a096785e0aeb8ef",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/9db032b5df817d6e7705292c8a096785e0aeb8ef",
+    "html_url": "https://github.com/OCA/product-attribute/commit/9db032b5df817d6e7705292c8a096785e0aeb8ef",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/9db032b5df817d6e7705292c8a096785e0aeb8ef/comments",
+    "author": {
+      "login": "oscarolar",
+      "id": 3836433,
+      "node_id": "MDQ6VXNlcjM4MzY0MzM=",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3836433?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oscarolar",
+      "html_url": "https://github.com/oscarolar",
+      "followers_url": "https://api.github.com/users/oscarolar/followers",
+      "following_url": "https://api.github.com/users/oscarolar/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oscarolar/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oscarolar/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oscarolar/subscriptions",
+      "organizations_url": "https://api.github.com/users/oscarolar/orgs",
+      "repos_url": "https://api.github.com/users/oscarolar/repos",
+      "events_url": "https://api.github.com/users/oscarolar/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oscarolar/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "1903e36cd0c100280833b4f2726a285da9afd0ba",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/1903e36cd0c100280833b4f2726a285da9afd0ba",
+        "html_url": "https://github.com/OCA/product-attribute/commit/1903e36cd0c100280833b4f2726a285da9afd0ba"
+      }
+    ]
+  },
+  {
+    "sha": "a233b42db469155ce3508c81f3a4cb6d97f74c27",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOmEyMzNiNDJkYjQ2OTE1NWNlMzUwOGM4MWYzYTRjYjZkOTdmNzRjMjc=",
+    "commit": {
+      "author": {
+        "name": "Yannick Vaucher",
+        "email": "yannick.vaucher@camptocamp.com",
+        "date": "2015-02-06T14:30:37Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[FIX] product_manufacturer: Add license to manifest + icons",
+      "tree": {
+        "sha": "0c2db703e37798918da7d8353dc74684ddb7a36a",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/0c2db703e37798918da7d8353dc74684ddb7a36a"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/a233b42db469155ce3508c81f3a4cb6d97f74c27",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/a233b42db469155ce3508c81f3a4cb6d97f74c27",
+    "html_url": "https://github.com/OCA/product-attribute/commit/a233b42db469155ce3508c81f3a4cb6d97f74c27",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/a233b42db469155ce3508c81f3a4cb6d97f74c27/comments",
+    "author": {
+      "login": "yvaucher",
+      "id": 4158438,
+      "node_id": "MDQ6VXNlcjQxNTg0Mzg=",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4158438?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/yvaucher",
+      "html_url": "https://github.com/yvaucher",
+      "followers_url": "https://api.github.com/users/yvaucher/followers",
+      "following_url": "https://api.github.com/users/yvaucher/following{/other_user}",
+      "gists_url": "https://api.github.com/users/yvaucher/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/yvaucher/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/yvaucher/subscriptions",
+      "organizations_url": "https://api.github.com/users/yvaucher/orgs",
+      "repos_url": "https://api.github.com/users/yvaucher/repos",
+      "events_url": "https://api.github.com/users/yvaucher/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/yvaucher/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "9db032b5df817d6e7705292c8a096785e0aeb8ef",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/9db032b5df817d6e7705292c8a096785e0aeb8ef",
+        "html_url": "https://github.com/OCA/product-attribute/commit/9db032b5df817d6e7705292c8a096785e0aeb8ef"
+      }
+    ]
+  },
+  {
+    "sha": "f5793901183a0d98813cb32b0f1083b062f044c6",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOmY1NzkzOTAxMTgzYTBkOTg4MTNjYjMyYjBmMTA4M2IwNjJmMDQ0YzY=",
+    "commit": {
+      "author": {
+        "name": "Pedro M. Baeza",
+        "email": "pedro.baeza@gmail.com",
+        "date": "2015-02-13T11:41:07Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[IMP] product_manufacturer: URL widget for product URL",
+      "tree": {
+        "sha": "96ff8025fe32ea821ddda04aba8ae7c5f8f617ca",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/96ff8025fe32ea821ddda04aba8ae7c5f8f617ca"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/f5793901183a0d98813cb32b0f1083b062f044c6",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/f5793901183a0d98813cb32b0f1083b062f044c6",
+    "html_url": "https://github.com/OCA/product-attribute/commit/f5793901183a0d98813cb32b0f1083b062f044c6",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/f5793901183a0d98813cb32b0f1083b062f044c6/comments",
+    "author": {
+      "login": "pedrobaeza",
+      "id": 7165771,
+      "node_id": "MDQ6VXNlcjcxNjU3NzE=",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7165771?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/pedrobaeza",
+      "html_url": "https://github.com/pedrobaeza",
+      "followers_url": "https://api.github.com/users/pedrobaeza/followers",
+      "following_url": "https://api.github.com/users/pedrobaeza/following{/other_user}",
+      "gists_url": "https://api.github.com/users/pedrobaeza/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/pedrobaeza/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/pedrobaeza/subscriptions",
+      "organizations_url": "https://api.github.com/users/pedrobaeza/orgs",
+      "repos_url": "https://api.github.com/users/pedrobaeza/repos",
+      "events_url": "https://api.github.com/users/pedrobaeza/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/pedrobaeza/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "a233b42db469155ce3508c81f3a4cb6d97f74c27",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/a233b42db469155ce3508c81f3a4cb6d97f74c27",
+        "html_url": "https://github.com/OCA/product-attribute/commit/a233b42db469155ce3508c81f3a4cb6d97f74c27"
+      }
+    ]
+  },
+  {
+    "sha": "c810d25f06b1921e6245067db9d1d73cae4e9ce4",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOmM4MTBkMjVmMDZiMTkyMWU2MjQ1MDY3ZGI5ZDFkNzNjYWU0ZTljZTQ=",
+    "commit": {
+      "author": {
+        "name": "Alexandre Fayolle",
+        "email": "alexandre.fayolle@camptocamp.com",
+        "date": "2015-03-02T16:26:38Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "Add OCA as author of OCA addons\n\nIn order to get visibility on https://www.odoo.com/apps the OCA board has\ndecided to add the OCA as author of all the addons maintained as part of the\nassociation.",
+      "tree": {
+        "sha": "089301ef1bd999574111a678ee324d664961b341",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/089301ef1bd999574111a678ee324d664961b341"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/c810d25f06b1921e6245067db9d1d73cae4e9ce4",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/c810d25f06b1921e6245067db9d1d73cae4e9ce4",
+    "html_url": "https://github.com/OCA/product-attribute/commit/c810d25f06b1921e6245067db9d1d73cae4e9ce4",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/c810d25f06b1921e6245067db9d1d73cae4e9ce4/comments",
+    "author": {
+      "login": "gurneyalex",
+      "id": 2032807,
+      "node_id": "MDQ6VXNlcjIwMzI4MDc=",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2032807?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/gurneyalex",
+      "html_url": "https://github.com/gurneyalex",
+      "followers_url": "https://api.github.com/users/gurneyalex/followers",
+      "following_url": "https://api.github.com/users/gurneyalex/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gurneyalex/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/gurneyalex/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gurneyalex/subscriptions",
+      "organizations_url": "https://api.github.com/users/gurneyalex/orgs",
+      "repos_url": "https://api.github.com/users/gurneyalex/repos",
+      "events_url": "https://api.github.com/users/gurneyalex/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/gurneyalex/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "f5793901183a0d98813cb32b0f1083b062f044c6",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/f5793901183a0d98813cb32b0f1083b062f044c6",
+        "html_url": "https://github.com/OCA/product-attribute/commit/f5793901183a0d98813cb32b0f1083b062f044c6"
+      }
+    ]
+  },
+  {
+    "sha": "101ad92944432a2b92d6fe8e7b327e207f8c3118",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjEwMWFkOTI5NDQ0MzJhMmI5MmQ2ZmU4ZTdiMzI3ZTIwN2Y4YzMxMTg=",
+    "commit": {
+      "author": {
+        "name": "Holger Brunn",
+        "email": "hbrunn@therp.nl",
+        "date": "2015-08-24T10:08:31Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[ADD] migration for product_manufacturer",
+      "tree": {
+        "sha": "0ce1070c74780c16683d1f7b30b1d45705e9f5f0",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/0ce1070c74780c16683d1f7b30b1d45705e9f5f0"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/101ad92944432a2b92d6fe8e7b327e207f8c3118",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/101ad92944432a2b92d6fe8e7b327e207f8c3118",
+    "html_url": "https://github.com/OCA/product-attribute/commit/101ad92944432a2b92d6fe8e7b327e207f8c3118",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/101ad92944432a2b92d6fe8e7b327e207f8c3118/comments",
+    "author": {
+      "login": "hbrunn",
+      "id": 2563186,
+      "node_id": "MDQ6VXNlcjI1NjMxODY=",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2563186?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hbrunn",
+      "html_url": "https://github.com/hbrunn",
+      "followers_url": "https://api.github.com/users/hbrunn/followers",
+      "following_url": "https://api.github.com/users/hbrunn/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hbrunn/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hbrunn/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hbrunn/subscriptions",
+      "organizations_url": "https://api.github.com/users/hbrunn/orgs",
+      "repos_url": "https://api.github.com/users/hbrunn/repos",
+      "events_url": "https://api.github.com/users/hbrunn/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hbrunn/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "c810d25f06b1921e6245067db9d1d73cae4e9ce4",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/c810d25f06b1921e6245067db9d1d73cae4e9ce4",
+        "html_url": "https://github.com/OCA/product-attribute/commit/c810d25f06b1921e6245067db9d1d73cae4e9ce4"
+      }
+    ]
+  },
+  {
+    "sha": "63b16c5555c015d47812cfaf2a8c8c507c63daf5",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjYzYjE2YzU1NTVjMDE1ZDQ3ODEyY2ZhZjJhOGM4YzUwN2M2M2RhZjU=",
+    "commit": {
+      "author": {
+        "name": "Paulius Sladkevičius",
+        "email": "paulius@hbee.eu",
+        "date": "2016-04-28T15:21:22Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "product_manufacturer: update view to meet v9",
+      "tree": {
+        "sha": "e1aa22fb74c797a35a5d53ed6846bfe970676feb",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/e1aa22fb74c797a35a5d53ed6846bfe970676feb"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/63b16c5555c015d47812cfaf2a8c8c507c63daf5",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/63b16c5555c015d47812cfaf2a8c8c507c63daf5",
+    "html_url": "https://github.com/OCA/product-attribute/commit/63b16c5555c015d47812cfaf2a8c8c507c63daf5",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/63b16c5555c015d47812cfaf2a8c8c507c63daf5/comments",
+    "author": {
+      "login": "paulius-sladkevicius",
+      "id": 213811,
+      "node_id": "MDQ6VXNlcjIxMzgxMQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/213811?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/paulius-sladkevicius",
+      "html_url": "https://github.com/paulius-sladkevicius",
+      "followers_url": "https://api.github.com/users/paulius-sladkevicius/followers",
+      "following_url": "https://api.github.com/users/paulius-sladkevicius/following{/other_user}",
+      "gists_url": "https://api.github.com/users/paulius-sladkevicius/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/paulius-sladkevicius/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/paulius-sladkevicius/subscriptions",
+      "organizations_url": "https://api.github.com/users/paulius-sladkevicius/orgs",
+      "repos_url": "https://api.github.com/users/paulius-sladkevicius/repos",
+      "events_url": "https://api.github.com/users/paulius-sladkevicius/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/paulius-sladkevicius/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "101ad92944432a2b92d6fe8e7b327e207f8c3118",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/101ad92944432a2b92d6fe8e7b327e207f8c3118",
+        "html_url": "https://github.com/OCA/product-attribute/commit/101ad92944432a2b92d6fe8e7b327e207f8c3118"
+      }
+    ]
+  },
+  {
+    "sha": "5fe5f08bb35ef96aab58bb15890a8773991a6b8a",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjVmZTVmMDhiYjM1ZWY5NmFhYjU4YmIxNTg5MGE4NzczOTkxYTZiOGE=",
+    "commit": {
+      "author": {
+        "name": "raycarnes",
+        "email": "raycarnes@hotmail.com",
+        "date": "2016-10-15T17:54:23Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "Port to v10",
+      "tree": {
+        "sha": "4cf07c6c5ffce1e133d420569e2ec37ae2d18fa1",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/4cf07c6c5ffce1e133d420569e2ec37ae2d18fa1"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/5fe5f08bb35ef96aab58bb15890a8773991a6b8a",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/5fe5f08bb35ef96aab58bb15890a8773991a6b8a",
+    "html_url": "https://github.com/OCA/product-attribute/commit/5fe5f08bb35ef96aab58bb15890a8773991a6b8a",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/5fe5f08bb35ef96aab58bb15890a8773991a6b8a/comments",
+    "author": {
+      "login": "raycarnes",
+      "id": 11108754,
+      "node_id": "MDQ6VXNlcjExMTA4NzU0",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/11108754?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/raycarnes",
+      "html_url": "https://github.com/raycarnes",
+      "followers_url": "https://api.github.com/users/raycarnes/followers",
+      "following_url": "https://api.github.com/users/raycarnes/following{/other_user}",
+      "gists_url": "https://api.github.com/users/raycarnes/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/raycarnes/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/raycarnes/subscriptions",
+      "organizations_url": "https://api.github.com/users/raycarnes/orgs",
+      "repos_url": "https://api.github.com/users/raycarnes/repos",
+      "events_url": "https://api.github.com/users/raycarnes/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/raycarnes/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "63b16c5555c015d47812cfaf2a8c8c507c63daf5",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/63b16c5555c015d47812cfaf2a8c8c507c63daf5",
+        "html_url": "https://github.com/OCA/product-attribute/commit/63b16c5555c015d47812cfaf2a8c8c507c63daf5"
+      }
+    ]
+  },
+  {
+    "sha": "34cca5c79f2c3089ae68926e2319d97a8ea2ed56",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjM0Y2NhNWM3OWYyYzMwODlhZTY4OTI2ZTIzMTlkOTdhOGVhMmVkNTY=",
+    "commit": {
+      "author": {
+        "name": "Ray Carnes",
+        "email": "ray.carnes@bistasolutions.com",
+        "date": "2016-10-15T18:28:41Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "several fixes\n\nAdd # -*- encoding: utf-8 -*-",
+      "tree": {
+        "sha": "34a094eb978a78f6aa96d381bb4c664e5de6b2a1",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/34a094eb978a78f6aa96d381bb4c664e5de6b2a1"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/34cca5c79f2c3089ae68926e2319d97a8ea2ed56",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/34cca5c79f2c3089ae68926e2319d97a8ea2ed56",
+    "html_url": "https://github.com/OCA/product-attribute/commit/34cca5c79f2c3089ae68926e2319d97a8ea2ed56",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/34cca5c79f2c3089ae68926e2319d97a8ea2ed56/comments",
+    "author": {
+      "login": "bistaray",
+      "id": 13910162,
+      "node_id": "MDQ6VXNlcjEzOTEwMTYy",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/13910162?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/bistaray",
+      "html_url": "https://github.com/bistaray",
+      "followers_url": "https://api.github.com/users/bistaray/followers",
+      "following_url": "https://api.github.com/users/bistaray/following{/other_user}",
+      "gists_url": "https://api.github.com/users/bistaray/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/bistaray/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/bistaray/subscriptions",
+      "organizations_url": "https://api.github.com/users/bistaray/orgs",
+      "repos_url": "https://api.github.com/users/bistaray/repos",
+      "events_url": "https://api.github.com/users/bistaray/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/bistaray/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "5fe5f08bb35ef96aab58bb15890a8773991a6b8a",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/5fe5f08bb35ef96aab58bb15890a8773991a6b8a",
+        "html_url": "https://github.com/OCA/product-attribute/commit/5fe5f08bb35ef96aab58bb15890a8773991a6b8a"
+      }
+    ]
+  },
+  {
+    "sha": "a36f5b87069170708330ebdb9901f7cc705967e9",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOmEzNmY1Yjg3MDY5MTcwNzA4MzMwZWJkYjk5MDFmN2NjNzA1OTY3ZTk=",
+    "commit": {
+      "author": {
+        "name": "OCA Transbot",
+        "email": "transbot@odoo-community.org",
+        "date": "2016-11-29T14:25:01Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "OCA Transbot updated translations from Transifex",
+      "tree": {
+        "sha": "9c430ca3cffc8254489244fe3866caf9a902bad1",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/9c430ca3cffc8254489244fe3866caf9a902bad1"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/a36f5b87069170708330ebdb9901f7cc705967e9",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/a36f5b87069170708330ebdb9901f7cc705967e9",
+    "html_url": "https://github.com/OCA/product-attribute/commit/a36f5b87069170708330ebdb9901f7cc705967e9",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/a36f5b87069170708330ebdb9901f7cc705967e9/comments",
+    "author": {
+      "login": "oca-transbot",
+      "id": 10069797,
+      "node_id": "MDQ6VXNlcjEwMDY5Nzk3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/10069797?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oca-transbot",
+      "html_url": "https://github.com/oca-transbot",
+      "followers_url": "https://api.github.com/users/oca-transbot/followers",
+      "following_url": "https://api.github.com/users/oca-transbot/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oca-transbot/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oca-transbot/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oca-transbot/subscriptions",
+      "organizations_url": "https://api.github.com/users/oca-transbot/orgs",
+      "repos_url": "https://api.github.com/users/oca-transbot/repos",
+      "events_url": "https://api.github.com/users/oca-transbot/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oca-transbot/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "34cca5c79f2c3089ae68926e2319d97a8ea2ed56",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/34cca5c79f2c3089ae68926e2319d97a8ea2ed56",
+        "html_url": "https://github.com/OCA/product-attribute/commit/34cca5c79f2c3089ae68926e2319d97a8ea2ed56"
+      }
+    ]
+  },
+  {
+    "sha": "5f9944019feea74a59a0bd739000fc015a6b1bb7",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjVmOTk0NDAxOWZlZWE3NGE1OWEwYmQ3MzkwMDBmYzAxNWE2YjFiYjc=",
+    "commit": {
+      "author": {
+        "name": "mreficent",
+        "email": "miquel.raich@eficent.com",
+        "date": "2017-11-03T12:05:48Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[8.0][FIX/MIG] product_manufacturer",
+      "tree": {
+        "sha": "d790d2b45fc8c55f1cc5cfc9ca6844c7cb80675f",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/d790d2b45fc8c55f1cc5cfc9ca6844c7cb80675f"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/5f9944019feea74a59a0bd739000fc015a6b1bb7",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/5f9944019feea74a59a0bd739000fc015a6b1bb7",
+    "html_url": "https://github.com/OCA/product-attribute/commit/5f9944019feea74a59a0bd739000fc015a6b1bb7",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/5f9944019feea74a59a0bd739000fc015a6b1bb7/comments",
+    "author": {
+      "login": "mreficent",
+      "id": 25005517,
+      "node_id": "MDQ6VXNlcjI1MDA1NTE3",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/25005517?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mreficent",
+      "html_url": "https://github.com/mreficent",
+      "followers_url": "https://api.github.com/users/mreficent/followers",
+      "following_url": "https://api.github.com/users/mreficent/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mreficent/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mreficent/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mreficent/subscriptions",
+      "organizations_url": "https://api.github.com/users/mreficent/orgs",
+      "repos_url": "https://api.github.com/users/mreficent/repos",
+      "events_url": "https://api.github.com/users/mreficent/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mreficent/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "a36f5b87069170708330ebdb9901f7cc705967e9",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/a36f5b87069170708330ebdb9901f7cc705967e9",
+        "html_url": "https://github.com/OCA/product-attribute/commit/a36f5b87069170708330ebdb9901f7cc705967e9"
+      }
+    ]
+  },
+  {
+    "sha": "9a9801ec0818712de023cafd1bcd6bf9fdacbffd",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjlhOTgwMWVjMDgxODcxMmRlMDIzY2FmZDFiY2Q2YmY5ZmRhY2JmZmQ=",
+    "commit": {
+      "author": {
+        "name": "Lois Rilo",
+        "email": "lois.rilo@eficent.com",
+        "date": "2018-02-09T14:20:08Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[11.0][MIG] product_manufacturer",
+      "tree": {
+        "sha": "c755782f129dacc48a2edfacda77b8af88a56490",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/c755782f129dacc48a2edfacda77b8af88a56490"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/9a9801ec0818712de023cafd1bcd6bf9fdacbffd",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/9a9801ec0818712de023cafd1bcd6bf9fdacbffd",
+    "html_url": "https://github.com/OCA/product-attribute/commit/9a9801ec0818712de023cafd1bcd6bf9fdacbffd",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/9a9801ec0818712de023cafd1bcd6bf9fdacbffd/comments",
+    "author": {
+      "login": "lreficent",
+      "id": 23449160,
+      "node_id": "MDQ6VXNlcjIzNDQ5MTYw",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/23449160?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/lreficent",
+      "html_url": "https://github.com/lreficent",
+      "followers_url": "https://api.github.com/users/lreficent/followers",
+      "following_url": "https://api.github.com/users/lreficent/following{/other_user}",
+      "gists_url": "https://api.github.com/users/lreficent/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/lreficent/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/lreficent/subscriptions",
+      "organizations_url": "https://api.github.com/users/lreficent/orgs",
+      "repos_url": "https://api.github.com/users/lreficent/repos",
+      "events_url": "https://api.github.com/users/lreficent/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/lreficent/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "5f9944019feea74a59a0bd739000fc015a6b1bb7",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/5f9944019feea74a59a0bd739000fc015a6b1bb7",
+        "html_url": "https://github.com/OCA/product-attribute/commit/5f9944019feea74a59a0bd739000fc015a6b1bb7"
+      }
+    ]
+  },
+  {
+    "sha": "e019650fbbe5a54e6a44f47398ac93cd82a69a1a",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOmUwMTk2NTBmYmJlNWE1NGU2YTQ0ZjQ3Mzk4YWM5M2NkODJhNjlhMWE=",
+    "commit": {
+      "author": {
+        "name": "OCA Transbot",
+        "email": "transbot@odoo-community.org",
+        "date": "2018-03-03T09:22:47Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "OCA Transbot updated translations from Transifex",
+      "tree": {
+        "sha": "cbc08db9e2a36e999b474730408c9e1e718a0cfc",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/cbc08db9e2a36e999b474730408c9e1e718a0cfc"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/e019650fbbe5a54e6a44f47398ac93cd82a69a1a",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/e019650fbbe5a54e6a44f47398ac93cd82a69a1a",
+    "html_url": "https://github.com/OCA/product-attribute/commit/e019650fbbe5a54e6a44f47398ac93cd82a69a1a",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/e019650fbbe5a54e6a44f47398ac93cd82a69a1a/comments",
+    "author": {
+      "login": "oca-transbot",
+      "id": 10069797,
+      "node_id": "MDQ6VXNlcjEwMDY5Nzk3",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/10069797?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oca-transbot",
+      "html_url": "https://github.com/oca-transbot",
+      "followers_url": "https://api.github.com/users/oca-transbot/followers",
+      "following_url": "https://api.github.com/users/oca-transbot/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oca-transbot/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oca-transbot/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oca-transbot/subscriptions",
+      "organizations_url": "https://api.github.com/users/oca-transbot/orgs",
+      "repos_url": "https://api.github.com/users/oca-transbot/repos",
+      "events_url": "https://api.github.com/users/oca-transbot/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oca-transbot/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "9a9801ec0818712de023cafd1bcd6bf9fdacbffd",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/9a9801ec0818712de023cafd1bcd6bf9fdacbffd",
+        "html_url": "https://github.com/OCA/product-attribute/commit/9a9801ec0818712de023cafd1bcd6bf9fdacbffd"
+      }
+    ]
+  },
+  {
+    "sha": "33a165daf428cf20159f335d29379dbe2493ed48",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjMzYTE2NWRhZjQyOGNmMjAxNTlmMzM1ZDI5Mzc5ZGJlMjQ5M2VkNDg=",
+    "commit": {
+      "author": {
+        "name": "Stéphane Bidoul (ACSONE)",
+        "email": "stephane.bidoul@acsone.eu",
+        "date": "2018-06-15T21:34:42Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "remove obsolete .pot files [ci skip]",
+      "tree": {
+        "sha": "465d742c9cba0c9bcfa09a9106d4f5b2be580955",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/465d742c9cba0c9bcfa09a9106d4f5b2be580955"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/33a165daf428cf20159f335d29379dbe2493ed48",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/33a165daf428cf20159f335d29379dbe2493ed48",
+    "html_url": "https://github.com/OCA/product-attribute/commit/33a165daf428cf20159f335d29379dbe2493ed48",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/33a165daf428cf20159f335d29379dbe2493ed48/comments",
+    "author": {
+      "login": "sbidoul",
+      "id": 692075,
+      "node_id": "MDQ6VXNlcjY5MjA3NQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/692075?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sbidoul",
+      "html_url": "https://github.com/sbidoul",
+      "followers_url": "https://api.github.com/users/sbidoul/followers",
+      "following_url": "https://api.github.com/users/sbidoul/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sbidoul/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sbidoul/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sbidoul/subscriptions",
+      "organizations_url": "https://api.github.com/users/sbidoul/orgs",
+      "repos_url": "https://api.github.com/users/sbidoul/repos",
+      "events_url": "https://api.github.com/users/sbidoul/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sbidoul/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "e019650fbbe5a54e6a44f47398ac93cd82a69a1a",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/e019650fbbe5a54e6a44f47398ac93cd82a69a1a",
+        "html_url": "https://github.com/OCA/product-attribute/commit/e019650fbbe5a54e6a44f47398ac93cd82a69a1a"
+      }
+    ]
+  },
+  {
+    "sha": "42a63249c2b8c3612b3ba2c69f1571037bab2db3",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjQyYTYzMjQ5YzJiOGMzNjEyYjNiYTJjNjlmMTU3MTAzN2JhYjJkYjM=",
+    "commit": {
+      "author": {
+        "name": "oca-travis",
+        "email": "oca+oca-travis@odoo-community.org",
+        "date": "2018-06-21T18:21:11Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:39:56Z"
+      },
+      "message": "[UPD] Update product_manufacturer.pot",
+      "tree": {
+        "sha": "04171e268f454f11b10fbfe4c6b788652e155c2d",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/04171e268f454f11b10fbfe4c6b788652e155c2d"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/42a63249c2b8c3612b3ba2c69f1571037bab2db3",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/42a63249c2b8c3612b3ba2c69f1571037bab2db3",
+    "html_url": "https://github.com/OCA/product-attribute/commit/42a63249c2b8c3612b3ba2c69f1571037bab2db3",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/42a63249c2b8c3612b3ba2c69f1571037bab2db3/comments",
+    "author": {
+      "login": "oca-travis",
+      "id": 40197031,
+      "node_id": "MDQ6VXNlcjQwMTk3MDMx",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/40197031?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oca-travis",
+      "html_url": "https://github.com/oca-travis",
+      "followers_url": "https://api.github.com/users/oca-travis/followers",
+      "following_url": "https://api.github.com/users/oca-travis/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oca-travis/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oca-travis/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oca-travis/subscriptions",
+      "organizations_url": "https://api.github.com/users/oca-travis/orgs",
+      "repos_url": "https://api.github.com/users/oca-travis/repos",
+      "events_url": "https://api.github.com/users/oca-travis/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oca-travis/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+      {
+        "sha": "33a165daf428cf20159f335d29379dbe2493ed48",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/33a165daf428cf20159f335d29379dbe2493ed48",
+        "html_url": "https://github.com/OCA/product-attribute/commit/33a165daf428cf20159f335d29379dbe2493ed48"
+      }
+    ]
+  },
+  {
+    "sha": "2c110ec8c002aaf151b114529b5ebf90ae4865ca",
+    "node_id": "MDY6Q29tbWl0MTU1Mzc2NTQwOjJjMTEwZWM4YzAwMmFhZjE1MWIxMTQ1MjliNWViZjkwYWU0ODY1Y2E=",
+    "commit": {
+      "author": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:47:44Z"
+      },
+      "committer": {
+        "name": "Daniels Andersons",
+        "email": "daniels.andersons@avoin.systems",
+        "date": "2018-10-29T15:47:44Z"
+      },
+      "message": "[MIG] product_manufacturer: Migration to 12.0",
+      "tree": {
+        "sha": "fe7ef7f1171457a1d16a742d22c8405f53aeb938",
+        "url": "https://api.github.com/repos/OCA/product-attribute/git/trees/fe7ef7f1171457a1d16a742d22c8405f53aeb938"
+      },
+      "url": "https://api.github.com/repos/OCA/product-attribute/git/commits/2c110ec8c002aaf151b114529b5ebf90ae4865ca",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/OCA/product-attribute/commits/2c110ec8c002aaf151b114529b5ebf90ae4865ca",
+    "html_url": "https://github.com/OCA/product-attribute/commit/2c110ec8c002aaf151b114529b5ebf90ae4865ca",
+    "comments_url": "https://api.github.com/repos/OCA/product-attribute/commits/2c110ec8c002aaf151b114529b5ebf90ae4865ca/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "42a63249c2b8c3612b3ba2c69f1571037bab2db3",
+        "url": "https://api.github.com/repos/OCA/product-attribute/commits/42a63249c2b8c3612b3ba2c69f1571037bab2db3",
+        "html_url": "https://github.com/OCA/product-attribute/commit/42a63249c2b8c3612b3ba2c69f1571037bab2db3"
+      }
+    ]
+  }
+]

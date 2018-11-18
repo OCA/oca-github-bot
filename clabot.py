@@ -265,18 +265,9 @@ class PullRequestHandler(GithubHookHandler):
         users_login = set()
         users_no_login = set()
         for commit in commits:
-            message = commit['commit']['message']
-            if re.match(RE_WEBLATE_COMMIT_MSG,
-                        message,
-                        re.S):
-                # don't enforce CLA check on translations
-                continue
-            if commit['committer']:
-                author = commit['committer']['login']
-                users_login.add(author)
-            else:
-                author = commit['commit']['author']['name']
-                users_no_login.add(author)
+            u_login, u_no_login = get_commit_author(commit)
+            users_login |= u_login
+            users_no_login |= u_no_login
 
         pull_request = '{pull_user}/{owner}/{repo}/{number}'.format(
             pull_user=pull_user, owner=owner, repo=repo, number=number
@@ -310,8 +301,8 @@ class PullRequestHandler(GithubHookHandler):
                 users_ko += '+ @%s\n' % user
             for user in users_no_sign:
                 users_ko += '+ @%s (login unknown in OCA database)\n' % user
-            for user in users_no_login:
-                users_ko += '+ %s (no github login found)\n' % user
+            for user, email in users_no_login:
+                users_ko += '+ %s <%s> (no github login found)\n' % (user, email)
 
             if send_miss_notification:
                 path = '/repos/{owner}/{repo}/issues/{number}/comments'
@@ -328,7 +319,7 @@ class PullRequestHandler(GithubHookHandler):
                              owner, repo, number,
                              ', '.join(users_oca_no_sign) or '',
                              ', '.join(users_no_sign) or '',
-                             ', '.join(users_no_login) or '',
+                             ', '.join('%s <%s>' % (name, email) for name, email in users_no_login) or '',
                              )
 
             else:
@@ -363,6 +354,36 @@ class PullRequestHandler(GithubHookHandler):
                              )
 
         return True
+
+
+def get_commit_author(commit):
+    """
+    Check a commit from the github api json
+    """
+    message = commit['commit']['message']
+    if re.match(RE_WEBLATE_COMMIT_MSG,
+                message,
+                re.S):
+        # don't enforce CLA check on translations
+        return set(), set()
+    users_login = set()
+    users_no_login = set()
+    if commit['committer'] and 'login' in commit['committer']:
+        author = commit['committer']['login']
+        users_login.add(author)
+    else:
+        author = commit['commit']['committer']['name']
+        author_email = commit['commit']['committer']['email']
+        users_no_login.add((author, author_email))
+    if commit['author'] and 'login' in commit['author']:
+        author = commit['author']['login']
+        users_login.add(author)
+    else:
+        author = commit['commit']['author']['name']
+        author_email = commit['commit']['author']['email']
+        users_no_login.add((author, author_email))
+
+    return users_login, users_no_login
 
 
 def run(config):
