@@ -319,7 +319,7 @@ class PullRequestHandler(GithubHookHandler):
                              owner, repo, number,
                              ', '.join(users_oca_no_sign) or '',
                              ', '.join(users_no_sign) or '',
-                             ', '.join('%s <%s>' % u for u in users_no_login) or '',
+                             ', '.join('%s <%s>' % (name, email) for name, email in users_no_login) or '',
                              )
 
             else:
