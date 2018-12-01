@@ -110,3 +110,30 @@ def temporary_clone(org, repo, branch):
             os.chdir(cwd)
     finally:
         shutil.rmtree(tempdir)
+
+
+def git_push_if_needed(remote, branch, cwd=None):
+    """
+    Push current HEAD to remote branch.
+
+    Return True if push succeeded, False if there was nothing to push.
+    Raises a celery Retry exception in case of non-fast-forward push.
+    """
+    r = subprocess.call(
+        ["git", "diff", "--quiet", "--exit-code", remote + "/" + branch], cwd=cwd
+    )
+    if r == 0:
+        return False
+    try:
+        subprocess.check_output(
+            ["git", "push", remote, branch], stderr=subprocess.STDOUT, cwd=cwd
+        )
+    except subprocess.CalledProcessError as e:
+        if b"non-fast-forward" in e.output:
+            raise Retry(
+                exc=e,
+                message="Retrying because a non-fast-forward git push was attempted.",
+            )
+        else:
+            raise
+    return True
