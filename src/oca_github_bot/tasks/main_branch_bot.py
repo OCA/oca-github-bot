@@ -16,7 +16,7 @@ def _gen_addons_table(org, repo, branch, dry_run):
     gen_addons_table_cmd = ["oca-gen-addons-table"]
     if not dry_run:
         gen_addons_table_cmd.append("--commit")
-    subprocess.check_call(gen_addons_table_cmd)
+    subprocess.check_output(gen_addons_table_cmd, stderr=subprocess.STDOUT)
 
 
 def _gen_addons_readme(org, repo, branch, dry_run):
@@ -32,7 +32,7 @@ def _gen_addons_readme(org, repo, branch, dry_run):
     ]
     if not dry_run:
         gen_addon_readme_cmd.append("--commit")
-    subprocess.check_call(gen_addon_readme_cmd)
+    subprocess.check_output(gen_addon_readme_cmd, stderr=subprocess.STDOUT)
 
 
 def _setuptools_odoo_make_default(org, repo, branch, dry_run):
@@ -47,7 +47,7 @@ def _setuptools_odoo_make_default(org, repo, branch, dry_run):
     ]
     if not dry_run:
         make_default_setup_cmd.append("--commit")
-    subprocess.check_call(make_default_setup_cmd)
+    subprocess.check_output(make_default_setup_cmd, stderr=subprocess.STDOUT)
 
 
 @task()
