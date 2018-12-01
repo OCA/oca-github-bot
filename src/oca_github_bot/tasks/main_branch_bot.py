@@ -4,7 +4,7 @@
 import subprocess
 
 from .. import github, manifest
-from ..github import temporary_clone
+from ..github import git_push_if_needed, temporary_clone
 from ..queue import getLogger, task
 from ..version_branch import is_main_branch_bot_branch
 
@@ -69,7 +69,7 @@ def main_branch_bot(org, repo, branch, dry_run=False):
             _logger.info(f"DRY-RUN git push in {org}/{repo}@{branch}")
         else:
             _logger.info(f"git push in {org}/{repo}@{branch}")
-            subprocess.check_call(["git", "push", "origin", branch])
+            git_push_if_needed("origin", branch)
 
 
 @task()
