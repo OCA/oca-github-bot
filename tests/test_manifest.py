@@ -11,6 +11,7 @@ from oca_github_bot.manifest import (
     get_manifest,
     get_manifest_path,
     git_modified_addons,
+    is_addon_dir,
     is_addons_dir,
     set_manifest_version,
 )
@@ -25,6 +26,13 @@ def test_is_addons_dir_one_addon(tmpdir):
     p = tmpdir.mkdir("addon").join("__manifest__.py")
     p.write("{'name': 'addon'}")
     assert is_addons_dir(str(tmpdir))
+
+
+def test_is_addon_dir(tmp_path):
+    assert not is_addon_dir(tmp_path)
+    m = tmp_path / "__manifest__.py"
+    m.write_text("{'name': 'addon'}")
+    assert is_addon_dir(tmp_path)
 
 
 def test_get_manifest_path(tmp_path):
