@@ -4,6 +4,7 @@
 import ast
 import os
 import re
+import subprocess
 
 MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py", "__terp__.py")
 VERSION_RE = re.compile(
@@ -79,3 +80,25 @@ def bump_manifest_version(addon_dir, mode):
     version = get_manifest(addon_dir)["version"]
     version = bump_version(version, mode)
     set_manifest_version(addon_dir, version)
+
+
+def git_modified_addons(addons_dir, ref):
+    """
+    List addons that have been modified in git HEAD compared to ref.
+    """
+    modified = set()
+    cmd = ["git", "diff", "--name-only", ref]
+    diffs = subprocess.check_output(cmd, cwd=addons_dir, universal_newlines=True)
+    for diff in diffs.split("\n"):
+        if not diff or "/" not in diff:
+            continue
+        parts = diff.split("/")
+        if parts[0] == "setup" and len(parts) > 1:
+            addon_name = parts[1]
+            if os.path.isdir(os.path.join(addons_dir, "setup", addon_name)):
+                modified.add(addon_name)
+        else:
+            addon_name = parts[0]
+            if get_manifest_path(os.path.join(addons_dir, addon_name)):
+                modified.add(addon_name)
+    return modified

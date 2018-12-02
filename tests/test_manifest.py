@@ -1,6 +1,8 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import subprocess
+
 import pytest
 from oca_github_bot.manifest import (
     NoManifestFound,
@@ -8,6 +10,7 @@ from oca_github_bot.manifest import (
     bump_version,
     get_manifest,
     get_manifest_path,
+    git_modified_addons,
     is_addons_dir,
     set_manifest_version,
 )
@@ -70,3 +73,34 @@ def test_bump_manifest_version(tmp_path):
     bump_manifest_version(addon_dir, "minor")
     m = get_manifest(addon_dir)
     assert m["version"] == "12.0.1.1.0"
+
+
+def tests_git_modified_addons(git_clone):
+    # create an addon, commit it, and check it is modified
+    addon_dir = git_clone / "addon"
+    addon_dir.mkdir()
+    manifest_path = addon_dir / "__manifest__.py"
+    manifest_path.write_text("{'name': 'the addon'}")
+    subprocess.check_call(["git", "add", "."], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "origin/master") == {"addon"}
+    # push and check addon is not modified
+    subprocess.check_call(["git", "push", "origin", "master"], cwd=git_clone)
+    assert not git_modified_addons(git_clone, "origin/master")
+    # same test with the setup dir
+    setup_dir = git_clone / "setup" / "addon"
+    setup_dir.mkdir(parents=True)
+    (setup_dir / "setup.py").write_text("")
+    subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "origin/master") == {"addon"}
+    # add a second addon, and change the first one
+    addon2_dir = git_clone / "addon2"
+    addon2_dir.mkdir()
+    manifest2_path = addon2_dir / "__manifest__.py"
+    manifest2_path.write_text("{'name': 'the 2nd addon'}")
+    (addon_dir / "__init__.py").write_text("")
+    (git_clone / "README").write_text("")
+    subprocess.check_call(["git", "add", "."], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "origin/master") == {"addon", "addon2"}
