@@ -18,6 +18,7 @@ def git_clone(tmp_path):
     clone = tmp_path / "clone"
     subprocess.check_call(["git", "clone", str(remote), "clone"], cwd=tmp_path)
     subprocess.check_call(["git", "config", "user.name", "test"], cwd=clone)
+    subprocess.check_call(["git", "config", "commit.gpgsign", "false"], cwd=clone)
     subprocess.check_call(
         ["git", "config", "user.email", "test@example.com"], cwd=clone
     )
