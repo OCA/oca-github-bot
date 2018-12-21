@@ -35,6 +35,18 @@ SQL_DATABASE_SCRIPT = '''
     ON login_cla_ko(login, pull_request);
     CREATE INDEX IF NOT EXISTS login_cla_ko_index
     ON login_cla_ko(login, pull_request);
+
+    CREATE TABLE IF NOT EXISTS nologin_cla_ko(
+        name VARCHAR(80),
+        email VARCHAR(80),
+        date_cla_ko TEXT,
+        pull_request TEXT
+    );
+    CREATE UNIQUE INDEX IF NOT EXISTS nologin_cla_ko_unique
+    ON nologin_cla_ko(email, pull_request);
+    CREATE INDEX IF NOT EXISTS nologin_cla_ko_index
+    ON nologin_cla_ko(email, pull_request);
+
 '''
 
 SQL_SELECT_HIT_CACHE = '''
@@ -63,6 +75,19 @@ SQL_DELETE_MISS_CACHE = '''
     DELETE FROM login_cla_ko WHERE login IN (%s)
 '''
 
+SQL_SELECT_MISS_CACHE_NOLOGIN_PR = '''
+    SELECT email,pull_request FROM nologin_cla_ko WHERE pull_request=?
+'''
+
+SQL_INSERT_MISS_CACHE_NOLOGIN = '''
+    INSERT OR IGNORE INTO nologin_cla_ko(email, date_cla_ko, pull_request)
+    VALUES(?, CURRENT_DATE, ?)
+'''
+
+SQL_DELETE_MISS_CACHE = '''
+    DELETE FROM login_cla_ko WHERE login IN (%s)
+'''
+
 RE_WEBLATE_COMMIT_MSG = r'''^Translated using Weblate.*
 Translate-URL: https://translation\.odoo-community\.org/'''
 
@@ -70,7 +95,8 @@ Translate-URL: https://translation\.odoo-community\.org/'''
 try:
     compare_digest = hmac.compare_digest
 except AttributeError:
-    compare_digest = lambda a, b: a == b
+    def compare_digest(a, b):
+        return a == b
 
 
 _logger = logging.getLogger('clabot')
@@ -266,8 +292,8 @@ class PullRequestHandler(GithubHookHandler):
         users_no_login = set()
         for commit in commits:
             u_login, u_no_login = get_commit_author(commit)
-            users_login |= u_login
             users_no_login |= u_no_login
+            users_login |= u_login
 
         pull_request = '{pull_user}/{owner}/{repo}/{number}'.format(
             pull_user=pull_user, owner=owner, repo=repo, number=number
@@ -294,6 +320,10 @@ class PullRequestHandler(GithubHookHandler):
                 auth=HTTPBasicAuth(login, password)
             )
 
+        # remove no_login users which have already been notified on this PR
+        users_no_login = self._cleanup_users_no_login(users_no_login,
+                                                      pull_request)
+
         if users_no_sign or users_oca_no_sign or users_no_login:
 
             users_ko = ''
@@ -302,7 +332,8 @@ class PullRequestHandler(GithubHookHandler):
             for user in users_no_sign:
                 users_ko += '+ @%s (login unknown in OCA database)\n' % user
             for user, email in users_no_login:
-                users_ko += '+ %s <%s> (no github login found)\n' % (user, email)
+                users_ko += ('+ %s <%s> (no github login found)\n' %
+                             (user, email))
 
             if send_miss_notification:
                 path = '/repos/{owner}/{repo}/issues/{number}/comments'
@@ -319,7 +350,9 @@ class PullRequestHandler(GithubHookHandler):
                              owner, repo, number,
                              ', '.join(users_oca_no_sign) or '',
                              ', '.join(users_no_sign) or '',
-                             ', '.join('%s <%s>' % (name, email) for name, email in users_no_login) or '',
+                             ', '.join('%s <%s>' % (name, email)
+                                       for name, email in users_no_login)
+                             if users_no_login else '',
                              )
 
             else:
@@ -354,6 +387,34 @@ class PullRequestHandler(GithubHookHandler):
                              )
 
         return True
+
+    def _cleanup_users_no_login(self, users_no_login, pull_request):
+        """check if the users without a github login in the list have already been
+        notified in the PR. If so, remove them from the list to avoid notifying
+        again and again.
+        return a set of (name, email) for unnotified users.
+        """
+        cache_cr = self.server.cache_cr
+        if not cache_cr:
+            return users_no_login
+        res = cache_cr.execute(
+            SQL_SELECT_MISS_CACHE_NOLOGIN_PR,
+            (pull_request,)
+        )
+        notified_miss = set(r[0] for r in res.fetchall())
+        remaining_no_login = set((name, email)
+                                 for name, email in users_no_login
+                                 if email not in notified_miss)
+        self._insert_miss_no_login(remaining_no_login, pull_request)
+        return remaining_no_login
+
+    def _insert_miss_no_login(self, users_no_login, pull_request):
+        cache_cr = self.server.cache_cr
+        if not cache_cr:
+            return
+        for name, email in users_no_login:
+            cache_cr.execute(SQL_INSERT_MISS_CACHE_NOLOGIN,
+                             (email, pull_request))
 
 
 def get_commit_author(commit):
