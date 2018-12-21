@@ -302,7 +302,8 @@ class PullRequestHandler(GithubHookHandler):
             for user in users_no_sign:
                 users_ko += '+ @%s (login unknown in OCA database)\n' % user
             for user, email in users_no_login:
-                users_ko += '+ %s <%s> (no github login found)\n' % (user, email)
+                users_ko += ('+ %s <%s> (no github login found)\n' %
+                             (user, email))
 
             if send_miss_notification:
                 path = '/repos/{owner}/{repo}/issues/{number}/comments'
@@ -319,7 +320,9 @@ class PullRequestHandler(GithubHookHandler):
                              owner, repo, number,
                              ', '.join(users_oca_no_sign) or '',
                              ', '.join(users_no_sign) or '',
-                             ', '.join('%s <%s>' % (name, email) for name, email in users_no_login) or '',
+                             ', '.join('%s <%s>' % (name, email)
+                                       for name, email in users_no_login)
+                             if users_no_login else '',
                              )
 
             else:
