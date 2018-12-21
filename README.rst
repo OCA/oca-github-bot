@@ -77,6 +77,16 @@ can be used to ask the bot to the following:
 * when the version was bumped, generate a wheel and rsync it to the PEP 503
   simple index
 
+On Pull Request open
+--------------------
+
+Check the PR for CLA.
+
+On Pull Request update
+------------------------
+
+Check the PR for CLA.
+
 TODO (help wanted)
 ------------------
 
