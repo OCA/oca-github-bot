@@ -70,7 +70,8 @@ Translate-URL: https://translation\.odoo-community\.org/'''
 try:
     compare_digest = hmac.compare_digest
 except AttributeError:
-    compare_digest = lambda a, b: a == b
+    def compare_digest(a, b):
+        return a == b
 
 
 _logger = logging.getLogger('clabot')
