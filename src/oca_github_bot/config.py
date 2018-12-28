@@ -26,6 +26,8 @@ def switchable(switch_name=None):
     return wrap
 
 
+DEBUG = bool(int(os.environ.get("DEBUG", 0)))
+
 HTTP_HOST = os.environ.get("HTTP_HOST")
 HTTP_PORT = int(os.environ.get("HTTP_PORT") or "8080")
 
@@ -35,6 +37,7 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 GITHUB_ORG = os.environ.get("GITHUB_ORG")
 GIT_NAME = os.environ.get("GIT_NAME")
 GIT_EMAIL = os.environ.get("GIT_EMAIL")
+GITHUB_URL = os.environ.get("GITHUB_URL", "https://api.github.com")
 
 ODOO_URL = os.environ.get("ODOO_URL")
 ODOO_DB = os.environ.get("ODOO_DB")
@@ -69,3 +72,40 @@ MERGE_BOT_INTRO_MESSAGES = [
 ]
 
 SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")
+
+CLABOT_CACHE = os.environ.get("CLABOT_CACHE", "clabot_cache.db")
+
+
+cla_ko_message = """Hey @{pull_user},
+thank you for your Pull Request and contribution to the OCA.
+
+It looks like some users haven't signed our **C**ontributor **L**icense
+**A**greement, yet.
+
+1. You can get our full Contributor License Agreement (CLA) here:
+http://odoo-community.org/page/website.cla
+
+2. Your company (with Enterprise CLA) or every users listed below (with
+Individual CLA) should complete and sign it
+
+3. Do not forget to include your complete data (company and/or personal) and
+the covered Github login(s).
+
+4. Please scan the document(s) and send them back to cla@odoo-community.org,
+
+Here is a list of the users :
+{users_ko}
+Appreciation of efforts,
+
+--
+OCA CLAbot"""
+
+cla_ok_message = """Hey @{pull_user},
+
+We acknowledge that the following users have signed our **C**ontributor
+**L**icense **A**greement: {users_ok}
+
+Appreciation of efforts,
+
+--
+OCA CLAbot"""

@@ -9,6 +9,8 @@
 #HTTP_HOST=0.0.0.0
 #HTTP_PORT=8080
 
+# github url. Leave unchanged unless you need to mock up for tests
+GITHUB_URL=https://api.github.com
 # GitHub webhook secret
 GITHUB_SECRET=
 # GitHub login the bot uses to perform GitHub activites
@@ -27,6 +29,9 @@ ODOO_DB=
 ODOO_LOGIN=
 ODOO_PASSWORD=
 
+#DEBUG=1
+
+
 #SENTRY_DSN=
 
 # Coma separated list of task to run
@@ -39,3 +44,6 @@ ODOO_PASSWORD=
 # Root of the PEP 503 simple index where wheels are published
 # (publishing disabled if empty)
 SIMPLE_INDEX_ROOT=/app/run/simple-index
+
+# file to use to store the sqlite database for clabot
+CLABOT_CACHE=
