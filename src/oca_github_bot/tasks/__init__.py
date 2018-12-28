@@ -2,6 +2,7 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 from . import (
+    check_cla,
     heartbeat,
     main_branch_bot,
     tag_approved,
