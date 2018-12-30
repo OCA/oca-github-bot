@@ -32,10 +32,10 @@ class CLACheck:
         self.db = sqlite3.connect(config.CLABOT_CACHE)
 
     SQL_SELECT_MISS_CACHE_USERS = """
-    SELECT login,pull_request FROM login_cla_ko WHERE login IN (%s)
+    SELECT login,pull_request FROM login_cla_ko WHERE login IN ({placeholder})
     """
     SQL_DELETE_MISS_CACHE = """
-    DELETE FROM login_cla_ko WHERE login IN (%s)
+    DELETE FROM login_cla_ko WHERE login IN ({placeholder})
     """
     SQL_INSERT_HIT_CACHE = """
     INSERT OR IGNORE INTO login_cla_ok(login, date_cla_ok)
@@ -157,11 +157,13 @@ class CLACheck:
         users_sign = []
         users_sign_notify = []
         sql_select_hit_cache = """
-        SELECT login FROM login_cla_ok WHERE login IN (%s)
+        SELECT login FROM login_cla_ok WHERE login IN ({placeholder})
         """
 
-        placeholders = ",".join("?" * len(users))
-        res = self.db.execute(sql_select_hit_cache % placeholders, users)
+        placeholder = ",".join("?" * len(users))
+        res = self.db.execute(
+            sql_select_hit_cache.format(placeholder=placeholder), users
+        )
         users_cached = [r[0] for r in res.fetchall()]
         users = list(set(users) - set(users_cached))
 
@@ -188,9 +190,9 @@ class CLACheck:
         if users_no_sign or users_oca_no_sign:
 
             users = users_no_sign + users_oca_no_sign
-            placeholders = ",".join("?" * len(users))
+            placeholder = ",".join("?" * len(users))
             res = self.db.execute(
-                self.SQL_SELECT_MISS_CACHE_USERS % placeholders, users
+                self.SQL_SELECT_MISS_CACHE_USERS.format(placeholder=placeholder), users
             )
             users_no_sign_hit = [r[0] for r in res.fetchall()]
             users_oca_no_sign = list(set(users_oca_no_sign) - set(users_no_sign_hit))
@@ -213,13 +215,16 @@ class CLACheck:
     def _update_cache_cla_signed(self, users_signed):
         if not users_signed:
             return []
-        placeholders = ",".join("?" * len(users_signed))
+        placeholder = ",".join("?" * len(users_signed))
         res = self.db.execute(
-            self.SQL_SELECT_MISS_CACHE_USERS % placeholders, users_signed
+            self.SQL_SELECT_MISS_CACHE_USERS.format(placeholder=placeholder),
+            users_signed,
         )
         if res:
             users_sign_notify = res.fetchall()
-            self.db.execute(self.SQL_DELETE_MISS_CACHE % placeholders, users_signed)
+            self.db.execute(
+                self.SQL_DELETE_MISS_CACHE.format(placeholder=placeholder), users_signed
+            )
         self.db.executemany(self.SQL_INSERT_HIT_CACHE, (users_signed,))
         self.db.commit()
         return users_sign_notify
