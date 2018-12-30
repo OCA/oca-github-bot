@@ -33,6 +33,7 @@ class CLACheck:
         self.pull_user = pull_user
         self.pr_number = pr_number
         self.action = action
+        self.pr_key = f"{self.pull_user}/{self.owner}/{self.repo}/{self.pr_number}"
         self.db = sqlite3.connect(config.CLABOT_CACHE)
 
     SQL_SELECT_MISS_CACHE_USERS = """
@@ -62,9 +63,7 @@ class CLACheck:
 
     # FIXME: make async
     def _get_pr_commits(self):
-        path = "/repos/{owner}/{repo}/pulls/{number}/commits".format(
-            owner=self.owner, repo=self.repo, number=self.pr_number
-        )
+        path = f"/repos/{self.owner}/{self.repo}/pulls/{self.pr_number}/commits"
         params = {"per_page": 250}  # maximum allowed
         res = requests.get(  # FIXME this must use the framework
             config.GITHUB_URL + path,
@@ -84,16 +83,6 @@ class CLACheck:
             users_login |= u_login
             users_no_login |= u_no_login
         return users_login, users_no_login
-
-    @property
-    def pr_key(self):
-        pr_key = "{pull_user}/{owner}/{repo}/{number}".format(
-            pull_user=self.pull_user,
-            owner=self.owner,
-            repo=self.repo,
-            number=self.pr_number,
-        )
-        return pr_key
 
     # FIXME make async
     def post_notification(self, path, message):
@@ -130,48 +119,43 @@ class CLACheck:
 
             users_ko = ""
             for user in users_oca_no_sign:
-                users_ko += "+ @%s\n" % user
+                users_ko += f"+ @{user}\n"
             for user in users_no_sign:
-                users_ko += "+ @%s (login unknown in OCA database)\n" % user
+                users_ko += f"+ @{user} (login unknown in OCA database)\n"
             for user, email in users_no_login:
-                users_ko += "+ {} <{}> (no github login found)\n".format(user, email)
+                users_ko += f"+ {user} <{email}> (no github login found)\n"
 
             if send_miss_notification:
-                path = "/repos/{owner}/{repo}/issues/{number}/comments"
-                path = path.format(
-                    owner=self.owner, repo=self.repo, number=self.pr_number
+                path = (
+                    f"/repos/{self.owner}/{self.repo}/issues/{self.pr_number}/comments"
                 )
                 message = config["cla_ko_message"].format(
                     pull_user=self.pull_user, users_ko=users_ko
                 )
                 self.post_notification(path, message)
 
-                _logger.info(
-                    "PR: %s/%s#%s: no CLA for [%s], "
-                    "unknown OCA login for [%s], "
-                    "no github login for [%s]",
-                    self.owner,
-                    self.repo,
-                    self.pr_number,
-                    ", ".join(users_oca_no_sign) or "",
-                    ", ".join(users_no_sign) or "",
-                    ", ".join(
-                        "{} <{}>".format(name, email) for name, email in users_no_login
-                    )
+                no_cla = ", ".join(users_oca_no_sign) or ""
+                unknown_login = ", ".join(users_no_sign) or ""
+                no_gh_login = (
+                    ", ".join(f"{name} <{email}>" for name, email in users_no_login)
                     if users_no_login
-                    else "",
+                    else ""
+                )
+                _logger.info(
+                    f"PR: {self.owner}/{self.repo}#{self.pr_number}: "
+                    f"no CLA for [{no_cla}], "
+                    f"unknown OCA login for [{unknown_login}], "
+                    f"no github login for [{no_gh_login}]"
                 )
 
             else:
                 _logger.info(
-                    "PR: %s/%s#%s: CLA notification already sent",
-                    self.owner,
-                    self.repo,
-                    self.pr_number,
+                    f"PR: {self.owner}/{self.repo}#{self.pr_number}: "
+                    f"CLA notification already sent"
                 )
 
         else:
-            _logger.info("PR %s/%s#%s: CLA OK", self.owner, self.repo, self.pr_number)
+            _logger.info(f"PR {self.owner}/{self.repo}#{self.pr_number}: " f"CLA OK")
 
         if users_sign_notify:
             sign_notifications = {}
@@ -180,23 +164,20 @@ class CLACheck:
 
             for pr, users_sign in sign_notifications.items():
                 pull_user, owner, repo, number = pr.split("/")
-                path = "/repos/{owner}/{repo}/issues/{number}/comments"
-                path = path.format(owner=owner, repo=repo, number=number)
+                path = f"/repos/{owner}/{repo}/issues/{number}/comments"
 
                 users_ok = ""
                 for user in users_sign:
-                    users_ok += "+ @%s\n" % user
+                    users_ok += f"+ @{user}\n"
 
                 message = config.cla_ok_message.format(
                     pull_user=pull_user, users_ok=users_ok
                 )
                 self.post_notification(path, message)
+                signed = ", ".join(users_sign)
                 _logger.info(
-                    "PR %s/%s#%s: CLA OK for [%s]",
-                    self.owner,
-                    self.repo,
-                    self.pr_number,
-                    ", ".join(users_sign),
+                    f"PR {self.owner}/{self.repo}#{self.pr_number}: "
+                    f"CLA OK for [{signed}]"
                 )
 
         return True
