@@ -21,15 +21,18 @@ _logger = getLogger(__name__)
 
 
 @task()
-def check_cla(event, gh):
-    checker = CLACheck(event, gh)
+def check_cla(owner, repo, pull_user, pr_number, action):
+    checker = CLACheck(owner, repo, pull_user, pr_number, action)
     return checker.check_cla()
 
 
 class CLACheck:
-    def __init__(self, event, gh):
-        self.event = event
-        self.gh = gh
+    def __init__(self, owner, repo, pull_user, pr_number, action):
+        self.owner = owner
+        self.repo = repo
+        self.pull_user = pull_user
+        self.pr_number = pr_number
+        self.action = action
         self.db = sqlite3.connect(config.CLABOT_CACHE)
 
     SQL_SELECT_MISS_CACHE_USERS = """
@@ -57,26 +60,10 @@ class CLACheck:
         login_pr = [(login, self.pr_key) for login in users_no_sign]
         self.db.executemany(self.SQL_INSERT_MISS_CACHE, login_pr)
 
-    @property
-    def owner(self):
-        return self.event["repository"]["owner"]["login"]
-
-    @property
-    def repo(self):
-        return self.event["repository"]["name"]
-
-    @property
-    def number(self):
-        return self.event["number"]
-
-    @property
-    def pull_user(self):
-        return self.event["pull_request"]["user"]["login"]
-
     # FIXME: make async
     def _get_pr_commits(self):
         path = "/repos/{owner}/{repo}/pulls/{number}/commits".format(
-            owner=self.owner, repo=self.repo, number=self.number
+            owner=self.owner, repo=self.repo, number=self.pr_number
         )
         params = {"per_page": 250}  # maximum allowed
         res = requests.get(  # FIXME this must use the framework
@@ -104,7 +91,7 @@ class CLACheck:
             pull_user=self.pull_user,
             owner=self.owner,
             repo=self.repo,
-            number=self.number,
+            number=self.pr_number,
         )
         return pr_key
 
@@ -125,9 +112,8 @@ class CLACheck:
 
     # FIXME make async
     def check_cla(self):
-        event = self.event
         # method "handle_payload" in clabot.py
-        if event["action"] not in ("opened", "synchronize"):
+        if self.action not in ("opened", "synchronize"):
             return True
 
         users_login, users_no_login = self._get_commit_users()
@@ -152,7 +138,9 @@ class CLACheck:
 
             if send_miss_notification:
                 path = "/repos/{owner}/{repo}/issues/{number}/comments"
-                path = path.format(owner=self.owner, repo=self.repo, number=self.number)
+                path = path.format(
+                    owner=self.owner, repo=self.repo, number=self.pr_number
+                )
                 message = config["cla_ko_message"].format(
                     pull_user=self.pull_user, users_ko=users_ko
                 )
@@ -164,7 +152,7 @@ class CLACheck:
                     "no github login for [%s]",
                     self.owner,
                     self.repo,
-                    self.number,
+                    self.pr_number,
                     ", ".join(users_oca_no_sign) or "",
                     ", ".join(users_no_sign) or "",
                     ", ".join(
@@ -179,11 +167,11 @@ class CLACheck:
                     "PR: %s/%s#%s: CLA notification already sent",
                     self.owner,
                     self.repo,
-                    self.number,
+                    self.pr_number,
                 )
 
         else:
-            _logger.info("PR %s/%s#%s: CLA OK", self.owner, self.repo, self.number)
+            _logger.info("PR %s/%s#%s: CLA OK", self.owner, self.repo, self.pr_number)
 
         if users_sign_notify:
             sign_notifications = {}
@@ -207,7 +195,7 @@ class CLACheck:
                     "PR %s/%s#%s: CLA OK for [%s]",
                     self.owner,
                     self.repo,
-                    self.number,
+                    self.pr_number,
                     ", ".join(users_sign),
                 )
 
