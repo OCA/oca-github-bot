@@ -43,6 +43,17 @@ def gh_call(func, *args, **kwargs):
         raise
 
 
+def gh_comment_issue(org, repo, issue_number, message):
+    """post a comment on issue org/repo#issue_number
+
+    This can be used to comment pull requests too, as PR are a special kind of
+    issues.
+    """
+    with repository(org, repo) as repo:
+        issue = repo.issue(issue_number)
+        return issue.create_comment(message)
+
+
 def gh_date(d):
     return d.isoformat()
 

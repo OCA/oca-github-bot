@@ -26,8 +26,6 @@ def switchable(switch_name=None):
     return wrap
 
 
-DEBUG = bool(int(os.environ.get("DEBUG", 0)))
-
 HTTP_HOST = os.environ.get("HTTP_HOST")
 HTTP_PORT = int(os.environ.get("HTTP_PORT") or "8080")
 
@@ -37,7 +35,6 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 GITHUB_ORG = os.environ.get("GITHUB_ORG")
 GIT_NAME = os.environ.get("GIT_NAME")
 GIT_EMAIL = os.environ.get("GIT_EMAIL")
-GITHUB_URL = os.environ.get("GITHUB_URL", "https://api.github.com")
 
 ODOO_URL = os.environ.get("ODOO_URL")
 ODOO_DB = os.environ.get("ODOO_DB")

@@ -9,8 +9,6 @@
 #HTTP_HOST=0.0.0.0
 #HTTP_PORT=8080
 
-# github url. Leave unchanged unless you need to mock up for tests
-GITHUB_URL=https://api.github.com
 # GitHub webhook secret
 GITHUB_SECRET=
 # GitHub login the bot uses to perform GitHub activites
@@ -28,9 +26,6 @@ ODOO_URL=
 ODOO_DB=
 ODOO_LOGIN=
 ODOO_PASSWORD=
-
-#DEBUG=1
-
 
 #SENTRY_DSN=
 

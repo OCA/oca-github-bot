@@ -1,18 +1,13 @@
 # Copyright (c) Camptocamp 2018
 # Copyright (c) Akretion 2014
-import json
-import logging
 import re
 import sqlite3
 
-import requests  # FIXME remove
-from requests.auth import HTTPBasicAuth  # FIXME remove
-
-from .. import config
+from .. import config, github
 from ..odoo_client import login
 from ..queue import getLogger, task
 
-_logger = logging.getLogger(__name__)
+_logger = getLogger(__name__)
 RE_WEBLATE_COMMIT_MSG = r"""^Translated using Weblate.*
 Translate-URL: https://translation\.odoo-community\.org/"""
 
@@ -61,43 +56,20 @@ class CLACheck:
         login_pr = [(login, self.pr_key) for login in users_no_sign]
         self.db.executemany(self.SQL_INSERT_MISS_CACHE, login_pr)
 
-    # FIXME: make async
-    def _get_pr_commits(self):
-        path = f"/repos/{self.owner}/{self.repo}/pulls/{self.pr_number}/commits"
-        params = {"per_page": 250}  # maximum allowed
-        res = requests.get(  # FIXME this must use the framework
-            config.GITHUB_URL + path,
-            params=params,
-            auth=HTTPBasicAuth(config.GITHUB_LOGIN, config.GITHUB_PASSWORD),
-        )
-        commits = res.json()
-        return commits
+    @property
+    def gh_pull_request(self):
+        with github.repository(self.owner, self.repo) as repo:
+            return repo.pull_request(self.pr_number)
 
-    # FIXME make async
     def _get_commit_users(self):
-        commits = self._get_pr_commits()
         users_login = set()
         users_no_login = set()
-        for commit in commits:
-            u_login, u_no_login = get_commit_author(commit)
+        gh_commits = self.gh_pull_request.commits()
+        for gh_commit in gh_commits:
+            u_login, u_no_login = get_commit_author(gh_commit)
             users_login |= u_login
             users_no_login |= u_no_login
         return users_login, users_no_login
-
-    # FIXME make async
-    def post_notification(self, path, message):
-
-        if config.DEBUG:
-            _logger.debug("notification:path:" + path)
-            _logger.debug("notification:message:" + message)
-            return
-
-        data = {"body": message}
-        requests.post(
-            config.GITHUB_URL + path,
-            data=json.dumps(data),
-            auth=HTTPBasicAuth(config.GITHUB_LOGIN, config.GITHUB_PASSWORD),
-        )
 
     # FIXME make async
     def check_cla(self):
@@ -126,13 +98,10 @@ class CLACheck:
                 users_ko += f"+ {user} <{email}> (no github login found)\n"
 
             if send_miss_notification:
-                path = (
-                    f"/repos/{self.owner}/{self.repo}/issues/{self.pr_number}/comments"
-                )
                 message = config["cla_ko_message"].format(
                     pull_user=self.pull_user, users_ko=users_ko
                 )
-                self.post_notification(path, message)
+                github.comment_issue(self.owner, self.repo, self.pr_number, message)
 
                 no_cla = ", ".join(users_oca_no_sign) or ""
                 unknown_login = ", ".join(users_no_sign) or ""
@@ -164,8 +133,6 @@ class CLACheck:
 
             for pr, users_sign in sign_notifications.items():
                 pull_user, owner, repo, number = pr.split("/")
-                path = f"/repos/{owner}/{repo}/issues/{number}/comments"
-
                 users_ok = ""
                 for user in users_sign:
                     users_ok += f"+ @{user}\n"
@@ -173,7 +140,7 @@ class CLACheck:
                 message = config.cla_ok_message.format(
                     pull_user=pull_user, users_ok=users_ok
                 )
-                self.post_notification(path, message)
+                github.comment_issue(owner, repo, number, message)
                 signed = ", ".join(users_sign)
                 _logger.info(
                     f"PR {self.owner}/{self.repo}#{self.pr_number}: "
@@ -284,29 +251,29 @@ class CLACheck:
         self.db.executemany(sql, params)
 
 
-def get_commit_author(commit):
+def get_commit_author(gh_commit):
     """
     Check a commit from the github api json
     """
-    message = commit["commit"]["message"]
+    message = gh_commit.commit.message
     if re.match(RE_WEBLATE_COMMIT_MSG, message, re.S):
         # don't enforce CLA check on translations
         return set(), set()
     users_login = set()
     users_no_login = set()
-    if commit["committer"] and "login" in commit["committer"]:
-        author = commit["committer"]["login"]
+    if gh_commit.committer and gh_commit.committer.login:
+        author = gh_commit.committer.login
         users_login.add(author)
     else:
-        author = commit["commit"]["committer"]["name"]
-        author_email = commit["commit"]["committer"]["email"]
+        author = gh_commit.commit.committer.name
+        author_email = gh_commit.commit.committer.email
         users_no_login.add((author, author_email))
-    if commit["author"] and "login" in commit["author"]:
-        author = commit["author"]["login"]
+    if gh_commit.author and gh_commit.author.login:
+        author = gh_commit.author.login
         users_login.add(author)
     else:
-        author = commit["commit"]["author"]["name"]
-        author_email = commit["commit"]["author"]["email"]
+        author = gh_commit.commit.author.name
+        author_email = gh_commit.commit.author.email
         users_no_login.add((author, author_email))
 
     return users_login, users_no_login
