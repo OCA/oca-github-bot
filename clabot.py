@@ -136,10 +136,12 @@ class GithubHookHandler(BaseHTTPRequestHandler):
 
         if github_event == 'ping':
             self.send_response(200)
+            self.end_headers()
             return
 
         if github_event not in self._github_allowed_events:
             self.send_response(400)
+            self.end_headers()
             return
 
         try:
@@ -157,16 +159,20 @@ class GithubHookHandler(BaseHTTPRequestHandler):
             repo = payload['repository']['name']
         except:
             self.send_response(400)
+            self.end_headers()
             return
 
         if not self._validate_signature(repo, post_data, hub_signature):
             self.send_response(401)
+            self.end_headers()
             return
 
         if self.handle_payload(payload):
             self.send_response(200)
+            self.end_headers()
         else:
             self.send_response(400)
+            self.end_headers()
 
 
 class PullRequestHandler(GithubHookHandler):
