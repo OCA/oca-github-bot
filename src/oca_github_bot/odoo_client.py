@@ -6,12 +6,12 @@ from urllib.parse import urlparse
 
 import odoorpc
 
-from .config import ODOO_DB, ODOO_LOGIN, ODOO_PASSWORD, ODOO_URL
+from . import config
 
 
 @contextmanager
 def login():
-    url = urlparse(ODOO_URL)
+    url = urlparse(config.ODOO_URL)
     if url.scheme == "https":
         protocol = "jsonrpc+ssl"
     elif url.scheme == "http":
@@ -25,6 +25,7 @@ def login():
             port = 443
         elif url.scheme == "http":
             port = 80
+
     odoo = odoorpc.ODOO(host, protocol=protocol, port=port)
-    odoo.login(ODOO_DB, ODOO_LOGIN, ODOO_PASSWORD)
+    odoo.login(config.ODOO_DB, config.ODOO_LOGIN, config.ODOO_PASSWORD)
     yield odoo

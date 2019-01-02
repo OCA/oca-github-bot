@@ -13,6 +13,7 @@ from aiohttp import web
 from gidgethub import aiohttp as gh_aiohttp, sansio as gh_sansio
 
 from . import config
+from .cla import init_cla_database
 from .router import router
 
 _logger = logging.getLogger(__name__)
@@ -41,6 +42,8 @@ async def webhook(request):
 def main():
     # configure logging
     logging.basicConfig(level=logging.DEBUG)
+    # make sure the CLA database is available
+    init_cla_database(config.CLABOT_CACHE)
     # launch webhook app
     app = web.Application()
     app.router.add_post("/", webhook)
