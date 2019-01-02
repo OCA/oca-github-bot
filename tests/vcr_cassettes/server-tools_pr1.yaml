@@ -1,0 +1,1677 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/vnd.github.v3.full+json]
+      Accept-Charset: [utf-8]
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [token 123456789abcdef123456789abcdef123456789a]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [github3.py/1.2.0]
+    method: GET
+    uri: https://api.github.com/repos/gurneyalex/server-tools
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['ETag, Link, Location, Retry-After, X-GitHub-OTP,
+          X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+          X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type']
+      Cache-Control: ['private, max-age=60, s-maxage=60']
+      Content-Encoding: [gzip]
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 02 Jan 2019 15:13:42 GMT']
+      ETag: [W/"18dc745b9dc89f3668e95498f0ae27e0"]
+      Last-Modified: ['Thu, 25 Oct 2018 06:36:49 GMT']
+      Referrer-Policy: ['origin-when-cross-origin, strict-origin-when-cross-origin']
+      Server: [GitHub.com]
+      Status: [200 OK]
+      Strict-Transport-Security: [max-age=31536000; includeSubdomains; preload]
+      Transfer-Encoding: [chunked]
+      Vary: ['Accept, Authorization, Cookie, X-GitHub-OTP']
+      X-Accepted-OAuth-Scopes: [repo]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [deny]
+      X-GitHub-Media-Type: [github.v3; param=full; format=json]
+      X-GitHub-Request-Id: ['E8F6:1F57:5D3C2F8:CE416A5:5C2CD526']
+      X-OAuth-Scopes: ['public_repo, write:discussion']
+      X-RateLimit-Limit: ['5000']
+      X-RateLimit-Remaining: ['4989']
+      X-RateLimit-Reset: ['1546445306']
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/vnd.github.v3.full+json]
+      Accept-Charset: [utf-8]
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [token 123456789abcdef123456789abcdef123456789a]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [github3.py/1.2.0]
+    method: GET
+    uri: https://api.github.com/repos/gurneyalex/server-tools/pulls/1
+  response:
+    body:
+      string: !!binary |
+        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
+        CtY8AAA=
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['ETag, Link, Location, Retry-After, X-GitHub-OTP,
+          X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+          X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type']
+      Cache-Control: ['private, max-age=60, s-maxage=60']
+      Content-Encoding: [gzip]
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 02 Jan 2019 15:13:42 GMT']
+      ETag: [W/"c4c5269943829a1f0cf09b92350d71de"]
+      Last-Modified: ['Wed, 02 Jan 2019 14:21:03 GMT']
+      Referrer-Policy: ['origin-when-cross-origin, strict-origin-when-cross-origin']
+      Server: [GitHub.com]
+      Status: [200 OK]
+      Strict-Transport-Security: [max-age=31536000; includeSubdomains; preload]
+      Transfer-Encoding: [chunked]
+      Vary: ['Accept, Authorization, Cookie, X-GitHub-OTP']
+      X-Accepted-OAuth-Scopes: ['']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [deny]
+      X-GitHub-Media-Type: [github.v3; param=full; format=json]
+      X-GitHub-Request-Id: ['E8F6:1F57:5D3C308:CE416BA:5C2CD526']
+      X-OAuth-Scopes: ['public_repo, write:discussion']
+      X-RateLimit-Limit: ['5000']
+      X-RateLimit-Remaining: ['4988']
+      X-RateLimit-Reset: ['1546445306']
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/vnd.github.v3.full+json]
+      Accept-Charset: [utf-8]
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [token 123456789abcdef123456789abcdef123456789a]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [github3.py/1.2.0]
+    method: GET
+    uri: https://api.github.com/repos/gurneyalex/server-tools/pulls/1/commits?per_page=100
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['ETag, Link, Location, Retry-After, X-GitHub-OTP,
+          X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+          X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type']
+      Cache-Control: ['private, max-age=60, s-maxage=60']
+      Content-Encoding: [gzip]
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 02 Jan 2019 15:13:43 GMT']
+      ETag: [W/"c1850ad38de10b5e264c20a99943eb19"]
+      Last-Modified: ['Wed, 02 Jan 2019 14:21:03 GMT']
+      Referrer-Policy: ['origin-when-cross-origin, strict-origin-when-cross-origin']
+      Server: [GitHub.com]
+      Status: [200 OK]
+      Strict-Transport-Security: [max-age=31536000; includeSubdomains; preload]
+      Transfer-Encoding: [chunked]
+      Vary: ['Accept, Authorization, Cookie, X-GitHub-OTP']
+      X-Accepted-OAuth-Scopes: ['']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [deny]
+      X-GitHub-Media-Type: [github.v3; param=full; format=json]
+      X-GitHub-Request-Id: ['E8F6:1F57:5D3C315:CE416D4:5C2CD526']
+      X-OAuth-Scopes: ['public_repo, write:discussion']
+      X-RateLimit-Limit: ['5000']
+      X-RateLimit-Remaining: ['4987']
+      X-RateLimit-Reset: ['1546445306']
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {}, "id": 530991888}'
+    headers:
+      Connection: [close]
+      Content-Length: ['67']
+      Content-Type: [application/json]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/web/webclient/version_info
+  response:
+    body: {string: '{"result": {"server_version_info": [11, 0, 0, "final", 0, ""],
+        "protocol_version": 1, "server_serie": "11.0", "server_version": "11.0"},
+        "id": 530991888, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['171']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:43 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:43 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"db": "odoo_community_v11",
+      "login": "clabot", "password": "totallyfake"}, "id": 423102590}'
+    headers:
+      Connection: [close]
+      Content-Length: ['157']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/web/session/authenticate
+  response:
+    body: {string: '{"result": {"server_version_info": [11, 0, 0, "final", 0, ""],
+        "db": "odoo_community_v11", "uid": 327, "server_version": "11.0", "web.base.url":
+        "https://odoo-community.org", "is_system": false, "max_time_between_keys_in_ms":
+        55, "is_superuser": false, "username": "clabot@odoo-community.org", "currencies":
+        {"1": {"symbol": "\u20ac", "position": "after", "digits": [69, 2]}, "3": {"symbol":
+        "$", "position": "before", "digits": [69, 2]}, "164": {"symbol": "L", "position":
+        "after", "digits": [69, 2]}, "5": {"symbol": "$", "position": "after", "digits":
+        [69, 2]}, "22": {"symbol": "$", "position": "before", "digits": [69, 2]},
+        "133": {"symbol": "$U", "position": "after", "digits": [69, 2]}}, "user_context":
+        {"lang": "en_US", "uid": 327, "tz": false}, "company_id": 1, "partner_id":
+        1128, "session_id": "8949a1970499a7320454c69ff4656fe48bf9332d", "user_companies":
+        false, "name": "clabot"}, "id": 423102590, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['928']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:43 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:43 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "fields_get"]}, "id": 835126159}'
+    headers:
+      Connection: [close]
+      Content-Length: ['187']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": {"organization_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "many2many", "string": "Organizations",
+        "store": true, "searchable": true, "depends": [], "sortable": true, "required":
+        false, "relation": "github.organization", "context": {}, "readonly": true},
+        "comment": {"change_default": false, "company_dependent": false, "manual":
+        false, "searchable": true, "type": "text", "string": "Notes", "store": true,
+        "depends": [], "sortable": true, "translate": false, "required": false, "readonly":
+        false}, "currency_id": {"change_default": false, "company_dependent": false,
+        "manual": false, "help": "Utility field to express amount currency", "domain":
+        [], "type": "many2one", "string": "Currency", "store": false, "searchable":
+        false, "depends": [], "sortable": false, "required": false, "relation": "res.currency",
+        "context": {}, "readonly": true}, "payment_next_action": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "This is the next
+        action to be taken.", "searchable": true, "type": "text", "string": "Next
+        Action", "store": true, "depends": [], "sortable": true, "translate": false,
+        "required": false, "readonly": false}, "meeting_ids": {"change_default": false,
+        "company_dependent": false, "manual": false, "domain": [], "type": "many2many",
+        "string": "Meetings", "store": true, "searchable": true, "depends": [], "sortable":
+        true, "required": false, "relation": "calendar.event", "context": {}, "readonly":
+        false}, "property_payment_term_id": {"change_default": false, "company_dependent":
+        true, "manual": false, "help": "This payment term will be used instead of
+        the default one for sales orders and customer invoices", "domain": [], "type":
+        "many2one", "string": "Customer Payment Terms", "store": false, "searchable":
+        true, "depends": [], "sortable": false, "required": false, "relation": "account.payment.term",
+        "context": {}, "readonly": false}, "implemented_date": {"change_default":
+        false, "company_dependent": false, "manual": false, "string": "Implemented
+        Date", "depends": [], "type": "date", "required": false, "store": true, "sortable":
+        true, "searchable": true, "readonly": false}, "message_bounce": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "Counter of the
+        number of bounced emails for this contact", "searchable": true, "type": "integer",
+        "string": "Bounce", "store": true, "depends": [], "sortable": true, "required":
+        false, "group_operator": "sum", "readonly": false}, "date_localization": {"change_default":
+        false, "company_dependent": false, "manual": false, "string": "Geolocation
+        Date", "depends": [], "type": "date", "required": false, "store": true, "sortable":
+        true, "searchable": true, "readonly": false}, "is_integrator": {"change_default":
+        false, "company_dependent": false, "manual": false, "string": "Integrator",
+        "depends": ["child_ids", "child_ids.membership_state", "child_ids.parent_id"],
+        "type": "boolean", "required": false, "store": true, "sortable": true, "searchable":
+        true, "readonly": true}, "parent_name": {"change_default": false, "company_dependent":
+        false, "manual": false, "related": ["parent_id", "name"], "searchable": true,
+        "type": "char", "string": "Parent name", "store": false, "depends": ["parent_id.name"],
+        "sortable": false, "translate": false, "required": false, "readonly": true},
+        "website_short_description": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "text", "string": "Website
+        Partner Short Description", "store": true, "depends": [], "sortable": true,
+        "translate": false, "required": false, "readonly": false}, "street2": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": true, "type":
+        "char", "string": "Street2", "store": true, "depends": [], "sortable": true,
+        "translate": false, "required": false, "readonly": false}, "membership_start":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "Date from which membership becomes active.", "searchable": true, "type":
+        "date", "string": "Membership Start Date", "store": true, "depends": ["member_lines.account_invoice_line.invoice_id.state",
+        "member_lines.account_invoice_line.invoice_id.invoice_line_ids", "member_lines.account_invoice_line.invoice_id.payment_ids",
+        "free_member", "member_lines.date_to", "member_lines.date_from", "member_lines.date_cancel",
+        "membership_state", "associate_member.membership_state"], "sortable": true,
+        "required": false, "readonly": true}, "message_unread": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "If checked new
+        messages require your attention.", "searchable": false, "type": "boolean",
+        "string": "Unread Messages", "store": false, "depends": [], "sortable": false,
+        "required": false, "readonly": true}, "message_unread_counter": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "Number of unread
+        messages", "searchable": false, "type": "integer", "string": "Unread Messages
+        Counter", "store": false, "depends": [], "sortable": false, "required": false,
+        "group_operator": "sum", "readonly": true}, "website": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "Website of Partner
+        or Company", "searchable": true, "type": "char", "string": "Website", "store":
+        true, "depends": [], "sortable": true, "translate": false, "required": false,
+        "readonly": false}, "developed_module_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "many2many", "string": "Developed
+        Modules", "store": true, "searchable": true, "depends": ["author_ids", "is_integrator",
+        "author_ids.module_ids.product_template_id"], "sortable": true, "required":
+        false, "relation": "product.template", "context": {}, "readonly": true}, "partner_latitude":
+        {"change_default": false, "company_dependent": false, "manual": false, "depends":
+        [], "type": "float", "string": "Geo Latitude", "store": true, "digits": [16,
+        5], "searchable": true, "sortable": true, "required": false, "group_operator":
+        "sum", "readonly": false}, "github_organization": {"change_default": false,
+        "company_dependent": false, "manual": false, "searchable": true, "type": "char",
+        "string": "Github Organization", "store": true, "depends": [], "sortable":
+        true, "translate": false, "required": false, "readonly": false}, "name": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": true, "type":
+        "char", "string": "Name", "store": true, "depends": [], "sortable": true,
+        "translate": false, "required": false, "readonly": false}, "ref": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": true, "type":
+        "char", "string": "Internal Reference", "store": true, "depends": [], "sortable":
+        true, "translate": false, "required": false, "readonly": false}, "member_count":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "integer", "string": "Number of members", "store": true, "depends":
+        ["child_ids.membership_state", "child_ids.parent_id"], "sortable": true, "required":
+        false, "group_operator": "sum", "readonly": true}, "assigned_partner_id":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "many2one", "string": "Implemented by", "store": true, "searchable":
+        true, "depends": [], "sortable": true, "required": false, "relation": "res.partner",
+        "context": {}, "readonly": false}, "member_lines": {"change_default": false,
+        "company_dependent": false, "manual": false, "domain": [], "type": "one2many",
+        "string": "Membership", "store": true, "searchable": true, "depends": [],
+        "sortable": true, "required": false, "relation": "membership.membership_line",
+        "context": {}, "relation_field": "partner", "readonly": false}, "parent_id":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "many2one", "string": "Related Company", "store": true, "searchable":
+        true, "depends": [], "sortable": true, "required": false, "relation": "res.partner",
+        "context": {}, "readonly": false}, "payment_next_action_date": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "This is when
+        the manual follow-up is needed.", "searchable": true, "type": "date", "string":
+        "Next Action Date", "store": true, "depends": [], "sortable": true, "required":
+        false, "readonly": false}, "github_url": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "char", "string": "Github
+        URL", "store": true, "depends": [], "sortable": true, "translate": false,
+        "required": false, "readonly": true}, "supplier_invoice_count": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": false, "type":
+        "integer", "string": "# Vendor Bills", "store": false, "depends": [], "sortable":
+        false, "required": false, "group_operator": "sum", "readonly": true}, "barcode":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "char", "string": "Barcode", "store": true, "depends": [], "sortable":
+        true, "translate": false, "required": false, "readonly": false}, "activation":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "many2one", "string": "Activation", "store": true, "searchable":
+        true, "depends": [], "sortable": true, "required": false, "relation": "res.partner.activation",
+        "context": {}, "readonly": false}, "event_count": {"change_default": false,
+        "company_dependent": false, "manual": false, "help": "Number of events the
+        partner has participated.", "searchable": false, "type": "integer", "string":
+        "Events", "store": false, "depends": [], "sortable": false, "required": false,
+        "group_operator": "sum", "readonly": true}, "country_id": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "many2one", "string": "Country", "store": true, "searchable": true, "depends":
+        [], "sortable": true, "required": false, "relation": "res.country", "context":
+        {}, "readonly": false}, "membership_amount": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "The price negotiated by the partner", "depends":
+        [], "type": "float", "string": "Membership Amount", "store": true, "digits":
+        [16, 2], "searchable": true, "sortable": true, "required": false, "group_operator":
+        "sum", "readonly": false}, "type": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "Used to select automatically the right address
+        according to the context in sales and purchases documents.", "searchable":
+        true, "type": "selection", "string": "Address Type", "store": true, "depends":
+        [], "sortable": true, "required": false, "selection": [["contact", "Contact"],
+        ["invoice", "Invoice address"], ["delivery", "Shipping address"], ["other",
+        "Other address"], ["private", "Private Address"]], "readonly": false}, "supplier_payment_mode_id":
+        {"change_default": false, "company_dependent": true, "manual": false, "help":
+        "Select the default payment mode for this supplier.", "domain": "[(''payment_type'',
+        ''='', ''outbound'')]", "type": "many2one", "string": "Supplier Payment Mode",
+        "store": false, "searchable": true, "depends": [], "sortable": false, "required":
+        false, "relation": "account.payment.mode", "context": {}, "readonly": false},
+        "x_github_login": {"change_default": false, "company_dependent": false, "manual":
+        true, "searchable": false, "type": "char", "string": "Github Technical Name",
+        "store": false, "depends": [], "sortable": false, "translate": false, "required":
+        false, "readonly": false}, "membership_state": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "It indicates the membership state.\n-Non
+        Member: A partner who has not applied for any membership.\n-Cancelled Member:
+        A member who has cancelled his membership.\n-Old Member: A member whose membership
+        date has expired.\n-Waiting Member: A member who has applied for the membership
+        and whose invoice is going to be created.\n-Invoiced Member: A member whose
+        invoice has been created.\n-Paying member: A member who has paid the membership
+        fee.", "searchable": true, "type": "selection", "string": "Current Membership
+        Status", "store": true, "depends": ["member_lines.account_invoice_line.invoice_id.state",
+        "member_lines.account_invoice_line.invoice_id.invoice_line_ids", "member_lines.account_invoice_line.invoice_id.payment_ids",
+        "member_lines.account_invoice_line.invoice_id.payment_move_line_ids", "member_lines.account_invoice_line.invoice_id.partner_id",
+        "free_member", "member_lines.date_to", "member_lines.date_from", "associate_member.membership_state"],
+        "sortable": true, "required": false, "selection": [["none", "Non Member"],
+        ["canceled", "Cancelled Member"], ["old", "Old Member"], ["waiting", "Waiting
+        Member"], ["invoiced", "Invoiced Member"], ["free", "Free Member"], ["paid",
+        "Paid Member"]], "readonly": true}, "tz_offset": {"change_default": false,
+        "company_dependent": false, "manual": false, "searchable": false, "type":
+        "char", "string": "Timezone offset", "store": false, "depends": ["tz"], "sortable":
+        false, "translate": false, "required": false, "readonly": true}, "title":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "many2one", "string": "Title", "store": true, "searchable": true,
+        "depends": [], "sortable": true, "required": false, "relation": "res.partner.title",
+        "context": {}, "readonly": false}, "contract_ids": {"change_default": false,
+        "company_dependent": false, "manual": false, "domain": [], "type": "one2many",
+        "string": "Contracts", "store": true, "searchable": true, "depends": [], "sortable":
+        true, "required": false, "relation": "account.analytic.account", "context":
+        {}, "relation_field": "partner_id", "readonly": true}, "commercial_partner_country_id":
+        {"change_default": false, "company_dependent": false, "manual": false, "related":
+        ["commercial_partner_id", "country_id"], "domain": [], "type": "many2one",
+        "string": "Country", "store": true, "searchable": true, "depends": ["commercial_partner_id.country_id"],
+        "sortable": true, "required": false, "relation": "res.country", "context":
+        {}, "readonly": false}, "display_name": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "char", "string": "Display
+        Name", "store": true, "depends": ["is_company", "name", "parent_id.name",
+        "type", "company_name"], "sortable": true, "translate": false, "required":
+        false, "readonly": true}, "property_stock_supplier": {"change_default": false,
+        "company_dependent": true, "manual": false, "help": "This stock location will
+        be used, instead of the default one, as the source location for goods you
+        receive from the current partner", "domain": [], "type": "many2one", "string":
+        "Vendor Location", "store": false, "searchable": true, "depends": [], "sortable":
+        false, "required": false, "relation": "stock.location", "context": {}, "readonly":
+        false}, "vat": {"change_default": false, "company_dependent": false, "manual":
+        false, "help": "Tax Identification Number. Fill it if the company is subjected
+        to taxes. Used by the some of the legal statements.", "searchable": true,
+        "type": "char", "string": "TIN", "store": true, "depends": [], "sortable":
+        true, "translate": false, "required": false, "readonly": false}, "signup_valid":
+        {"change_default": false, "company_dependent": false, "manual": false, "string":
+        "Signup Token is Valid", "depends": ["signup_token", "signup_expiration"],
+        "type": "boolean", "required": false, "store": false, "sortable": false, "searchable":
+        false, "readonly": true}, "last_time_entries_checked": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "Last time the
+        invoices & payments matching was performed for this partner. It is set either
+        if there''s not at least an unreconciled debit and an unreconciled credit
+        or if you click the \"Done\" button.", "searchable": true, "type": "datetime",
+        "string": "Latest Invoices & Payments Matching Date", "store": true, "depends":
+        [], "sortable": true, "required": false, "readonly": true}, "lang": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "If the selected
+        language is loaded in the system, all documents related to this contact will
+        be printed in this language. If not, it will be English.", "searchable": true,
+        "type": "selection", "string": "Language", "store": true, "depends": [], "sortable":
+        true, "required": false, "selection": [["en_US", "English"], ["fr_FR", "French
+        / Fran\u00e7ais"]], "readonly": false}, "sale_order_ids": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "one2many", "string": "Sales Order", "store": true, "searchable": true, "depends":
+        [], "sortable": true, "required": false, "relation": "sale.order", "context":
+        {}, "relation_field": "partner_id", "readonly": false}, "street": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": true, "type":
+        "char", "string": "Street", "store": true, "depends": [], "sortable": true,
+        "translate": false, "required": false, "readonly": false}, "github_last_sync_date":
+        {"change_default": false, "company_dependent": false, "manual": false, "string":
+        "Last Sync Date with Github", "depends": [], "type": "datetime", "required":
+        false, "store": true, "sortable": true, "searchable": true, "readonly": true},
+        "property_purchase_currency_id": {"change_default": false, "company_dependent":
+        true, "manual": false, "help": "This currency will be used, instead of the
+        default one, for purchases from the current partner", "domain": [], "type":
+        "many2one", "string": "Supplier Currency", "store": false, "searchable": true,
+        "depends": [], "sortable": false, "required": false, "relation": "res.currency",
+        "context": {}, "readonly": false}, "email": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "char", "string": "Email",
+        "store": true, "depends": [], "sortable": true, "translate": false, "required":
+        false, "readonly": false}, "image_small": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "Small-sized image of this contact. It is
+        automatically resized as a 64x64px image, with aspect ratio preserved. Use
+        this field anywhere a small image is required.", "searchable": true, "type":
+        "binary", "string": "Small-sized image", "store": true, "depends": [], "sortable":
+        true, "required": false, "attachment": true, "readonly": false}, "website_meta_title":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "char", "string": "Website meta title", "store": true, "depends":
+        [], "sortable": true, "translate": true, "required": false, "readonly": false},
+        "write_date": {"change_default": false, "company_dependent": false, "manual":
+        false, "string": "Last Updated on", "depends": [], "type": "datetime", "required":
+        false, "store": true, "sortable": true, "searchable": true, "readonly": false},
+        "__last_update": {"change_default": false, "company_dependent": false, "manual":
+        false, "string": "Last Modified on", "depends": ["create_date", "write_date"],
+        "type": "datetime", "required": false, "store": false, "sortable": false,
+        "searchable": false, "readonly": true}, "create_uid": {"change_default": false,
+        "company_dependent": false, "manual": false, "domain": [], "type": "many2one",
+        "string": "Created by", "store": true, "searchable": true, "depends": [],
+        "sortable": true, "required": false, "relation": "res.users", "context": {},
+        "readonly": false}, "signup_url": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": false, "type": "char", "string": "Signup
+        URL", "store": false, "depends": [], "sortable": false, "translate": false,
+        "required": false, "readonly": true}, "customer": {"change_default": false,
+        "company_dependent": false, "manual": false, "help": "Check this box if this
+        contact is a customer.", "searchable": true, "type": "boolean", "string":
+        "Is a Customer", "store": true, "depends": [], "sortable": true, "required":
+        false, "readonly": false}, "website_description": {"change_default": false,
+        "company_dependent": false, "manual": false, "strip_classes": false, "searchable":
+        true, "type": "html", "sanitize_attributes": true, "sanitize": true, "strip_style":
+        true, "string": "Website Partner Full Description", "store": true, "depends":
+        [], "sanitize_style": false, "sortable": true, "translate": false, "required":
+        false, "readonly": false, "sanitize_tags": true}, "city": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": true, "type":
+        "char", "string": "City", "store": true, "depends": [], "sortable": true,
+        "translate": false, "required": false, "readonly": false}, "website_url":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "The full URL to access the document through the website.", "searchable":
+        false, "type": "char", "string": "Website URL", "store": false, "depends":
+        [], "sortable": false, "translate": false, "required": false, "readonly":
+        true}, "invoice_warn": {"change_default": false, "company_dependent": false,
+        "manual": false, "help": "Selecting the \"Warning\" option will notify user
+        with the message, Selecting \"Blocking Message\" will throw an exception with
+        the message and block the flow. The Message has to be written in the next
+        field.", "searchable": true, "type": "selection", "string": "Invoice", "store":
+        true, "depends": [], "sortable": true, "required": true, "selection": [["no-message",
+        "No Message"], ["warning", "Warning"], ["block", "Blocking Message"]], "readonly":
+        false}, "phone": {"change_default": false, "company_dependent": false, "manual":
+        false, "searchable": true, "type": "char", "string": "Phone", "store": true,
+        "depends": [], "sortable": true, "translate": false, "required": false, "readonly":
+        false}, "message_is_follower": {"change_default": false, "company_dependent":
+        false, "manual": false, "string": "Is Follower", "depends": ["message_follower_ids"],
+        "type": "boolean", "required": false, "store": false, "sortable": false, "searchable":
+        true, "readonly": true}, "journal_item_count": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": false, "type": "integer", "string":
+        "Journal Items", "store": false, "depends": [], "sortable": false, "required":
+        false, "group_operator": "sum", "readonly": true}, "debit": {"change_default":
+        false, "company_dependent": false, "currency_field": "currency_id", "help":
+        "Total amount you have to pay to this vendor.", "searchable": true, "type":
+        "monetary", "string": "Total Payable", "store": false, "manual": false, "depends":
+        [], "sortable": false, "required": false, "group_operator": "sum", "readonly":
+        true}, "category_id": {"change_default": false, "company_dependent": false,
+        "manual": false, "domain": [], "type": "many2many", "string": "Tags", "store":
+        true, "searchable": true, "depends": [], "sortable": true, "required": false,
+        "relation": "res.partner.category", "context": {}, "readonly": false}, "website_meta_keywords":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "char", "string": "Website meta keywords", "store": true, "depends":
+        [], "sortable": true, "translate": true, "required": false, "readonly": false},
+        "sale_warn_msg": {"change_default": false, "company_dependent": false, "manual":
+        false, "searchable": true, "type": "text", "string": "Message for Sales Order",
+        "store": true, "depends": [], "sortable": true, "translate": false, "required":
+        false, "readonly": false}, "purchase_order_count": {"change_default": false,
+        "company_dependent": false, "manual": false, "searchable": false, "type":
+        "integer", "string": "# of Purchase Order", "store": false, "depends": [],
+        "sortable": false, "required": false, "group_operator": "sum", "readonly":
+        true}, "team_id": {"change_default": false, "company_dependent": false, "manual":
+        false, "help": "If set, this sales channel will be used for sales and assignations
+        related to this partner", "domain": [], "type": "many2one", "string": "Sales
+        Channel", "store": true, "searchable": true, "depends": [], "sortable": true,
+        "required": false, "relation": "crm.team", "context": {}, "readonly": false},
+        "zip": {"change_default": true, "company_dependent": false, "manual": false,
+        "searchable": true, "type": "char", "string": "Zip", "store": true, "depends":
+        [], "sortable": true, "translate": false, "required": false, "readonly": false},
+        "organization_qty": {"change_default": false, "company_dependent": false,
+        "manual": false, "searchable": true, "type": "integer", "string": "Number
+        of Organizations", "store": true, "depends": ["organization_ids", "organization_ids.member_ids"],
+        "sortable": true, "required": false, "group_operator": "sum", "readonly":
+        true}, "meeting_count": {"change_default": false, "company_dependent": false,
+        "manual": false, "searchable": false, "type": "integer", "string": "# Meetings",
+        "store": false, "depends": [], "sortable": false, "required": false, "group_operator":
+        "sum", "readonly": true}, "date_partnership": {"change_default": false, "company_dependent":
+        false, "manual": false, "string": "Partnership Date", "depends": [], "type":
+        "date", "required": false, "store": true, "sortable": true, "searchable":
+        true, "readonly": false}, "website_published": {"change_default": false, "company_dependent":
+        false, "manual": false, "string": "Visible in Website", "depends": [], "type":
+        "boolean", "required": false, "store": true, "sortable": true, "searchable":
+        true, "readonly": false}, "credit": {"change_default": false, "company_dependent":
+        false, "currency_field": "currency_id", "help": "Total amount this customer
+        owes you.", "searchable": true, "type": "monetary", "string": "Total Receivable",
+        "store": false, "manual": false, "depends": [], "sortable": false, "required":
+        false, "group_operator": "sum", "readonly": true}, "picking_warn_msg": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": true, "type":
+        "text", "string": "Message for Stock Picking", "store": true, "depends": [],
+        "sortable": true, "translate": false, "required": false, "readonly": false},
+        "author_ids": {"change_default": false, "company_dependent": false, "manual":
+        false, "domain": [], "type": "one2many", "string": "Authors", "store": true,
+        "searchable": true, "depends": [], "sortable": true, "required": false, "relation":
+        "odoo.author", "context": {}, "relation_field": "partner_id", "readonly":
+        true}, "github_team_qty": {"change_default": false, "company_dependent": false,
+        "manual": false, "searchable": true, "type": "integer", "string": "Number
+        of Teams", "store": true, "depends": ["github_team_ids"], "sortable": true,
+        "required": false, "group_operator": "sum", "readonly": true}, "partner_longitude":
+        {"change_default": false, "company_dependent": false, "manual": false, "depends":
+        [], "type": "float", "string": "Geo Longitude", "store": true, "digits": [16,
+        5], "searchable": true, "sortable": true, "required": false, "group_operator":
+        "sum", "readonly": false}, "website_tag_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "many2many", "string": "Website
+        tags", "store": true, "searchable": true, "depends": [], "sortable": true,
+        "required": false, "relation": "res.partner.tag", "context": {}, "readonly":
+        false}, "message_ids": {"change_default": false, "company_dependent": false,
+        "manual": false, "domain": [["model", "=", "res.partner"]], "type": "one2many",
+        "string": "Messages", "store": true, "searchable": true, "depends": [], "sortable":
+        true, "required": false, "relation": "mail.message", "context": {}, "relation_field":
+        "res_id", "readonly": false}, "bank_account_count": {"change_default": false,
+        "company_dependent": false, "manual": false, "searchable": false, "type":
+        "integer", "string": "Bank", "store": false, "depends": [], "sortable": false,
+        "required": false, "group_operator": "sum", "readonly": true}, "property_account_receivable_id":
+        {"change_default": false, "company_dependent": true, "manual": false, "help":
+        "This account will be used instead of the default one as the receivable account
+        for the current partner", "domain": "[(''internal_type'', ''='', ''receivable''),
+        (''deprecated'', ''='', False)]", "type": "many2one", "string": "Account Receivable",
+        "store": false, "searchable": true, "depends": [], "sortable": false, "required":
+        true, "relation": "account.account", "context": {}, "readonly": false}, "sanitized_vat":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "TIN in uppercase without spaces nor special caracters.", "searchable": true,
+        "type": "char", "string": "Sanitized TIN", "store": true, "depends": ["vat"],
+        "sortable": true, "translate": false, "required": false, "readonly": true},
+        "is_company": {"change_default": false, "company_dependent": false, "manual":
+        false, "help": "Check if the contact is a company, otherwise it is a person",
+        "searchable": true, "type": "boolean", "string": "Is a Company", "store":
+        true, "depends": [], "sortable": true, "required": false, "readonly": false},
+        "function": {"change_default": false, "company_dependent": false, "manual":
+        false, "searchable": true, "type": "char", "string": "Job Position", "store":
+        true, "depends": [], "sortable": true, "translate": false, "required": false,
+        "readonly": false}, "property_stock_customer": {"change_default": false, "company_dependent":
+        true, "manual": false, "help": "This stock location will be used, instead
+        of the default one, as the destination location for goods you send to this
+        partner", "domain": [], "type": "many2one", "string": "Customer Location",
+        "store": false, "searchable": true, "depends": [], "sortable": false, "required":
+        false, "relation": "stock.location", "context": {}, "readonly": false}, "mobile":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "char", "string": "Mobile", "store": true, "depends": [], "sortable":
+        true, "translate": false, "required": false, "readonly": false}, "debit_limit":
+        {"change_default": false, "company_dependent": false, "currency_field": "currency_id",
+        "searchable": true, "type": "monetary", "string": "Payable Limit", "store":
+        true, "manual": false, "depends": [], "sortable": true, "required": false,
+        "group_operator": "sum", "readonly": false}, "property_product_pricelist":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "This pricelist will be used, instead of the default one, for sales to the
+        current partner", "domain": [], "type": "many2one", "string": "Sale Pricelist",
+        "store": false, "searchable": false, "depends": ["country_id"], "sortable":
+        false, "required": false, "relation": "product.pricelist", "context": {},
+        "readonly": false}, "property_account_position_id": {"change_default": false,
+        "company_dependent": true, "manual": false, "help": "The fiscal position will
+        determine taxes and accounts used for the partner.", "domain": [], "type":
+        "many2one", "string": "Fiscal Position", "store": false, "searchable": true,
+        "depends": [], "sortable": false, "required": false, "relation": "account.fiscal.position",
+        "context": {}, "readonly": false}, "free_member": {"change_default": false,
+        "company_dependent": false, "manual": false, "help": "Select if you want to
+        give free membership.", "searchable": true, "type": "boolean", "string": "Free
+        Member", "store": true, "depends": [], "sortable": true, "required": false,
+        "readonly": false}, "bank_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "one2many", "string": "Banks",
+        "store": true, "searchable": true, "depends": [], "sortable": true, "required":
+        false, "relation": "res.partner.bank", "context": {}, "relation_field": "partner_id",
+        "readonly": false}, "company_id": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "many2one", "string": "Company",
+        "store": true, "searchable": true, "depends": [], "sortable": true, "required":
+        false, "relation": "res.company", "context": {}, "readonly": false}, "message_follower_ids":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [["res_model", "=", "res.partner"]], "type": "one2many", "string": "Followers",
+        "store": true, "searchable": true, "depends": [], "sortable": true, "required":
+        false, "relation": "mail.followers", "context": {}, "relation_field": "res_id",
+        "readonly": false}, "task_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "one2many", "string": "Tasks",
+        "store": true, "searchable": true, "depends": [], "sortable": true, "required":
+        false, "relation": "project.task", "context": {}, "relation_field": "partner_id",
+        "readonly": false}, "image": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "This field holds the image used as avatar
+        for this contact, limited to 1024x1024px", "searchable": true, "type": "binary",
+        "string": "Image", "store": true, "depends": [], "sortable": true, "required":
+        false, "attachment": true, "readonly": false}, "payment_token_count": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": false, "type":
+        "integer", "string": "Count Payment Token", "store": false, "depends": ["payment_token_ids"],
+        "sortable": false, "required": false, "group_operator": "sum", "readonly":
+        true}, "grade_id": {"change_default": false, "company_dependent": false, "manual":
+        false, "domain": [], "type": "many2one", "string": "Level", "store": true,
+        "searchable": true, "depends": [], "sortable": true, "required": false, "relation":
+        "res.partner.grade", "context": {}, "readonly": false}, "github_team_ids":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "many2many", "string": "Teams", "store": true, "searchable": true,
+        "depends": [], "sortable": true, "required": false, "relation": "github.team.partner",
+        "context": {}, "readonly": true}, "message_partner_ids": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "many2many", "string": "Followers (Partners)", "store": false, "searchable":
+        true, "depends": ["message_follower_ids"], "sortable": false, "required":
+        false, "relation": "res.partner", "context": {}, "readonly": true}, "contracts_count":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        false, "type": "integer", "string": "Contracts", "store": false, "depends":
+        [], "sortable": false, "required": false, "group_operator": "sum", "readonly":
+        true}, "favourite_module_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "many2many", "string": "Favourite
+        Modules", "store": true, "searchable": true, "depends": [], "sortable": true,
+        "required": false, "relation": "product.template", "context": {}, "readonly":
+        true}, "last_website_so_id": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "many2one", "string": "Last
+        Online Sales Order", "store": true, "searchable": true, "depends": [], "sortable":
+        true, "required": false, "relation": "sale.order", "context": {}, "readonly":
+        false}, "commercial_partner_id": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "many2one", "string": "Commercial
+        Entity", "store": true, "searchable": true, "depends": ["is_company", "parent_id.commercial_partner_id"],
+        "sortable": true, "required": false, "relation": "res.partner", "context":
+        {}, "readonly": true}, "email_formatted": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "Format email address \"Name <email@domain>\"",
+        "searchable": false, "type": "char", "string": "Formatted Email", "store":
+        false, "depends": ["name", "email"], "sortable": false, "translate": false,
+        "required": false, "readonly": true}, "im_status": {"change_default": false,
+        "company_dependent": false, "manual": false, "searchable": false, "type":
+        "char", "string": "IM Status", "store": false, "depends": [], "sortable":
+        false, "translate": false, "required": false, "readonly": true}, "user_ids":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "one2many", "string": "Users", "store": true, "searchable": true,
+        "depends": [], "sortable": true, "required": false, "relation": "res.users",
+        "context": {}, "relation_field": "partner_id", "readonly": false}, "commercial_company_name":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "char", "string": "Company Name Entity", "store": true, "depends":
+        ["company_name", "parent_id.is_company", "commercial_partner_id.name"], "sortable":
+        true, "translate": false, "required": false, "readonly": true}, "implemented_partner_ids":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "one2many", "string": "Implementation References", "store": true,
+        "searchable": true, "depends": [], "sortable": true, "required": false, "relation":
+        "res.partner", "context": {}, "relation_field": "assigned_partner_id", "readonly":
+        false}, "supplier": {"change_default": false, "company_dependent": false,
+        "manual": false, "help": "Check this box if this contact is a vendor. If it''s
+        not checked, purchase people will not see it when encoding a purchase order.",
+        "searchable": true, "type": "boolean", "string": "Is a Vendor", "store": true,
+        "depends": [], "sortable": true, "required": false, "readonly": false}, "date":
+        {"change_default": false, "company_dependent": false, "manual": false, "string":
+        "Date", "depends": [], "type": "date", "required": false, "store": true, "sortable":
+        true, "searchable": true, "readonly": false}, "trust": {"change_default":
+        false, "company_dependent": true, "manual": false, "searchable": true, "type":
+        "selection", "string": "Degree of trust you have in this debtor", "store":
+        false, "depends": [], "sortable": false, "required": false, "selection": [["good",
+        "Good Debtor"], ["normal", "Normal Debtor"], ["bad", "Bad Debtor"]], "readonly":
+        false}, "payment_note": {"change_default": false, "company_dependent": false,
+        "manual": false, "help": "Payment Note", "searchable": true, "type": "text",
+        "string": "Customer Payment Promise", "store": true, "depends": [], "sortable":
+        true, "translate": false, "required": false, "readonly": false}, "github_write_date":
+        {"change_default": false, "company_dependent": false, "manual": false, "string":
+        "Last Write Date on Github", "depends": [], "type": "datetime", "required":
+        false, "store": true, "sortable": true, "searchable": true, "readonly": true},
+        "company_name": {"change_default": false, "company_dependent": false, "manual":
+        false, "searchable": true, "type": "char", "string": "Company Name", "store":
+        true, "depends": [], "sortable": true, "translate": false, "required": false,
+        "readonly": false}, "purchase_warn_msg": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "text", "string": "Message
+        for Purchase Order", "store": true, "depends": [], "sortable": true, "translate":
+        false, "required": false, "readonly": false}, "create_date": {"change_default":
+        false, "company_dependent": false, "manual": false, "string": "Created on",
+        "depends": [], "type": "datetime", "required": false, "store": true, "sortable":
+        true, "searchable": true, "readonly": false}, "picking_warn": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "Selecting the
+        \"Warning\" option will notify user with the message, Selecting \"Blocking
+        Message\" will throw an exception with the message and block the flow. The
+        Message has to be written in the next field.", "searchable": true, "type":
+        "selection", "string": "Stock Picking", "store": true, "depends": [], "sortable":
+        true, "required": true, "selection": [["no-message", "No Message"], ["warning",
+        "Warning"], ["block", "Blocking Message"]], "readonly": false}, "partner_share":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "Either customer (no user), either shared user. Indicated the current partner
+        is a customer without access or with a limited access created for sharing
+        data.", "searchable": true, "type": "boolean", "string": "Share Partner",
+        "store": true, "depends": ["user_ids.share"], "sortable": true, "required":
+        false, "readonly": true}, "module_count": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "integer", "string": "Number
+        of modules", "store": true, "depends": ["author_ids", "author_ids.partner_id",
+        "author_ids.module_qty"], "sortable": true, "required": false, "group_operator":
+        "sum", "readonly": true}, "tz": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "The partner''s timezone, used to output proper
+        date and time values inside printed reports. It is important to set a value
+        for this field. You should use the same timezone that is otherwise used to
+        pick and render date and time values: your computer''s timezone.", "searchable":
+        true, "type": "selection", "string": "Timezone", "store": true, "depends":
+        [], "sortable": true, "required": false, "selection": [["Africa/Abidjan",
+        "Africa/Abidjan"], ["Africa/Accra", "Africa/Accra"], ["Africa/Addis_Ababa",
+        "Africa/Addis_Ababa"], ["Africa/Algiers", "Africa/Algiers"], ["Africa/Asmara",
+        "Africa/Asmara"], ["Africa/Asmera", "Africa/Asmera"], ["Africa/Bamako", "Africa/Bamako"],
+        ["Africa/Bangui", "Africa/Bangui"], ["Africa/Banjul", "Africa/Banjul"], ["Africa/Bissau",
+        "Africa/Bissau"], ["Africa/Blantyre", "Africa/Blantyre"], ["Africa/Brazzaville",
+        "Africa/Brazzaville"], ["Africa/Bujumbura", "Africa/Bujumbura"], ["Africa/Cairo",
+        "Africa/Cairo"], ["Africa/Casablanca", "Africa/Casablanca"], ["Africa/Ceuta",
+        "Africa/Ceuta"], ["Africa/Conakry", "Africa/Conakry"], ["Africa/Dakar", "Africa/Dakar"],
+        ["Africa/Dar_es_Salaam", "Africa/Dar_es_Salaam"], ["Africa/Djibouti", "Africa/Djibouti"],
+        ["Africa/Douala", "Africa/Douala"], ["Africa/El_Aaiun", "Africa/El_Aaiun"],
+        ["Africa/Freetown", "Africa/Freetown"], ["Africa/Gaborone", "Africa/Gaborone"],
+        ["Africa/Harare", "Africa/Harare"], ["Africa/Johannesburg", "Africa/Johannesburg"],
+        ["Africa/Juba", "Africa/Juba"], ["Africa/Kampala", "Africa/Kampala"], ["Africa/Khartoum",
+        "Africa/Khartoum"], ["Africa/Kigali", "Africa/Kigali"], ["Africa/Kinshasa",
+        "Africa/Kinshasa"], ["Africa/Lagos", "Africa/Lagos"], ["Africa/Libreville",
+        "Africa/Libreville"], ["Africa/Lome", "Africa/Lome"], ["Africa/Luanda", "Africa/Luanda"],
+        ["Africa/Lubumbashi", "Africa/Lubumbashi"], ["Africa/Lusaka", "Africa/Lusaka"],
+        ["Africa/Malabo", "Africa/Malabo"], ["Africa/Maputo", "Africa/Maputo"], ["Africa/Maseru",
+        "Africa/Maseru"], ["Africa/Mbabane", "Africa/Mbabane"], ["Africa/Mogadishu",
+        "Africa/Mogadishu"], ["Africa/Monrovia", "Africa/Monrovia"], ["Africa/Nairobi",
+        "Africa/Nairobi"], ["Africa/Ndjamena", "Africa/Ndjamena"], ["Africa/Niamey",
+        "Africa/Niamey"], ["Africa/Nouakchott", "Africa/Nouakchott"], ["Africa/Ouagadougou",
+        "Africa/Ouagadougou"], ["Africa/Porto-Novo", "Africa/Porto-Novo"], ["Africa/Sao_Tome",
+        "Africa/Sao_Tome"], ["Africa/Timbuktu", "Africa/Timbuktu"], ["Africa/Tripoli",
+        "Africa/Tripoli"], ["Africa/Tunis", "Africa/Tunis"], ["Africa/Windhoek", "Africa/Windhoek"],
+        ["America/Adak", "America/Adak"], ["America/Anchorage", "America/Anchorage"],
+        ["America/Anguilla", "America/Anguilla"], ["America/Antigua", "America/Antigua"],
+        ["America/Araguaina", "America/Araguaina"], ["America/Argentina/Buenos_Aires",
+        "America/Argentina/Buenos_Aires"], ["America/Argentina/Catamarca", "America/Argentina/Catamarca"],
+        ["America/Argentina/ComodRivadavia", "America/Argentina/ComodRivadavia"],
+        ["America/Argentina/Cordoba", "America/Argentina/Cordoba"], ["America/Argentina/Jujuy",
+        "America/Argentina/Jujuy"], ["America/Argentina/La_Rioja", "America/Argentina/La_Rioja"],
+        ["America/Argentina/Mendoza", "America/Argentina/Mendoza"], ["America/Argentina/Rio_Gallegos",
+        "America/Argentina/Rio_Gallegos"], ["America/Argentina/Salta", "America/Argentina/Salta"],
+        ["America/Argentina/San_Juan", "America/Argentina/San_Juan"], ["America/Argentina/San_Luis",
+        "America/Argentina/San_Luis"], ["America/Argentina/Tucuman", "America/Argentina/Tucuman"],
+        ["America/Argentina/Ushuaia", "America/Argentina/Ushuaia"], ["America/Aruba",
+        "America/Aruba"], ["America/Asuncion", "America/Asuncion"], ["America/Atikokan",
+        "America/Atikokan"], ["America/Atka", "America/Atka"], ["America/Bahia", "America/Bahia"],
+        ["America/Bahia_Banderas", "America/Bahia_Banderas"], ["America/Barbados",
+        "America/Barbados"], ["America/Belem", "America/Belem"], ["America/Belize",
+        "America/Belize"], ["America/Blanc-Sablon", "America/Blanc-Sablon"], ["America/Boa_Vista",
+        "America/Boa_Vista"], ["America/Bogota", "America/Bogota"], ["America/Boise",
+        "America/Boise"], ["America/Buenos_Aires", "America/Buenos_Aires"], ["America/Cambridge_Bay",
+        "America/Cambridge_Bay"], ["America/Campo_Grande", "America/Campo_Grande"],
+        ["America/Cancun", "America/Cancun"], ["America/Caracas", "America/Caracas"],
+        ["America/Catamarca", "America/Catamarca"], ["America/Cayenne", "America/Cayenne"],
+        ["America/Cayman", "America/Cayman"], ["America/Chicago", "America/Chicago"],
+        ["America/Chihuahua", "America/Chihuahua"], ["America/Coral_Harbour", "America/Coral_Harbour"],
+        ["America/Cordoba", "America/Cordoba"], ["America/Costa_Rica", "America/Costa_Rica"],
+        ["America/Creston", "America/Creston"], ["America/Cuiaba", "America/Cuiaba"],
+        ["America/Curacao", "America/Curacao"], ["America/Danmarkshavn", "America/Danmarkshavn"],
+        ["America/Dawson", "America/Dawson"], ["America/Dawson_Creek", "America/Dawson_Creek"],
+        ["America/Denver", "America/Denver"], ["America/Detroit", "America/Detroit"],
+        ["America/Dominica", "America/Dominica"], ["America/Edmonton", "America/Edmonton"],
+        ["America/Eirunepe", "America/Eirunepe"], ["America/El_Salvador", "America/El_Salvador"],
+        ["America/Ensenada", "America/Ensenada"], ["America/Fort_Nelson", "America/Fort_Nelson"],
+        ["America/Fort_Wayne", "America/Fort_Wayne"], ["America/Fortaleza", "America/Fortaleza"],
+        ["America/Glace_Bay", "America/Glace_Bay"], ["America/Godthab", "America/Godthab"],
+        ["America/Goose_Bay", "America/Goose_Bay"], ["America/Grand_Turk", "America/Grand_Turk"],
+        ["America/Grenada", "America/Grenada"], ["America/Guadeloupe", "America/Guadeloupe"],
+        ["America/Guatemala", "America/Guatemala"], ["America/Guayaquil", "America/Guayaquil"],
+        ["America/Guyana", "America/Guyana"], ["America/Halifax", "America/Halifax"],
+        ["America/Havana", "America/Havana"], ["America/Hermosillo", "America/Hermosillo"],
+        ["America/Indiana/Indianapolis", "America/Indiana/Indianapolis"], ["America/Indiana/Knox",
+        "America/Indiana/Knox"], ["America/Indiana/Marengo", "America/Indiana/Marengo"],
+        ["America/Indiana/Petersburg", "America/Indiana/Petersburg"], ["America/Indiana/Tell_City",
+        "America/Indiana/Tell_City"], ["America/Indiana/Vevay", "America/Indiana/Vevay"],
+        ["America/Indiana/Vincennes", "America/Indiana/Vincennes"], ["America/Indiana/Winamac",
+        "America/Indiana/Winamac"], ["America/Indianapolis", "America/Indianapolis"],
+        ["America/Inuvik", "America/Inuvik"], ["America/Iqaluit", "America/Iqaluit"],
+        ["America/Jamaica", "America/Jamaica"], ["America/Jujuy", "America/Jujuy"],
+        ["America/Juneau", "America/Juneau"], ["America/Kentucky/Louisville", "America/Kentucky/Louisville"],
+        ["America/Kentucky/Monticello", "America/Kentucky/Monticello"], ["America/Knox_IN",
+        "America/Knox_IN"], ["America/Kralendijk", "America/Kralendijk"], ["America/La_Paz",
+        "America/La_Paz"], ["America/Lima", "America/Lima"], ["America/Los_Angeles",
+        "America/Los_Angeles"], ["America/Louisville", "America/Louisville"], ["America/Lower_Princes",
+        "America/Lower_Princes"], ["America/Maceio", "America/Maceio"], ["America/Managua",
+        "America/Managua"], ["America/Manaus", "America/Manaus"], ["America/Marigot",
+        "America/Marigot"], ["America/Martinique", "America/Martinique"], ["America/Matamoros",
+        "America/Matamoros"], ["America/Mazatlan", "America/Mazatlan"], ["America/Mendoza",
+        "America/Mendoza"], ["America/Menominee", "America/Menominee"], ["America/Merida",
+        "America/Merida"], ["America/Metlakatla", "America/Metlakatla"], ["America/Mexico_City",
+        "America/Mexico_City"], ["America/Miquelon", "America/Miquelon"], ["America/Moncton",
+        "America/Moncton"], ["America/Monterrey", "America/Monterrey"], ["America/Montevideo",
+        "America/Montevideo"], ["America/Montreal", "America/Montreal"], ["America/Montserrat",
+        "America/Montserrat"], ["America/Nassau", "America/Nassau"], ["America/New_York",
+        "America/New_York"], ["America/Nipigon", "America/Nipigon"], ["America/Nome",
+        "America/Nome"], ["America/Noronha", "America/Noronha"], ["America/North_Dakota/Beulah",
+        "America/North_Dakota/Beulah"], ["America/North_Dakota/Center", "America/North_Dakota/Center"],
+        ["America/North_Dakota/New_Salem", "America/North_Dakota/New_Salem"], ["America/Ojinaga",
+        "America/Ojinaga"], ["America/Panama", "America/Panama"], ["America/Pangnirtung",
+        "America/Pangnirtung"], ["America/Paramaribo", "America/Paramaribo"], ["America/Phoenix",
+        "America/Phoenix"], ["America/Port-au-Prince", "America/Port-au-Prince"],
+        ["America/Port_of_Spain", "America/Port_of_Spain"], ["America/Porto_Acre",
+        "America/Porto_Acre"], ["America/Porto_Velho", "America/Porto_Velho"], ["America/Puerto_Rico",
+        "America/Puerto_Rico"], ["America/Rainy_River", "America/Rainy_River"], ["America/Rankin_Inlet",
+        "America/Rankin_Inlet"], ["America/Recife", "America/Recife"], ["America/Regina",
+        "America/Regina"], ["America/Resolute", "America/Resolute"], ["America/Rio_Branco",
+        "America/Rio_Branco"], ["America/Rosario", "America/Rosario"], ["America/Santa_Isabel",
+        "America/Santa_Isabel"], ["America/Santarem", "America/Santarem"], ["America/Santiago",
+        "America/Santiago"], ["America/Santo_Domingo", "America/Santo_Domingo"], ["America/Sao_Paulo",
+        "America/Sao_Paulo"], ["America/Scoresbysund", "America/Scoresbysund"], ["America/Shiprock",
+        "America/Shiprock"], ["America/Sitka", "America/Sitka"], ["America/St_Barthelemy",
+        "America/St_Barthelemy"], ["America/St_Johns", "America/St_Johns"], ["America/St_Kitts",
+        "America/St_Kitts"], ["America/St_Lucia", "America/St_Lucia"], ["America/St_Thomas",
+        "America/St_Thomas"], ["America/St_Vincent", "America/St_Vincent"], ["America/Swift_Current",
+        "America/Swift_Current"], ["America/Tegucigalpa", "America/Tegucigalpa"],
+        ["America/Thule", "America/Thule"], ["America/Thunder_Bay", "America/Thunder_Bay"],
+        ["America/Tijuana", "America/Tijuana"], ["America/Toronto", "America/Toronto"],
+        ["America/Tortola", "America/Tortola"], ["America/Vancouver", "America/Vancouver"],
+        ["America/Virgin", "America/Virgin"], ["America/Whitehorse", "America/Whitehorse"],
+        ["America/Winnipeg", "America/Winnipeg"], ["America/Yakutat", "America/Yakutat"],
+        ["America/Yellowknife", "America/Yellowknife"], ["Antarctica/Casey", "Antarctica/Casey"],
+        ["Antarctica/Davis", "Antarctica/Davis"], ["Antarctica/DumontDUrville", "Antarctica/DumontDUrville"],
+        ["Antarctica/Macquarie", "Antarctica/Macquarie"], ["Antarctica/Mawson", "Antarctica/Mawson"],
+        ["Antarctica/McMurdo", "Antarctica/McMurdo"], ["Antarctica/Palmer", "Antarctica/Palmer"],
+        ["Antarctica/Rothera", "Antarctica/Rothera"], ["Antarctica/South_Pole", "Antarctica/South_Pole"],
+        ["Antarctica/Syowa", "Antarctica/Syowa"], ["Antarctica/Troll", "Antarctica/Troll"],
+        ["Antarctica/Vostok", "Antarctica/Vostok"], ["Arctic/Longyearbyen", "Arctic/Longyearbyen"],
+        ["Asia/Aden", "Asia/Aden"], ["Asia/Almaty", "Asia/Almaty"], ["Asia/Amman",
+        "Asia/Amman"], ["Asia/Anadyr", "Asia/Anadyr"], ["Asia/Aqtau", "Asia/Aqtau"],
+        ["Asia/Aqtobe", "Asia/Aqtobe"], ["Asia/Ashgabat", "Asia/Ashgabat"], ["Asia/Ashkhabad",
+        "Asia/Ashkhabad"], ["Asia/Baghdad", "Asia/Baghdad"], ["Asia/Bahrain", "Asia/Bahrain"],
+        ["Asia/Baku", "Asia/Baku"], ["Asia/Bangkok", "Asia/Bangkok"], ["Asia/Barnaul",
+        "Asia/Barnaul"], ["Asia/Beirut", "Asia/Beirut"], ["Asia/Bishkek", "Asia/Bishkek"],
+        ["Asia/Brunei", "Asia/Brunei"], ["Asia/Calcutta", "Asia/Calcutta"], ["Asia/Chita",
+        "Asia/Chita"], ["Asia/Choibalsan", "Asia/Choibalsan"], ["Asia/Chongqing",
+        "Asia/Chongqing"], ["Asia/Chungking", "Asia/Chungking"], ["Asia/Colombo",
+        "Asia/Colombo"], ["Asia/Dacca", "Asia/Dacca"], ["Asia/Damascus", "Asia/Damascus"],
+        ["Asia/Dhaka", "Asia/Dhaka"], ["Asia/Dili", "Asia/Dili"], ["Asia/Dubai", "Asia/Dubai"],
+        ["Asia/Dushanbe", "Asia/Dushanbe"], ["Asia/Gaza", "Asia/Gaza"], ["Asia/Harbin",
+        "Asia/Harbin"], ["Asia/Hebron", "Asia/Hebron"], ["Asia/Ho_Chi_Minh", "Asia/Ho_Chi_Minh"],
+        ["Asia/Hong_Kong", "Asia/Hong_Kong"], ["Asia/Hovd", "Asia/Hovd"], ["Asia/Irkutsk",
+        "Asia/Irkutsk"], ["Asia/Istanbul", "Asia/Istanbul"], ["Asia/Jakarta", "Asia/Jakarta"],
+        ["Asia/Jayapura", "Asia/Jayapura"], ["Asia/Jerusalem", "Asia/Jerusalem"],
+        ["Asia/Kabul", "Asia/Kabul"], ["Asia/Kamchatka", "Asia/Kamchatka"], ["Asia/Karachi",
+        "Asia/Karachi"], ["Asia/Kashgar", "Asia/Kashgar"], ["Asia/Kathmandu", "Asia/Kathmandu"],
+        ["Asia/Katmandu", "Asia/Katmandu"], ["Asia/Khandyga", "Asia/Khandyga"], ["Asia/Kolkata",
+        "Asia/Kolkata"], ["Asia/Krasnoyarsk", "Asia/Krasnoyarsk"], ["Asia/Kuala_Lumpur",
+        "Asia/Kuala_Lumpur"], ["Asia/Kuching", "Asia/Kuching"], ["Asia/Kuwait", "Asia/Kuwait"],
+        ["Asia/Macao", "Asia/Macao"], ["Asia/Macau", "Asia/Macau"], ["Asia/Magadan",
+        "Asia/Magadan"], ["Asia/Makassar", "Asia/Makassar"], ["Asia/Manila", "Asia/Manila"],
+        ["Asia/Muscat", "Asia/Muscat"], ["Asia/Nicosia", "Asia/Nicosia"], ["Asia/Novokuznetsk",
+        "Asia/Novokuznetsk"], ["Asia/Novosibirsk", "Asia/Novosibirsk"], ["Asia/Omsk",
+        "Asia/Omsk"], ["Asia/Oral", "Asia/Oral"], ["Asia/Phnom_Penh", "Asia/Phnom_Penh"],
+        ["Asia/Pontianak", "Asia/Pontianak"], ["Asia/Pyongyang", "Asia/Pyongyang"],
+        ["Asia/Qatar", "Asia/Qatar"], ["Asia/Qyzylorda", "Asia/Qyzylorda"], ["Asia/Rangoon",
+        "Asia/Rangoon"], ["Asia/Riyadh", "Asia/Riyadh"], ["Asia/Saigon", "Asia/Saigon"],
+        ["Asia/Sakhalin", "Asia/Sakhalin"], ["Asia/Samarkand", "Asia/Samarkand"],
+        ["Asia/Seoul", "Asia/Seoul"], ["Asia/Shanghai", "Asia/Shanghai"], ["Asia/Singapore",
+        "Asia/Singapore"], ["Asia/Srednekolymsk", "Asia/Srednekolymsk"], ["Asia/Taipei",
+        "Asia/Taipei"], ["Asia/Tashkent", "Asia/Tashkent"], ["Asia/Tbilisi", "Asia/Tbilisi"],
+        ["Asia/Tehran", "Asia/Tehran"], ["Asia/Tel_Aviv", "Asia/Tel_Aviv"], ["Asia/Thimbu",
+        "Asia/Thimbu"], ["Asia/Thimphu", "Asia/Thimphu"], ["Asia/Tokyo", "Asia/Tokyo"],
+        ["Asia/Tomsk", "Asia/Tomsk"], ["Asia/Ujung_Pandang", "Asia/Ujung_Pandang"],
+        ["Asia/Ulaanbaatar", "Asia/Ulaanbaatar"], ["Asia/Ulan_Bator", "Asia/Ulan_Bator"],
+        ["Asia/Urumqi", "Asia/Urumqi"], ["Asia/Ust-Nera", "Asia/Ust-Nera"], ["Asia/Vientiane",
+        "Asia/Vientiane"], ["Asia/Vladivostok", "Asia/Vladivostok"], ["Asia/Yakutsk",
+        "Asia/Yakutsk"], ["Asia/Yangon", "Asia/Yangon"], ["Asia/Yekaterinburg", "Asia/Yekaterinburg"],
+        ["Asia/Yerevan", "Asia/Yerevan"], ["Atlantic/Azores", "Atlantic/Azores"],
+        ["Atlantic/Bermuda", "Atlantic/Bermuda"], ["Atlantic/Canary", "Atlantic/Canary"],
+        ["Atlantic/Cape_Verde", "Atlantic/Cape_Verde"], ["Atlantic/Faeroe", "Atlantic/Faeroe"],
+        ["Atlantic/Faroe", "Atlantic/Faroe"], ["Atlantic/Jan_Mayen", "Atlantic/Jan_Mayen"],
+        ["Atlantic/Madeira", "Atlantic/Madeira"], ["Atlantic/Reykjavik", "Atlantic/Reykjavik"],
+        ["Atlantic/South_Georgia", "Atlantic/South_Georgia"], ["Atlantic/St_Helena",
+        "Atlantic/St_Helena"], ["Atlantic/Stanley", "Atlantic/Stanley"], ["Australia/ACT",
+        "Australia/ACT"], ["Australia/Adelaide", "Australia/Adelaide"], ["Australia/Brisbane",
+        "Australia/Brisbane"], ["Australia/Broken_Hill", "Australia/Broken_Hill"],
+        ["Australia/Canberra", "Australia/Canberra"], ["Australia/Currie", "Australia/Currie"],
+        ["Australia/Darwin", "Australia/Darwin"], ["Australia/Eucla", "Australia/Eucla"],
+        ["Australia/Hobart", "Australia/Hobart"], ["Australia/LHI", "Australia/LHI"],
+        ["Australia/Lindeman", "Australia/Lindeman"], ["Australia/Lord_Howe", "Australia/Lord_Howe"],
+        ["Australia/Melbourne", "Australia/Melbourne"], ["Australia/NSW", "Australia/NSW"],
+        ["Australia/North", "Australia/North"], ["Australia/Perth", "Australia/Perth"],
+        ["Australia/Queensland", "Australia/Queensland"], ["Australia/South", "Australia/South"],
+        ["Australia/Sydney", "Australia/Sydney"], ["Australia/Tasmania", "Australia/Tasmania"],
+        ["Australia/Victoria", "Australia/Victoria"], ["Australia/West", "Australia/West"],
+        ["Australia/Yancowinna", "Australia/Yancowinna"], ["Brazil/Acre", "Brazil/Acre"],
+        ["Brazil/DeNoronha", "Brazil/DeNoronha"], ["Brazil/East", "Brazil/East"],
+        ["Brazil/West", "Brazil/West"], ["CET", "CET"], ["CST6CDT", "CST6CDT"], ["Canada/Atlantic",
+        "Canada/Atlantic"], ["Canada/Central", "Canada/Central"], ["Canada/East-Saskatchewan",
+        "Canada/East-Saskatchewan"], ["Canada/Eastern", "Canada/Eastern"], ["Canada/Mountain",
+        "Canada/Mountain"], ["Canada/Newfoundland", "Canada/Newfoundland"], ["Canada/Pacific",
+        "Canada/Pacific"], ["Canada/Saskatchewan", "Canada/Saskatchewan"], ["Canada/Yukon",
+        "Canada/Yukon"], ["Chile/Continental", "Chile/Continental"], ["Chile/EasterIsland",
+        "Chile/EasterIsland"], ["Cuba", "Cuba"], ["EET", "EET"], ["EST", "EST"], ["EST5EDT",
+        "EST5EDT"], ["Egypt", "Egypt"], ["Eire", "Eire"], ["Europe/Amsterdam", "Europe/Amsterdam"],
+        ["Europe/Andorra", "Europe/Andorra"], ["Europe/Astrakhan", "Europe/Astrakhan"],
+        ["Europe/Athens", "Europe/Athens"], ["Europe/Belfast", "Europe/Belfast"],
+        ["Europe/Belgrade", "Europe/Belgrade"], ["Europe/Berlin", "Europe/Berlin"],
+        ["Europe/Bratislava", "Europe/Bratislava"], ["Europe/Brussels", "Europe/Brussels"],
+        ["Europe/Bucharest", "Europe/Bucharest"], ["Europe/Budapest", "Europe/Budapest"],
+        ["Europe/Busingen", "Europe/Busingen"], ["Europe/Chisinau", "Europe/Chisinau"],
+        ["Europe/Copenhagen", "Europe/Copenhagen"], ["Europe/Dublin", "Europe/Dublin"],
+        ["Europe/Gibraltar", "Europe/Gibraltar"], ["Europe/Guernsey", "Europe/Guernsey"],
+        ["Europe/Helsinki", "Europe/Helsinki"], ["Europe/Isle_of_Man", "Europe/Isle_of_Man"],
+        ["Europe/Istanbul", "Europe/Istanbul"], ["Europe/Jersey", "Europe/Jersey"],
+        ["Europe/Kaliningrad", "Europe/Kaliningrad"], ["Europe/Kiev", "Europe/Kiev"],
+        ["Europe/Kirov", "Europe/Kirov"], ["Europe/Lisbon", "Europe/Lisbon"], ["Europe/Ljubljana",
+        "Europe/Ljubljana"], ["Europe/London", "Europe/London"], ["Europe/Luxembourg",
+        "Europe/Luxembourg"], ["Europe/Madrid", "Europe/Madrid"], ["Europe/Malta",
+        "Europe/Malta"], ["Europe/Mariehamn", "Europe/Mariehamn"], ["Europe/Minsk",
+        "Europe/Minsk"], ["Europe/Monaco", "Europe/Monaco"], ["Europe/Moscow", "Europe/Moscow"],
+        ["Europe/Nicosia", "Europe/Nicosia"], ["Europe/Oslo", "Europe/Oslo"], ["Europe/Paris",
+        "Europe/Paris"], ["Europe/Podgorica", "Europe/Podgorica"], ["Europe/Prague",
+        "Europe/Prague"], ["Europe/Riga", "Europe/Riga"], ["Europe/Rome", "Europe/Rome"],
+        ["Europe/Samara", "Europe/Samara"], ["Europe/San_Marino", "Europe/San_Marino"],
+        ["Europe/Sarajevo", "Europe/Sarajevo"], ["Europe/Simferopol", "Europe/Simferopol"],
+        ["Europe/Skopje", "Europe/Skopje"], ["Europe/Sofia", "Europe/Sofia"], ["Europe/Stockholm",
+        "Europe/Stockholm"], ["Europe/Tallinn", "Europe/Tallinn"], ["Europe/Tirane",
+        "Europe/Tirane"], ["Europe/Tiraspol", "Europe/Tiraspol"], ["Europe/Ulyanovsk",
+        "Europe/Ulyanovsk"], ["Europe/Uzhgorod", "Europe/Uzhgorod"], ["Europe/Vaduz",
+        "Europe/Vaduz"], ["Europe/Vatican", "Europe/Vatican"], ["Europe/Vienna", "Europe/Vienna"],
+        ["Europe/Vilnius", "Europe/Vilnius"], ["Europe/Volgograd", "Europe/Volgograd"],
+        ["Europe/Warsaw", "Europe/Warsaw"], ["Europe/Zagreb", "Europe/Zagreb"], ["Europe/Zaporozhye",
+        "Europe/Zaporozhye"], ["Europe/Zurich", "Europe/Zurich"], ["GB", "GB"], ["GB-Eire",
+        "GB-Eire"], ["GMT", "GMT"], ["GMT+0", "GMT+0"], ["GMT-0", "GMT-0"], ["GMT0",
+        "GMT0"], ["Greenwich", "Greenwich"], ["HST", "HST"], ["Hongkong", "Hongkong"],
+        ["Iceland", "Iceland"], ["Indian/Antananarivo", "Indian/Antananarivo"], ["Indian/Chagos",
+        "Indian/Chagos"], ["Indian/Christmas", "Indian/Christmas"], ["Indian/Cocos",
+        "Indian/Cocos"], ["Indian/Comoro", "Indian/Comoro"], ["Indian/Kerguelen",
+        "Indian/Kerguelen"], ["Indian/Mahe", "Indian/Mahe"], ["Indian/Maldives", "Indian/Maldives"],
+        ["Indian/Mauritius", "Indian/Mauritius"], ["Indian/Mayotte", "Indian/Mayotte"],
+        ["Indian/Reunion", "Indian/Reunion"], ["Iran", "Iran"], ["Israel", "Israel"],
+        ["Jamaica", "Jamaica"], ["Japan", "Japan"], ["Kwajalein", "Kwajalein"], ["Libya",
+        "Libya"], ["MET", "MET"], ["MST", "MST"], ["MST7MDT", "MST7MDT"], ["Mexico/BajaNorte",
+        "Mexico/BajaNorte"], ["Mexico/BajaSur", "Mexico/BajaSur"], ["Mexico/General",
+        "Mexico/General"], ["NZ", "NZ"], ["NZ-CHAT", "NZ-CHAT"], ["Navajo", "Navajo"],
+        ["PRC", "PRC"], ["PST8PDT", "PST8PDT"], ["Pacific/Apia", "Pacific/Apia"],
+        ["Pacific/Auckland", "Pacific/Auckland"], ["Pacific/Bougainville", "Pacific/Bougainville"],
+        ["Pacific/Chatham", "Pacific/Chatham"], ["Pacific/Chuuk", "Pacific/Chuuk"],
+        ["Pacific/Easter", "Pacific/Easter"], ["Pacific/Efate", "Pacific/Efate"],
+        ["Pacific/Enderbury", "Pacific/Enderbury"], ["Pacific/Fakaofo", "Pacific/Fakaofo"],
+        ["Pacific/Fiji", "Pacific/Fiji"], ["Pacific/Funafuti", "Pacific/Funafuti"],
+        ["Pacific/Galapagos", "Pacific/Galapagos"], ["Pacific/Gambier", "Pacific/Gambier"],
+        ["Pacific/Guadalcanal", "Pacific/Guadalcanal"], ["Pacific/Guam", "Pacific/Guam"],
+        ["Pacific/Honolulu", "Pacific/Honolulu"], ["Pacific/Johnston", "Pacific/Johnston"],
+        ["Pacific/Kiritimati", "Pacific/Kiritimati"], ["Pacific/Kosrae", "Pacific/Kosrae"],
+        ["Pacific/Kwajalein", "Pacific/Kwajalein"], ["Pacific/Majuro", "Pacific/Majuro"],
+        ["Pacific/Marquesas", "Pacific/Marquesas"], ["Pacific/Midway", "Pacific/Midway"],
+        ["Pacific/Nauru", "Pacific/Nauru"], ["Pacific/Niue", "Pacific/Niue"], ["Pacific/Norfolk",
+        "Pacific/Norfolk"], ["Pacific/Noumea", "Pacific/Noumea"], ["Pacific/Pago_Pago",
+        "Pacific/Pago_Pago"], ["Pacific/Palau", "Pacific/Palau"], ["Pacific/Pitcairn",
+        "Pacific/Pitcairn"], ["Pacific/Pohnpei", "Pacific/Pohnpei"], ["Pacific/Ponape",
+        "Pacific/Ponape"], ["Pacific/Port_Moresby", "Pacific/Port_Moresby"], ["Pacific/Rarotonga",
+        "Pacific/Rarotonga"], ["Pacific/Saipan", "Pacific/Saipan"], ["Pacific/Samoa",
+        "Pacific/Samoa"], ["Pacific/Tahiti", "Pacific/Tahiti"], ["Pacific/Tarawa",
+        "Pacific/Tarawa"], ["Pacific/Tongatapu", "Pacific/Tongatapu"], ["Pacific/Truk",
+        "Pacific/Truk"], ["Pacific/Wake", "Pacific/Wake"], ["Pacific/Wallis", "Pacific/Wallis"],
+        ["Pacific/Yap", "Pacific/Yap"], ["Poland", "Poland"], ["Portugal", "Portugal"],
+        ["ROC", "ROC"], ["ROK", "ROK"], ["Singapore", "Singapore"], ["Turkey", "Turkey"],
+        ["UCT", "UCT"], ["US/Alaska", "US/Alaska"], ["US/Aleutian", "US/Aleutian"],
+        ["US/Arizona", "US/Arizona"], ["US/Central", "US/Central"], ["US/East-Indiana",
+        "US/East-Indiana"], ["US/Eastern", "US/Eastern"], ["US/Hawaii", "US/Hawaii"],
+        ["US/Indiana-Starke", "US/Indiana-Starke"], ["US/Michigan", "US/Michigan"],
+        ["US/Mountain", "US/Mountain"], ["US/Pacific", "US/Pacific"], ["US/Pacific-New",
+        "US/Pacific-New"], ["US/Samoa", "US/Samoa"], ["UTC", "UTC"], ["Universal",
+        "Universal"], ["W-SU", "W-SU"], ["WET", "WET"], ["Zulu", "Zulu"], ["Etc/GMT",
+        "Etc/GMT"], ["Etc/GMT+0", "Etc/GMT+0"], ["Etc/GMT+1", "Etc/GMT+1"], ["Etc/GMT+10",
+        "Etc/GMT+10"], ["Etc/GMT+11", "Etc/GMT+11"], ["Etc/GMT+12", "Etc/GMT+12"],
+        ["Etc/GMT+2", "Etc/GMT+2"], ["Etc/GMT+3", "Etc/GMT+3"], ["Etc/GMT+4", "Etc/GMT+4"],
+        ["Etc/GMT+5", "Etc/GMT+5"], ["Etc/GMT+6", "Etc/GMT+6"], ["Etc/GMT+7", "Etc/GMT+7"],
+        ["Etc/GMT+8", "Etc/GMT+8"], ["Etc/GMT+9", "Etc/GMT+9"], ["Etc/GMT-0", "Etc/GMT-0"],
+        ["Etc/GMT-1", "Etc/GMT-1"], ["Etc/GMT-10", "Etc/GMT-10"], ["Etc/GMT-11", "Etc/GMT-11"],
+        ["Etc/GMT-12", "Etc/GMT-12"], ["Etc/GMT-13", "Etc/GMT-13"], ["Etc/GMT-14",
+        "Etc/GMT-14"], ["Etc/GMT-2", "Etc/GMT-2"], ["Etc/GMT-3", "Etc/GMT-3"], ["Etc/GMT-4",
+        "Etc/GMT-4"], ["Etc/GMT-5", "Etc/GMT-5"], ["Etc/GMT-6", "Etc/GMT-6"], ["Etc/GMT-7",
+        "Etc/GMT-7"], ["Etc/GMT-8", "Etc/GMT-8"], ["Etc/GMT-9", "Etc/GMT-9"], ["Etc/GMT0",
+        "Etc/GMT0"], ["Etc/Greenwich", "Etc/Greenwich"], ["Etc/UCT", "Etc/UCT"], ["Etc/UTC",
+        "Etc/UTC"], ["Etc/Universal", "Etc/Universal"], ["Etc/Zulu", "Etc/Zulu"]],
+        "readonly": false}, "message_last_post": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "Date of the last message posted on the record.",
+        "searchable": true, "type": "datetime", "string": "Last Message Date", "store":
+        true, "depends": [], "sortable": true, "required": false, "readonly": false},
+        "implemented_count": {"change_default": false, "company_dependent": false,
+        "manual": false, "searchable": true, "type": "integer", "string": "Implemented
+        Count", "store": true, "depends": ["implemented_partner_ids", "implemented_partner_ids.website_published",
+        "implemented_partner_ids.active"], "sortable": true, "required": false, "group_operator":
+        "sum", "readonly": true}, "company_type": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": false, "type": "selection", "string":
+        "Company Type", "store": false, "depends": ["is_company"], "sortable": false,
+        "required": false, "selection": [["person", "Individual"], ["company", "Company"]],
+        "readonly": false}, "invoice_warn_msg": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "text", "string": "Message
+        for Invoice", "store": true, "depends": [], "sortable": true, "translate":
+        false, "required": false, "readonly": false}, "grade_sequence": {"change_default":
+        false, "company_dependent": false, "manual": false, "related": ["grade_id",
+        "sequence"], "searchable": true, "type": "integer", "string": "Sequence",
+        "store": true, "depends": ["grade_id.sequence"], "sortable": true, "required":
+        false, "group_operator": "sum", "readonly": true}, "is_bot_account": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "Check this box
+        if this account is a bot or similar.", "searchable": true, "type": "boolean",
+        "string": "Is Bot Github Account", "store": true, "depends": [], "sortable":
+        true, "required": false, "readonly": false}, "sale_warn": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "Selecting the
+        \"Warning\" option will notify user with the message, Selecting \"Blocking
+        Message\" will throw an exception with the message and block the flow. The
+        Message has to be written in the next field.", "searchable": true, "type":
+        "selection", "string": "Sales Order", "store": true, "depends": [], "sortable":
+        true, "required": true, "selection": [["no-message", "No Message"], ["warning",
+        "Warning"], ["block", "Blocking Message"]], "readonly": false}, "credit_policy_id":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "The Credit Control Policy used for this partner. This setting can be forced
+        on the invoice. If nothing is defined, it will use the company setting.",
+        "domain": "[(''account_ids'', ''in'', property_account_receivable_id)]", "type":
+        "many2one", "string": "Credit Control Policy", "store": true, "searchable":
+        true, "depends": [], "sortable": true, "required": false, "relation": "credit.control.policy",
+        "context": {}, "readonly": false}, "customer_payment_mode_id": {"change_default":
+        false, "company_dependent": true, "manual": false, "help": "Select the default
+        payment mode for this customer.", "domain": "[(''payment_type'', ''='', ''inbound'')]",
+        "type": "many2one", "string": "Customer Payment Mode", "store": false, "searchable":
+        true, "depends": [], "sortable": false, "required": false, "relation": "account.payment.mode",
+        "context": {}, "readonly": false}, "employee": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "Check this box if this contact is an Employee.",
+        "searchable": true, "type": "boolean", "string": "Employee", "store": true,
+        "depends": [], "sortable": true, "required": false, "readonly": false}, "image_medium":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "Medium-sized image of this contact. It is automatically resized as a 128x128px
+        image, with aspect ratio preserved. Use this field in form views or some kanban
+        views.", "searchable": true, "type": "binary", "string": "Medium-sized image",
+        "store": true, "depends": [], "sortable": true, "required": false, "attachment":
+        true, "readonly": false}, "calendar_last_notif_ack": {"change_default": false,
+        "company_dependent": false, "manual": false, "string": "Last notification
+        marked as read from base Calendar", "depends": [], "type": "datetime", "required":
+        false, "store": true, "sortable": true, "searchable": true, "readonly": false},
+        "property_supplier_payment_term_id": {"change_default": false, "company_dependent":
+        true, "manual": false, "help": "This payment term will be used instead of
+        the default one for purchase orders and vendor bills", "domain": [], "type":
+        "many2one", "string": "Vendor Payment Terms", "store": false, "searchable":
+        true, "depends": [], "sortable": false, "required": false, "relation": "account.payment.term",
+        "context": {}, "readonly": false}, "github_organization_url": {"change_default":
+        false, "company_dependent": false, "manual": false, "searchable": true, "type":
+        "char", "string": "Github Organization URL", "store": true, "depends": ["github_organization"],
+        "sortable": true, "translate": false, "required": false, "readonly": true},
+        "date_review": {"change_default": false, "company_dependent": false, "manual":
+        false, "string": "Latest Partner Review", "depends": [], "type": "date", "required":
+        false, "store": true, "sortable": true, "searchable": true, "readonly": false},
+        "child_ids": {"change_default": false, "company_dependent": false, "manual":
+        false, "domain": [["active", "=", true]], "type": "one2many", "string": "Contacts",
+        "store": true, "searchable": true, "depends": ["child_ids.active"], "sortable":
+        true, "required": false, "relation": "res.partner", "context": {}, "relation_field":
+        "parent_id", "readonly": false}, "contact_address": {"change_default": false,
+        "company_dependent": false, "manual": false, "searchable": false, "type":
+        "char", "string": "Complete Address", "store": false, "depends": ["street",
+        "street2", "zip", "city", "state_id", "country_id", "country_id.address_format",
+        "country_id.code", "country_id.name", "company_name", "state_id.code", "state_id.name"],
+        "sortable": false, "translate": false, "required": false, "readonly": true},
+        "industry_id": {"change_default": false, "company_dependent": false, "manual":
+        false, "domain": [], "type": "many2one", "string": "Industry", "store": true,
+        "searchable": true, "depends": [], "sortable": true, "required": false, "relation":
+        "res.partner.industry", "context": {}, "readonly": false}, "self": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "many2one", "string": "Self", "store": false, "searchable": false, "depends":
+        [], "sortable": false, "required": false, "relation": "res.partner", "context":
+        {}, "readonly": true}, "property_account_payable_id": {"change_default": false,
+        "company_dependent": true, "manual": false, "help": "This account will be
+        used instead of the default one as the payable account for the current partner",
+        "domain": "[(''internal_type'', ''='', ''payable''), (''deprecated'', ''='',
+        False)]", "type": "many2one", "string": "Account Payable", "store": false,
+        "searchable": true, "depends": [], "sortable": false, "required": true, "relation":
+        "account.account", "context": {}, "readonly": false}, "ref_company_ids": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "one2many", "string": "Companies that refers to partner", "store": true, "searchable":
+        true, "depends": [], "sortable": true, "required": false, "relation": "res.company",
+        "context": {}, "relation_field": "partner_id", "readonly": false}, "task_count":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        false, "type": "integer", "string": "# Tasks", "store": false, "depends":
+        [], "sortable": false, "required": false, "group_operator": "sum", "readonly":
+        true}, "github_create_date": {"change_default": false, "company_dependent":
+        false, "manual": false, "string": "Create Date on Github", "depends": [],
+        "type": "datetime", "required": false, "store": true, "sortable": true, "searchable":
+        true, "readonly": true}, "associate_member": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "A member with whom you want to associate
+        your membership. It will consider the membership state of the associated member.",
+        "domain": [], "type": "many2one", "string": "Associate Member", "store": true,
+        "searchable": true, "depends": [], "sortable": true, "required": false, "relation":
+        "res.partner", "context": {}, "readonly": false}, "payment_responsible_id":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "Optionally you can assign a user to this field, which will make him responsible
+        for the action.", "domain": [], "type": "many2one", "string": "Follow-up Responsible",
+        "store": true, "searchable": true, "depends": [], "sortable": true, "required":
+        false, "relation": "res.users", "context": {}, "readonly": false}, "manual_followup":
+        {"change_default": false, "company_dependent": false, "manual": false, "string":
+        "Manual Followup", "depends": [], "type": "boolean", "required": false, "store":
+        true, "sortable": true, "searchable": true, "readonly": false}, "active":
+        {"change_default": false, "company_dependent": false, "manual": false, "string":
+        "Active", "depends": [], "type": "boolean", "required": false, "store": true,
+        "sortable": true, "searchable": true, "readonly": false}, "membership_cancel":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "Date on which membership has been cancelled", "searchable": true, "type":
+        "date", "string": "Cancel Membership Date", "store": true, "depends": ["member_lines.account_invoice_line.invoice_id.state",
+        "member_lines.account_invoice_line.invoice_id.invoice_line_ids", "member_lines.account_invoice_line.invoice_id.payment_ids",
+        "free_member", "member_lines.date_to", "member_lines.date_from", "member_lines.date_cancel",
+        "membership_state", "associate_member.membership_state"], "sortable": true,
+        "required": false, "readonly": true}, "color": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "integer", "string": "Color
+        Index", "store": true, "depends": [], "sortable": true, "required": false,
+        "group_operator": "sum", "readonly": false}, "date_review_next": {"change_default":
+        false, "company_dependent": false, "manual": false, "string": "Next Partner
+        Review", "depends": [], "type": "date", "required": false, "store": true,
+        "sortable": true, "searchable": true, "readonly": false}, "partner_weight":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "Gives the probability to assign a lead to this partner. (0 means no assignation.)",
+        "searchable": true, "type": "integer", "string": "Level Weight", "store":
+        true, "depends": [], "sortable": true, "required": false, "group_operator":
+        "sum", "readonly": false}, "credit_control_line_ids": {"change_default": false,
+        "company_dependent": false, "manual": false, "domain": [], "type": "one2many",
+        "string": "Credit Control Lines", "store": true, "searchable": true, "depends":
+        [], "sortable": true, "required": false, "relation": "credit.control.line",
+        "context": {}, "relation_field": "invoice_id", "readonly": true}, "message_needaction_counter":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "Number of messages which requires an action", "searchable": false, "type":
+        "integer", "string": "Number of Actions", "store": false, "depends": [], "sortable":
+        false, "required": false, "group_operator": "sum", "readonly": true}, "invoice_ids":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "one2many", "string": "Invoices", "store": true, "searchable":
+        true, "depends": [], "sortable": true, "required": false, "relation": "account.invoice",
+        "context": {}, "relation_field": "partner_id", "readonly": true}, "contributor_count":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "integer", "string": "Number of contributors", "store": true,
+        "depends": ["child_ids.github_login", "child_ids.parent_id"], "sortable":
+        true, "required": false, "group_operator": "sum", "readonly": true}, "user_id":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "The internal user that is in charge of communicating with this contact if
+        any.", "domain": [], "type": "many2one", "string": "Salesperson", "store":
+        true, "searchable": true, "depends": [], "sortable": true, "required": false,
+        "relation": "res.users", "context": {}, "readonly": false}, "github_login":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "char", "string": "Github Technical Name", "store": true, "depends":
+        [], "sortable": true, "translate": false, "required": false, "readonly": false},
+        "opportunity_count": {"change_default": false, "company_dependent": false,
+        "manual": false, "searchable": false, "type": "integer", "string": "Opportunity",
+        "store": false, "depends": [], "sortable": false, "required": false, "group_operator":
+        "sum", "readonly": true}, "id": {"change_default": false, "company_dependent":
+        false, "manual": false, "string": "ID", "depends": [], "type": "integer",
+        "required": false, "store": true, "sortable": true, "searchable": true, "readonly":
+        true}, "sponsorship_line_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [], "type": "one2many", "string": "Sponsorship
+        Activities", "store": true, "searchable": true, "depends": [], "sortable":
+        true, "required": false, "relation": "sponsorship.line", "context": {}, "relation_field":
+        "partner_id", "readonly": false}, "payment_token_ids": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "one2many", "string": "Payment Tokens", "store": true, "searchable": true,
+        "depends": [], "sortable": true, "required": false, "relation": "payment.token",
+        "context": {}, "relation_field": "partner_id", "readonly": false}, "website_meta_description":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "text", "string": "Website meta description", "store": true,
+        "depends": [], "sortable": true, "translate": true, "required": false, "readonly":
+        false}, "channel_ids": {"change_default": false, "company_dependent": false,
+        "manual": false, "domain": [], "type": "many2many", "string": "Channels",
+        "store": true, "searchable": true, "depends": [], "sortable": true, "required":
+        false, "relation": "mail.channel", "context": {}, "readonly": false}, "state_id":
+        {"change_default": false, "company_dependent": false, "manual": false, "domain":
+        [], "type": "many2one", "string": "State", "store": true, "searchable": true,
+        "depends": [], "sortable": true, "required": false, "relation": "res.country.state",
+        "context": {}, "readonly": false}, "write_uid": {"change_default": false,
+        "company_dependent": false, "manual": false, "domain": [], "type": "many2one",
+        "string": "Last Updated by", "store": true, "searchable": true, "depends":
+        [], "sortable": true, "required": false, "relation": "res.users", "context":
+        {}, "readonly": false}, "membership_stop": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "Date until which membership remains active.",
+        "searchable": true, "type": "date", "string": "Membership End Date", "store":
+        true, "depends": ["member_lines.account_invoice_line.invoice_id.state", "member_lines.account_invoice_line.invoice_id.invoice_line_ids",
+        "member_lines.account_invoice_line.invoice_id.payment_ids", "free_member",
+        "member_lines.date_to", "member_lines.date_from", "member_lines.date_cancel",
+        "membership_state", "associate_member.membership_state"], "sortable": true,
+        "required": false, "readonly": true}, "message_needaction": {"change_default":
+        false, "company_dependent": false, "manual": false, "help": "If checked, new
+        messages require your attention.", "searchable": true, "type": "boolean",
+        "string": "Action Needed", "store": false, "depends": [], "sortable": false,
+        "required": false, "readonly": true}, "contributor_module_line_ids": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "one2many", "string": "Contributed Modules", "store": true, "searchable":
+        true, "depends": [], "sortable": true, "required": false, "relation": "contributor.module.line",
+        "context": {}, "relation_field": "partner_id", "readonly": true}, "has_unreconciled_entries":
+        {"change_default": false, "company_dependent": false, "manual": false, "help":
+        "The partner has at least one unreconciled debit and credit since last time
+        the invoices & payments matching was performed.", "searchable": false, "type":
+        "boolean", "string": "Has Unreconciled Entries", "store": false, "depends":
+        [], "sortable": false, "required": false, "readonly": true}, "sale_order_count":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        false, "type": "integer", "string": "# of Sales Order", "store": false, "depends":
+        [], "sortable": false, "required": false, "group_operator": "sum", "readonly":
+        true}, "purchase_warn": {"change_default": false, "company_dependent": false,
+        "manual": false, "help": "Selecting the \"Warning\" option will notify user
+        with the message, Selecting \"Blocking Message\" will throw an exception with
+        the message and block the flow. The Message has to be written in the next
+        field.", "searchable": true, "type": "selection", "string": "Purchase Order",
+        "store": true, "depends": [], "sortable": true, "required": true, "selection":
+        [["no-message", "No Message"], ["warning", "Warning"], ["block", "Blocking
+        Message"]], "readonly": false}, "message_channel_ids": {"change_default":
+        false, "company_dependent": false, "manual": false, "domain": [], "type":
+        "many2many", "string": "Followers (Channels)", "store": false, "searchable":
+        true, "depends": ["message_follower_ids"], "sortable": false, "required":
+        false, "relation": "mail.channel", "context": {}, "readonly": true}, "credit_limit":
+        {"change_default": false, "company_dependent": false, "manual": false, "searchable":
+        true, "type": "float", "string": "Credit Limit", "store": true, "depends":
+        [], "sortable": true, "required": false, "group_operator": "sum", "readonly":
+        false}, "opportunity_ids": {"change_default": false, "company_dependent":
+        false, "manual": false, "domain": [["type", "=", "opportunity"]], "type":
+        "one2many", "string": "Opportunities", "store": true, "searchable": true,
+        "depends": ["opportunity_ids.type"], "sortable": true, "required": false,
+        "relation": "crm.lead", "context": {}, "relation_field": "partner_id", "readonly":
+        false}, "github_id_external": {"change_default": false, "company_dependent":
+        false, "manual": false, "searchable": true, "type": "char", "string": "Github
+        Id", "store": true, "depends": [], "sortable": true, "translate": false, "required":
+        false, "readonly": true}, "opt_out": {"change_default": false, "company_dependent":
+        false, "manual": false, "help": "If opt-out is checked, this contact has refused
+        to receive emails for mass mailing and marketing campaign. Filter ''Available
+        for Mass Mailing'' allows users to filter the partners when performing mass
+        mailing.", "searchable": true, "type": "boolean", "string": "Opt-Out", "store":
+        true, "depends": [], "sortable": true, "required": false, "readonly": false},
+        "website_message_ids": {"change_default": false, "company_dependent": false,
+        "manual": false, "help": "Website communication history", "domain": [["model",
+        "=", "res.partner"], ["message_type", "=", "comment"]], "type": "one2many",
+        "string": "Website Messages", "store": true, "searchable": true, "depends":
+        [], "sortable": true, "required": false, "relation": "mail.message", "context":
+        {}, "relation_field": "res_id", "readonly": false}}, "id": 835126159, "jsonrpc":
+        "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['84157']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:44 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:44 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "Emiq2"]]], {"context": {"lang": "en_US",
+      "uid": 327, "tz": false}}]}, "id": 425784820}'
+    headers:
+      Connection: [close]
+      Content-Length: ['279']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [], "id": 425784820, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['49']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:44 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:44 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "legalsylvain"]]], {"context": {"lang": "en_US",
+      "uid": 327, "tz": false}}]}, "id": 818900269}'
+    headers:
+      Connection: [close]
+      Content-Length: ['286']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [326], "id": 818900269, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['52']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:44 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:44 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "legalsylvain"], "|", ["category_id", "=",
+      "ICLA"], ["parent_id.category_id", "=", "ECLA"]]], {"context": {"lang": "en_US",
+      "uid": 327, "tz": false}}]}, "id": 140023372}'
+    headers:
+      Connection: [close]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [326], "id": 140023372, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['52']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:44 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:44 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "oca-transbot"]]], {"context": {"lang": "en_US",
+      "uid": 327, "tz": false}}]}, "id": 357470383}'
+    headers:
+      Connection: [close]
+      Content-Length: ['286']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [4428], "id": 357470383, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['53']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:45 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:45 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "oca-transbot"], "|", ["category_id", "=",
+      "ICLA"], ["parent_id.category_id", "=", "ECLA"]]], {"context": {"lang": "en_US",
+      "uid": 327, "tz": false}}]}, "id": 574113947}'
+    headers:
+      Connection: [close]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [], "id": 574113947, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['49']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:45 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:45 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "rafaelbn"]]], {"context": {"lang": "en_US",
+      "uid": 327, "tz": false}}]}, "id": 148599977}'
+    headers:
+      Connection: [close]
+      Content-Length: ['282']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [1832], "id": 148599977, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['53']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:45 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:45 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "rafaelbn"], "|", ["category_id", "=", "ICLA"],
+      ["parent_id.category_id", "=", "ECLA"]]], {"context": {"lang": "en_US", "uid":
+      327, "tz": false}}]}, "id": 800846507}'
+    headers:
+      Connection: [close]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [1832], "id": 800846507, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['53']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:45 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:45 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "sbidoul"]]], {"context": {"lang": "en_US",
+      "uid": 327, "tz": false}}]}, "id": 26171865}'
+    headers:
+      Connection: [close]
+      Content-Length: ['280']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [350], "id": 26171865, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['51']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:45 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:45 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"jsonrpc": "2.0", "method": "call", "params": {"service": "object", "method":
+      "execute_kw", "args": ["odoo_community_v11", 327, "yortoagIv+", "res.partner",
+      "search", [[["github_login", "=", "sbidoul"], "|", ["category_id", "=", "ICLA"],
+      ["parent_id.category_id", "=", "ECLA"]]], {"context": {"lang": "en_US", "uid":
+      327, "tz": false}}]}, "id": 988042877}'
+    headers:
+      Connection: [close]
+      Content-Length: ['356']
+      Content-Type: [application/json]
+      Cookie: [session_id=8949a1970499a7320454c69ff4656fe48bf9332d]
+      Host: ['odoo-community.org:443']
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://odoo-community.org/jsonrpc
+  response:
+    body: {string: '{"result": [350], "id": 988042877, "jsonrpc": "2.0"}'}
+    headers:
+      Connection: [close]
+      Content-Length: ['52']
+      Content-Type: [application/json]
+      Date: ['Wed, 02 Jan 2019 15:13:46 GMT']
+      Server: [nginx/1.10.3]
+      Set-Cookie: ['session_id=8949a1970499a7320454c69ff4656fe48bf9332d; Expires=Tue,
+          02-Apr-2019 15:13:46 GMT; Max-Age=7776000; HttpOnly; Path=/']
+    status: {code: 200, message: OK}
+version: 1

@@ -158,7 +158,7 @@ class CLAChecker:
         )
         users_cached = [r[0] for r in res.fetchall()]
         users = list(set(users) - set(users_cached))
-
+        users.sort()
         with login() as client:
             Partner = client.env["res.partner"]
             for user in users:
