@@ -62,7 +62,9 @@ def test_set_addon_version(tmp_path):
 
 def test_bump_version():
     assert bump_version("12.0.1.0.0", "major") == "12.0.2.0.0"
+    assert bump_version("12.0.1.1.1", "major") == "12.0.2.0.0"
     assert bump_version("12.0.1.0.0", "minor") == "12.0.1.1.0"
+    assert bump_version("12.0.1.0.1", "minor") == "12.0.1.1.0"
     assert bump_version("12.0.1.0.0", "patch") == "12.0.1.0.1"
     with pytest.raises(RuntimeError):
         bump_version("1.0", "major")

@@ -72,8 +72,11 @@ def bump_version(version, mode):
     patch = mo.group("patch")
     if mode == "major":
         major = int(major) + 1
+        minor = 0
+        patch = 0
     elif mode == "minor":
         minor = int(minor) + 1
+        patch = 0
     elif mode == "patch":
         patch = int(patch) + 1
     else:
