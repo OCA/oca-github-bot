@@ -35,6 +35,14 @@ def _gen_addons_readme(org, repo, branch, dry_run):
     subprocess.check_output(gen_addon_readme_cmd, stderr=subprocess.STDOUT)
 
 
+def _gen_addons_icon(org, repo, branch, dry_run):
+    _logger.info("oca-gen-addon-icon in %s/%s@%s", org, repo, branch)
+    gen_addon_icon_cmd = ["oca-gen-addon-icon", "--addons-dir", "."]
+    if not dry_run:
+        gen_addon_icon_cmd.append("--commit")
+    subprocess.check_output(gen_addon_icon_cmd, stderr=subprocess.STDOUT)
+
+
 def _setuptools_odoo_make_default(org, repo, branch, dry_run):
     _logger.info("setuptools-odoo-make-default in %s/%s@%s\n", org, repo, branch)
     make_default_setup_cmd = [
@@ -62,6 +70,8 @@ def main_branch_bot(org, repo, branch, dry_run=False):
         _gen_addons_table(org, repo, branch, dry_run)
         # generate README.rst
         _gen_addons_readme(org, repo, branch, dry_run)
+        # generate icon
+        _gen_addons_icon(org, repo, branch, dry_run)
         # generate/clean default setup.py
         _setuptools_odoo_make_default(org, repo, branch, dry_run)
         # push changes to git, if any
