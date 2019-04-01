@@ -36,6 +36,10 @@ Addon README.rst generator
   For addons repositories, generate README.rst from readme fragments
   in each addon directory, and push changes back to github.
 
+Addon icon generator
+  For addons repositories, put default OCA icon in each addon that don't have
+  yet any icon, and push changes back to github.
+
 setup.py generator
   For addons repositories, run setuptools-odoo-make-defaults, and push
   changes back to github.
