@@ -29,6 +29,6 @@ requests==2.20.0
 six==1.11.0
 tornado==5.1.1
 uritemplate==3.0.0
-urllib3==1.24.1
+urllib3==1.25.1
 vine==1.1.4
 yarl==1.2.6
