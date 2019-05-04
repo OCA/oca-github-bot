@@ -4,4 +4,5 @@
 from . import heartbeat
 from . import main_branch_bot
 from . import tag_approved
+from . import tag_needs_review
 from . import tag_ready_to_merge
