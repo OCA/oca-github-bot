@@ -17,7 +17,7 @@ ODOO_DB = os.environ.get("ODOO_DB", "odoo_community_v11")
 ODOO_LOGIN = os.environ.get("ODOO_LOGIN")
 ODOO_PASSWORD = os.environ.get("ODOO_PASSWORD")
 
-REDIS_URI = os.environ.get("REDIS_URI", "redis://queue")
+BROKER_URI = os.environ.get("BROKER_URI", os.environ.get("REDIS_URI", "redis://queue"))
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 

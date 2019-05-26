@@ -3,8 +3,8 @@
 # have a default value, all others must be provided
 #
 
-# redis URI to use for the celery task queue
-#REDIS_URI=redis://queue
+# broker URI to use for the celery task queue
+#BROKER_URI=redis://queue
 
 #HTTP_HOST=0.0.0.0
 #HTTP_PORT=8080

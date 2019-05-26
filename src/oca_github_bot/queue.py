@@ -8,7 +8,7 @@ from celery.utils.log import get_task_logger
 
 from . import config
 
-app = celery.Celery(broker=config.REDIS_URI)
+app = celery.Celery(broker=config.BROKER_URI)
 
 getLogger = get_task_logger
 
