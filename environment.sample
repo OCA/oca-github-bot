@@ -15,6 +15,8 @@ GITHUB_SECRET=
 GITHUB_LOGIN=
 # GitHub oauth token
 GITHUB_TOKEN=
+# Github organisation name (default OCA)
+GITHUB_ORG=
 # Git name and email used for creating commits (default: user git config,
 # needs to be set to to launch the docker composition)
 GIT_NAME=

@@ -23,6 +23,8 @@ def _gen_addons_readme(org, repo, branch, dry_run):
     _logger.info("oca-gen-addon-readme in %s/%s@%s", org, repo, branch)
     gen_addon_readme_cmd = [
         "oca-gen-addon-readme",
+        "--org-name",
+        org,
         "--repo-name",
         repo,
         "--branch",
@@ -50,7 +52,7 @@ def _setuptools_odoo_make_default(org, repo, branch, dry_run):
         "--addons-dir",
         ".",
         "--metapackage",
-        "oca-" + repo,
+        org.lower() + "-" + repo,
         "--clean",
     ]
     if not dry_run:
