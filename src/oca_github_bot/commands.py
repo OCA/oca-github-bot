@@ -3,6 +3,9 @@
 
 import re
 
+from .queue import task
+from .tasks import merge_bot
+
 BOT_COMMAND_RE = re.compile(
     r"/ocabot +(?P<command>\w+)( +(?P<options>.*?))? *$", re.MULTILINE
 )
@@ -33,6 +36,11 @@ class BotCommand:
     def parse_options(self, options):
         pass
 
+    @task()
+    def run(self, org, repo, pr, target_branch, user, dry_run=False):
+        """ Run the command on a given pull request on behalf of a GitHub user """
+        raise NotImplementedError()
+
 
 class BotCommandMerge(BotCommand):
     bumpversion = None  # optional str: major|minor|patch
@@ -44,6 +52,12 @@ class BotCommandMerge(BotCommand):
             self.bumpversion = options
         else:
             raise InvalidOptionsError(self.name, options)
+
+    @task()
+    def run(self, org, repo, pr, target_branch, user, dry_run=False):
+        merge_bot.merge_bot_start(
+            org, repo, pr, target_branch, bumpversion=self.bumpversion, dry_run=False
+        )
 
 
 def parse_commands(text):
