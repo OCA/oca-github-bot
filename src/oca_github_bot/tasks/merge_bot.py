@@ -34,3 +34,15 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                 bump_manifest_version(addon, bumpversion, git_commit=True)
         # push
         subprocess.check_call(["git", "push", "--force", "origin", merge_bot_branch])
+
+
+@task()
+def merge_bot_status_error(org, repo, merge_bot_branch):
+    # TODO
+    pass
+
+
+@task()
+def merge_bot_status_ok(org, repo, merge_bot_branch):
+    # TODO
+    pass
