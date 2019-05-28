@@ -58,6 +58,23 @@ def _setuptools_odoo_make_default(org, repo, branch, dry_run):
     subprocess.check_output(make_default_setup_cmd, stderr=subprocess.STDOUT)
 
 
+def main_branch_bot_actions(org, repo, branch, dry_run):
+    """
+    Run main branch bot actions on a local git checkout.
+
+    Assumes the current directory is the root of a local git checkout.
+    """
+    _logger.info(f"main_branch_bot {org}/{repo}@{branch}")
+    # update addons table in README.md
+    _gen_addons_table(org, repo, branch, dry_run)
+    # generate README.rst
+    _gen_addons_readme(org, repo, branch, dry_run)
+    # generate icon
+    _gen_addons_icon(org, repo, branch, dry_run)
+    # generate/clean default setup.py
+    _setuptools_odoo_make_default(org, repo, branch, dry_run)
+
+
 @task()
 def main_branch_bot(org, repo, branch, dry_run=False):
     if not is_main_branch_bot_branch(branch):
@@ -65,15 +82,7 @@ def main_branch_bot(org, repo, branch, dry_run=False):
     with temporary_clone(org, repo, branch):
         if not manifest.is_addons_dir("."):
             return
-        _logger.info(f"main_branch_bot {org}/{repo}@{branch}")
-        # update addons table in README.md
-        _gen_addons_table(org, repo, branch, dry_run)
-        # generate README.rst
-        _gen_addons_readme(org, repo, branch, dry_run)
-        # generate icon
-        _gen_addons_icon(org, repo, branch, dry_run)
-        # generate/clean default setup.py
-        _setuptools_odoo_make_default(org, repo, branch, dry_run)
+        main_branch_bot_actions(org, repo, branch, dry_run)
         # push changes to git, if any
         if dry_run:
             _logger.info(f"DRY-RUN git push in {org}/{repo}@{branch}")
