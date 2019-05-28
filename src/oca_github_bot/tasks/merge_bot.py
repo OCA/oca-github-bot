@@ -3,7 +3,7 @@
 
 import subprocess
 
-from ..github import temporary_clone
+from .. import github
 from ..manifest import bump_manifest_version, git_modified_addons
 from ..queue import getLogger, task
 from ..version_branch import make_merge_bot_branch
@@ -16,9 +16,11 @@ _logger = getLogger(__name__)
 def merge_bot_start(
     org, repo, pr, target_branch, user, bumpversion=None, dry_run=False
 ):
-    # TODO check user has write access when reaching this point
     # TODO error handling
-    with temporary_clone(org, repo, target_branch):
+    with github.repository(org, repo) as gh_repo:
+        if not github.git_user_can_push(gh_repo, user):
+            return
+    with github.temporary_clone(org, repo, target_branch):
         # create merge bot branch from PR and rebase it on target branch
         merge_bot_branch = make_merge_bot_branch(pr, target_branch)
         subprocess.check_output(
