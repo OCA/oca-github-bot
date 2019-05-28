@@ -56,7 +56,13 @@ class BotCommandMerge(BotCommand):
     @task()
     def run(self, org, repo, pr, target_branch, user, dry_run=False):
         merge_bot.merge_bot_start(
-            org, repo, pr, target_branch, bumpversion=self.bumpversion, dry_run=False
+            org,
+            repo,
+            pr,
+            target_branch,
+            user,
+            bumpversion=self.bumpversion,
+            dry_run=False,
         )
 
 

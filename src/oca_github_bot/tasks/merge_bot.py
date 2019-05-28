@@ -13,7 +13,9 @@ _logger = getLogger(__name__)
 
 
 @task()
-def merge_bot_start(org, repo, pr, target_branch, bumpversion=None, dry_run=False):
+def merge_bot_start(
+    org, repo, pr, target_branch, user, bumpversion=None, dry_run=False
+):
     # TODO check user has write access when reaching this point
     # TODO error handling
     with temporary_clone(org, repo, target_branch):
