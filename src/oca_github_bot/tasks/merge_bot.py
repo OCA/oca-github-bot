@@ -13,13 +13,12 @@ _logger = getLogger(__name__)
 
 
 @task()
-def merge_bot_start(
-    org, repo, pr, target_branch, user, bumpversion=None, dry_run=False
-):
+def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
     # TODO error handling
-    with github.repository(org, repo) as gh_repo:
-        if not github.git_user_can_push(gh_repo, user):
+    with github.login() as gh:
+        if not github.git_user_can_push(gh.repository(org, repo), username):
             return
+        target_branch = gh.pull_request(org, repo, pr).base.ref
     with github.temporary_clone(org, repo, target_branch):
         # create merge bot branch from PR and rebase it on target branch
         merge_bot_branch = make_merge_bot_branch(pr, target_branch)

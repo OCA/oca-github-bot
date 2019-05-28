@@ -3,7 +3,6 @@
 
 import re
 
-from .queue import task
 from .tasks import merge_bot
 
 BOT_COMMAND_RE = re.compile(
@@ -36,8 +35,7 @@ class BotCommand:
     def parse_options(self, options):
         pass
 
-    @task()
-    def run(self, org, repo, pr, target_branch, user, dry_run=False):
+    def delay(self, org, repo, pr, username, dry_run=False):
         """ Run the command on a given pull request on behalf of a GitHub user """
         raise NotImplementedError()
 
@@ -53,16 +51,9 @@ class BotCommandMerge(BotCommand):
         else:
             raise InvalidOptionsError(self.name, options)
 
-    @task()
-    def run(self, org, repo, pr, target_branch, user, dry_run=False):
-        merge_bot.merge_bot_start(
-            org,
-            repo,
-            pr,
-            target_branch,
-            user,
-            bumpversion=self.bumpversion,
-            dry_run=False,
+    def delay(self, org, repo, pr, username, dry_run=False):
+        merge_bot.merge_bot_start.delay(
+            org, repo, pr, username, bumpversion=self.bumpversion, dry_run=False
         )
 
 
