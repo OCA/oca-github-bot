@@ -148,4 +148,6 @@ def git_user_can_push(gh_repo, username):
 
 def git_get_head_sha():
     """ Get the sha of the git HEAD in current directory """
-    return subprocess.check_output(["git", "rev-parse", "HEAD"])
+    return subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], universal_newlines=True
+    ).strip()
