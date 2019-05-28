@@ -1,7 +1,30 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import logging
 import os
+from functools import wraps
+
+_logger = logging.getLogger("oca_gihub_bot.tasks")
+
+
+def switchable(switch_name=None):
+    def wrap(func):
+        @wraps(func)
+        def func_wrapper(*args, **kwargs):
+            sname = switch_name
+            if switch_name is None:
+                sname = func.__name__
+
+            if BOT_TASKS != ["all"] and sname not in BOT_TASKS:
+                _logger.debug("Method %s skipped (Disabled by config)", sname)
+                return
+            return func(*args, **kwargs)
+
+        return func_wrapper
+
+    return wrap
+
 
 HTTP_HOST = os.environ.get("HTTP_HOST")
 HTTP_PORT = int(os.environ.get("HTTP_PORT") or "8080")
@@ -23,3 +46,10 @@ BROKER_URI = os.environ.get("BROKER_URI", os.environ.get("REDIS_URI", "redis://q
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 
 DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
+
+# coma separated list of task to run
+# by default all configured tasks are run.
+# defined tasks:
+#  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,gen_addons_readme,
+#  gen_addons_icon,setuptools_odoo,merge_bot
+BOT_TASKS = os.environ.get("BOT_TASKS", "all").split(",")

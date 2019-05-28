@@ -4,6 +4,7 @@
 import subprocess
 
 from .. import github
+from ..config import switchable
 from ..manifest import bump_manifest_version, git_modified_addons
 from ..queue import getLogger, task
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
@@ -33,6 +34,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch):
 
 
 @task()
+@switchable("merge_bot")
 def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
     with github.login() as gh:
         if not github.git_user_can_push(gh.repository(org, repo), username):
@@ -82,6 +84,7 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
 
 
 @task()
+@switchable("merge_bot")
 def merge_bot_status(org, repo, merge_bot_branch, sha):
     with github.temporary_clone(org, repo, merge_bot_branch):
         head_sha = github.git_get_head_sha()

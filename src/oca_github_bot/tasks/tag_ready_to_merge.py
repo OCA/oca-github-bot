@@ -4,6 +4,7 @@
 from datetime import datetime, timedelta
 
 from .. import github
+from ..config import switchable
 from ..github import gh_call, gh_datetime
 from ..queue import getLogger, task
 
@@ -22,6 +23,7 @@ READY_TO_MERGE_COMMENT = (
 
 
 @task()
+@switchable()
 def tag_ready_to_merge(org, repo=None, dry_run=False):
     """Add the ``ready to merge`` tag to all PRs where conditions are met."""
     with github.login() as gh:
