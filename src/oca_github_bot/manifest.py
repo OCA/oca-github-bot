@@ -37,6 +37,19 @@ def is_addon_dir(addon_dir):
     return bool(get_manifest_path(addon_dir))
 
 
+def get_addon_name(addon_dir):
+    return os.path.basename(os.path.abspath(addon_dir))
+
+
+def get_manifest_file_name(addon_dir):
+    """ Return the name of the manifest file, without path """
+    for manifest_name in MANIFEST_NAMES:
+        manifest_path = os.path.join(addon_dir, manifest_name)
+        if os.path.exists(manifest_path):
+            return manifest_name
+    return None
+
+
 def get_manifest_path(addon_dir):
     for manifest_name in MANIFEST_NAMES:
         manifest_path = os.path.join(addon_dir, manifest_name)
@@ -84,10 +97,23 @@ def bump_version(version, mode):
     return f"{series}.{major}.{minor}.{patch}"
 
 
-def bump_manifest_version(addon_dir, mode):
+def bump_manifest_version(addon_dir, mode, git_commit=False):
     version = get_manifest(addon_dir)["version"]
     version = bump_version(version, mode)
     set_manifest_version(addon_dir, version)
+    if git_commit:
+        addon_name = get_addon_name(addon_dir)
+        subprocess.check_call(
+            [
+                "git",
+                "commit",
+                "-m",
+                f"{addon_name} {version}",
+                "--",
+                get_manifest_file_name(addon_dir),
+            ],
+            cwd=addon_dir,
+        )
 
 
 def git_modified_addons(addons_dir, ref):
