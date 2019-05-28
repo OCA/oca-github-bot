@@ -141,8 +141,11 @@ def git_push_if_needed(remote, branch, cwd=None):
 
 def git_user_can_push(gh_repo, username):
     for collaborator in gh_call(gh_repo.collaborators):
-        if username == collaborator.login and collaborator.permissions.get(
-            "push", False
-        ):
+        if username == collaborator.login and collaborator.permissions.get("push"):
             return True
     return False
+
+
+def git_get_head_sha():
+    """ Get the sha of the git HEAD in current directory """
+    return subprocess.check_output(["git", "rev-parse", "HEAD"])
