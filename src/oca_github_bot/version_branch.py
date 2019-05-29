@@ -23,7 +23,7 @@ def is_protected_branch(branch_name):
 
 
 def is_merge_bot_branch(branch):
-    return bool(MERGE_BOT_BRANCH_RE.match(branch))
+    return branch and bool(MERGE_BOT_BRANCH_RE.match(branch))
 
 
 def parse_merge_bot_branch(branch):

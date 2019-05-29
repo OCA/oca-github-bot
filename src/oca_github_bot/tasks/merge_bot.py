@@ -82,7 +82,7 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
 
 
 @task()
-def merge_bot_status_failure(org, repo, merge_bot_branch, sha):
+def merge_bot_status(org, repo, merge_bot_branch, sha):
     with github.temporary_clone(org, repo, merge_bot_branch):
         head_sha = github.git_get_head_sha()
         if head_sha != sha:
@@ -91,21 +91,26 @@ def merge_bot_status_failure(org, repo, merge_bot_branch, sha):
             return
         pr, target_branch, _ = parse_merge_bot_branch(merge_bot_branch)
         with github.login() as gh:
-            gh_pr = gh.pull_request(org, repo, pr)
-            github.gh_call(
-                gh_pr.create_comment,
-                f"Merge command aborted due to a red status `{merge_bot_branch}`.",
-            )
-            # TODO add link to failure status in message?
-            # TODO delete merge_bot_branch?
-
-
-@task()
-def merge_bot_status_success(org, repo, merge_bot_branch, sha):
-    with github.temporary_clone(org, repo, merge_bot_branch):
-        head_sha = github.git_get_head_sha()
-        if head_sha != sha:
-            # the branch has evolved, this means that this status
-            # does not correspond to the last commit of the bot, ignore it
-            return
-        _merge_bot_merge_pr(org, repo, merge_bot_branch)
+            gh_repo = gh.repository(org, repo)
+            gh_commit = github.gh_call(gh_repo.commit, sha)
+            gh_status = github.gh_call(gh_commit.status)
+            # here we assume the status is complete!
+            success = None
+            for status in gh_status.statuses:
+                if status.context in ("ci/runbot", "codecov/project", "codecov/patch"):
+                    # ignore
+                    continue
+                if status.state == "success":
+                    success = True
+                else:
+                    success = False
+                    break
+            if success is True:
+                _merge_bot_merge_pr(org, repo, merge_bot_branch)
+            elif success is False:
+                gh_pr = gh.pull_request(org, repo, pr)
+                github.gh_call(
+                    gh_pr.create_comment,
+                    f"Merge command aborted due to a failed check at {sha}.",
+                )
+                _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
