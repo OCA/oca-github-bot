@@ -79,7 +79,6 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                 gh_pr.create_comment,
                 f"Rebased to `{merge_bot_branch}`, awaiting test results.",
             )
-            raise
 
 
 @task()
