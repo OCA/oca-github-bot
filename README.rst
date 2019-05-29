@@ -52,6 +52,19 @@ On Pull Request review
 When there are two approvals, set the ``approved`` label.
 When the PR is at least 5 days old, set the ``ready to merge`` label.
 
+Commands
+--------
+
+One can ask the bot to perform some tasks by entering special commands
+as merge request comments.
+
+`/ocabot merge` optionally followed by one of `major`, `minor`, `patch`,
+can be used to ask the bot to the following:
+* rebase the PR on the target branch
+* run the main branch operations (see above) on it
+* optionally bump the version number of the addons modified by the PR
+* merge when tests on the rebased branch are green
+
 TODO (help wanted)
 ------------------
 
