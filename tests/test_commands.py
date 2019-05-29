@@ -1,4 +1,4 @@
-# Copyright (c) ACSONE SA/NV 2018
+# Copyright (c) ACSONE SA/NV 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import pytest
