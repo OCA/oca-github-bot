@@ -32,6 +32,12 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
     # TODO error handling
     with github.login() as gh:
         if not github.git_user_can_push(gh.repository(org, repo), username):
+            gh_pr = gh.pull_request(org, repo, pr)
+            github.gh_call(
+                gh_pr.create_comment,
+                f"Sorry @{username} "
+                f"you do not have push permission, so I can't merge for you.",
+            )
             return
         gh_pr = gh.pull_request(org, repo, pr)
         target_branch = gh_pr.base.ref
