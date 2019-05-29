@@ -129,7 +129,11 @@ def git_modified_addons(addons_dir, ref):
         parts = diff.split("/")
         if parts[0] == "setup" and len(parts) > 1:
             addon_name = parts[1]
-            if os.path.isdir(os.path.join(addons_dir, "setup", addon_name)):
+            if is_addon_dir(
+                os.path.join(addons_dir, "setup", "addon", "odoo_addons", addon_name)
+            ) or is_addon_dir(
+                os.path.join(addons_dir, "setup", "addon", "odoo", "addons", addon_name)
+            ):
                 modified.add(addon_name)
         else:
             addon_name = parts[0]

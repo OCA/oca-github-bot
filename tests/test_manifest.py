@@ -103,6 +103,11 @@ def tests_git_modified_addons(git_clone):
     (setup_dir / "setup.py").write_text("")
     subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
+    assert not git_modified_addons(git_clone, "origin/master")
+    (setup_dir / "odoo" / "addons").mkdir(parents=True)
+    (setup_dir / "odoo" / "addons" / "addon").symlink_to("../../../../addon")
+    subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == {"addon"}
     # add a second addon, and change the first one
     addon2_dir = git_clone / "addon2"
