@@ -6,7 +6,7 @@ from ..router import router
 
 
 @router.register("issue_comment", action="created")
-async def on_pr_review_comment(event, gh, *args, **kwargs):
+async def on_command(event, gh, *args, **kwargs):
     """On pull request review, tag if approved or ready to merge."""
     if not event.data["issue"].get("pull_request"):
         # ignore issue comments
