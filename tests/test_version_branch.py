@@ -26,14 +26,21 @@ def test_is_protected_branch():
 
 
 def test_is_merge_bot_branch():
-    assert is_merge_bot_branch("12.0-ocabot-merge-100")
-    assert not is_merge_bot_branch("12.0-ocabot-merge-a100")
-    assert not is_merge_bot_branch("something-ocabot-merge-100")
+    assert is_merge_bot_branch("ocabot-merge-pr-100-to-12.0-by-toto")
+    assert not is_merge_bot_branch("cabot-merge-pr-a100-to-12.0-by-titi")
+    assert not is_merge_bot_branch("ocabot-merge-pr-100-to-something-by-toto")
 
 
 def test_make_merge_bot_branch():
-    assert make_merge_bot_branch("100", "12.0") == "12.0-ocabot-merge-100"
+    assert (
+        make_merge_bot_branch("100", "12.0", "toto")
+        == "ocabot-merge-pr-100-to-12.0-by-toto"
+    )
 
 
 def test_parse_merge_bot_branch():
-    assert parse_merge_bot_branch("12.0-ocabot-merge-100") == ("100", "12.0")
+    assert parse_merge_bot_branch("ocabot-merge-pr-100-to-12.0-by-toto") == (
+        "100",
+        "12.0",
+        "toto",
+    )

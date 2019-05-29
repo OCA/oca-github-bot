@@ -13,11 +13,12 @@ _logger = getLogger(__name__)
 
 
 def _merge_bot_merge_pr(org, repo, merge_bot_branch):
-    pr, target_branch = parse_merge_bot_branch(merge_bot_branch)
+    pr, target_branch, username = parse_merge_bot_branch(merge_bot_branch)
     subprocess.check_call(["git", "checkout", target_branch])
     # TODO what if is there is a merge conflict anyway here?
     # TODO what if something else was merged since the bot branch was created
-    subprocess.check_call(["git", "merge", "--no-ff", "--no-edit", merge_bot_branch])
+    msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
+    subprocess.check_call(["git", "merge", "--no-ff", "--m", msg, merge_bot_branch])
     subprocess.check_call(["git", "push", "origin", target_branch])
     subprocess.check_call(["git", "push", "origin", f":{merge_bot_branch}"])
     with github.login() as gh:
@@ -43,7 +44,7 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
         target_branch = gh_pr.base.ref
     with github.temporary_clone(org, repo, target_branch):
         # create merge bot branch from PR and rebase it on target branch
-        merge_bot_branch = make_merge_bot_branch(pr, target_branch)
+        merge_bot_branch = make_merge_bot_branch(pr, target_branch, username)
         subprocess.check_output(
             ["git", "fetch", "origin", f"pull/{pr}/head:{merge_bot_branch}"]
         )
@@ -74,7 +75,7 @@ def merge_bot_status_failure(org, repo, merge_bot_branch, sha):
             # the branch has evolved, this means that this status
             # does not correspond to the last commit of the bot, ignore it
             return
-        pr, target_branch = parse_merge_bot_branch(merge_bot_branch)
+        pr, target_branch, _ = parse_merge_bot_branch(merge_bot_branch)
         with github.login() as gh:
             gh_pr = gh.pull_request(org, repo, pr)
             github.gh_call(
