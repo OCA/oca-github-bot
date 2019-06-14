@@ -124,6 +124,39 @@ run ``pre-commit install`` after cloning the repository.
 
 To run tests, type ``tox``. Test are written with pytest.
 
+Here is a recommended procedure to test locally:
+
+* Prepare an ``environment`` file by cloning and adapting ``environment.sample``.
+* Load ``environment`` in your shell, for instance with bash:
+
+.. code::
+
+  export $(cat environment | xargs)
+
+* Launch the ``redis`` message queue:
+
+.. code::
+
+  docker run -p 6379:6379 redis
+
+* Create a virtual environment and install the project in it:
+
+.. code::
+
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt -e .
+
+* Then you can debug the two processes in your favorite IDE:
+
+  - the webhook server: ``python -m oca_github_bot``
+  - the task worker: ``python -m celery --app=oca_github_bot.queue.app --pool=solo --loglevel=INFO``
+
+* To expose the webhook server on your local machine to internet,
+  you can use `ngrok <https://ngrok.com/>`_
+* Then configure a GitHub webhook in a sandbox project in your organization
+  so you can start receiving webhook calls to your local machine.
+
 Contributors
 ============
 
