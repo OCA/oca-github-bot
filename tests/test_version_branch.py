@@ -7,6 +7,7 @@ from oca_github_bot.version_branch import (
     is_protected_branch,
     make_merge_bot_branch,
     parse_merge_bot_branch,
+    search_merge_bot_branch,
 )
 
 
@@ -51,3 +52,21 @@ def test_parse_merge_bot_branch():
         "toto",
         None,
     )
+
+
+def test_merge_bot_branch_prefix():
+    # This prefix must not change, as other tools may depend on it.
+    # The rest of the branch name must be considered opaque and fit for the bot
+    # needs only.
+    assert make_merge_bot_branch("100", "12.0", "toto", "patch").startswith(
+        "ocabot-merge-"
+    )
+
+
+def test_search_merge_bot_branch():
+    text = "blah blah ocabot-merge-pr-100-to-12.0-by-toto-bump-no more stuff"
+    assert (
+        search_merge_bot_branch(text) == "ocabot-merge-pr-100-to-12.0-by-toto-bump-no"
+    )
+    text = "blah blah more stuff"
+    assert search_merge_bot_branch(text) is None

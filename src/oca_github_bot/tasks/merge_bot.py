@@ -92,7 +92,13 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                 # run main branch bot actions
                 main_branch_bot_actions(org, repo, target_branch, dry_run)
                 # push and let tests run again
-                _git_call(["git", "push", "--force", "origin", merge_bot_branch])
+                try:
+                    # delete merge bot branch
+                    _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
+                except subprocess.CalledProcessError:
+                    # remote branch may not exist on remote
+                    pass
+                _git_call(["git", "push", "origin", merge_bot_branch])
                 github.gh_call(
                     gh_pr.create_comment,
                     f"Rebased to [{merge_bot_branch}]"
