@@ -46,7 +46,7 @@ async def test_on_check_suite_invalid_branch(mocker):
 async def test_on_check_suite_valid_branch(mocker):
     mock_merge_bot_functions(mocker)
 
-    branch = make_merge_bot_branch(42, "12.0", "toto")
+    branch = make_merge_bot_branch(42, "12.0", "toto", "patch")
     sha = "1" * 40
     data = create_test_data(branch, "completed", "failure", sha)
     event = EventMock(data)
@@ -60,7 +60,7 @@ async def test_on_check_suite_valid_branch(mocker):
 async def test_on_check_suite_valid_branch_in_progress(mocker):
     mock_merge_bot_functions(mocker)
 
-    branch = make_merge_bot_branch(42, "12.0", "toto")
+    branch = make_merge_bot_branch(42, "12.0", "toto", "patch")
     sha = "1" * 40
     data = create_test_data(branch, "in_progress", "success", sha)
     event = EventMock(data)

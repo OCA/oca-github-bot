@@ -18,7 +18,7 @@ def _git_call(cmd):
 
 
 def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
-    pr, target_branch, username = parse_merge_bot_branch(merge_bot_branch)
+    pr, target_branch, username, bumpversion = parse_merge_bot_branch(merge_bot_branch)
     # first check if the merge bot branch is still on top of the target branch
     _git_call(["git", "checkout", target_branch])
     r = subprocess.call(
@@ -29,11 +29,13 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             f"{merge_bot_branch} can't be fast forwarded on {target_branch}, "
             f"rebasing again."
         )
-        _git_call(["git", "checkout", merge_bot_branch])
-        _git_call(["git", "rebase", target_branch])
-        _git_call(["git", "push", "--force", "origin", merge_bot_branch])
-        # let checks run again
+        merge_bot_start(org, repo, pr, username, bumpversion, dry_run)
         return False
+    # bump version
+    _git_call(["git", "checkout", merge_bot_branch])
+    if bumpversion:
+        for addon in git_modified_addons(".", target_branch):
+            bump_manifest_version(addon, bumpversion, git_commit=True)
     # create the merge commit
     _git_call(["git", "checkout", target_branch])
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
@@ -71,7 +73,9 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
         try:
             with github.temporary_clone(org, repo, target_branch):
                 # create merge bot branch from PR and rebase it on target branch
-                merge_bot_branch = make_merge_bot_branch(pr, target_branch, username)
+                merge_bot_branch = make_merge_bot_branch(
+                    pr, target_branch, username, bumpversion
+                )
                 _git_call(
                     ["git", "fetch", "origin", f"pull/{pr}/head:{merge_bot_branch}"]
                 )
@@ -79,13 +83,6 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                 _git_call(["git", "rebase", "--autosquash", target_branch])
                 # run main branch bot actions
                 main_branch_bot_actions(org, repo, target_branch, dry_run)
-                if bumpversion:
-                    # TODO: bumpversion should be done just before merge
-                    #       after travis has pushed .pot to the merge bot branch;
-                    #       for this, we need to encode the bump request in the
-                    #       merge bot branch name
-                    for addon in git_modified_addons(".", target_branch):
-                        bump_manifest_version(addon, bumpversion, git_commit=True)
                 # push and let tests run again
                 _git_call(["git", "push", "--force", "origin", merge_bot_branch])
                 github.gh_call(
@@ -142,7 +139,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
             # the branch has evolved, this means that this status
             # does not correspond to the last commit of the bot, ignore it
             return
-        pr, target_branch, _ = parse_merge_bot_branch(merge_bot_branch)
+        pr, _, _, _ = parse_merge_bot_branch(merge_bot_branch)
         with github.login() as gh:
             gh_repo = gh.repository(org, repo)
             gh_commit = github.gh_call(gh_repo.commit, sha)
