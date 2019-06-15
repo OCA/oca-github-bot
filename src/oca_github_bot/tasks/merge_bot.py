@@ -17,18 +17,33 @@ def _git_call(cmd):
     subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
 
 
-def _merge_bot_merge_pr(org, repo, merge_bot_branch):
+def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     pr, target_branch, username = parse_merge_bot_branch(merge_bot_branch)
+    # first check if the merge bot branch is still on top of the target branch
     _git_call(["git", "checkout", target_branch])
-    # TODO what if is there is a merge conflict anyway here?
-    # TODO what if something else was merged since the bot branch was created
+    r = subprocess.call(
+        ["git", "merge-base", "--is-ancestor", target_branch, merge_bot_branch]
+    )
+    if r != 0:
+        _logger.info(
+            f"{merge_bot_branch} can't be fast forwarded on {target_branch}, "
+            f"rebasing again."
+        )
+        _git_call(["git", "checkout", merge_bot_branch])
+        _git_call(["git", "rebase", target_branch])
+        _git_call(["git", "push", "--force", "origin", merge_bot_branch])
+        # let checks run again
+        return False
+    # create the merge commit
+    _git_call(["git", "checkout", target_branch])
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
     _git_call(["git", "merge", "--no-ff", "--m", msg, merge_bot_branch])
     _git_call(["git", "push", "origin", target_branch])
     try:
+        # delete merge bot branch
         _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
     except subprocess.CalledProcessError:
-        # remote branch may not exist if the merge bot operations
+        # remote branch may not exist on remote if the merge bot operations
         # did not change anything to the PR and we are merging immediately
         pass
     with github.login() as gh:
@@ -36,6 +51,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch):
         merge_sha = github.git_get_head_sha()
         github.gh_call(gh_pr.create_comment, f"Merged at {merge_sha}.")
         github.gh_call(gh_pr.close)
+    return True
 
 
 @task()
@@ -70,14 +86,14 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                     #       merge bot branch name
                     for addon in git_modified_addons(".", target_branch):
                         bump_manifest_version(addon, bumpversion, git_commit=True)
-                    # push and let tests run again
-                    _git_call(["git", "push", "--force", "origin", merge_bot_branch])
-                    github.gh_call(
-                        gh_pr.create_comment,
-                        f"Rebased to [{merge_bot_branch}]"
-                        f"(https://github.com/{org}/{repo}/commits/{merge_bot_branch})"
-                        f", awaiting test results.",
-                    )
+                # push and let tests run again
+                _git_call(["git", "push", "--force", "origin", merge_bot_branch])
+                github.gh_call(
+                    gh_pr.create_comment,
+                    f"Rebased to [{merge_bot_branch}]"
+                    f"(https://github.com/{org}/{repo}/commits/{merge_bot_branch})"
+                    f", awaiting test results.",
+                )
         except subprocess.CalledProcessError as e:
             cmd = " ".join(e.cmd)
             github.gh_call(
