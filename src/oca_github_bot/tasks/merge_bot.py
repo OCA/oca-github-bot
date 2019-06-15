@@ -56,7 +56,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             gh_pr.create_comment,
             f"Merged at {merge_sha}. Don't worry if GitHub says there are "
             f"unmerged commits: it is due to a rebase before merge. "
-            f"All your commits safely landed on the main branch.",
+            f"All commits of this PR have been merged on the main branch.",
         )
         gh_issue = github.gh_call(gh_pr.issue)
         github.gh_call(gh_issue.add_labels, LABEL_MERGED)
@@ -167,6 +167,9 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                 gh_pr = gh.pull_request(org, repo, pr)
                 github.gh_call(
                     gh_pr.create_comment,
-                    f"Merge command aborted due to a failed check at {sha}.",
+                    f"Merge command aborted due to a failed check on "
+                    f"[{merge_bot_branch}]"
+                    f"(https://github.com/{org}/{repo}/commits/{sha}). "
+                    f"Rebasing the PR should help reveal and fix the issue.",
                 )
                 _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
