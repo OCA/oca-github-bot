@@ -4,6 +4,7 @@
 from collections import defaultdict
 
 from .. import github
+from ..config import switchable
 from ..github import gh_call
 from ..queue import getLogger, task
 from .tag_ready_to_merge import LABEL_READY_TO_MERGE, tag_ready_to_merge
@@ -15,6 +16,7 @@ LABEL_APPROVED = "approved"
 
 
 @task()
+@switchable()
 def tag_approved(org, repo, pr, dry_run=False):
     """Add the ``approved`` tag to the given PR if conditions are met.
 

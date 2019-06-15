@@ -4,6 +4,7 @@
 import subprocess
 
 from .. import github, manifest
+from ..config import switchable
 from ..github import git_push_if_needed, temporary_clone
 from ..queue import getLogger, task
 from ..version_branch import is_main_branch_bot_branch
@@ -11,6 +12,7 @@ from ..version_branch import is_main_branch_bot_branch
 _logger = getLogger(__name__)
 
 
+@switchable("gen_addons_table")
 def _gen_addons_table(org, repo, branch, dry_run):
     _logger.info("oca-gen-addons-table in %s/%s@%s", org, repo, branch)
     gen_addons_table_cmd = ["oca-gen-addons-table"]
@@ -19,6 +21,7 @@ def _gen_addons_table(org, repo, branch, dry_run):
     subprocess.check_output(gen_addons_table_cmd, stderr=subprocess.STDOUT)
 
 
+@switchable("gen_addons_readme")
 def _gen_addons_readme(org, repo, branch, dry_run):
     _logger.info("oca-gen-addon-readme in %s/%s@%s", org, repo, branch)
     gen_addon_readme_cmd = [
@@ -37,6 +40,7 @@ def _gen_addons_readme(org, repo, branch, dry_run):
     subprocess.check_output(gen_addon_readme_cmd, stderr=subprocess.STDOUT)
 
 
+@switchable("gen_addons_icon")
 def _gen_addons_icon(org, repo, branch, dry_run):
     _logger.info("oca-gen-addon-icon in %s/%s@%s", org, repo, branch)
     gen_addon_icon_cmd = ["oca-gen-addon-icon", "--addons-dir", "."]
@@ -45,6 +49,7 @@ def _gen_addons_icon(org, repo, branch, dry_run):
     subprocess.check_output(gen_addon_icon_cmd, stderr=subprocess.STDOUT)
 
 
+@switchable("setuptools_odoo")
 def _setuptools_odoo_make_default(org, repo, branch, dry_run):
     _logger.info("setuptools-odoo-make-default in %s/%s@%s\n", org, repo, branch)
     make_default_setup_cmd = [
