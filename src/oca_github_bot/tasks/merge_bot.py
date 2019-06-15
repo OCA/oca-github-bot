@@ -51,7 +51,12 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
         merge_sha = github.git_get_head_sha()
-        github.gh_call(gh_pr.create_comment, f"Merged at {merge_sha}.")
+        github.gh_call(
+            gh_pr.create_comment,
+            f"Merged at {merge_sha}. Don't worry if GitHub says there are "
+            f"unmerged commits: it is due to a rebase before merge. "
+            f"All your commits safely landed on the main branch.",
+        )
         github.gh_call(gh_pr.close)
     return True
 
