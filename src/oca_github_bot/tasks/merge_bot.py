@@ -60,14 +60,16 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                     ["git", "fetch", "origin", f"pull/{pr}/head:{merge_bot_branch}"]
                 )
                 _git_call(["git", "checkout", merge_bot_branch])
-                pr_sha = github.git_get_head_sha()
                 _git_call(["git", "rebase", "--autosquash", target_branch])
                 # run main branch bot actions
                 main_branch_bot_actions(org, repo, target_branch, dry_run)
                 if bumpversion:
+                    # TODO: bumpversion should be done just before merge
+                    #       after travis has pushed .pot to the merge bot branch;
+                    #       for this, we need to encode the bump request in the
+                    #       merge bot branch name
                     for addon in git_modified_addons(".", target_branch):
                         bump_manifest_version(addon, bumpversion, git_commit=True)
-                if pr_sha != github.git_get_head_sha():
                     # push and let tests run again
                     _git_call(["git", "push", "--force", "origin", merge_bot_branch])
                     github.gh_call(
@@ -76,10 +78,6 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                         f"(https://github.com/{org}/{repo}/commits/{merge_bot_branch})"
                         f", awaiting test results.",
                     )
-                else:
-                    # nothing changed, no need to retest, merge now
-                    # TODO check status instead of obeying order blindly?
-                    _merge_bot_merge_pr(org, repo, merge_bot_branch)
         except subprocess.CalledProcessError as e:
             cmd = " ".join(e.cmd)
             github.gh_call(
