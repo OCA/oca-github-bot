@@ -133,9 +133,12 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
             gh_repo = gh.repository(org, repo)
             gh_commit = github.gh_call(gh_repo.commit, sha)
             success = _get_commit_success(gh_commit)
-            if success is True:
+            if success is None:
+                # checks in progress
+                return
+            elif success:
                 _merge_bot_merge_pr(org, repo, merge_bot_branch)
-            elif success is False:
+            else:
                 gh_pr = gh.pull_request(org, repo, pr)
                 github.gh_call(
                     gh_pr.create_comment,
