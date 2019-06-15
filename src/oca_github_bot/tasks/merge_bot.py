@@ -12,6 +12,8 @@ from .main_branch_bot import main_branch_bot_actions
 
 _logger = getLogger(__name__)
 
+LABEL_MERGED = "merged 🎉"
+
 
 def _git_call(cmd):
     subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
@@ -56,6 +58,8 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             f"unmerged commits: it is due to a rebase before merge. "
             f"All your commits safely landed on the main branch.",
         )
+        gh_issue = github.gh_call(gh_pr.issue)
+        github.gh_call(gh_issue.add_labels, LABEL_MERGED)
         github.gh_call(gh_pr.close)
     return True
 
