@@ -168,6 +168,7 @@ Contributors
 * Holger Brunn <hbrunn@therp.nl>
 * Michel Raich <miquel.raich@eficent.com>
 * Florian Kantelberg <florian.kantelberg@initos.com>
+* Laurent Mignon <laurent.mignon@acsone.eu>
 
 Maintainers
 ===========
