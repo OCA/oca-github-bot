@@ -4,7 +4,7 @@
 import subprocess
 
 from .. import github
-from ..config import switchable
+from ..config import GITHUB_CHECK_SUITES_IGNORED, GITHUB_STATUS_IGNORED, switchable
 from ..manifest import bump_manifest_version, git_modified_addons
 from ..queue import getLogger, task
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
@@ -25,7 +25,12 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch):
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
     _git_call(["git", "merge", "--no-ff", "--m", msg, merge_bot_branch])
     _git_call(["git", "push", "origin", target_branch])
-    _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
+    try:
+        _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
+    except subprocess.CalledProcessError:
+        # remote branch may not exist if the merge bot operations
+        # did not change anything to the PR and we are merging immediately
+        pass
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
         merge_sha = github.git_get_head_sha()
@@ -65,6 +70,12 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                 if pr_sha != github.git_get_head_sha():
                     # push and let tests run again
                     _git_call(["git", "push", "--force", "origin", merge_bot_branch])
+                    github.gh_call(
+                        gh_pr.create_comment,
+                        f"Rebased to [{merge_bot_branch}]"
+                        f"(https://github.com/{org}/{repo}/commits/{merge_bot_branch})"
+                        f", awaiting test results.",
+                    )
                 else:
                     # nothing changed, no need to retest, merge now
                     # TODO check status instead of obeying order blindly?
@@ -76,11 +87,36 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                 f"Command `{cmd}` failed with output:\n```\n{e.output}\n```",
             )
             raise
+
+
+def _get_commit_success(gh_commit):
+    """ Test commit status, using both status and check suites APIs """
+    success = None  # None means don't know / in progress
+    gh_status = github.gh_call(gh_commit.status)
+    for status in gh_status.statuses:
+        if status.context in GITHUB_STATUS_IGNORED:
+            # ignore
+            continue
+        if status.state == "success":
+            success = True
+        elif status.state == "pending":
+            # in progress
+            return None
         else:
-            github.gh_call(
-                gh_pr.create_comment,
-                f"Rebased to `{merge_bot_branch}`, awaiting test results.",
-            )
+            return False
+    gh_check_suites = github.gh_call(gh_commit.check_suites)
+    for check_suite in gh_check_suites:
+        if check_suite.app.name in GITHUB_CHECK_SUITES_IGNORED:
+            # ignore
+            continue
+        if check_suite.conclusion == "success":
+            success = True
+        elif not check_suite.conclusion:
+            # not complete
+            return None
+        else:
+            return False
+    return success
 
 
 @task()
@@ -96,18 +132,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
         with github.login() as gh:
             gh_repo = gh.repository(org, repo)
             gh_commit = github.gh_call(gh_repo.commit, sha)
-            gh_status = github.gh_call(gh_commit.status)
-            # here we assume the status is complete!
-            success = None
-            for status in gh_status.statuses:
-                if status.context in ("ci/runbot", "codecov/project", "codecov/patch"):
-                    # ignore
-                    continue
-                if status.state == "success":
-                    success = True
-                else:
-                    success = False
-                    break
+            success = _get_commit_success(gh_commit)
             if success is True:
                 _merge_bot_merge_pr(org, repo, merge_bot_branch)
             elif success is False:
