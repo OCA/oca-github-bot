@@ -45,8 +45,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         # delete merge bot branch
         _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
     except subprocess.CalledProcessError:
-        # remote branch may not exist on remote if the merge bot operations
-        # did not change anything to the PR and we are merging immediately
+        # remote branch may not exist on remote
         pass
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
