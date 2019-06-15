@@ -117,6 +117,7 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
 def _get_commit_success(gh_commit):
     """ Test commit status, using both status and check suites APIs """
     success = None  # None means don't know / in progress
+    old_travis = False
     gh_status = github.gh_call(gh_commit.status)
     for status in gh_status.statuses:
         if status.context in GITHUB_STATUS_IGNORED:
@@ -124,6 +125,10 @@ def _get_commit_success(gh_commit):
             continue
         if status.state == "success":
             success = True
+            # <hack>
+            if status.context.startswith("continuous-integration/travis-ci"):
+                old_travis = True
+            # </hack>
         elif status.state == "pending":
             # in progress
             return None
@@ -138,6 +143,11 @@ def _get_commit_success(gh_commit):
             success = True
         elif not check_suite.conclusion:
             # not complete
+            # <hack>
+            if check_suite.app.name == "Travis CI" and old_travis:
+                # ignore incomplete new Travis when old travis status is ok
+                continue
+            # </hack>
             return None
         else:
             return False
