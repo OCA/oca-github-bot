@@ -54,13 +54,11 @@ def test_parse_merge_bot_branch():
     )
 
 
-def test_merge_bot_branch_prefix():
-    # This prefix must not change, as other tools may depend on it.
+def test_merge_bot_branch_name():
+    # ocabot-merge must not change, as other tools may depend on it.
     # The rest of the branch name must be considered opaque and fit for the bot
     # needs only.
-    assert make_merge_bot_branch("100", "12.0", "toto", "patch").startswith(
-        "ocabot-merge-"
-    )
+    assert "ocabot-merge" in make_merge_bot_branch("100", "12.0", "toto", "patch")
 
 
 def test_search_merge_bot_branch():
