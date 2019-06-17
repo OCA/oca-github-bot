@@ -54,5 +54,10 @@ DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
 #  gen_addons_icon,setuptools_odoo,merge_bot
 BOT_TASKS = os.environ.get("BOT_TASKS", "all").split(",")
 
-GITHUB_STATUS_IGNORED = ["ci/runbot", "codecov/project", "codecov/patch"]
+GITHUB_STATUS_IGNORED = [
+    "ci/runbot",
+    "codecov/project",
+    "codecov/patch",
+    "coverage/coveralls",
+]
 GITHUB_CHECK_SUITES_IGNORED = ["Codecov"]
