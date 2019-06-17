@@ -35,14 +35,23 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         return False
     # bump version
     _git_call(["git", "checkout", merge_bot_branch])
-    if bumpversion:
-        for addon in git_modified_addons(".", target_branch):
+    # TODO This comparison to find modified addons will be incorrect
+    #      in rare cases where, eg, the readme generator updates
+    #      all readme files. This would then incorrectly bump version
+    #      on too many addons. Two solution: either compare with the original
+    #      PR branch, or generate readmes only for addons touched by the PR.
+    modified_addons = git_modified_addons(".", target_branch)
+    for addon in modified_addons:
+        # TODO wlc lock and push
+        # TODO msgmerge and commit
+        if bumpversion:
             bump_manifest_version(addon, bumpversion, git_commit=True)
     # create the merge commit
     _git_call(["git", "checkout", target_branch])
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
     _git_call(["git", "merge", "--no-ff", "--m", msg, merge_bot_branch])
     _git_call(["git", "push", "origin", target_branch])
+    # TODO wlc unlock modified_addons
     try:
         # delete merge bot branch
         _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
@@ -88,6 +97,8 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                     ["git", "fetch", "origin", f"pull/{pr}/head:{merge_bot_branch}"]
                 )
                 _git_call(["git", "checkout", merge_bot_branch])
+                # TODO for each modified addon, wlc lock / commit / push
+                # TODO then pull target_branch again
                 _git_call(["git", "rebase", "--autosquash", target_branch])
                 # run main branch bot actions
                 main_branch_bot_actions(org, repo, target_branch, dry_run)
