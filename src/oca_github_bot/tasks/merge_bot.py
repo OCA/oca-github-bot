@@ -35,12 +35,12 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         return False
     # bump version
     _git_call(["git", "checkout", merge_bot_branch])
-    # TODO This comparison to find modified addons will be incorrect
-    #      in rare cases where, eg, the readme generator updates
-    #      all readme files. This would then incorrectly bump version
-    #      on too many addons. Two solution: either compare with the original
-    #      PR branch, or generate readmes only for addons touched by the PR.
     modified_addons = git_modified_addons(".", target_branch)
+    # Run main branch bot actions before bump version,
+    # and after getting the list of modified addons, so we avoid
+    # bumping version for too many addons in rare case where, eg,
+    # the readme generator would refresh all addons of the repo.
+    main_branch_bot_actions(org, repo, target_branch, dry_run)
     for addon in modified_addons:
         # TODO wlc lock and push
         # TODO msgmerge and commit
@@ -100,8 +100,6 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                 # TODO for each modified addon, wlc lock / commit / push
                 # TODO then pull target_branch again
                 _git_call(["git", "rebase", "--autosquash", target_branch])
-                # run main branch bot actions
-                main_branch_bot_actions(org, repo, target_branch, dry_run)
                 # push and let tests run again
                 try:
                     # delete merge bot branch
