@@ -99,7 +99,7 @@ First create and customize a file named ``environment``,
 based on `environment.sample <./environment.sample>`_.
 
 Tasks performed by the bot can be specified by setting the ``BOT_TASKS``
-variable. This is useful if you want to use this bot for your own github
+variable. This is useful if you want to use this bot for your own GitHub
 organisation.
 
 Using docker-compose

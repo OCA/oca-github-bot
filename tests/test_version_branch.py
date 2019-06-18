@@ -7,6 +7,7 @@ from oca_github_bot.version_branch import (
     is_protected_branch,
     make_merge_bot_branch,
     parse_merge_bot_branch,
+    search_merge_bot_branch,
 )
 
 
@@ -26,21 +27,42 @@ def test_is_protected_branch():
 
 
 def test_is_merge_bot_branch():
-    assert is_merge_bot_branch("ocabot-merge-pr-100-to-12.0-by-toto")
-    assert not is_merge_bot_branch("cabot-merge-pr-a100-to-12.0-by-titi")
-    assert not is_merge_bot_branch("ocabot-merge-pr-100-to-something-by-toto")
+    assert is_merge_bot_branch("12.0-ocabot-merge-pr-100-by-toto-bump-patch")
+    assert not is_merge_bot_branch("12.0-cabot-merge-pr-a100-by-titi-bump-no")
+    assert is_merge_bot_branch("master-ocabot-merge-pr-100-by-toto-bump-no")
 
 
 def test_make_merge_bot_branch():
     assert (
-        make_merge_bot_branch("100", "12.0", "toto")
-        == "ocabot-merge-pr-100-to-12.0-by-toto"
+        make_merge_bot_branch("100", "12.0", "toto", "patch")
+        == "12.0-ocabot-merge-pr-100-by-toto-bump-patch"
     )
 
 
 def test_parse_merge_bot_branch():
-    assert parse_merge_bot_branch("ocabot-merge-pr-100-to-12.0-by-toto") == (
+    assert parse_merge_bot_branch("12.0-ocabot-merge-pr-100-by-toto-bump-patch") == (
         "100",
         "12.0",
         "toto",
+        "patch",
     )
+    assert parse_merge_bot_branch("12.0-ocabot-merge-pr-100-by-toto-bump-no") == (
+        "100",
+        "12.0",
+        "toto",
+        None,
+    )
+
+
+def test_merge_bot_branch_name():
+    # ocabot-merge must not change, as other tools may depend on it.
+    # The rest of the branch name must be considered opaque and fit for the bot
+    # needs only.
+    assert "ocabot-merge" in make_merge_bot_branch("100", "12.0", "toto", "patch")
+
+
+def test_search_merge_bot_branch():
+    text = "blah blah 12.0-ocabot-merge-pr-100-by-toto-bump-no more stuff"
+    assert search_merge_bot_branch(text) == "12.0-ocabot-merge-pr-100-by-toto-bump-no"
+    text = "blah blah more stuff"
+    assert search_merge_bot_branch(text) is None

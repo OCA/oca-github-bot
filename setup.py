@@ -25,7 +25,7 @@ setup(
         "gidgethub",
         "appdirs",
         # GitHub client
-        "github3.py",
+        "github3.py>=1.3.0",
         # celery and celery monitoring for the task queue
         "flower",
         "celery[redis]",
