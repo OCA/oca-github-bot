@@ -27,26 +27,26 @@ def test_is_protected_branch():
 
 
 def test_is_merge_bot_branch():
-    assert is_merge_bot_branch("ocabot-merge-pr-100-to-12.0-by-toto-bump-patch")
-    assert not is_merge_bot_branch("cabot-merge-pr-a100-to-12.0-by-titi-bump-no")
-    assert not is_merge_bot_branch("ocabot-merge-pr-100-to-something-by-toto-bump-no")
+    assert is_merge_bot_branch("12.0-ocabot-merge-pr-100-by-toto-bump-patch")
+    assert not is_merge_bot_branch("12.0-cabot-merge-pr-a100-by-titi-bump-no")
+    assert is_merge_bot_branch("master-ocabot-merge-pr-100-by-toto-bump-no")
 
 
 def test_make_merge_bot_branch():
     assert (
         make_merge_bot_branch("100", "12.0", "toto", "patch")
-        == "ocabot-merge-pr-100-to-12.0-by-toto-bump-patch"
+        == "12.0-ocabot-merge-pr-100-by-toto-bump-patch"
     )
 
 
 def test_parse_merge_bot_branch():
-    assert parse_merge_bot_branch("ocabot-merge-pr-100-to-12.0-by-toto-bump-patch") == (
+    assert parse_merge_bot_branch("12.0-ocabot-merge-pr-100-by-toto-bump-patch") == (
         "100",
         "12.0",
         "toto",
         "patch",
     )
-    assert parse_merge_bot_branch("ocabot-merge-pr-100-to-12.0-by-toto-bump-no") == (
+    assert parse_merge_bot_branch("12.0-ocabot-merge-pr-100-by-toto-bump-no") == (
         "100",
         "12.0",
         "toto",
@@ -62,9 +62,7 @@ def test_merge_bot_branch_name():
 
 
 def test_search_merge_bot_branch():
-    text = "blah blah ocabot-merge-pr-100-to-12.0-by-toto-bump-no more stuff"
-    assert (
-        search_merge_bot_branch(text) == "ocabot-merge-pr-100-to-12.0-by-toto-bump-no"
-    )
+    text = "blah blah 12.0-ocabot-merge-pr-100-by-toto-bump-no more stuff"
+    assert search_merge_bot_branch(text) == "12.0-ocabot-merge-pr-100-by-toto-bump-no"
     text = "blah blah more stuff"
     assert search_merge_bot_branch(text) is None
