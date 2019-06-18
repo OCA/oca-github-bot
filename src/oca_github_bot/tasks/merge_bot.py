@@ -40,7 +40,10 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # and after getting the list of modified addons, so we avoid
     # bumping version for too many addons in rare case where, eg,
     # the readme generator would refresh all addons of the repo.
-    main_branch_bot_actions(org, repo, target_branch, dry_run)
+    # Do not run the main branch bot if there are no modified addons,
+    # because it is dedicated to addons repos.
+    if modified_addons:
+        main_branch_bot_actions(org, repo, target_branch, dry_run)
     for addon in modified_addons:
         # TODO wlc lock and push
         # TODO msgmerge and commit
