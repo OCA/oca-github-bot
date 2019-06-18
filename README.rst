@@ -58,8 +58,9 @@ Commands
 One can ask the bot to perform some tasks by entering special commands
 as merge request comments.
 
-`/ocabot merge` optionally followed by one of `major`, `minor`, `patch`,
+``/ocabot merg`` optionally followed by one of ``major``, ``minor``, ``patch``,
 can be used to ask the bot to the following:
+
 * rebase the PR on the target branch
 * run the main branch operations (see above) on it
 * optionally bump the version number of the addons modified by the PR
