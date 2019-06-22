@@ -1,10 +1,16 @@
 # Copyright (c) ACSONE SA/NV 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import random
 import subprocess
 
 from .. import github
-from ..config import GITHUB_CHECK_SUITES_IGNORED, GITHUB_STATUS_IGNORED, switchable
+from ..config import (
+    GITHUB_CHECK_SUITES_IGNORED,
+    GITHUB_STATUS_IGNORED,
+    MERGE_BOT_INTRO_MESSAGES,
+    switchable,
+)
 from ..manifest import bump_manifest_version, git_modified_addons
 from ..queue import getLogger, task
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
@@ -19,6 +25,11 @@ def _git_call(cmd):
     subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
 
 
+def _get_merge_bot_intro_message():
+    i = random.randint(0, len(MERGE_BOT_INTRO_MESSAGES) - 1)
+    return MERGE_BOT_INTRO_MESSAGES[i]
+
+
 def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     pr, target_branch, username, bumpversion = parse_merge_bot_branch(merge_bot_branch)
     # first check if the merge bot branch is still on top of the target branch
@@ -31,7 +42,19 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             f"{merge_bot_branch} can't be fast forwarded on {target_branch}, "
             f"rebasing again."
         )
-        merge_bot_start(org, repo, pr, username, bumpversion, dry_run)
+        intro_message = (
+            f"It looks like something changed on `{target_branch}` "
+            f"in the meantime, let's try again."
+        )
+        merge_bot_start(
+            org,
+            repo,
+            pr,
+            username,
+            bumpversion,
+            dry_run=dry_run,
+            intro_message=intro_message,
+        )
         return False
     # bump version
     _git_call(["git", "checkout", merge_bot_branch])
@@ -66,9 +89,11 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         merge_sha = github.git_get_head_sha()
         github.gh_call(
             gh_pr.create_comment,
-            f"Merged at {merge_sha}. Don't worry if GitHub says there are "
+            f"Congratulations, your PR was merged at {merge_sha}. "
+            f"Thanks a lot for contributing to {org}. ❤️\n\n"
+            f"PS: Don't worry if GitHub says there are "
             f"unmerged commits: it is due to a rebase before merge. "
-            f"All commits of this PR have been merged on the main branch.",
+            f"All commits of this PR have been merged into `{target_branch}`.",
         )
         gh_issue = github.gh_call(gh_pr.issue)
         github.gh_call(gh_issue.add_labels, LABEL_MERGED)
@@ -78,7 +103,9 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
 
 @task()
 @switchable("merge_bot")
-def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
+def merge_bot_start(
+    org, repo, pr, username, bumpversion=None, dry_run=False, intro_message=None
+):
     with github.login() as gh:
         if not github.git_user_can_push(gh.repository(org, repo), username):
             gh_pr = gh.pull_request(org, repo, pr)
@@ -111,8 +138,11 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
                     # remote branch may not exist on remote
                     pass
                 _git_call(["git", "push", "origin", merge_bot_branch])
+                if not intro_message:
+                    intro_message = _get_merge_bot_intro_message()
                 github.gh_call(
                     gh_pr.create_comment,
+                    f"{intro_message}\n"
                     f"Rebased to [{merge_bot_branch}]"
                     f"(https://github.com/{org}/{repo}/commits/{merge_bot_branch})"
                     f", awaiting test results.",
@@ -121,7 +151,8 @@ def merge_bot_start(org, repo, pr, username, bumpversion=None, dry_run=False):
             cmd = " ".join(e.cmd)
             github.gh_call(
                 gh_pr.create_comment,
-                f"Command `{cmd}` failed with output:\n```\n{e.output}\n```",
+                f"The merge process could not start, because "
+                f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
             )
             raise
 
@@ -184,6 +215,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                 # checks in progress
                 return
             elif success:
+                # TODO catch exceptions and report them to the PR
                 _merge_bot_merge_pr(org, repo, merge_bot_branch)
             else:
                 gh_pr = gh.pull_request(org, repo, pr)
@@ -191,7 +223,6 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                     gh_pr.create_comment,
                     f"Merge command aborted due to a failed check on "
                     f"[{merge_bot_branch}]"
-                    f"(https://github.com/{org}/{repo}/commits/{sha}). "
-                    f"Rebasing the PR should help reveal and fix the issue.",
+                    f"(https://github.com/{org}/{repo}/commits/{sha}).",
                 )
                 _git_call(["git", "push", "origin", f":{merge_bot_branch}"])

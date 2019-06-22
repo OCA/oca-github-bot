@@ -61,3 +61,9 @@ GITHUB_STATUS_IGNORED = [
     "coverage/coveralls",
 ]
 GITHUB_CHECK_SUITES_IGNORED = ["Codecov"]
+MERGE_BOT_INTRO_MESSAGES = [
+    "On my way to merge this fine PR!",
+    "This PR looks fantastic, let's merge it!",
+    "Hey, thanks for contributing! Proceeding to merge this for you.",
+    "What a great day to merge this nice PR. Let's do it!",
+]
