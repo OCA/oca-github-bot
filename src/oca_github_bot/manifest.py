@@ -19,6 +19,10 @@ class NoManifestFound(Exception):
     pass
 
 
+class OdooSeriesNotDetected(Exception):
+    pass
+
+
 def is_addons_dir(addons_dir):
     """ Test if an directory contains Odoo addons. """
     if not os.path.isdir(addons_dir):
@@ -140,3 +144,13 @@ def git_modified_addons(addons_dir, ref):
             if is_addon_dir(os.path.join(addons_dir, addon_name)):
                 modified.add(addon_name)
     return modified
+
+
+def get_odoo_series_from_version(version):
+    mo = VERSION_RE.match(version)
+    if not mo:
+        raise OdooSeriesNotDetected()
+    series = mo.group("series")
+    if not series:
+        raise OdooSeriesNotDetected()
+    return tuple(int(s) for s in series.split("."))

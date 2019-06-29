@@ -6,10 +6,12 @@ import subprocess
 import pytest
 from oca_github_bot.manifest import (
     NoManifestFound,
+    OdooSeriesNotDetected,
     bump_manifest_version,
     bump_version,
     get_manifest,
     get_manifest_path,
+    get_odoo_series_from_version,
     git_modified_addons,
     is_addon_dir,
     is_addons_dir,
@@ -119,3 +121,14 @@ def tests_git_modified_addons(git_clone):
     subprocess.check_call(["git", "add", "."], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == {"addon", "addon2"}
+
+
+def test_get_odoo_series_from_version():
+    assert get_odoo_series_from_version("12.0.1.0.0") == (12, 0)
+    assert get_odoo_series_from_version("6.1.1.0.0") == (6, 1)
+    with pytest.raises(OdooSeriesNotDetected):
+        get_odoo_series_from_version("1.0.0")
+    with pytest.raises(OdooSeriesNotDetected):
+        get_odoo_series_from_version("1.0")
+    with pytest.raises(OdooSeriesNotDetected):
+        get_odoo_series_from_version("12.0.1")
