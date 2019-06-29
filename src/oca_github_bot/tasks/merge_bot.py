@@ -43,8 +43,8 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             f"rebasing again."
         )
         intro_message = (
-            f"It looks like something changed on `{target_branch}` "
-            f"in the meantime, let's try again."
+            f"It looks like something changed on `{target_branch}` in the meantime. "
+            f"Let me try again (no action is required from you)."
         )
         merge_bot_start(
             org,
@@ -151,7 +151,7 @@ def merge_bot_start(
             cmd = " ".join(e.cmd)
             github.gh_call(
                 gh_pr.create_comment,
-                f"The merge process could not start, because "
+                f"@{username} The merge process could not start, because "
                 f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
             )
             raise
@@ -206,7 +206,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
             # the branch has evolved, this means that this status
             # does not correspond to the last commit of the bot, ignore it
             return
-        pr, _, _, _ = parse_merge_bot_branch(merge_bot_branch)
+        pr, _, username, _ = parse_merge_bot_branch(merge_bot_branch)
         with github.login() as gh:
             gh_repo = gh.repository(org, repo)
             gh_commit = github.gh_call(gh_repo.commit, sha)
@@ -221,7 +221,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                 gh_pr = gh.pull_request(org, repo, pr)
                 github.gh_call(
                     gh_pr.create_comment,
-                    f"Merge command aborted due to a failed check on "
+                    f"@{username} Merge command aborted due to a failed check on "
                     f"[{merge_bot_branch}]"
                     f"(https://github.com/{org}/{repo}/commits/{sha}).",
                 )
