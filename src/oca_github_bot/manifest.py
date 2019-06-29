@@ -25,20 +25,20 @@ class OdooSeriesNotDetected(Exception):
 
 def is_addons_dir(addons_dir):
     """ Test if an directory contains Odoo addons. """
-    if not os.path.isdir(addons_dir):
-        return False
-    for p in os.listdir(addons_dir):
-        addon_dir = os.path.join(addons_dir, p)
-        if not os.path.isdir(addon_dir):
-            continue
-        if is_addon_dir(addon_dir):
-            return True
-    return False
+    return any(addon_dirs_in(addons_dir))
 
 
 def is_addon_dir(addon_dir):
     """ Test if a directory contains an Odoo addon. """
     return bool(get_manifest_path(addon_dir))
+
+
+def addon_dirs_in(addons_dir):
+    """ Enumerate addon directories """
+    for d in os.listdir(addons_dir):
+        addon_dir = os.path.join(addons_dir, d)
+        if is_addon_dir(addon_dir):
+            yield addon_dir
 
 
 def get_addon_name(addon_dir):
