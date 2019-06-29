@@ -123,9 +123,10 @@ def bump_manifest_version(addon_dir, mode, git_commit=False):
 def git_modified_addons(addons_dir, ref):
     """
     List addons that have been modified in git HEAD compared to ref.
+    Deleted addons are not returned.
     """
     modified = set()
-    cmd = ["git", "diff", "--name-only", ref]
+    cmd = ["git", "diff", "--name-only", ref, "--"]
     diffs = subprocess.check_output(cmd, cwd=addons_dir, universal_newlines=True)
     for diff in diffs.split("\n"):
         if not diff or "/" not in diff:

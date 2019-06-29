@@ -121,6 +121,11 @@ def tests_git_modified_addons(git_clone):
     subprocess.check_call(["git", "add", "."], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == {"addon", "addon2"}
+    # remove the first and test it does not appear in result
+    subprocess.check_call(["git", "tag", "beforerm"], cwd=git_clone)
+    subprocess.check_call(["git", "rm", "-r", "addon"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "rm addon"], cwd=git_clone)
+    assert not git_modified_addons(git_clone, "beforerm")
 
 
 def test_get_odoo_series_from_version():
