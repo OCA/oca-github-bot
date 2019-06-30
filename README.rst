@@ -55,9 +55,8 @@ When the PR is at least 5 days old, set the ``ready to merge`` label.
 On Pull Request CI status
 -------------------------
 
-When the CI in a Pull Request goes green, set the ``needs review`` label.
-When a Pull Request with the ``needs review`` label is updated and the CI
-fails, remove the ``needs review`` label.
+When the CI in a Pull Request goes green, set the ``needs review`` label,
+unless it has ``wip:``  or ``[wip]`` in it's title.
 
 Commands
 --------
