@@ -47,11 +47,11 @@ SENTRY_DSN = os.environ.get("SENTRY_DSN")
 
 DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
 
-# coma separated list of task to run
-# by default all configured tasks are run.
-# defined tasks:
-#  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,gen_addons_readme,
-#  gen_addons_icon,setuptools_odoo,merge_bot
+# Coma separated list of task to run
+# By default all configured tasks are run.
+# Available tasks:
+#  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
+#  gen_addons_readme,gen_addons_icon,setuptools_odoo,merge_bot,tag_needs_review
 BOT_TASKS = os.environ.get("BOT_TASKS", "all").split(",")
 
 GITHUB_STATUS_IGNORED = [
