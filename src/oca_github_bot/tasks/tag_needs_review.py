@@ -26,8 +26,3 @@ def tag_needs_review(org, pr, repo, status, dry_run=False):
                 _logger.info(f"DRY-RUN add {LABEL_NEEDS_REVIEW} label")
             else:
                 gh_call(gh_issue.add_labels, LABEL_NEEDS_REVIEW)
-            return
-        if dry_run:
-            _logger.info(f"DRY-RUN remove {LABEL_NEEDS_REVIEW} label")
-        else:
-            gh_call(gh_issue.remove_label, LABEL_NEEDS_REVIEW)
