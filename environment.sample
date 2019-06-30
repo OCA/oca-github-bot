@@ -35,3 +35,7 @@ ODOO_PASSWORD=
 #  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,merge_bot,tag_needs_review
 #BOT_TASKS=all
+
+# Root of the PEP 503 simple index where wheels are published
+# (publishing disabled if empty)
+#SIMPLE_INDEX_ROOT=

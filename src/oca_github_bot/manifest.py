@@ -147,6 +147,11 @@ def git_modified_addons(addons_dir, ref):
     return modified
 
 
+def git_modified_addon_dirs(addons_dir, ref):
+    modified_addons = git_modified_addons(addons_dir, ref)
+    return [os.path.join(addons_dir, addon) for addon in modified_addons]
+
+
 def get_odoo_series_from_version(version):
     mo = VERSION_RE.match(version)
     if not mo:

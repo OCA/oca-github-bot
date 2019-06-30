@@ -4,7 +4,8 @@
 import subprocess
 
 from .. import github, manifest
-from ..config import switchable
+from ..build_wheels import build_and_publish_wheels
+from ..config import SIMPLE_INDEX_ROOT, switchable
 from ..github import git_push_if_needed, temporary_clone
 from ..queue import getLogger, task
 from ..version_branch import is_main_branch_bot_branch
@@ -96,6 +97,8 @@ def main_branch_bot(org, repo, branch, dry_run=False):
         else:
             _logger.info(f"git push in {org}/{repo}@{branch}")
             git_push_if_needed("origin", branch)
+        if SIMPLE_INDEX_ROOT:
+            build_and_publish_wheels(".", SIMPLE_INDEX_ROOT)
 
 
 @task()

@@ -67,3 +67,5 @@ MERGE_BOT_INTRO_MESSAGES = [
     "Hey, thanks for contributing! Proceeding to merge this for you.",
     "What a great day to merge this nice PR. Let's do it!",
 ]
+
+SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")

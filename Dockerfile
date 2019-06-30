@@ -12,6 +12,7 @@ RUN set -x \
     curl \
     git \
     python3-venv \
+    rsync \
   && /tmp/install/gosu.sh \
   && /tmp/install/post-install-clean.sh \
   && rm -r /tmp/install

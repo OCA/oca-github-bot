@@ -12,6 +12,7 @@ from oca_github_bot.manifest import (
     get_manifest,
     get_manifest_path,
     get_odoo_series_from_version,
+    git_modified_addon_dirs,
     git_modified_addons,
     is_addon_dir,
     is_addons_dir,
@@ -111,6 +112,9 @@ def tests_git_modified_addons(git_clone):
     subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == {"addon"}
+    assert git_modified_addon_dirs(git_clone, "origin/master") == [
+        str(git_clone / "addon")
+    ]
     # add a second addon, and change the first one
     addon2_dir = git_clone / "addon2"
     addon2_dir.mkdir()

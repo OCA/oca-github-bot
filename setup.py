@@ -33,6 +33,9 @@ setup(
         "odoorpc",
         # Sentry
         "raven",
+        # setuptools and twine to build, check and upload wheels
+        "setuptools",
+        "twine",
     ],
     license="MIT",
     classifiers=[

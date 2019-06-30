@@ -5,13 +5,15 @@ import random
 import subprocess
 
 from .. import github
+from ..build_wheels import build_and_check_wheel, build_and_publish_wheel
 from ..config import (
     GITHUB_CHECK_SUITES_IGNORED,
     GITHUB_STATUS_IGNORED,
     MERGE_BOT_INTRO_MESSAGES,
+    SIMPLE_INDEX_ROOT,
     switchable,
 )
-from ..manifest import bump_manifest_version, git_modified_addons
+from ..manifest import bump_manifest_version, git_modified_addon_dirs
 from ..queue import getLogger, task
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
 from .main_branch_bot import main_branch_bot_actions
@@ -23,6 +25,18 @@ LABEL_MERGED = "merged 🎉"
 
 def _git_call(cmd):
     subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
+
+
+def _git_delete_branch(remote, branch):
+    try:
+        # delete merge bot branch
+        _git_call(["git", "push", remote, f":{branch}"])
+    except subprocess.CalledProcessError as e:
+        if "unable to delete" in e.output:
+            # remote branch may not exist on remote
+            pass
+        else:
+            raise
 
 
 def _get_merge_bot_intro_message():
@@ -65,30 +79,30 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # to the PR.
     _git_call(["git", "fetch", "origin", f"pull/{pr}/head:tmp-pr-{pr}"])
     _git_call(["git", "checkout", f"tmp-pr-{pr}"])
-    modified_addons = git_modified_addons(".", target_branch)
+    modified_addon_dirs = git_modified_addon_dirs(".", target_branch)
     # Run main branch bot actions before bump version.
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.
     _git_call(["git", "checkout", merge_bot_branch])
-    if modified_addons:
+    if modified_addon_dirs:
         main_branch_bot_actions(org, repo, target_branch, dry_run)
-    for addon in modified_addons:
+    for addon_dir in modified_addon_dirs:
         # TODO wlc lock and push
         # TODO msgmerge and commit
         if bumpversion:
-            bump_manifest_version(addon, bumpversion, git_commit=True)
+            bump_manifest_version(addon_dir, bumpversion, git_commit=True)
+            build_and_check_wheel(addon_dir)
     # create the merge commit
     _git_call(["git", "checkout", target_branch])
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
     _git_call(["git", "merge", "--no-ff", "--m", msg, merge_bot_branch])
     _git_call(["git", "push", "origin", target_branch])
+    # build and publish wheel
+    if bumpversion and modified_addon_dirs and SIMPLE_INDEX_ROOT:
+        for addon_dir in modified_addon_dirs:
+            build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT)
     # TODO wlc unlock modified_addons
-    try:
-        # delete merge bot branch
-        _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
-    except subprocess.CalledProcessError:
-        # remote branch may not exist on remote
-        pass
+    _git_delete_branch("origin", merge_bot_branch)
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
         merge_sha = github.git_get_head_sha()
@@ -136,12 +150,7 @@ def merge_bot_start(
                 # TODO then pull target_branch again
                 _git_call(["git", "rebase", "--autosquash", target_branch])
                 # push and let tests run again
-                try:
-                    # delete merge bot branch
-                    _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
-                except subprocess.CalledProcessError:
-                    # remote branch may not exist on remote
-                    pass
+                _git_delete_branch("origin", merge_bot_branch)
                 _git_call(["git", "push", "origin", merge_bot_branch])
                 if not intro_message:
                     intro_message = _get_merge_bot_intro_message()
