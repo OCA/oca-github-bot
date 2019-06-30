@@ -1,5 +1,6 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+from ..config import switchable
 from ..github import gh_call, repository
 from ..queue import getLogger, task
 
@@ -10,6 +11,7 @@ LABEL_WIP = "work in progress"
 
 
 @task()
+@switchable()
 def tag_needs_review(org, pr, repo, status, dry_run=False):
     """On a successful execution of the CI tests, adds the `needs review`
     label to the pull request if it doesn't have `wip:` at the
