@@ -1,3 +1,5 @@
+# Distributed under the MIT License (http://opensource.org/licenses/MIT).
+
 from ..router import router
 from ..tasks.tag_needs_review import tag_needs_review
 

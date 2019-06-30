@@ -1,3 +1,5 @@
+# Distributed under the MIT License (http://opensource.org/licenses/MIT).
+
 from ..github import gh_call, repository
 from ..queue import getLogger, task
 
