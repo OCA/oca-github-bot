@@ -221,8 +221,12 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                 gh_pr = gh.pull_request(org, repo, pr)
                 github.gh_call(
                     gh_pr.create_comment,
-                    f"@{username} Merge command aborted due to a failed check on "
-                    f"[{merge_bot_branch}]"
-                    f"(https://github.com/{org}/{repo}/commits/{sha}).",
+                    f"@{username} your merge command was aborted due to failed "
+                    f"check(s), which you can inspect on "
+                    f"[this commit of {merge_bot_branch}]"
+                    f"(https://github.com/{org}/{repo}/commits/{sha}).\n\n"
+                    f"After fixing the problem, you can re-issue a merge command. "
+                    f"Please refrain from merging manually as it will most probably "
+                    f"make the target branch red.",
                 )
                 _git_call(["git", "push", "origin", f":{merge_bot_branch}"])
