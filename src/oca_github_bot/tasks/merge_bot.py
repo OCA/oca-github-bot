@@ -155,6 +155,13 @@ def merge_bot_start(
                 f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
             )
             raise
+        except Exception as e:
+            github.gh_call(
+                gh_pr.create_comment,
+                f"@{username} The merge process could not start, because "
+                f"of exception {e}.",
+            )
+            raise
 
 
 def _get_commit_success(gh_commit):
@@ -209,16 +216,32 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
         pr, _, username, _ = parse_merge_bot_branch(merge_bot_branch)
         with github.login() as gh:
             gh_repo = gh.repository(org, repo)
+            gh_pr = gh.pull_request(org, repo, pr)
             gh_commit = github.gh_call(gh_repo.commit, sha)
             success = _get_commit_success(gh_commit)
             if success is None:
                 # checks in progress
                 return
             elif success:
-                # TODO catch exceptions and report them to the PR
-                _merge_bot_merge_pr(org, repo, merge_bot_branch)
+                try:
+                    _merge_bot_merge_pr(org, repo, merge_bot_branch)
+                except subprocess.CalledProcessError as e:
+                    cmd = " ".join(e.cmd)
+                    github.gh_call(
+                        gh_pr.create_comment,
+                        f"@{username} The merge process could not be "
+                        f"finalized, because "
+                        f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
+                    )
+                    raise
+                except Exception as e:
+                    github.gh_call(
+                        gh_pr.create_comment,
+                        f"@{username} The merge process could not be "
+                        f"finalized because of exception {e}.",
+                    )
+                    raise
             else:
-                gh_pr = gh.pull_request(org, repo, pr)
                 github.gh_call(
                     gh_pr.create_comment,
                     f"@{username} your merge command was aborted due to failed "
