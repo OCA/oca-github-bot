@@ -85,7 +85,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # because it is dedicated to addons repos.
     _git_call(["git", "checkout", merge_bot_branch])
     if modified_addon_dirs:
-        main_branch_bot_actions(org, repo, target_branch, dry_run)
+        main_branch_bot_actions(org, repo, target_branch)
     for addon_dir in modified_addon_dirs:
         # TODO wlc lock and push
         # TODO msgmerge and commit
@@ -96,7 +96,11 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     _git_call(["git", "checkout", target_branch])
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
     _git_call(["git", "merge", "--no-ff", "--m", msg, merge_bot_branch])
-    _git_call(["git", "push", "origin", target_branch])
+    if dry_run:
+        _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
+    else:
+        _logger.info(f"git push in {org}/{repo}@{target_branch}")
+        _git_call(["git", "push", "origin", target_branch])
     # build and publish wheel
     if bumpversion and modified_addon_dirs and SIMPLE_INDEX_ROOT:
         for addon_dir in modified_addon_dirs:
@@ -115,7 +119,11 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             f"All commits of this PR have been merged into `{target_branch}`.",
         )
         gh_issue = github.gh_call(gh_pr.issue)
-        github.gh_call(gh_issue.add_labels, LABEL_MERGED)
+        if dry_run:
+            _logger.info(f"DRY-RUN add {LABEL_MERGED} label to PR {gh_pr.url}")
+        else:
+            _logger.info(f"add {LABEL_MERGED} label to PR {gh_pr.url}")
+            github.gh_call(gh_issue.add_labels, LABEL_MERGED)
         github.gh_call(gh_pr.close)
     return True
 
