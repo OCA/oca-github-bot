@@ -56,15 +56,20 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             intro_message=intro_message,
         )
         return False
-    # bump version
-    _git_call(["git", "checkout", merge_bot_branch])
+    # Get modified addons list on the PR and not on the merge bot branch
+    # because travis .pot generation may sometimes touch
+    # other addons unrelated to the PR and we don't want to bump
+    # version on those. This is also the least surprising approach, bumping
+    # version only on addons visibly modified on the PR, and not on
+    # other addons that may be modified by the bot for reasons unrelated
+    # to the PR.
+    _git_call(["git", "fetch", "origin", f"pull/{pr}/head:tmp-pr-{pr}"])
+    _git_call(["git", "checkout", f"tmp-pr-{pr}"])
     modified_addons = git_modified_addons(".", target_branch)
-    # Run main branch bot actions before bump version,
-    # and after getting the list of modified addons, so we avoid
-    # bumping version for too many addons in rare case where, eg,
-    # the readme generator would refresh all addons of the repo.
+    # Run main branch bot actions before bump version.
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.
+    _git_call(["git", "checkout", merge_bot_branch])
     if modified_addons:
         main_branch_bot_actions(org, repo, target_branch, dry_run)
     for addon in modified_addons:
