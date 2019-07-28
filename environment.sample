@@ -38,4 +38,4 @@ ODOO_PASSWORD=
 
 # Root of the PEP 503 simple index where wheels are published
 # (publishing disabled if empty)
-#SIMPLE_INDEX_ROOT=
+SIMPLE_INDEX_ROOT=/app/run/simple-index
