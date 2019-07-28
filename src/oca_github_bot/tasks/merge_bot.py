@@ -104,7 +104,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # build and publish wheel
     if bumpversion and modified_addon_dirs and SIMPLE_INDEX_ROOT:
         for addon_dir in modified_addon_dirs:
-            build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT)
+            build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT, dry_run)
     # TODO wlc unlock modified_addons
     _git_delete_branch("origin", merge_bot_branch)
     with github.login() as gh:

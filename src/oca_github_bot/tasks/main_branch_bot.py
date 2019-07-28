@@ -78,7 +78,7 @@ def main_branch_bot_actions(org, repo, branch):
 
 
 @task()
-def main_branch_bot(org, repo, branch, dry_run=False):
+def main_branch_bot(org, repo, branch, build_wheels, dry_run=False):
     if not is_main_branch_bot_branch(branch):
         return
     with temporary_clone(org, repo, branch):
@@ -91,13 +91,15 @@ def main_branch_bot(org, repo, branch, dry_run=False):
         else:
             _logger.info(f"git push in {org}/{repo}@{branch}")
             git_push_if_needed("origin", branch)
-        if SIMPLE_INDEX_ROOT:
-            build_and_publish_wheels(".", SIMPLE_INDEX_ROOT)
+        if build_wheels and SIMPLE_INDEX_ROOT:
+            build_and_publish_wheels(".", SIMPLE_INDEX_ROOT, dry_run)
 
 
 @task()
-def main_branch_bot_all_repos(org, dry_run=False):
+def main_branch_bot_all_repos(org, build_wheels, dry_run=False):
     with github.login() as gh:
         for repo in gh.repositories_by(org):
             for branch in repo.branches():
-                main_branch_bot.delay(org, repo.name, branch.name, dry_run)
+                main_branch_bot.delay(
+                    org, repo.name, branch.name, build_wheels, dry_run
+                )

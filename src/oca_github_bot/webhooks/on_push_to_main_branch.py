@@ -21,4 +21,4 @@ async def on_push_to_main_branch(event, gh, *args, **kwargs):
     if not is_main_branch_bot_branch(branch):
         return
 
-    main_branch_bot.delay(org, repo, branch)
+    main_branch_bot.delay(org, repo, branch, build_wheels=False)

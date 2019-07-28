@@ -1,12 +1,15 @@
 # Copyright (c) ACSONE SA/NV 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import logging
 import os
 import subprocess
 import sys
 import tempfile
 
 from .manifest import addon_dirs_in, get_manifest, get_odoo_series_from_version
+
+_logger = logging.getLogger(__name__)
 
 
 def _build_wheel(addon_dir, dist_dir):
@@ -51,26 +54,34 @@ def build_and_check_wheel(addon_dir):
         _check_wheels(dist_dir)
 
 
-def build_and_publish_wheel(addon_dir, simple_index_root):
+def build_and_publish_wheel(addon_dir, simple_index_root, dry_run=False):
     with tempfile.TemporaryDirectory() as dist_dir:
         _build_wheel(addon_dir, dist_dir)
         _check_wheels(dist_dir)
-        _publish_dist_dir_to_simple_index(dist_dir, simple_index_root)
+        _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run)
 
 
-def build_and_publish_wheels(addons_dir, simple_index_root):
+def build_and_publish_wheels(addons_dir, simple_index_root, dry_run=False):
     for addon_dir in addon_dirs_in(addons_dir):
         build_and_publish_wheel(addon_dir, simple_index_root)
 
 
-def _publish_dist_dir_to_simple_index(dist_dir, simple_index_root):
+def _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run=False):
     pkgname = _find_pkgname(dist_dir)
-    fulltarget = os.path.join(simple_index_root, pkgname, "")
     # --ignore-existing: never overwrite an existing package
     # os.path.join: make sure directory names end with /
-    subprocess.check_call(
-        ["rsync", "-rv", "--ignore-existing", os.path.join(dist_dir, ""), fulltarget]
-    )
+    cmd = [
+        "rsync",
+        "-rv",
+        "--ignore-existing",
+        os.path.join(dist_dir, ""),
+        os.path.join(simple_index_root, pkgname, ""),
+    ]
+    if dry_run:
+        _logger.info("DRY-RUN" + " ".join(cmd))
+    else:
+        _logger.info(" ".join(cmd))
+        subprocess.check_call(cmd)
 
 
 def _find_pkgname(dist_dir):

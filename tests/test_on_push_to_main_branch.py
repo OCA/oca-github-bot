@@ -15,5 +15,5 @@ async def test_on_push_to_main_branch_1(mocker):
     )
     await on_push_to_main_branch.on_push_to_main_branch(event, None)
     on_push_to_main_branch.main_branch_bot.delay.assert_called_once_with(
-        "OCA", "some-repo", "11.0"
+        "OCA", "some-repo", "11.0", build_wheels=False
     )
