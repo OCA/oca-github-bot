@@ -1,4 +1,12 @@
-v20190728
+v20190729.1
+~~~~~~~~~~~
+
+**Bug fixes**
+
+- Update OCA/maintainer-tools to correctly pin docutils 0.15.1.
+- Fix traceback in on_pr_green_label_needs_review.
+
+v20190729
 ~~~~~~~~~
 
 **Features**
@@ -9,6 +17,13 @@ v20190728
 - Simplify the docker image, removing gosu. Run under user 1000 in
   /var/run by default. Can be influenced using docker --user or similar.
   The default docker-compose.yml needs UID and GID environment variables.
+
+**Bug fixes**
+
+- Merge bot: fix detection of modified addons in case main branch was modified
+  since the PR was created.
+- Update OCA/maintainer-tools to pin docutils 0.15.1
+  (see https://github.com/OCA/maintainer-tools/issues/423).
 
 v20190708
 ~~~~~~~~~
