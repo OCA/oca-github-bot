@@ -11,5 +11,5 @@ async def on_pr_green_label_needs_review(event, gh, *args, **kwargs):
     """
     status = event.data["check_suite"]["conclusion"]
     org, repo = event.data["repository"]["full_name"].split("/")
-    pr = event.data["check_suite"]["pull_requests"][0]["number"]
-    tag_needs_review.delay(org, pr, repo, status)
+    for pr in event.data["check_suite"]["pull_requests"]:
+        tag_needs_review.delay(org, pr["number"], repo, status)
