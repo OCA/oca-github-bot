@@ -78,8 +78,14 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # other addons that may be modified by the bot for reasons unrelated
     # to the PR.
     _git_call(["git", "fetch", "origin", f"pull/{pr}/head:tmp-pr-{pr}"])
+    merge_base = github.git_merge_base(target_branch, f"tmp-pr-{pr}", ".")
+    if not merge_base:
+        raise RuntimeError(
+            f"No common ancestor found between PR {pr} and {target_branch}, "
+            f"aborting merge."
+        )
     _git_call(["git", "checkout", f"tmp-pr-{pr}"])
-    modified_addon_dirs = git_modified_addon_dirs(".", target_branch)
+    modified_addon_dirs = git_modified_addon_dirs(".", merge_base)
     # Run main branch bot actions before bump version.
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.

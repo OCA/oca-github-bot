@@ -146,8 +146,14 @@ def git_user_can_push(gh_repo, username):
     return False
 
 
-def git_get_head_sha():
+def git_get_head_sha(cwd="."):
     """ Get the sha of the git HEAD in current directory """
     return subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], universal_newlines=True
+        ["git", "rev-parse", "HEAD"], universal_newlines=True, cwd=cwd
+    ).strip()
+
+
+def git_merge_base(ref1, ref2, cwd="."):
+    return subprocess.check_output(
+        ["git", "merge-base", ref1, ref2], universal_newlines=True, cwd=cwd
     ).strip()
