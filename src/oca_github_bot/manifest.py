@@ -65,7 +65,7 @@ def get_manifest_path(addon_dir):
 def get_manifest(addon_dir):
     manifest_path = get_manifest_path(addon_dir)
     if not manifest_path:
-        raise NoManifestFound()
+        raise NoManifestFound(f"no manifest found in {addon_dir}")
     with open(manifest_path, "r") as f:
         return ast.literal_eval(f.read())
 
