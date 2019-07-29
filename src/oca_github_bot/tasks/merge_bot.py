@@ -266,7 +266,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                     github.gh_call(
                         gh_pr.create_comment,
                         f"@{username} The merge process could not be "
-                        f"finalized because of exception {e}.",
+                        f"finalized because an exception was raised: {e}.",
                     )
                     raise
             else:
