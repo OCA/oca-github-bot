@@ -36,6 +36,7 @@ setup(
         # setuptools and twine to build, check and upload wheels
         "setuptools",
         "twine",
+        "wheel",
     ],
     license="MIT",
     classifiers=[

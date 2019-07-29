@@ -46,6 +46,7 @@ uritemplate==3.0.0        # via gidgethub, github3.py
 urllib3==1.25.2           # via requests
 vine==1.1.4               # via amqp
 webencodings==0.5.1       # via bleach
+wheel==0.33.4
 yarl==1.2.6               # via aiohttp
 
 # The following packages are considered to be unsafe in a requirements file:
