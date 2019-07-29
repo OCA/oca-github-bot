@@ -46,6 +46,9 @@ setup.py generator
 
 These actions are also run nightly on all repos.
 
+Also nightly, wheels are generated for all addons repositories and rsynced
+to a PEP 503 simple index.
+
 On Pull Request review
 ----------------------
 
@@ -71,6 +74,8 @@ can be used to ask the bot to the following:
 * run the main branch operations (see above) on it
 * optionally bump the version number of the addons modified by the PR
 * merge when tests on the rebased branch are green
+* when the version was bumped, generate a wheel and rsync it to the PEP 503
+  simple index
 
 TODO (help wanted)
 ------------------
@@ -142,7 +147,9 @@ Here is a recommended procedure to test locally:
 
 .. code::
 
-  export $(cat environment | xargs)
+  set -o exportall
+  source environment
+  set +o exportall
 
 * Launch the ``redis`` message queue:
 
