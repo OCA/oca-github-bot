@@ -1,3 +1,10 @@
+next
+~~~~
+
+**Bug fixes**
+
+- Do not attempt to build wheels for uninstallable addons.
+
 v20190729.1
 ~~~~~~~~~~~
 

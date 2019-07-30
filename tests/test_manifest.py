@@ -36,6 +36,27 @@ def test_is_addon_dir(tmp_path):
     m = tmp_path / "__manifest__.py"
     m.write_text("{'name': 'addon'}")
     assert is_addon_dir(tmp_path)
+    m.write_text("{'name': 'addon', 'installable': False}")
+    assert is_addon_dir(tmp_path)
+    m.write_text("{'name': 'addon', 'installable': False}")
+    assert not is_addon_dir(tmp_path, installable_only=True)
+    m.write_text("{'name': 'addon', 'installable': True}")
+    assert is_addon_dir(tmp_path, installable_only=True)
+
+
+def test_is_addons_dir(tmp_path):
+    addon1 = tmp_path / "addon1"
+    addon1.mkdir()
+    assert not is_addons_dir(tmp_path)
+    m = addon1 / "__manifest__.py"
+    m.write_text("{'name': 'addon'}")
+    assert is_addons_dir(tmp_path)
+    m.write_text("{'name': 'addon', 'installable': False}")
+    assert is_addons_dir(tmp_path)
+    m.write_text("{'name': 'addon', 'installable': False}")
+    assert not is_addons_dir(tmp_path, installable_only=True)
+    m.write_text("{'name': 'addon', 'installable': True}")
+    assert is_addons_dir(tmp_path, installable_only=True)
 
 
 def test_get_manifest_path(tmp_path):

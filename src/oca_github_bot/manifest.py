@@ -23,21 +23,27 @@ class OdooSeriesNotDetected(Exception):
     pass
 
 
-def is_addons_dir(addons_dir):
+def is_addons_dir(addons_dir, installable_only=False):
     """ Test if an directory contains Odoo addons. """
-    return any(addon_dirs_in(addons_dir))
+    return any(addon_dirs_in(addons_dir, installable_only))
 
 
-def is_addon_dir(addon_dir):
+def is_addon_dir(addon_dir, installable_only=False):
     """ Test if a directory contains an Odoo addon. """
-    return bool(get_manifest_path(addon_dir))
+    if not installable_only:
+        return bool(get_manifest_path(addon_dir))
+    else:
+        try:
+            return get_manifest(addon_dir).get("installable", True)
+        except NoManifestFound:
+            return False
 
 
-def addon_dirs_in(addons_dir):
+def addon_dirs_in(addons_dir, installable_only=False):
     """ Enumerate addon directories """
     for d in os.listdir(addons_dir):
         addon_dir = os.path.join(addons_dir, d)
-        if is_addon_dir(addon_dir):
+        if is_addon_dir(addon_dir, installable_only):
             yield addon_dir
 
 

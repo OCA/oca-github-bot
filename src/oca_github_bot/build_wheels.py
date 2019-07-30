@@ -62,7 +62,7 @@ def build_and_publish_wheel(addon_dir, simple_index_root, dry_run=False):
 
 
 def build_and_publish_wheels(addons_dir, simple_index_root, dry_run=False):
-    for addon_dir in addon_dirs_in(addons_dir):
+    for addon_dir in addon_dirs_in(addons_dir, installable_only=True):
         build_and_publish_wheel(addon_dir, simple_index_root)
 
 
