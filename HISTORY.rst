@@ -1,6 +1,10 @@
 next
 ~~~~
 
+**Features**
+
+- Improved command parser (#53)
+
 **Bug fixes**
 
 - Do not attempt to build wheels for uninstallable addons.

@@ -6,7 +6,7 @@ import re
 from .tasks import merge_bot
 
 BOT_COMMAND_RE = re.compile(
-    r"/ocabot +(?P<command>\w+)( +(?P<options>.*?))? *$", re.MULTILINE
+    r"/ocabot[ \t]+(?P<command>\w+)(?P<options>[ \t\w]*)(\W|\r?$)", re.MULTILINE
 )
 
 
@@ -23,6 +23,7 @@ class InvalidOptionsError(Exception):
 class BotCommand:
     def __init__(self, name, options):
         self.name = name
+        self.options = options
         self.parse_options(options)
 
     @classmethod
@@ -46,8 +47,8 @@ class BotCommandMerge(BotCommand):
     def parse_options(self, options):
         if not options:
             return
-        if options in ("major", "minor", "patch"):
-            self.bumpversion = options
+        if len(options) == 1 and options[0] in ("major", "minor", "patch"):
+            self.bumpversion = options[0]
         else:
             raise InvalidOptionsError(self.name, options)
 
@@ -60,4 +61,6 @@ class BotCommandMerge(BotCommand):
 def parse_commands(text):
     """ Parse a text and return an iterator of BotCommand objects. """
     for mo in BOT_COMMAND_RE.finditer(text):
-        yield BotCommand.create(mo.group("command"), mo.group("options"))
+        yield BotCommand.create(
+            mo.group("command"), mo.group("options").strip().split()
+        )

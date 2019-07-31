@@ -22,11 +22,38 @@ def test_parse_command_multi():
                 /ocabot merge major
                 /ocabot   merge   patch
                 /ocabot merge patch
+                /ocabot merge, please
+                /ocabot merge  minor, please
+                /ocabot merge minor, please
+                /ocabot merge.
+                /ocabot merge patch. blah
+                /ocabot merge minor # ignored
                 ...
             """
         )
     )
-    assert len(cmds) == 3
+    assert [(cmd.name, cmd.options) for cmd in cmds] == [
+        ("merge", ["major"]),
+        ("merge", ["patch"]),
+        ("merge", ["patch"]),
+        ("merge", []),
+        ("merge", ["minor"]),
+        ("merge", ["minor"]),
+        ("merge", []),
+        ("merge", ["patch"]),
+        ("merge", ["minor"]),
+    ]
+
+
+def test_parse_command_2():
+    cmds = list(
+        parse_commands(
+            "Great contribution, thanks!\r\n\r\n"
+            "/ocabot merge\r\n\r\n"
+            "Please forward port it to 12.0."
+        )
+    )
+    assert [(cmd.name, cmd.options) for cmd in cmds] == [("merge", [])]
 
 
 def test_parse_command_merge():
