@@ -38,13 +38,18 @@ def _build_wheel(addon_dir, dist_dir):
             "--python-tag",
             "py2" if series < (11, 0) else "py3",
         ]
-        subprocess.check_output(cmd, cwd=setup_dir, stderr=subprocess.STDOUT)
+        subprocess.check_output(
+            cmd, cwd=setup_dir, universal_newlines=True, stderr=subprocess.STDOUT
+        )
 
 
 def _check_wheels(dist_dir):
     wheels = [f for f in os.listdir(dist_dir) if f.endswith(".whl")]
     subprocess.check_output(
-        ["twine", "check"] + wheels, cwd=dist_dir, stderr=subprocess.STDOUT
+        ["twine", "check"] + wheels,
+        cwd=dist_dir,
+        universal_newlines=True,
+        stderr=subprocess.STDOUT,
     )
 
 
