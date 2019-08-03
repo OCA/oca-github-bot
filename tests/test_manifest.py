@@ -4,6 +4,7 @@
 import subprocess
 
 import pytest
+
 from oca_github_bot.manifest import (
     NoManifestFound,
     OdooSeriesNotDetected,

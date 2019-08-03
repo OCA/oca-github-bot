@@ -2,6 +2,7 @@ import celery
 import pytest
 import requests
 from github3.exceptions import ForbiddenError
+
 from oca_github_bot.github import gh_call
 
 

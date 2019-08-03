@@ -2,6 +2,7 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import pytest
+
 from oca_github_bot.commands import (
     InvalidCommandError,
     InvalidOptionsError,

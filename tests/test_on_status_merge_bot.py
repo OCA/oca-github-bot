@@ -2,6 +2,7 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import pytest
+
 from oca_github_bot.version_branch import make_merge_bot_branch
 from oca_github_bot.webhooks import on_status_merge_bot
 
