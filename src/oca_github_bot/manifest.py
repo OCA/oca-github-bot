@@ -85,6 +85,15 @@ def set_manifest_version(addon_dir, version):
         f.write(manifest)
 
 
+def is_maintainer(username, addon_dirs):
+    for addon_dir in addon_dirs:
+        manifest = get_manifest(addon_dir)
+        maintainers = manifest.get("maintainers", [])
+        if username not in maintainers:
+            return False
+    return True
+
+
 def bump_version(version, mode):
     mo = VERSION_RE.match(version)
     if not mo:

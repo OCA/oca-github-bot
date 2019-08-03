@@ -18,6 +18,7 @@ from oca_github_bot.manifest import (
     git_modified_addons,
     is_addon_dir,
     is_addons_dir,
+    is_maintainer,
     set_manifest_version,
 )
 
@@ -202,3 +203,22 @@ def test_get_odoo_series_from_version():
         get_odoo_series_from_version("1.0")
     with pytest.raises(OdooSeriesNotDetected):
         get_odoo_series_from_version("12.0.1")
+
+
+def test_is_maintainer(tmp_path):
+    addon1 = tmp_path / "addon1"
+    addon1.mkdir()
+    (addon1 / "__manifest__.py").write_text(
+        "{'name': 'addon1', 'maintainers': ['u1', 'u2']}"
+    )
+    addon2 = tmp_path / "addon2"
+    addon2.mkdir()
+    (addon2 / "__manifest__.py").write_text("{'name': 'addon2', 'maintainers': ['u2']}")
+    addon3 = tmp_path / "addon3"
+    addon3.mkdir()
+    (addon3 / "__manifest__.py").write_text("{'name': 'addon3'}")
+    assert is_maintainer("u1", [addon1])
+    assert not is_maintainer("u1", [addon2])
+    assert not is_maintainer("u1", [addon1, addon2])
+    assert is_maintainer("u2", [addon1, addon2])
+    assert not is_maintainer("u2", [addon1, addon2, addon3])
