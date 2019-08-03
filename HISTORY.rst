@@ -9,6 +9,7 @@ next
   better display of errors in merge bot.
 - Better detection of modified addons (using diff after rebase instead
   of diff to merge base).
+- merge bot: allow addon maintainers to merge (#51)
 
 **Bug fixes**
 

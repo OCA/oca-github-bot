@@ -140,6 +140,9 @@ def git_modified_addons(addons_dir, ref):
     List addons that have been modified in the current branch compared to
     ref, after rebasing on ref.
     Deleted addons are not returned.
+
+    Returns a tuple with a set of modified addons, and a flag telling
+    if something else than addons has been modified.
     """
     modified = set()
     current_branch = subprocess.check_output(
@@ -165,8 +168,13 @@ def git_modified_addons(addons_dir, ref):
         subprocess.check_output(
             ["git", "checkout", current_branch], cwd=addons_dir, universal_newlines=True
         )
+    other_changes = False
     for diff in diffs.split("\n"):
-        if not diff or "/" not in diff:
+        if not diff:
+            continue
+        if "/" not in diff:
+            # file at repo root modified
+            other_changes = True
             continue
         parts = diff.split("/")
         if parts[0] == "setup" and len(parts) > 1:
@@ -179,16 +187,20 @@ def git_modified_addons(addons_dir, ref):
                 )
             ):
                 modified.add(addon_name)
+            else:
+                other_changes = True
         else:
             addon_name = parts[0]
             if is_addon_dir(os.path.join(addons_dir, addon_name)):
                 modified.add(addon_name)
-    return modified
+            else:
+                other_changes = True
+    return modified, other_changes
 
 
 def git_modified_addon_dirs(addons_dir, ref):
-    modified_addons = git_modified_addons(addons_dir, ref)
-    return [os.path.join(addons_dir, addon) for addon in modified_addons]
+    modified_addons, other_changes = git_modified_addons(addons_dir, ref)
+    return [os.path.join(addons_dir, addon) for addon in modified_addons], other_changes
 
 
 def get_odoo_series_from_version(version):
