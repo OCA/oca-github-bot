@@ -128,12 +128,34 @@ def bump_manifest_version(addon_dir, mode, git_commit=False):
 
 def git_modified_addons(addons_dir, ref):
     """
-    List addons that have been modified in git HEAD compared to ref.
+    List addons that have been modified in the current branch compared to
+    ref, after rebasing on ref.
     Deleted addons are not returned.
     """
     modified = set()
-    cmd = ["git", "diff", "--name-only", ref, "--"]
-    diffs = subprocess.check_output(cmd, cwd=addons_dir, universal_newlines=True)
+    current_branch = subprocess.check_output(
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+        cwd=addons_dir,
+        universal_newlines=True,
+    ).strip()
+    try:
+        subprocess.check_output(
+            ["git", "checkout", "-B", "tmp-git-modified-addons"],
+            cwd=addons_dir,
+            universal_newlines=True,
+        )
+        subprocess.check_output(
+            ["git", "rebase", ref], cwd=addons_dir, universal_newlines=True
+        )
+        diffs = subprocess.check_output(
+            ["git", "diff", "--name-only", ref, "--"],
+            cwd=addons_dir,
+            universal_newlines=True,
+        )
+    finally:
+        subprocess.check_output(
+            ["git", "checkout", current_branch], cwd=addons_dir, universal_newlines=True
+        )
     for diff in diffs.split("\n"):
         if not diff or "/" not in diff:
             continue
@@ -141,9 +163,11 @@ def git_modified_addons(addons_dir, ref):
         if parts[0] == "setup" and len(parts) > 1:
             addon_name = parts[1]
             if is_addon_dir(
-                os.path.join(addons_dir, "setup", "addon", "odoo_addons", addon_name)
+                os.path.join(addons_dir, "setup", addon_name, "odoo_addons", addon_name)
             ) or is_addon_dir(
-                os.path.join(addons_dir, "setup", "addon", "odoo", "addons", addon_name)
+                os.path.join(
+                    addons_dir, "setup", addon_name, "odoo", "addons", addon_name
+                )
             ):
                 modified.add(addon_name)
         else:

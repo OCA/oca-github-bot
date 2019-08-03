@@ -57,7 +57,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             f"rebasing again."
         )
         intro_message = (
-            f"It looks like something changed on `{target_branch}` in the meantime. "
+            f"It looks like something changed on `{target_branch}` in the meantime.\n"
             f"Let me try again (no action is required from you)."
         )
         merge_bot_start(
@@ -77,15 +77,9 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # version only on addons visibly modified on the PR, and not on
     # other addons that may be modified by the bot for reasons unrelated
     # to the PR.
-    _git_call(["git", "fetch", "origin", f"pull/{pr}/head:tmp-pr-{pr}"])
-    merge_base = github.git_merge_base(target_branch, f"tmp-pr-{pr}", ".")
-    if not merge_base:
-        raise RuntimeError(
-            f"No common ancestor found between PR {pr} and {target_branch}, "
-            f"aborting merge."
-        )
+    _git_call(["git", "fetch", "origin", f"refs/pull/{pr}/head:tmp-pr-{pr}"])
     _git_call(["git", "checkout", f"tmp-pr-{pr}"])
-    modified_addon_dirs = git_modified_addon_dirs(".", merge_base)
+    modified_addon_dirs = git_modified_addon_dirs(".", target_branch)
     # Run main branch bot actions before bump version.
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.

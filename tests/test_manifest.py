@@ -5,6 +5,7 @@ import subprocess
 
 import pytest
 
+from oca_github_bot.github import git_get_head_sha
 from oca_github_bot.manifest import (
     NoManifestFound,
     OdooSeriesNotDetected,
@@ -110,7 +111,7 @@ def test_bump_manifest_version(tmp_path):
     assert m["version"] == "12.0.1.1.0"
 
 
-def tests_git_modified_addons(git_clone):
+def test_git_modified_addons(git_clone):
     # create an addon, commit it, and check it is modified
     addon_dir = git_clone / "addon"
     addon_dir.mkdir()
@@ -152,6 +153,44 @@ def tests_git_modified_addons(git_clone):
     subprocess.check_call(["git", "rm", "-r", "addon"], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "rm addon"], cwd=git_clone)
     assert not git_modified_addons(git_clone, "beforerm")
+
+
+def test_git_modified_addons_merge_base(git_clone):
+    # create addon2 on master
+    addon2_dir = git_clone / "addon2"
+    addon2_dir.mkdir()
+    (addon2_dir / "__manifest__.py").write_text("{'name': 'addon2'}")
+    subprocess.check_call(["git", "add", "addon2"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "origin/master") == {"addon2"}
+    # create addon1 on a new branch
+    subprocess.check_call(["git", "checkout", "-b" "addon1"], cwd=git_clone)
+    addon1_dir = git_clone / "addon1"
+    addon1_dir.mkdir()
+    (addon1_dir / "__manifest__.py").write_text("{'name': 'addon1'}")
+    subprocess.check_call(["git", "add", "addon1"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon1"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "master") == {"addon1"}
+    # modify addon2 on master
+    subprocess.check_call(["git", "checkout", "master"], cwd=git_clone)
+    (addon2_dir / "__manifest__.py").write_text("{'name': 'modified addon2'}")
+    subprocess.check_call(["git", "add", "addon2"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "upd addon2"], cwd=git_clone)
+    # check comparison of addon1 to master only gives addon1
+    subprocess.check_call(["git", "checkout", "addon1"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "master") == {"addon1"}
+    # add same commit in master and addon1
+    subprocess.check_call(["git", "checkout", "master"], cwd=git_clone)
+    addon3_dir = git_clone / "addon3"
+    addon3_dir.mkdir()
+    (addon3_dir / "__manifest__.py").write_text("{'name': 'addon3'}")
+    subprocess.check_call(["git", "add", "addon3"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon3"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "HEAD^") == {"addon3"}
+    commit = git_get_head_sha(cwd=git_clone)
+    subprocess.check_call(["git", "checkout", "addon1"], cwd=git_clone)
+    subprocess.check_call(["git", "cherry-pick", commit], cwd=git_clone)
+    assert git_modified_addons(git_clone, "master") == {"addon1"}
 
 
 def test_get_odoo_series_from_version():

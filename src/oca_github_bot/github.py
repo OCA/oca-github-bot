@@ -154,9 +154,3 @@ def git_get_head_sha(cwd="."):
     return subprocess.check_output(
         ["git", "rev-parse", "HEAD"], universal_newlines=True, cwd=cwd
     ).strip()
-
-
-def git_merge_base(ref1, ref2, cwd="."):
-    return subprocess.check_output(
-        ["git", "merge-base", ref1, ref2], universal_newlines=True, cwd=cwd
-    ).strip()
