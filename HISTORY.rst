@@ -4,6 +4,9 @@ next
 **Features**
 
 - Improved command parser (#53)
+- Call external tools with universal_newlines=True for better
+  output capture (unicode instead of binary) and, in particular,
+  better display of errors in merge bot.
 
 **Bug fixes**
 

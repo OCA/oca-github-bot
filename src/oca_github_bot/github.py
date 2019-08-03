@@ -126,10 +126,13 @@ def git_push_if_needed(remote, branch, cwd=None):
         return False
     try:
         subprocess.check_output(
-            ["git", "push", remote, branch], stderr=subprocess.STDOUT, cwd=cwd
+            ["git", "push", remote, branch],
+            stderr=subprocess.STDOUT,
+            cwd=cwd,
+            universal_newlines=True,
         )
     except subprocess.CalledProcessError as e:
-        if b"non-fast-forward" in e.output:
+        if "non-fast-forward" in e.output:
             raise Retry(
                 exc=e,
                 message="Retrying because a non-fast-forward git push was attempted.",

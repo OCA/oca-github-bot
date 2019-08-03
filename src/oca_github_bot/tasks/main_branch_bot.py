@@ -17,7 +17,9 @@ _logger = getLogger(__name__)
 def _gen_addons_table(org, repo, branch):
     _logger.info("oca-gen-addons-table in %s/%s@%s", org, repo, branch)
     gen_addons_table_cmd = ["oca-gen-addons-table", "--commit"]
-    subprocess.check_output(gen_addons_table_cmd, stderr=subprocess.STDOUT)
+    subprocess.check_output(
+        gen_addons_table_cmd, universal_newlines=True, stderr=subprocess.STDOUT
+    )
 
 
 @switchable("gen_addons_readme")
@@ -35,14 +37,18 @@ def _gen_addons_readme(org, repo, branch):
         ".",
         "--commit",
     ]
-    subprocess.check_output(gen_addon_readme_cmd, stderr=subprocess.STDOUT)
+    subprocess.check_output(
+        gen_addon_readme_cmd, universal_newlines=True, stderr=subprocess.STDOUT
+    )
 
 
 @switchable("gen_addons_icon")
 def _gen_addons_icon(org, repo, branch):
     _logger.info("oca-gen-addon-icon in %s/%s@%s", org, repo, branch)
     gen_addon_icon_cmd = ["oca-gen-addon-icon", "--addons-dir", ".", "--commit"]
-    subprocess.check_output(gen_addon_icon_cmd, stderr=subprocess.STDOUT)
+    subprocess.check_output(
+        gen_addon_icon_cmd, universal_newlines=True, stderr=subprocess.STDOUT
+    )
 
 
 @switchable("setuptools_odoo")
@@ -57,7 +63,9 @@ def _setuptools_odoo_make_default(org, repo, branch):
         "--clean",
         "--commit",
     ]
-    subprocess.check_output(make_default_setup_cmd, stderr=subprocess.STDOUT)
+    subprocess.check_output(
+        make_default_setup_cmd, universal_newlines=True, stderr=subprocess.STDOUT
+    )
 
 
 def main_branch_bot_actions(org, repo, branch):
