@@ -23,8 +23,10 @@ _logger = getLogger(__name__)
 LABEL_MERGED = "merged 🎉"
 
 
-def _git_call(cmd):
-    subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
+def _git_call(cmd, cwd="."):
+    subprocess.check_output(
+        cmd, universal_newlines=True, stderr=subprocess.STDOUT, cwd=cwd
+    )
 
 
 def _git_delete_branch(remote, branch):
@@ -142,8 +144,14 @@ def _user_can_merge(gh, org, repo, username, addons_dir, target_branch):
     )
     if other_changes or not modified_addon_dirs:
         return False
-    # if we are modifying addons only, then the user must be maintainer of all of them
-    return is_maintainer(username, modified_addon_dirs)
+    # if we are modifying addons only, then the user must be maintainer of
+    # all of them on the target branch
+    current_branch = github.git_get_current_branch(cwd=addons_dir)
+    try:
+        _git_call(["git", "checkout", target_branch], cwd=addons_dir)
+        return is_maintainer(username, modified_addon_dirs)
+    finally:
+        _git_call(["git", "checkout", current_branch], cwd=addons_dir)
 
 
 @task()
@@ -170,7 +178,7 @@ def merge_bot_start(
                         f"Sorry @{username} you are not allowed to merge.\n\n"
                         f"To do so you must either have push permissions on "
                         f"the repository, or be a declared maintainer of all "
-                        f"modified addons.\n\n."
+                        f"modified addons.\n\n"
                         f"If you wish to adopt an addon and become it's "
                         f"[maintainer]"
                         f"(https://odoo-community.org/page/maintainer-role), "

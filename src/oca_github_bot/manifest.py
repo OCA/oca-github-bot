@@ -6,6 +6,8 @@ import os
 import re
 import subprocess
 
+from .github import git_get_current_branch
+
 MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py", "__terp__.py")
 VERSION_RE = re.compile(
     r"^(?P<series>\d+\.\d+)\.(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$"
@@ -87,7 +89,10 @@ def set_manifest_version(addon_dir, version):
 
 def is_maintainer(username, addon_dirs):
     for addon_dir in addon_dirs:
-        manifest = get_manifest(addon_dir)
+        try:
+            manifest = get_manifest(addon_dir)
+        except NoManifestFound:
+            return False
         maintainers = manifest.get("maintainers", [])
         if username not in maintainers:
             return False
@@ -145,29 +150,23 @@ def git_modified_addons(addons_dir, ref):
     if something else than addons has been modified.
     """
     modified = set()
-    current_branch = subprocess.check_output(
-        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+    current_branch = git_get_current_branch(addons_dir)
+    subprocess.check_output(
+        ["git", "checkout", "-B", "tmp-git-modified-addons"],
         cwd=addons_dir,
         universal_newlines=True,
-    ).strip()
-    try:
-        subprocess.check_output(
-            ["git", "checkout", "-B", "tmp-git-modified-addons"],
-            cwd=addons_dir,
-            universal_newlines=True,
-        )
-        subprocess.check_output(
-            ["git", "rebase", ref], cwd=addons_dir, universal_newlines=True
-        )
-        diffs = subprocess.check_output(
-            ["git", "diff", "--name-only", ref, "--"],
-            cwd=addons_dir,
-            universal_newlines=True,
-        )
-    finally:
-        subprocess.check_output(
-            ["git", "checkout", current_branch], cwd=addons_dir, universal_newlines=True
-        )
+    )
+    subprocess.check_output(
+        ["git", "rebase", ref], cwd=addons_dir, universal_newlines=True
+    )
+    diffs = subprocess.check_output(
+        ["git", "diff", "--name-only", ref, "--"],
+        cwd=addons_dir,
+        universal_newlines=True,
+    )
+    subprocess.check_output(
+        ["git", "checkout", current_branch], cwd=addons_dir, universal_newlines=True
+    )
     other_changes = False
     for diff in diffs.split("\n"):
         if not diff:

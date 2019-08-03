@@ -154,3 +154,9 @@ def git_get_head_sha(cwd="."):
     return subprocess.check_output(
         ["git", "rev-parse", "HEAD"], universal_newlines=True, cwd=cwd
     ).strip()
+
+
+def git_get_current_branch(cwd="."):
+    return subprocess.check_output(
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=cwd, universal_newlines=True
+    ).strip()

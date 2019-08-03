@@ -226,3 +226,4 @@ def test_is_maintainer(tmp_path):
     assert not is_maintainer("u1", [addon1, addon2])
     assert is_maintainer("u2", [addon1, addon2])
     assert not is_maintainer("u2", [addon1, addon2, addon3])
+    assert not is_maintainer("u1", [tmp_path / "not_an_addon"])
