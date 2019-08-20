@@ -90,7 +90,7 @@ class CLAChecker:
                 users_ko += f"+ {user} <{email}> (no github login found)\n"
 
             if send_miss_notification:
-                message = config.cla_ko_message.format(
+                message = config.CLA_KO_MESSAGE.format(
                     pull_user=self.pull_user, users_ko=users_ko
                 )
                 github.gh_comment_issue(self.owner, self.repo, self.pr_number, message)
@@ -129,7 +129,7 @@ class CLAChecker:
                 for user in users_sign:
                     users_ok += f"+ @{user}\n"
 
-                message = config.cla_ok_message.format(
+                message = config.CLA_OK_MESSAGE.format(
                     pull_user=pull_user, users_ok=users_ok
                 )
                 github.gh_comment_issue(owner, repo, number, message)

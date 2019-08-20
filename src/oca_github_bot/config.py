@@ -73,7 +73,7 @@ SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")
 CLABOT_CACHE = os.environ.get("CLABOT_CACHE", "clabot_cache.db")
 
 
-cla_ko_message = """Hey @{pull_user},
+CLA_KO_MESSAGE = """Hey @{pull_user},
 thank you for your Pull Request and contribution to the OCA.
 
 It looks like some users haven't signed our **C**ontributor **L**icense
@@ -97,7 +97,7 @@ Appreciation of efforts,
 --
 OCA CLAbot"""
 
-cla_ok_message = """Hey @{pull_user},
+CLA_OK_MESSAGE = """Hey @{pull_user},
 
 We acknowledge that the following users have signed our **C**ontributor
 **L**icense **A**greement: {users_ok}

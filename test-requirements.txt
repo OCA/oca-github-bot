@@ -4,4 +4,3 @@ pytest-cov
 pytest-mock
 pytest-vcr
 setuptools-odoo  # for setuptools-odoo-make-default
-vcrpy==2.0.1
