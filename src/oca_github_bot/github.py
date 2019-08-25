@@ -142,7 +142,7 @@ def git_push_if_needed(remote, branch, cwd=None):
     return True
 
 
-def git_user_can_push(gh_repo, username):
+def github_user_can_push(gh_repo, username):
     for collaborator in gh_call(gh_repo.collaborators):
         if username == collaborator.login and collaborator.permissions.get("push"):
             return True
@@ -156,7 +156,7 @@ def git_get_head_sha(cwd="."):
     ).strip()
 
 
-def git_merge_base(ref1, ref2, cwd="."):
+def git_get_current_branch(cwd="."):
     return subprocess.check_output(
-        ["git", "merge-base", ref1, ref2], universal_newlines=True, cwd=cwd
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=cwd, universal_newlines=True
     ).strip()

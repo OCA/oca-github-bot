@@ -6,6 +6,8 @@ import os
 import re
 import subprocess
 
+from .github import git_get_current_branch
+
 MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py", "__terp__.py")
 VERSION_RE = re.compile(
     r"^(?P<series>\d+\.\d+)\.(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$"
@@ -85,6 +87,18 @@ def set_manifest_version(addon_dir, version):
         f.write(manifest)
 
 
+def is_maintainer(username, addon_dirs):
+    for addon_dir in addon_dirs:
+        try:
+            manifest = get_manifest(addon_dir)
+        except NoManifestFound:
+            return False
+        maintainers = manifest.get("maintainers", [])
+        if username not in maintainers:
+            return False
+    return True
+
+
 def bump_version(version, mode):
     mo = VERSION_RE.match(version)
     if not mo:
@@ -128,34 +142,64 @@ def bump_manifest_version(addon_dir, mode, git_commit=False):
 
 def git_modified_addons(addons_dir, ref):
     """
-    List addons that have been modified in git HEAD compared to ref.
+    List addons that have been modified in the current branch compared to
+    ref, after rebasing on ref.
     Deleted addons are not returned.
+
+    Returns a tuple with a set of modified addons, and a flag telling
+    if something else than addons has been modified.
     """
     modified = set()
-    cmd = ["git", "diff", "--name-only", ref, "--"]
-    diffs = subprocess.check_output(cmd, cwd=addons_dir, universal_newlines=True)
+    current_branch = git_get_current_branch(addons_dir)
+    subprocess.check_output(
+        ["git", "checkout", "-B", "tmp-git-modified-addons"],
+        cwd=addons_dir,
+        universal_newlines=True,
+    )
+    subprocess.check_output(
+        ["git", "rebase", ref], cwd=addons_dir, universal_newlines=True
+    )
+    diffs = subprocess.check_output(
+        ["git", "diff", "--name-only", ref, "--"],
+        cwd=addons_dir,
+        universal_newlines=True,
+    )
+    subprocess.check_output(
+        ["git", "checkout", current_branch], cwd=addons_dir, universal_newlines=True
+    )
+    other_changes = False
     for diff in diffs.split("\n"):
-        if not diff or "/" not in diff:
+        if not diff:
+            continue
+        if "/" not in diff:
+            # file at repo root modified
+            other_changes = True
             continue
         parts = diff.split("/")
         if parts[0] == "setup" and len(parts) > 1:
             addon_name = parts[1]
             if is_addon_dir(
-                os.path.join(addons_dir, "setup", "addon", "odoo_addons", addon_name)
+                os.path.join(addons_dir, "setup", addon_name, "odoo_addons", addon_name)
             ) or is_addon_dir(
-                os.path.join(addons_dir, "setup", "addon", "odoo", "addons", addon_name)
+                os.path.join(
+                    addons_dir, "setup", addon_name, "odoo", "addons", addon_name
+                )
             ):
                 modified.add(addon_name)
+            else:
+                other_changes = True
         else:
             addon_name = parts[0]
             if is_addon_dir(os.path.join(addons_dir, addon_name)):
                 modified.add(addon_name)
-    return modified
+            else:
+                other_changes = True
+    return modified, other_changes
 
 
 def git_modified_addon_dirs(addons_dir, ref):
-    modified_addons = git_modified_addons(addons_dir, ref)
-    return [os.path.join(addons_dir, addon) for addon in modified_addons]
+    modified_addons, other_changes = git_modified_addons(addons_dir, ref)
+    return [os.path.join(addons_dir, addon) for addon in modified_addons], other_changes
 
 
 def get_odoo_series_from_version(version):

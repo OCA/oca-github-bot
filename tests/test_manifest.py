@@ -5,6 +5,7 @@ import subprocess
 
 import pytest
 
+from oca_github_bot.github import git_get_head_sha
 from oca_github_bot.manifest import (
     NoManifestFound,
     OdooSeriesNotDetected,
@@ -17,6 +18,7 @@ from oca_github_bot.manifest import (
     git_modified_addons,
     is_addon_dir,
     is_addons_dir,
+    is_maintainer,
     set_manifest_version,
 )
 
@@ -110,7 +112,7 @@ def test_bump_manifest_version(tmp_path):
     assert m["version"] == "12.0.1.1.0"
 
 
-def tests_git_modified_addons(git_clone):
+def test_git_modified_addons(git_clone):
     # create an addon, commit it, and check it is modified
     addon_dir = git_clone / "addon"
     addon_dir.mkdir()
@@ -118,25 +120,26 @@ def tests_git_modified_addons(git_clone):
     manifest_path.write_text("{'name': 'the addon'}")
     subprocess.check_call(["git", "add", "."], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon"], cwd=git_clone)
-    assert git_modified_addons(git_clone, "origin/master") == {"addon"}
+    assert git_modified_addons(git_clone, "origin/master") == ({"addon"}, False)
     # push and check addon is not modified
     subprocess.check_call(["git", "push", "origin", "master"], cwd=git_clone)
-    assert not git_modified_addons(git_clone, "origin/master")
+    assert git_modified_addons(git_clone, "origin/master") == (set(), False)
     # same test with the setup dir
     setup_dir = git_clone / "setup" / "addon"
     setup_dir.mkdir(parents=True)
     (setup_dir / "setup.py").write_text("")
     subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
-    assert not git_modified_addons(git_clone, "origin/master")
+    assert git_modified_addons(git_clone, "origin/master") == (set(), True)
     (setup_dir / "odoo" / "addons").mkdir(parents=True)
     (setup_dir / "odoo" / "addons" / "addon").symlink_to("../../../../addon")
     subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
-    assert git_modified_addons(git_clone, "origin/master") == {"addon"}
-    assert git_modified_addon_dirs(git_clone, "origin/master") == [
-        str(git_clone / "addon")
-    ]
+    assert git_modified_addons(git_clone, "origin/master") == ({"addon"}, False)
+    assert git_modified_addon_dirs(git_clone, "origin/master") == (
+        [str(git_clone / "addon")],
+        False,
+    )
     # add a second addon, and change the first one
     addon2_dir = git_clone / "addon2"
     addon2_dir.mkdir()
@@ -146,12 +149,53 @@ def tests_git_modified_addons(git_clone):
     (git_clone / "README").write_text("")
     subprocess.check_call(["git", "add", "."], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
-    assert git_modified_addons(git_clone, "origin/master") == {"addon", "addon2"}
+    assert git_modified_addons(git_clone, "origin/master") == (
+        {"addon", "addon2"},
+        True,  # because of README at repo root
+    )
     # remove the first and test it does not appear in result
     subprocess.check_call(["git", "tag", "beforerm"], cwd=git_clone)
     subprocess.check_call(["git", "rm", "-r", "addon"], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", "rm addon"], cwd=git_clone)
-    assert not git_modified_addons(git_clone, "beforerm")
+    assert git_modified_addons(git_clone, "beforerm") == (set(), True)
+
+
+def test_git_modified_addons_merge_base(git_clone):
+    # create addon2 on master
+    addon2_dir = git_clone / "addon2"
+    addon2_dir.mkdir()
+    (addon2_dir / "__manifest__.py").write_text("{'name': 'addon2'}")
+    subprocess.check_call(["git", "add", "addon2"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "origin/master") == ({"addon2"}, False)
+    # create addon1 on a new branch
+    subprocess.check_call(["git", "checkout", "-b" "addon1"], cwd=git_clone)
+    addon1_dir = git_clone / "addon1"
+    addon1_dir.mkdir()
+    (addon1_dir / "__manifest__.py").write_text("{'name': 'addon1'}")
+    subprocess.check_call(["git", "add", "addon1"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon1"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "master") == ({"addon1"}, False)
+    # modify addon2 on master
+    subprocess.check_call(["git", "checkout", "master"], cwd=git_clone)
+    (addon2_dir / "__manifest__.py").write_text("{'name': 'modified addon2'}")
+    subprocess.check_call(["git", "add", "addon2"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "upd addon2"], cwd=git_clone)
+    # check comparison of addon1 to master only gives addon1
+    subprocess.check_call(["git", "checkout", "addon1"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "master") == ({"addon1"}, False)
+    # add same commit in master and addon1
+    subprocess.check_call(["git", "checkout", "master"], cwd=git_clone)
+    addon3_dir = git_clone / "addon3"
+    addon3_dir.mkdir()
+    (addon3_dir / "__manifest__.py").write_text("{'name': 'addon3'}")
+    subprocess.check_call(["git", "add", "addon3"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "add addon3"], cwd=git_clone)
+    assert git_modified_addons(git_clone, "HEAD^") == ({"addon3"}, False)
+    commit = git_get_head_sha(cwd=git_clone)
+    subprocess.check_call(["git", "checkout", "addon1"], cwd=git_clone)
+    subprocess.check_call(["git", "cherry-pick", commit], cwd=git_clone)
+    assert git_modified_addons(git_clone, "master") == ({"addon1"}, False)
 
 
 def test_get_odoo_series_from_version():
@@ -163,3 +207,23 @@ def test_get_odoo_series_from_version():
         get_odoo_series_from_version("1.0")
     with pytest.raises(OdooSeriesNotDetected):
         get_odoo_series_from_version("12.0.1")
+
+
+def test_is_maintainer(tmp_path):
+    addon1 = tmp_path / "addon1"
+    addon1.mkdir()
+    (addon1 / "__manifest__.py").write_text(
+        "{'name': 'addon1', 'maintainers': ['u1', 'u2']}"
+    )
+    addon2 = tmp_path / "addon2"
+    addon2.mkdir()
+    (addon2 / "__manifest__.py").write_text("{'name': 'addon2', 'maintainers': ['u2']}")
+    addon3 = tmp_path / "addon3"
+    addon3.mkdir()
+    (addon3 / "__manifest__.py").write_text("{'name': 'addon3'}")
+    assert is_maintainer("u1", [addon1])
+    assert not is_maintainer("u1", [addon2])
+    assert not is_maintainer("u1", [addon1, addon2])
+    assert is_maintainer("u2", [addon1, addon2])
+    assert not is_maintainer("u2", [addon1, addon2, addon3])
+    assert not is_maintainer("u1", [tmp_path / "not_an_addon"])

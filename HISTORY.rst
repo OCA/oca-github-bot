@@ -7,10 +7,14 @@ next
 - Call external tools with universal_newlines=True for better
   output capture (unicode instead of binary) and, in particular,
   better display of errors in merge bot.
+- Better detection of modified addons (using diff after rebase instead
+  of diff to merge base).
+- merge bot: allow addon maintainers to merge (#51)
 
 **Bug fixes**
 
 - Do not attempt to build wheels for uninstallable addons.
+- Fix issue in detecting modified setup directory.
 
 v20190729.1
 ~~~~~~~~~~~

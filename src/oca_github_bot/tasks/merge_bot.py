@@ -13,7 +13,7 @@ from ..config import (
     SIMPLE_INDEX_ROOT,
     switchable,
 )
-from ..manifest import bump_manifest_version, git_modified_addon_dirs
+from ..manifest import bump_manifest_version, git_modified_addon_dirs, is_maintainer
 from ..queue import getLogger, task
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
 from .main_branch_bot import main_branch_bot_actions
@@ -23,8 +23,10 @@ _logger = getLogger(__name__)
 LABEL_MERGED = "merged 🎉"
 
 
-def _git_call(cmd):
-    subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
+def _git_call(cmd, cwd="."):
+    subprocess.check_output(
+        cmd, universal_newlines=True, stderr=subprocess.STDOUT, cwd=cwd
+    )
 
 
 def _git_delete_branch(remote, branch):
@@ -57,7 +59,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
             f"rebasing again."
         )
         intro_message = (
-            f"It looks like something changed on `{target_branch}` in the meantime. "
+            f"It looks like something changed on `{target_branch}` in the meantime.\n"
             f"Let me try again (no action is required from you)."
         )
         merge_bot_start(
@@ -77,15 +79,9 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # version only on addons visibly modified on the PR, and not on
     # other addons that may be modified by the bot for reasons unrelated
     # to the PR.
-    _git_call(["git", "fetch", "origin", f"pull/{pr}/head:tmp-pr-{pr}"])
-    merge_base = github.git_merge_base(target_branch, f"tmp-pr-{pr}", ".")
-    if not merge_base:
-        raise RuntimeError(
-            f"No common ancestor found between PR {pr} and {target_branch}, "
-            f"aborting merge."
-        )
+    _git_call(["git", "fetch", "origin", f"refs/pull/{pr}/head:tmp-pr-{pr}"])
     _git_call(["git", "checkout", f"tmp-pr-{pr}"])
-    modified_addon_dirs = git_modified_addon_dirs(".", merge_base)
+    modified_addon_dirs, _ = git_modified_addon_dirs(".", target_branch)
     # Run main branch bot actions before bump version.
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.
@@ -134,20 +130,36 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     return True
 
 
+def _user_can_merge(gh, org, repo, username, addons_dir, target_branch):
+    """
+    Check if a user is allowed to merge.
+
+    addons_dir must be a git clone of the branch to merge to target_branch.
+    """
+    gh_repo = gh.repository(org, repo)
+    if github.github_user_can_push(gh_repo, username):
+        return True
+    modified_addon_dirs, other_changes = git_modified_addon_dirs(
+        addons_dir, target_branch
+    )
+    if other_changes or not modified_addon_dirs:
+        return False
+    # if we are modifying addons only, then the user must be maintainer of
+    # all of them on the target branch
+    current_branch = github.git_get_current_branch(cwd=addons_dir)
+    try:
+        _git_call(["git", "checkout", target_branch], cwd=addons_dir)
+        return is_maintainer(username, modified_addon_dirs)
+    finally:
+        _git_call(["git", "checkout", current_branch], cwd=addons_dir)
+
+
 @task()
 @switchable("merge_bot")
 def merge_bot_start(
     org, repo, pr, username, bumpversion=None, dry_run=False, intro_message=None
 ):
     with github.login() as gh:
-        if not github.git_user_can_push(gh.repository(org, repo), username):
-            gh_pr = gh.pull_request(org, repo, pr)
-            github.gh_call(
-                gh_pr.create_comment,
-                f"Sorry @{username} "
-                f"you do not have push permission, so I can't merge for you.",
-            )
-            return
         gh_pr = gh.pull_request(org, repo, pr)
         target_branch = gh_pr.base.ref
         try:
@@ -160,6 +172,21 @@ def merge_bot_start(
                     ["git", "fetch", "origin", f"pull/{pr}/head:{merge_bot_branch}"]
                 )
                 _git_call(["git", "checkout", merge_bot_branch])
+                if not _user_can_merge(gh, org, repo, username, ".", target_branch):
+                    github.gh_call(
+                        gh_pr.create_comment,
+                        f"Sorry @{username} you are not allowed to merge.\n\n"
+                        f"To do so you must either have push permissions on "
+                        f"the repository, or be a declared maintainer of all "
+                        f"modified addons.\n\n"
+                        f"If you wish to adopt an addon and become it's "
+                        f"[maintainer]"
+                        f"(https://odoo-community.org/page/maintainer-role), "
+                        f"open a pull request to add "
+                        f"your GitHub login to the `maintainers` key of its "
+                        f"manifest.",
+                    )
+                    return
                 # TODO for each modified addon, wlc lock / commit / push
                 # TODO then pull target_branch again
                 _git_call(["git", "rebase", "--autosquash", target_branch])
