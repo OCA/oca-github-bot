@@ -61,6 +61,11 @@ On Pull Request CI status
 When the CI in a Pull Request goes green, set the ``needs review`` label,
 unless it has ``wip:``  or ``[wip]`` in it's title.
 
+Close stale PR
+--------------
+
+If PR had no activity for more than a year, it's closed as stale.
+
 Commands
 --------
 
@@ -191,6 +196,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Jose Angel Fentanez <joseangel@vauxoo.com>
 * Simone Rubino <simone.rubino@agilebg.com>
+* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
 
 Maintainers
 ===========

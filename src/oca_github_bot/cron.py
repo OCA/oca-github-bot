@@ -1,4 +1,5 @@
 # Copyright (c) ACSONE SA/NV 2018
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 from celery.schedules import crontab
@@ -27,6 +28,11 @@ if GITHUB_ORG:
                 "task": "oca_github_bot.tasks.tag_ready_to_merge.tag_ready_to_merge",
                 "args": (GITHUB_ORG,),
                 "schedule": crontab(minute="0"),
+            },
+            "close_stale": {
+                "task": "oca_github_bot.tasks.close_stale.close_stale",
+                "args": (GITHUB_ORG,),
+                "schedule": crontab(hour="0"),
             },
         }
     )
