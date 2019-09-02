@@ -10,6 +10,8 @@ next
 - Better detection of modified addons (using diff after rebase instead
   of diff to merge base).
 - merge bot: allow addon maintainers to merge (#51)
+- main branch bot: ignore repos that are forks of other repos when
+  running the main branch bot actions in the nightly cron
 
 **Bug fixes**
 
