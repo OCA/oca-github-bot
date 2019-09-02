@@ -47,4 +47,4 @@ ENV HOME=/app/run
 WORKDIR /app/run
 
 # run as non-root
-USER 1000
+USER 1000:1000
