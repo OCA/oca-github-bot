@@ -22,8 +22,8 @@ GITHUB_TOKEN=
 GIT_NAME=
 GIT_EMAIL=
 
-#ODOO_URL=https://odoo-community.org
-#ODOO_DB=odoo_community_v11
+ODOO_URL=
+ODOO_DB=
 ODOO_LOGIN=
 ODOO_PASSWORD=
 

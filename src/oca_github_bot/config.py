@@ -36,8 +36,8 @@ GITHUB_ORG = os.environ.get("GITHUB_ORG")
 GIT_NAME = os.environ.get("GIT_NAME")
 GIT_EMAIL = os.environ.get("GIT_EMAIL")
 
-ODOO_URL = os.environ.get("ODOO_URL", "https://odoo-community.org")
-ODOO_DB = os.environ.get("ODOO_DB", "odoo_community_v11")
+ODOO_URL = os.environ.get("ODOO_URL")
+ODOO_DB = os.environ.get("ODOO_DB")
 ODOO_LOGIN = os.environ.get("ODOO_LOGIN")
 ODOO_PASSWORD = os.environ.get("ODOO_PASSWORD")
 
