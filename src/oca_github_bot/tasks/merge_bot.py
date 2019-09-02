@@ -1,8 +1,10 @@
 # Copyright (c) ACSONE SA/NV 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import os
 import random
 import subprocess
+from enum import Enum
 
 from .. import github
 from ..build_wheels import build_and_check_wheel, build_and_publish_wheel
@@ -21,6 +23,11 @@ from .main_branch_bot import main_branch_bot_actions
 _logger = getLogger(__name__)
 
 LABEL_MERGED = "merged 🎉"
+
+
+class MergeStrategy(Enum):
+    rebase_autosquash = 1
+    merge = 2
 
 
 def _git_call(cmd, cwd="."):
@@ -55,8 +62,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     )
     if r != 0:
         _logger.info(
-            f"{merge_bot_branch} can't be fast forwarded on {target_branch}, "
-            f"rebasing again."
+            f"{merge_bot_branch} can't be fast forwarded on {target_branch}, retrying."
         )
         intro_message = (
             f"It looks like something changed on `{target_branch}` in the meantime.\n"
@@ -94,15 +100,11 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         if bumpversion:
             bump_manifest_version(addon_dir, bumpversion, git_commit=True)
             build_and_check_wheel(addon_dir)
-    # create the merge commit
-    _git_call(["git", "checkout", target_branch])
-    msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
-    _git_call(["git", "merge", "--no-ff", "--m", msg, merge_bot_branch])
     if dry_run:
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
     else:
         _logger.info(f"git push in {org}/{repo}@{target_branch}")
-        _git_call(["git", "push", "origin", target_branch])
+        _git_call(["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"])
     # build and publish wheel
     if bumpversion and modified_addon_dirs and SIMPLE_INDEX_ROOT:
         for addon_dir in modified_addon_dirs:
@@ -115,10 +117,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         github.gh_call(
             gh_pr.create_comment,
             f"Congratulations, your PR was merged at {merge_sha}. "
-            f"Thanks a lot for contributing to {org}. ❤️\n\n"
-            f"PS: Don't worry if GitHub says there are "
-            f"unmerged commits: it is due to a rebase before merge. "
-            f"All commits of this PR have been merged into `{target_branch}`.",
+            f"Thanks a lot for contributing to {org}. ❤️",
         )
         gh_issue = github.gh_call(gh_pr.issue)
         if dry_run:
@@ -154,24 +153,49 @@ def _user_can_merge(gh, org, repo, username, addons_dir, target_branch):
         _git_call(["git", "checkout", current_branch], cwd=addons_dir)
 
 
+def _prepare_merge_bot_branch(
+    merge_bot_branch, target_branch, pr_branch, pr, username, merge_strategy
+):
+    if merge_strategy == MergeStrategy.merge:
+        # nothing to do on the pr branch
+        pass
+    elif merge_strategy == MergeStrategy.rebase_autosquash:
+        # rebase the pr branch onto the target branch
+        _git_call(["git", "checkout", pr_branch])
+        _git_call(
+            ["git", "rebase", "--autosquash", "-i", target_branch],
+            env=dict(os.environ, GIT_SEQUENCE_EDITOR="true"),
+        )
+    # create the merge commit
+    _git_call(["git", "checkout", "-B", merge_bot_branch, target_branch])
+    msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
+    _git_call(["git", "merge", "--no-ff", "-m", msg, pr_branch])
+
+
 @task()
 @switchable("merge_bot")
 def merge_bot_start(
-    org, repo, pr, username, bumpversion=None, dry_run=False, intro_message=None
+    org,
+    repo,
+    pr,
+    username,
+    bumpversion=None,
+    dry_run=False,
+    intro_message=None,
+    merge_strategy=MergeStrategy.merge,
 ):
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
         target_branch = gh_pr.base.ref
+        merge_bot_branch = make_merge_bot_branch(
+            pr, target_branch, username, bumpversion
+        )
+        pr_branch = f"tmp-pr-{pr}"
         try:
             with github.temporary_clone(org, repo, target_branch):
                 # create merge bot branch from PR and rebase it on target branch
-                merge_bot_branch = make_merge_bot_branch(
-                    pr, target_branch, username, bumpversion
-                )
-                _git_call(
-                    ["git", "fetch", "origin", f"pull/{pr}/head:{merge_bot_branch}"]
-                )
-                _git_call(["git", "checkout", merge_bot_branch])
+                _git_call(["git", "fetch", "origin", f"pull/{pr}/head:{pr_branch}"])
+                _git_call(["git", "checkout", pr_branch])
                 if not _user_can_merge(gh, org, repo, username, ".", target_branch):
                     github.gh_call(
                         gh_pr.create_comment,
@@ -189,8 +213,16 @@ def merge_bot_start(
                     return
                 # TODO for each modified addon, wlc lock / commit / push
                 # TODO then pull target_branch again
-                _git_call(["git", "rebase", "--autosquash", target_branch])
-                # push and let tests run again
+                _prepare_merge_bot_branch(
+                    merge_bot_branch,
+                    target_branch,
+                    pr_branch,
+                    pr,
+                    username,
+                    merge_strategy,
+                )
+                # push and let tests run again; delete on origin
+                # to be sure GitHub sees it as a new branch and relaunches all checks
                 _git_delete_branch("origin", merge_bot_branch)
                 _git_call(["git", "push", "origin", merge_bot_branch])
                 if not intro_message:
@@ -198,9 +230,9 @@ def merge_bot_start(
                 github.gh_call(
                     gh_pr.create_comment,
                     f"{intro_message}\n"
-                    f"Rebased to [{merge_bot_branch}]"
-                    f"(https://github.com/{org}/{repo}/commits/{merge_bot_branch})"
-                    f", awaiting test results.",
+                    f"Prepared branch [{merge_bot_branch}]"
+                    f"(https://github.com/{org}/{repo}/commits/{merge_bot_branch}), "
+                    f"awaiting test results.",
                 )
         except subprocess.CalledProcessError as e:
             cmd = " ".join(e.cmd)
