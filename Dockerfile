@@ -21,7 +21,7 @@ RUN set -x \
   && python3 -m venv /ocamt \
   && /ocamt/bin/pip install wheel
 RUN set -x \
-  && /ocamt/bin/pip install -e git+https://github.com/OCA/maintainer-tools@3f3df660dc8757a3ee555940ddd33aec702cf2a6#egg=oca-maintainers-tools \
+  && /ocamt/bin/pip install -e git+https://github.com/OCA/maintainer-tools@da2dd9ba98019f6bd32efde6589116b2a2f0916f#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-addon-icon /usr/local/bin/
