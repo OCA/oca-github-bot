@@ -64,7 +64,8 @@ def temporary_clone(org, repo, branch):
     if not os.path.isdir(repo_cache_dir):
         os.makedirs(repo_cache_dir)
         subprocess.check_call(["git", "init", "--bare"], cwd=repo_cache_dir)
-    repo_url = f"https://{config.GITHUB_TOKEN}@github.com/{org}/{repo}"
+    repo_url = f"https://github.com/{org}/{repo}"
+    repo_url_with_token = f"https://{config.GITHUB_TOKEN}@github.com/{org}/{repo}"
     # fetch all branches into cache
     fetch_cmd = [
         "git",
@@ -105,6 +106,9 @@ def temporary_clone(org, repo, branch):
                 subprocess.check_call(["git", "config", "user.name", config.GIT_NAME])
             if config.GIT_EMAIL:
                 subprocess.check_call(["git", "config", "user.email", config.GIT_EMAIL])
+            subprocess.check_call(
+                ["git", "remote", "set-url", "--push", "origin", repo_url_with_token]
+            )
             yield
         finally:
             os.chdir(cwd)
