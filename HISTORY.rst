@@ -19,6 +19,8 @@ next
 
 - Do not attempt to build wheels for uninstallable addons.
 - Fix issue in detecting modified setup directory.
+- When rsyncing wheels to the simple index, use default directory
+  permissions on the target
 
 v20190729.1
 ~~~~~~~~~~~

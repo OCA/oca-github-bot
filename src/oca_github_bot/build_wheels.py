@@ -79,6 +79,8 @@ def _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run=False
         "rsync",
         "-rv",
         "--ignore-existing",
+        "--no-perms",
+        "--chmod=ugo=rwX",
         os.path.join(dist_dir, ""),
         os.path.join(simple_index_root, pkgname, ""),
     ]
