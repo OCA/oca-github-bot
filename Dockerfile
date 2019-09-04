@@ -13,6 +13,7 @@ RUN set -x \
     git \
     python3-venv \
     rsync \
+    openssh-client \
   && apt-get clean
 
 # the main branch bot needs several command line tools from in OCA/maintainer-tools
