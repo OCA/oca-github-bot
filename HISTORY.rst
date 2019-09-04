@@ -14,6 +14,7 @@ next
   running the main branch bot actions in the nightly cron
 - main branch bot: do not run the organization-wide nightly crons if
   GITHUB_ORG is not set
+- merge bot: do not rebase anymore, create a merge commit
 
 **Bug fixes**
 
