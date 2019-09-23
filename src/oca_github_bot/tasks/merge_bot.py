@@ -15,7 +15,12 @@ from ..config import (
     SIMPLE_INDEX_ROOT,
     switchable,
 )
-from ..manifest import bump_manifest_version, git_modified_addon_dirs, is_maintainer
+from ..manifest import (
+    bump_manifest_version,
+    git_modified_addon_dirs,
+    is_addon_dir,
+    is_maintainer,
+)
 from ..queue import getLogger, task
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
 from .main_branch_bot import main_branch_bot_actions
@@ -94,7 +99,14 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     _git_call(["git", "checkout", merge_bot_branch])
     if modified_addon_dirs:
         main_branch_bot_actions(org, repo, target_branch)
-    for addon_dir in modified_addon_dirs:
+
+    # remove not installable addons (case where an addons becomes no more
+    # installable).
+    modified_installable_addon_dirs = [
+        d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
+    ]
+
+    for addon_dir in modified_installable_addon_dirs:
         # TODO wlc lock and push
         # TODO msgmerge and commit
         if bumpversion:
@@ -106,8 +118,8 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         _logger.info(f"git push in {org}/{repo}@{target_branch}")
         _git_call(["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"])
     # build and publish wheel
-    if bumpversion and modified_addon_dirs and SIMPLE_INDEX_ROOT:
-        for addon_dir in modified_addon_dirs:
+    if bumpversion and modified_installable_addon_dirs and SIMPLE_INDEX_ROOT:
+        for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT, dry_run)
     # TODO wlc unlock modified_addons
     _git_delete_branch("origin", merge_bot_branch)
