@@ -1,3 +1,11 @@
+20190923
+~~~~~~~~
+
+** Bug fixes **
+
+- Do not bump version nor attempt to generate wheels for addons
+  that are not installable.
+
 20190904.1
 ~~~~~~~~~~
 
