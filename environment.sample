@@ -11,7 +11,7 @@
 
 # GitHub webhook secret
 GITHUB_SECRET=
-# GitHub login the bot uses to perform GitHub activites
+# GitHub login the bot uses to perform GitHub activities
 GITHUB_LOGIN=
 # GitHub oauth token
 GITHUB_TOKEN=
@@ -21,7 +21,7 @@ GITHUB_TOKEN=
 # needs to be set to to launch the docker composition)
 GIT_NAME=
 GIT_EMAIL=
-
+#GIT_SEQUENCE_EDITOR=true
 ODOO_URL=
 ODOO_DB=
 ODOO_LOGIN=

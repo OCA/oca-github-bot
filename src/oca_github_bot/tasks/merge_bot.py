@@ -1,7 +1,6 @@
 # Copyright (c) ACSONE SA/NV 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-import os
 import random
 import subprocess
 from enum import Enum
@@ -174,10 +173,7 @@ def _prepare_merge_bot_branch(
     elif merge_strategy == MergeStrategy.rebase_autosquash:
         # rebase the pr branch onto the target branch
         _git_call(["git", "checkout", pr_branch])
-        _git_call(
-            ["git", "rebase", "--autosquash", "-i", target_branch],
-            env=dict(os.environ, GIT_SEQUENCE_EDITOR="true"),
-        )
+        _git_call(["git", "rebase", "--autosquash", "-i", target_branch])
     # create the merge commit
     _git_call(["git", "checkout", "-B", merge_bot_branch, target_branch])
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
