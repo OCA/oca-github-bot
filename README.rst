@@ -85,6 +85,10 @@ can be used to ask the bot to do the following:
 * when the version was bumped, generate a wheel, rsync it to a PEP 503
   simple index root, or upload it to one or more indexes with twine
 
+``/ocabot rebase`` can be used to ask the bot to do the following:
+
+* rebase the PR on the target branch
+
 TODO (help wanted)
 ------------------
 
@@ -205,7 +209,7 @@ Contributors
 
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Holger Brunn <hbrunn@therp.nl>
-* Miquel Raïch <miquel.raich@eficent.com>
+* Miquel Raïch <miquel.raich@forgeflow.com>
 * Florian Kantelberg <florian.kantelberg@initos.com>
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Jose Angel Fentanez <joseangel@vauxoo.com>

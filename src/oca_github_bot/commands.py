@@ -3,7 +3,7 @@
 
 import re
 
-from .tasks import merge_bot
+from .tasks import merge_bot, rebase_bot
 
 BOT_COMMAND_RE = re.compile(
     # Do not start with > (Github comment), not consuming it
@@ -59,6 +59,8 @@ class BotCommand:
     def create(cls, name, options):
         if name == "merge":
             return BotCommandMerge(name, options)
+        elif name == "rebase":
+            return BotCommandRebase(name, options)
         else:
             raise InvalidCommandError(name)
 
@@ -88,6 +90,16 @@ class BotCommandMerge(BotCommand):
         merge_bot.merge_bot_start.delay(
             org, repo, pr, username, self.bumpversion_mode, dry_run=False
         )
+
+
+class BotCommandRebase(BotCommand):
+    def parse_options(self, options):
+        if not options:
+            return
+        raise InvalidOptionsError(self.name, options)
+
+    def delay(self, org, repo, pr, username, dry_run=False):
+        rebase_bot.rebase_bot_start.delay(org, repo, pr, username, dry_run=False)
 
 
 def parse_commands(text):
