@@ -4,6 +4,7 @@
 from . import (
     heartbeat,
     main_branch_bot,
+    mention_maintainer,
     tag_approved,
     tag_needs_review,
     tag_ready_to_merge,
