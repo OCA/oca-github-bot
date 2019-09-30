@@ -27,6 +27,7 @@ from .main_branch_bot import main_branch_bot_actions
 _logger = getLogger(__name__)
 
 LABEL_MERGED = "merged 🎉"
+LABEL_MERGING = "bot is merging ⏳"
 
 
 class MergeStrategy(Enum):
@@ -48,6 +49,17 @@ def _git_delete_branch(remote, branch, cwd):
                 f"and output:\n{e.output}"
             )
             raise
+
+
+def _remove_merging_label(github, gh_pr, dry_run=False):
+    gh_issue = github.gh_call(gh_pr.issue)
+    labels = [l.name for l in gh_issue.labels()]
+    if LABEL_MERGING in labels:
+        if dry_run:
+            _logger.info(f"DRY-RUN remove {LABEL_MERGING} label from PR {gh_pr.url}")
+        else:
+            _logger.info(f"remove {LABEL_MERGING} label from PR {gh_pr.url}")
+            github.gh_call(gh_issue.remove_label, LABEL_MERGING)
 
 
 def _get_merge_bot_intro_message():
@@ -139,6 +151,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             f"Thanks a lot for contributing to {org}. ❤️",
         )
         gh_issue = github.gh_call(gh_pr.issue)
+        _remove_merging_label(github, gh_pr, dry_run=dry_run)
         if dry_run:
             _logger.info(f"DRY-RUN add {LABEL_MERGED} label to PR {gh_pr.url}")
         else:
@@ -271,6 +284,10 @@ def merge_bot_start(
                 f"of exception {e}.",
             )
             raise
+        else:
+            gh_issue = github.gh_call(gh_pr.issue)
+            _logger.info(f"add {LABEL_MERGED} label to PR {gh_pr.url}")
+            github.gh_call(gh_issue.add_labels, LABEL_MERGING)
 
 
 def _get_commit_success(gh_commit):
@@ -342,6 +359,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                         f"finalized, because "
                         f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
                     )
+                    _remove_merging_label(github, gh_pr)
                     raise
                 except Exception as e:
                     github.gh_call(
@@ -349,6 +367,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                         f"@{username} The merge process could not be "
                         f"finalized because an exception was raised: {e}.",
                     )
+                    _remove_merging_label(github, gh_pr)
                     raise
             else:
                 github.gh_call(
@@ -364,3 +383,4 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                 check_call(
                     ["git", "push", "origin", f":{merge_bot_branch}"], cwd=clone_dir
                 )
+                _remove_merging_label(github, gh_pr)
