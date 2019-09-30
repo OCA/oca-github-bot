@@ -4,6 +4,7 @@ import os
 
 import pytest
 import vcr
+
 from oca_github_bot import cla, config, github
 
 
