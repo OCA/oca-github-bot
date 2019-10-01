@@ -147,9 +147,9 @@ Here is a recommended procedure to test locally:
 
 .. code::
 
-  set -o exportall
+  set -o allexport
   source environment
-  set +o exportall
+  set +o allexport
 
 * Launch the ``redis`` message queue:
 
