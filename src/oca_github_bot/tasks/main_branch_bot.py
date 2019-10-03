@@ -16,9 +16,9 @@ _logger = getLogger(__name__)
 @switchable("gen_addons_table")
 def _gen_addons_table(org, repo, branch, cwd):
     _logger.info("oca-gen-addons-table in %s/%s@%s", org, repo, branch)
-    gen_addons_table_cmd = ["oca-gen-addons-table", "--commit", "--addons-dir", cwd]
+    gen_addons_table_cmd = ["oca-gen-addons-table", "--commit"]
     subprocess.check_output(
-        gen_addons_table_cmd, universal_newlines=True, stderr=subprocess.STDOUT
+        gen_addons_table_cmd, universal_newlines=True, stderr=subprocess.STDOUT, cwd=cwd
     )
 
 
