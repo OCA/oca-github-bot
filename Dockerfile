@@ -27,7 +27,7 @@ RUN set -x \
   && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-addon-icon /usr/local/bin/
 RUN set -x \
-  && /ocamt/bin/pip install setuptools-odoo>=2.4.1 \
+  && /ocamt/bin/pip install setuptools-odoo>=2.5.0 \
   && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
 
 
