@@ -152,3 +152,12 @@ def git_get_head_sha(cwd):
 
 def git_get_current_branch(cwd):
     return check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=cwd).strip()
+
+
+def git_commit_if_needed(message, cwd):
+    """ Create a commit if there are staged files """
+    needs_commit = call(["git", "diff", "--cached", "--quiet", "--exit-code"], cwd=cwd)
+    if not needs_commit:
+        return False
+    check_call(["git", "commit", "-m", message], cwd=cwd)
+    return True

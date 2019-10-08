@@ -8,4 +8,5 @@ from . import (
     tag_approved,
     tag_needs_review,
     tag_ready_to_merge,
+    update_pre_commit_config,
 )

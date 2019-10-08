@@ -30,6 +30,11 @@ RUN set -x \
   && /ocamt/bin/pip install setuptools-odoo>=2.5.0 \
   && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
 
+# install pre-commit
+RUN set -x \
+  && python3 -m venv /pre-commit \
+  && /pre-commit/bin/pip install pre-commit \
+  && ln -s /pre-commit/bin/pre-commit /usr/local/bin
 
 # isolate from system python libraries
 RUN python3 -m venv /app
