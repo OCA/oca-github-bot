@@ -4,9 +4,9 @@
 import ast
 import os
 import re
-import subprocess
 
 from .github import git_get_current_branch
+from .process import check_call, check_output
 
 MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py", "__terp__.py")
 VERSION_RE = re.compile(
@@ -127,7 +127,7 @@ def bump_manifest_version(addon_dir, mode, git_commit=False):
     set_manifest_version(addon_dir, version)
     if git_commit:
         addon_name = get_addon_name(addon_dir)
-        subprocess.check_call(
+        check_call(
             [
                 "git",
                 "commit",
@@ -150,23 +150,11 @@ def git_modified_addons(addons_dir, ref):
     if something else than addons has been modified.
     """
     modified = set()
-    current_branch = git_get_current_branch(addons_dir)
-    subprocess.check_output(
-        ["git", "checkout", "-B", "tmp-git-modified-addons"],
-        cwd=addons_dir,
-        universal_newlines=True,
-    )
-    subprocess.check_output(
-        ["git", "rebase", ref], cwd=addons_dir, universal_newlines=True
-    )
-    diffs = subprocess.check_output(
-        ["git", "diff", "--name-only", ref, "--"],
-        cwd=addons_dir,
-        universal_newlines=True,
-    )
-    subprocess.check_output(
-        ["git", "checkout", current_branch], cwd=addons_dir, universal_newlines=True
-    )
+    current_branch = git_get_current_branch(cwd=addons_dir)
+    check_call(["git", "checkout", "-B", "tmp-git-modified-addons"], cwd=addons_dir)
+    check_call(["git", "rebase", ref], cwd=addons_dir)
+    diffs = check_output(["git", "diff", "--name-only", ref, "--"], cwd=addons_dir)
+    check_call(["git", "checkout", current_branch], cwd=addons_dir)
     other_changes = False
     for diff in diffs.split("\n"):
         if not diff:
