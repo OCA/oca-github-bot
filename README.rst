@@ -157,6 +157,12 @@ Here is a recommended procedure to test locally:
 
   docker run -p 6379:6379 redis
 
+* Install the `maintainer tools <https://github.com/OCA/maintainer-tools>`_ and add the generated binaries to your path:
+
+.. code::
+
+  PATH=/path/to/maintainer-tools/env/bin/:$PATH
+
 * Create a virtual environment and install the project in it:
 
 .. code::
@@ -184,6 +190,7 @@ Contributors
 * Florian Kantelberg <florian.kantelberg@initos.com>
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Jose Angel Fentanez <joseangel@vauxoo.com>
+* Simone Rubino <simone.rubino@agilebg.com>
 
 Maintainers
 ===========

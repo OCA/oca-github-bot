@@ -99,19 +99,19 @@ def temporary_clone(org, repo, branch):
             tempdir,
         ]
         subprocess.check_call(clone_cmd)
-        cwd = os.getcwd()
-        os.chdir(tempdir)
-        try:
-            if config.GIT_NAME:
-                subprocess.check_call(["git", "config", "user.name", config.GIT_NAME])
-            if config.GIT_EMAIL:
-                subprocess.check_call(["git", "config", "user.email", config.GIT_EMAIL])
+        if config.GIT_NAME:
             subprocess.check_call(
-                ["git", "remote", "set-url", "--push", "origin", repo_url_with_token]
+                ["git", "config", "user.name", config.GIT_NAME], cwd=tempdir
             )
-            yield
-        finally:
-            os.chdir(cwd)
+        if config.GIT_EMAIL:
+            subprocess.check_call(
+                ["git", "config", "user.email", config.GIT_EMAIL], cwd=tempdir
+            )
+        subprocess.check_call(
+            ["git", "remote", "set-url", "--push", "origin", repo_url_with_token],
+            cwd=tempdir,
+        )
+        yield tempdir
     finally:
         shutil.rmtree(tempdir)
 

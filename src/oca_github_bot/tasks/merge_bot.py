@@ -1,7 +1,6 @@
 # Copyright (c) ACSONE SA/NV 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-import os
 import random
 import subprocess
 from enum import Enum
@@ -35,16 +34,16 @@ class MergeStrategy(Enum):
     merge = 2
 
 
-def _git_call(cmd, cwd="."):
+def _git_call(cmd, cwd):
     subprocess.check_output(
         cmd, universal_newlines=True, stderr=subprocess.STDOUT, cwd=cwd
     )
 
 
-def _git_delete_branch(remote, branch):
+def _git_delete_branch(remote, branch, cwd):
     try:
         # delete merge bot branch
-        _git_call(["git", "push", remote, f":{branch}"])
+        _git_call(["git", "push", remote, f":{branch}"], cwd=cwd)
     except subprocess.CalledProcessError as e:
         if "unable to delete" in e.output:
             # remote branch may not exist on remote
@@ -58,12 +57,12 @@ def _get_merge_bot_intro_message():
     return MERGE_BOT_INTRO_MESSAGES[i]
 
 
-def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
+def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     pr, target_branch, username, bumpversion = parse_merge_bot_branch(merge_bot_branch)
     # first check if the merge bot branch is still on top of the target branch
-    _git_call(["git", "checkout", target_branch])
+    _git_call(["git", "checkout", target_branch], cwd=cwd)
     r = subprocess.call(
-        ["git", "merge-base", "--is-ancestor", target_branch, merge_bot_branch]
+        ["git", "merge-base", "--is-ancestor", target_branch, merge_bot_branch], cwd=cwd
     )
     if r != 0:
         _logger.info(
@@ -90,15 +89,15 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
     # version only on addons visibly modified on the PR, and not on
     # other addons that may be modified by the bot for reasons unrelated
     # to the PR.
-    _git_call(["git", "fetch", "origin", f"refs/pull/{pr}/head:tmp-pr-{pr}"])
-    _git_call(["git", "checkout", f"tmp-pr-{pr}"])
-    modified_addon_dirs, _ = git_modified_addon_dirs(".", target_branch)
+    _git_call(["git", "fetch", "origin", f"refs/pull/{pr}/head:tmp-pr-{pr}"], cwd=cwd)
+    _git_call(["git", "checkout", f"tmp-pr-{pr}"], cwd=cwd)
+    modified_addon_dirs, _ = git_modified_addon_dirs(cwd, target_branch)
     # Run main branch bot actions before bump version.
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.
-    _git_call(["git", "checkout", merge_bot_branch])
+    _git_call(["git", "checkout", merge_bot_branch], cwd=cwd)
     if modified_addon_dirs:
-        main_branch_bot_actions(org, repo, target_branch)
+        main_branch_bot_actions(org, repo, target_branch, cwd=cwd)
 
     # remove not installable addons (case where an addons becomes no more
     # installable).
@@ -116,13 +115,15 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, dry_run=False):
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
     else:
         _logger.info(f"git push in {org}/{repo}@{target_branch}")
-        _git_call(["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"])
+        _git_call(
+            ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
+        )
     # build and publish wheel
     if bumpversion and modified_installable_addon_dirs and SIMPLE_INDEX_ROOT:
         for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT, dry_run)
     # TODO wlc unlock modified_addons
-    _git_delete_branch("origin", merge_bot_branch)
+    _git_delete_branch("origin", merge_bot_branch, cwd=cwd)
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
         merge_sha = github.git_get_head_sha()
@@ -166,22 +167,19 @@ def _user_can_merge(gh, org, repo, username, addons_dir, target_branch):
 
 
 def _prepare_merge_bot_branch(
-    merge_bot_branch, target_branch, pr_branch, pr, username, merge_strategy
+    merge_bot_branch, target_branch, pr_branch, pr, username, merge_strategy, cwd
 ):
     if merge_strategy == MergeStrategy.merge:
         # nothing to do on the pr branch
         pass
     elif merge_strategy == MergeStrategy.rebase_autosquash:
         # rebase the pr branch onto the target branch
-        _git_call(["git", "checkout", pr_branch])
-        _git_call(
-            ["git", "rebase", "--autosquash", "-i", target_branch],
-            env=dict(os.environ, GIT_SEQUENCE_EDITOR="true"),
-        )
+        _git_call(["git", "checkout", pr_branch], cwd=cwd)
+        _git_call(["git", "rebase", "--autosquash", "-i", target_branch], cwd=cwd)
     # create the merge commit
-    _git_call(["git", "checkout", "-B", merge_bot_branch, target_branch])
+    _git_call(["git", "checkout", "-B", merge_bot_branch, target_branch], cwd=cwd)
     msg = f"Merge PR #{pr} into {target_branch}\n\nSigned-off-by {username}"
-    _git_call(["git", "merge", "--no-ff", "-m", msg, pr_branch])
+    _git_call(["git", "merge", "--no-ff", "-m", msg, pr_branch], cwd=cwd)
 
 
 @task()
@@ -204,11 +202,16 @@ def merge_bot_start(
         )
         pr_branch = f"tmp-pr-{pr}"
         try:
-            with github.temporary_clone(org, repo, target_branch):
+            with github.temporary_clone(org, repo, target_branch) as clone_dir:
                 # create merge bot branch from PR and rebase it on target branch
-                _git_call(["git", "fetch", "origin", f"pull/{pr}/head:{pr_branch}"])
-                _git_call(["git", "checkout", pr_branch])
-                if not _user_can_merge(gh, org, repo, username, ".", target_branch):
+                _git_call(
+                    ["git", "fetch", "origin", f"pull/{pr}/head:{pr_branch}"],
+                    cwd=clone_dir,
+                )
+                _git_call(["git", "checkout", pr_branch], cwd=clone_dir)
+                if not _user_can_merge(
+                    gh, org, repo, username, clone_dir, target_branch
+                ):
                     github.gh_call(
                         gh_pr.create_comment,
                         f"Sorry @{username} you are not allowed to merge.\n\n"
@@ -232,11 +235,12 @@ def merge_bot_start(
                     pr,
                     username,
                     merge_strategy,
+                    cwd=clone_dir,
                 )
                 # push and let tests run again; delete on origin
                 # to be sure GitHub sees it as a new branch and relaunches all checks
-                _git_delete_branch("origin", merge_bot_branch)
-                _git_call(["git", "push", "origin", merge_bot_branch])
+                _git_delete_branch("origin", merge_bot_branch, cwd=clone_dir)
+                _git_call(["git", "push", "origin", merge_bot_branch], cwd=clone_dir)
                 if not intro_message:
                     intro_message = _get_merge_bot_intro_message()
                 github.gh_call(
@@ -306,8 +310,8 @@ def _get_commit_success(gh_commit):
 @task()
 @switchable("merge_bot")
 def merge_bot_status(org, repo, merge_bot_branch, sha):
-    with github.temporary_clone(org, repo, merge_bot_branch):
-        head_sha = github.git_get_head_sha()
+    with github.temporary_clone(org, repo, merge_bot_branch) as clone_dir:
+        head_sha = github.git_get_head_sha(cwd=clone_dir)
         if head_sha != sha:
             # the branch has evolved, this means that this status
             # does not correspond to the last commit of the bot, ignore it
@@ -323,7 +327,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                 return
             elif success:
                 try:
-                    _merge_bot_merge_pr(org, repo, merge_bot_branch)
+                    _merge_bot_merge_pr(org, repo, merge_bot_branch, clone_dir)
                 except subprocess.CalledProcessError as e:
                     cmd = " ".join(e.cmd)
                     github.gh_call(
