@@ -6,7 +6,18 @@ import re
 from .tasks import merge_bot
 
 BOT_COMMAND_RE = re.compile(
-    r"/ocabot[ \t]+(?P<command>\w+)(?P<options>[ \t\w]*)(\W|\r?$)", re.MULTILINE
+    # Do not start with > (Github comment), not consuming it
+    r"^(?=[^>])"
+    # Anything before /ocabot, at least one whitspace after
+    r".*/ocabot\s+"
+    # command group: any word is ok
+    r"(?P<command>\w+)"
+    # options group: spaces and words, all the times you want (0 is ok too)
+    r"(?P<options>[ \t\w]*)"
+    # non-capturing group:
+    # stop finding options as soon as you find something that is not a word
+    r"(?:\W|\r?$)",
+    re.MULTILINE,
 )
 
 
