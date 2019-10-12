@@ -1,6 +1,6 @@
 /data/
 /tmp/
-/environment
+/environment*
 /.vscode
 
 # Byte-compiled / optimized / DLL files
