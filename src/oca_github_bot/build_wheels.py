@@ -3,11 +3,11 @@
 
 import logging
 import os
-import subprocess
 import sys
 import tempfile
 
 from .manifest import addon_dirs_in, get_manifest, get_odoo_series_from_version
+from .process import check_call
 
 _logger = logging.getLogger(__name__)
 
@@ -38,19 +38,12 @@ def _build_wheel(addon_dir, dist_dir):
             "--python-tag",
             "py2" if series < (11, 0) else "py3",
         ]
-        subprocess.check_output(
-            cmd, cwd=setup_dir, universal_newlines=True, stderr=subprocess.STDOUT
-        )
+        check_call(cmd, cwd=setup_dir)
 
 
 def _check_wheels(dist_dir):
     wheels = [f for f in os.listdir(dist_dir) if f.endswith(".whl")]
-    subprocess.check_output(
-        ["twine", "check"] + wheels,
-        cwd=dist_dir,
-        universal_newlines=True,
-        stderr=subprocess.STDOUT,
-    )
+    check_call(["twine", "check"] + wheels, cwd=dist_dir)
 
 
 def build_and_check_wheel(addon_dir):
@@ -88,7 +81,7 @@ def _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run=False
         _logger.info("DRY-RUN" + " ".join(cmd))
     else:
         _logger.info(" ".join(cmd))
-        subprocess.check_call(cmd)
+        check_call(cmd, cwd=".")
 
 
 def _find_pkgname(dist_dir):

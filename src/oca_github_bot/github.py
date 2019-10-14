@@ -4,7 +4,6 @@
 import logging
 import os
 import shutil
-import subprocess
 import tempfile
 from contextlib import contextmanager
 
@@ -13,6 +12,7 @@ import github3
 from celery.exceptions import Retry
 
 from . import config
+from .process import CalledProcessError, call, check_call, check_output
 
 _logger = logging.getLogger(__name__)
 
@@ -63,7 +63,7 @@ def temporary_clone(org, repo, branch):
     repo_cache_dir = os.path.join(cache_dir, "github.com", org.lower(), repo.lower())
     if not os.path.isdir(repo_cache_dir):
         os.makedirs(repo_cache_dir)
-        subprocess.check_call(["git", "init", "--bare"], cwd=repo_cache_dir)
+        check_call(["git", "init", "--bare"], cwd=repo_cache_dir)
     repo_url = f"https://github.com/{org}/{repo}"
     repo_url_with_token = f"https://{config.GITHUB_TOKEN}@github.com/{org}/{repo}"
     # fetch all branches into cache
@@ -75,11 +75,9 @@ def temporary_clone(org, repo, branch):
         repo_url,
         "refs/heads/*:refs/heads/*",
     ]
-    subprocess.check_call(fetch_cmd, cwd=repo_cache_dir)
+    check_call(fetch_cmd, cwd=repo_cache_dir)
     # check if branch exist
-    branches = subprocess.check_output(
-        ["git", "branch"], universal_newlines=True, cwd=repo_cache_dir
-    )
+    branches = check_output(["git", "branch"], cwd=repo_cache_dir)
     branches = [b.strip() for b in branches.split()]
     if branch not in branches:
         raise BranchNotFoundError()
@@ -98,16 +96,12 @@ def temporary_clone(org, repo, branch):
             repo_url,
             tempdir,
         ]
-        subprocess.check_call(clone_cmd)
+        check_call(clone_cmd, cwd=".")
         if config.GIT_NAME:
-            subprocess.check_call(
-                ["git", "config", "user.name", config.GIT_NAME], cwd=tempdir
-            )
+            check_call(["git", "config", "user.name", config.GIT_NAME], cwd=tempdir)
         if config.GIT_EMAIL:
-            subprocess.check_call(
-                ["git", "config", "user.email", config.GIT_EMAIL], cwd=tempdir
-            )
-        subprocess.check_call(
+            check_call(["git", "config", "user.email", config.GIT_EMAIL], cwd=tempdir)
+        check_call(
             ["git", "remote", "set-url", "--push", "origin", repo_url_with_token],
             cwd=tempdir,
         )
@@ -123,25 +117,22 @@ def git_push_if_needed(remote, branch, cwd=None):
     Return True if push succeeded, False if there was nothing to push.
     Raises a celery Retry exception in case of non-fast-forward push.
     """
-    r = subprocess.call(
-        ["git", "diff", "--quiet", "--exit-code", remote + "/" + branch], cwd=cwd
-    )
+    r = call(["git", "diff", "--quiet", "--exit-code", remote + "/" + branch], cwd=cwd)
     if r == 0:
         return False
     try:
-        subprocess.check_output(
-            ["git", "push", remote, branch],
-            stderr=subprocess.STDOUT,
-            cwd=cwd,
-            universal_newlines=True,
-        )
-    except subprocess.CalledProcessError as e:
+        check_call(["git", "push", remote, branch], cwd=cwd, log_error=False)
+    except CalledProcessError as e:
         if "non-fast-forward" in e.output:
             raise Retry(
                 exc=e,
                 message="Retrying because a non-fast-forward git push was attempted.",
             )
         else:
+            _logger.error(
+                f"command {e.cmd} failed with return code {e.returncode} "
+                f"and output:\n{e.output}"
+            )
             raise
     return True
 
@@ -153,14 +144,10 @@ def github_user_can_push(gh_repo, username):
     return False
 
 
-def git_get_head_sha(cwd="."):
+def git_get_head_sha(cwd):
     """ Get the sha of the git HEAD in current directory """
-    return subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], universal_newlines=True, cwd=cwd
-    ).strip()
+    return check_output(["git", "rev-parse", "HEAD"], cwd=cwd).strip()
 
 
-def git_get_current_branch(cwd="."):
-    return subprocess.check_output(
-        ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=cwd, universal_newlines=True
-    ).strip()
+def git_get_current_branch(cwd):
+    return check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=cwd).strip()
