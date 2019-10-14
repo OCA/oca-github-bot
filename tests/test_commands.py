@@ -76,3 +76,19 @@ def test_parse_command_merge():
     assert cmds[0].bumpversion is None
     with pytest.raises(InvalidOptionsError):
         list(parse_commands("/ocabot merge brol"))
+
+
+def test_parse_command_comment():
+    body = """
+> {merge_command}
+> Some comment {merge_command}
+>> Double comment! {merge_command}
+This is the one {merge_command} patch
+    """.format(
+        merge_command="/ocabot merge"
+    )
+    command = list(parse_commands(body))
+    assert len(command) == 1
+    command = command[0]
+    assert command.name == "merge"
+    assert command.bumpversion == "patch"
