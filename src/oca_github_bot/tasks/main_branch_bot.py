@@ -34,14 +34,14 @@ def _gen_addons_readme(org, repo, branch, cwd):
         cwd,
         "--commit",
     ]
-    check_call(gen_addon_readme_cmd, cwd=".")
+    check_call(gen_addon_readme_cmd, cwd=cwd)
 
 
 @switchable("gen_addons_icon")
 def _gen_addons_icon(org, repo, branch, cwd):
     _logger.info("oca-gen-addon-icon in %s/%s@%s", org, repo, branch)
     gen_addon_icon_cmd = ["oca-gen-addon-icon", "--addons-dir", cwd, "--commit"]
-    check_call(gen_addon_icon_cmd, cwd=".")
+    check_call(gen_addon_icon_cmd, cwd=cwd)
 
 
 @switchable("setuptools_odoo")
@@ -56,7 +56,7 @@ def _setuptools_odoo_make_default(org, repo, branch, cwd):
         "--clean",
         "--commit",
     ]
-    check_call(make_default_setup_cmd, cwd=".")
+    check_call(make_default_setup_cmd, cwd=cwd)
 
 
 def main_branch_bot_actions(org, repo, branch, cwd):
