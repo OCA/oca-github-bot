@@ -1,7 +1,26 @@
+20191017
+~~~~~~~~
+
+**Bug fixes**
+
+- Ignore /ocabot merge commands in quoted replies (lines starting with >).
+
+**Misc**
+
+- Better logging of subprocess output, for Sentry support.
+- Do not change current directory so a multithreaded task worker should be safe.
+
+20191004
+~~~~~~~~
+
+**Misc**
+
+- Bump setuptools-odoo version for Odoo 13 support.
+
 20190923
 ~~~~~~~~
 
-** Bug fixes **
+**Bug fixes**
 
 - Do not bump version nor attempt to generate wheels for addons
   that are not installable.
