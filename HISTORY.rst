@@ -1,3 +1,10 @@
+unreleased
+~~~~~~~~~~
+
+**Bug fixes**
+
+- main branch bot: do not run on forks on pushes too, not only in cron jobs
+
 20191017
 ~~~~~~~~
 

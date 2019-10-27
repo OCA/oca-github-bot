@@ -80,6 +80,9 @@ def main_branch_bot_actions(org, repo, branch, cwd):
 def main_branch_bot(org, repo, branch, build_wheels, dry_run=False):
     if not is_main_branch_bot_branch(branch):
         return
+    with github.repository(org, repo) as gh_repo:
+        if gh_repo.fork:
+            return
     with temporary_clone(org, repo, branch) as clone_dir:
         if not manifest.is_addons_dir(clone_dir):
             return
@@ -98,8 +101,6 @@ def main_branch_bot(org, repo, branch, build_wheels, dry_run=False):
 def main_branch_bot_all_repos(org, build_wheels, dry_run=False):
     with github.login() as gh:
         for repo in gh.repositories_by(org):
-            if repo.fork:
-                continue
             for branch in repo.branches():
                 main_branch_bot.delay(
                     org, repo.name, branch.name, build_wheels, dry_run
