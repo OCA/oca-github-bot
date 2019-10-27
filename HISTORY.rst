@@ -1,9 +1,19 @@
-unreleased
-~~~~~~~~~~
+20191027
+~~~~~~~~
+
+**Features**
+
+- mention maintainers in pull requests to their addons
+  `#77 <https://github.com/OCA/oca-github-bot/pull/77>`_
 
 **Bug fixes**
 
 - main branch bot: do not run on forks on pushes too, not only in cron jobs
+
+**Misc**
+
+- prune removed remote branches in git cache
+- make ``git_get_modified_addons`` (use rebase instead of merge)
 
 20191017
 ~~~~~~~~
