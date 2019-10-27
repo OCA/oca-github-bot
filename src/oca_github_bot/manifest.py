@@ -143,7 +143,7 @@ def bump_manifest_version(addon_dir, mode, git_commit=False):
 def git_modified_addons(addons_dir, ref):
     """
     List addons that have been modified in the current branch compared to
-    ref, after rebasing on ref.
+    ref, after simulating a merge in ref.
     Deleted addons are not returned.
 
     Returns a tuple with a set of modified addons, and a flag telling
@@ -151,8 +151,9 @@ def git_modified_addons(addons_dir, ref):
     """
     modified = set()
     current_branch = git_get_current_branch(cwd=addons_dir)
+    check_call(["git", "checkout", ref], cwd=addons_dir)
     check_call(["git", "checkout", "-B", "tmp-git-modified-addons"], cwd=addons_dir)
-    check_call(["git", "rebase", ref], cwd=addons_dir)
+    check_call(["git", "merge", current_branch], cwd=addons_dir)
     diffs = check_output(["git", "diff", "--name-only", ref, "--"], cwd=addons_dir)
     check_call(["git", "checkout", current_branch], cwd=addons_dir)
     other_changes = False
