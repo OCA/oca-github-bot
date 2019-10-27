@@ -72,6 +72,7 @@ def temporary_clone(org, repo, branch):
         "fetch",
         "--quiet",
         "--force",
+        "--prune",
         repo_url,
         "refs/heads/*:refs/heads/*",
     ]
