@@ -22,7 +22,7 @@ def check_call(cmd, cwd, log_error=True):
     )
     if cp.returncode and log_error:
         _logger.error(
-            f"command {cp.args} failed with return code {cp.returncode} "
+            f"command {cp.args} in {cwd} failed with return code {cp.returncode} "
             f"and output:\n{cp.stdout}"
         )
     cp.check_returncode()
