@@ -47,10 +47,10 @@ def mention_maintainer(org, repo, pr, dry_run=False):
 
 
 def get_maintainers_mentions(addon_dirs):
-    all_maintainers = list()
+    all_maintainers = set()
     for addon_dir in addon_dirs:
         maintainers = get_manifest(addon_dir).get("maintainers", [])
-        all_maintainers.extend(maintainers)
+        all_maintainers.update(maintainers)
     if not all_maintainers:
         return ""
     all_mentions = map(lambda m: "@" + m, all_maintainers)
