@@ -52,6 +52,30 @@ def test_multi_maintainer_one_mention(git_clone, mocker):
 
 
 @pytest.mark.vcr()
+def test_pr_by_maintainer_no_mention(git_clone, mocker):
+    themaintainer = "themaintainer"
+    github_mock = mocker.patch("oca_github_bot.tasks.mention_maintainer.github")
+    github_mock.temporary_clone.return_value.__enter__.return_value = str(git_clone)
+    pr_mock = github_mock.login.return_value.__enter__.return_value.pull_request
+    pr_mock.return_value.user.login = themaintainer
+
+    addon_dirs = list()
+    addon_names = ["addon1", "addon2"]
+    for addon_name in addon_names:
+        addon_dir = make_addon(git_clone, addon_name, maintainers=[themaintainer])
+        addon_dirs.append(addon_dir)
+
+    modified_addons_mock = mocker.patch(
+        "oca_github_bot.tasks.mention_maintainer.git_modified_addon_dirs"
+    )
+    modified_addons_mock.return_value = addon_dirs, False
+    mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
+    mention_maintainer("org", "repo", "pr")
+
+    github_mock.gh_call.assert_not_called()
+
+
+@pytest.mark.vcr()
 def test_no_maintainer_no_mention(git_clone, mocker):
     github_mock = mocker.patch("oca_github_bot.tasks.mention_maintainer.github")
     github_mock.temporary_clone.return_value.__enter__.return_value = str(git_clone)
