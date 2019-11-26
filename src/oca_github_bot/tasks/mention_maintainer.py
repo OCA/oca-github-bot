@@ -33,8 +33,9 @@ def mention_maintainer(org, repo, pr, dry_run=False):
                 d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
             ]
 
+            pr_opener = gh_pr.user.login
             all_mentions_comment = get_maintainers_mentions(
-                modified_installable_addon_dirs
+                modified_installable_addon_dirs, pr_opener
             )
 
         if not all_mentions_comment:
@@ -46,11 +47,13 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             return github.gh_call(gh_pr.create_comment, all_mentions_comment)
 
 
-def get_maintainers_mentions(addon_dirs):
+def get_maintainers_mentions(addon_dirs, pr_opener):
     all_maintainers = set()
     for addon_dir in addon_dirs:
         maintainers = get_manifest(addon_dir).get("maintainers", [])
         all_maintainers.update(maintainers)
+    if pr_opener in all_maintainers:
+        all_maintainers.remove(pr_opener)
     if not all_maintainers:
         return ""
     all_mentions = map(lambda m: "@" + m, all_maintainers)
