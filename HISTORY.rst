@@ -1,3 +1,13 @@
+20191126
+~~~~~~~~
+
+**Bug fixes**
+
+- do not mention maintainers when they open PR to module they maintain
+  `#92 <https://github.com/OCA/oca-github-bot/pull/92>`_
+- do not mention maintainers more than once
+  `#91 <https://github.com/OCA/oca-github-bot/pull/91>`_
+
 20191027
 ~~~~~~~~
 
