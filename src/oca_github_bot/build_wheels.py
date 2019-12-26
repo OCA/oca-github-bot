@@ -12,18 +12,18 @@ from .process import check_call
 _logger = logging.getLogger(__name__)
 
 
-def _build_wheel(addon_dir, dist_dir):
+def _build_and_check_wheel(addon_dir, dist_dir):
     manifest = get_manifest(addon_dir)
     if not manifest.get("installable", True):
-        return
+        return False
     series = get_odoo_series_from_version(manifest.get("version", ""))
     if series < (8, 0):
-        return
+        return False
     addon_name = os.path.basename(addon_dir)
     setup_dir = os.path.join(addon_dir, "..", "setup", addon_name)
     setup_file = os.path.join(setup_dir, "setup.py")
     if not os.path.isfile(setup_file):
-        return
+        return False
     with tempfile.TemporaryDirectory() as tempdir:
         bdist_dir = os.path.join(tempdir, "build")
         os.mkdir(bdist_dir)
@@ -39,6 +39,8 @@ def _build_wheel(addon_dir, dist_dir):
             "py2" if series < (11, 0) else "py3",
         ]
         check_call(cmd, cwd=setup_dir)
+        _check_wheels(dist_dir)
+    return True
 
 
 def _check_wheels(dist_dir):
@@ -48,15 +50,13 @@ def _check_wheels(dist_dir):
 
 def build_and_check_wheel(addon_dir):
     with tempfile.TemporaryDirectory() as dist_dir:
-        _build_wheel(addon_dir, dist_dir)
-        _check_wheels(dist_dir)
+        _build_and_check_wheel(addon_dir, dist_dir)
 
 
 def build_and_publish_wheel(addon_dir, simple_index_root, dry_run=False):
     with tempfile.TemporaryDirectory() as dist_dir:
-        _build_wheel(addon_dir, dist_dir)
-        _check_wheels(dist_dir)
-        _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run)
+        if _build_and_check_wheel(addon_dir, dist_dir):
+            _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run)
 
 
 def build_and_publish_wheels(addons_dir, simple_index_root, dry_run=False):
