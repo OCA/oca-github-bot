@@ -1,3 +1,11 @@
+20191226
+~~~~~~~~
+
+**Bug fixes**
+
+- do not fail on ``twine check`` when an addon has no ``setup.py``
+  `#96 <https://github.com/OCA/oca-github-bot/pull/96>`_
+
 20191126
 ~~~~~~~~
 
