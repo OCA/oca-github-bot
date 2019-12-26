@@ -12,7 +12,7 @@ from .process import check_call
 _logger = logging.getLogger(__name__)
 
 
-def _build_wheel(addon_dir, dist_dir):
+def _build_and_check_wheel(addon_dir, dist_dir):
     manifest = get_manifest(addon_dir)
     if not manifest.get("installable", True):
         return
@@ -39,6 +39,7 @@ def _build_wheel(addon_dir, dist_dir):
             "py2" if series < (11, 0) else "py3",
         ]
         check_call(cmd, cwd=setup_dir)
+        _check_wheels(dist_dir)
 
 
 def _check_wheels(dist_dir):
@@ -48,14 +49,12 @@ def _check_wheels(dist_dir):
 
 def build_and_check_wheel(addon_dir):
     with tempfile.TemporaryDirectory() as dist_dir:
-        _build_wheel(addon_dir, dist_dir)
-        _check_wheels(dist_dir)
+        _build_and_check_wheel(addon_dir, dist_dir)
 
 
 def build_and_publish_wheel(addon_dir, simple_index_root, dry_run=False):
     with tempfile.TemporaryDirectory() as dist_dir:
-        _build_wheel(addon_dir, dist_dir)
-        _check_wheels(dist_dir)
+        _build_and_check_wheel(addon_dir, dist_dir)
         _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run)
 
 
