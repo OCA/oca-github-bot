@@ -54,18 +54,24 @@ class BotCommand:
 
 class BotCommandMerge(BotCommand):
     bumpversion = None  # optional str: major|minor|patch
+    squash = None  # optional str: squash|autosquash
 
     def parse_options(self, options):
         if not options:
             return
-        if len(options) == 1 and options[0] in ("major", "minor", "patch"):
+        if len(options) == 2 and options[1] in ('squash', 'autosquash'):
+            self.squash = options[1]
+        if len(options) >= 1 and options[0] in ("major", "minor", "patch"):
             self.bumpversion = options[0]
         else:
             raise InvalidOptionsError(self.name, options)
 
     def delay(self, org, repo, pr, username, dry_run=False):
         merge_bot.merge_bot_start.delay(
-            org, repo, pr, username, bumpversion=self.bumpversion, dry_run=False
+            org, repo, pr, username,
+            bumpversion=self.bumpversion,
+            squash=self.squash,
+            dry_run=False
         )
 
 

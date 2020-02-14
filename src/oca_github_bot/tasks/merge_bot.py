@@ -188,6 +188,7 @@ def merge_bot_start(
     pr,
     username,
     bumpversion=None,
+    squash=None,
     dry_run=False,
     intro_message=None,
     merge_strategy=MergeStrategy.merge,
