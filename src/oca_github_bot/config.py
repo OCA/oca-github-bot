@@ -54,6 +54,24 @@ DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,merge_bot,tag_needs_review
 BOT_TASKS = os.environ.get("BOT_TASKS", "all").split(",")
 
+GEN_ADDONS_TABLE_EXTRA_ARGS = (
+    os.environ.get("GEN_ADDONS_TABLE_EXTRA_ARGS", "")
+    and os.environ.get("GEN_ADDONS_TABLE_EXTRA_ARGS").split(" ")
+    or []
+)
+
+GEN_ADDON_README_EXTRA_ARGS = (
+    os.environ.get("GEN_ADDON_README_EXTRA_ARGS", "")
+    and os.environ.get("GEN_ADDON_README_EXTRA_ARGS").split(" ")
+    or []
+)
+
+GEN_ADDON_ICON_EXTRA_ARGS = (
+    os.environ.get("GEN_ADDON_ICON_EXTRA_ARGS", "")
+    and os.environ.get("GEN_ADDON_ICON_EXTRA_ARGS").split(" ")
+    or []
+)
+
 GITHUB_STATUS_IGNORED = [
     "ci/runbot",
     "codecov/project",

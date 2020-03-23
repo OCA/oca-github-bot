@@ -3,7 +3,13 @@
 
 from .. import github, manifest
 from ..build_wheels import build_and_publish_wheels
-from ..config import SIMPLE_INDEX_ROOT, switchable
+from ..config import (
+    GEN_ADDON_ICON_EXTRA_ARGS,
+    GEN_ADDON_README_EXTRA_ARGS,
+    GEN_ADDONS_TABLE_EXTRA_ARGS,
+    SIMPLE_INDEX_ROOT,
+    switchable,
+)
 from ..github import git_push_if_needed, temporary_clone
 from ..process import check_call
 from ..queue import getLogger, task
@@ -16,7 +22,9 @@ _logger = getLogger(__name__)
 def _gen_addons_table(org, repo, branch, cwd):
     _logger.info("oca-gen-addons-table in %s/%s@%s", org, repo, branch)
     gen_addons_table_cmd = ["oca-gen-addons-table", "--commit"]
-    check_call(gen_addons_table_cmd, cwd=cwd)
+    check_call(
+        gen_addons_table_cmd, cwd=cwd, extra_cmd_args=GEN_ADDONS_TABLE_EXTRA_ARGS
+    )
 
 
 @switchable("gen_addons_readme")
@@ -34,7 +42,9 @@ def _gen_addons_readme(org, repo, branch, cwd):
         cwd,
         "--commit",
     ]
-    check_call(gen_addon_readme_cmd, cwd=cwd)
+    check_call(
+        gen_addon_readme_cmd, cwd=cwd, extra_cmd_args=GEN_ADDON_README_EXTRA_ARGS
+    )
 
 
 @switchable("gen_addons_icon")
@@ -56,7 +66,9 @@ def _setuptools_odoo_make_default(org, repo, branch, cwd):
         "--clean",
         "--commit",
     ]
-    check_call(make_default_setup_cmd, cwd=cwd)
+    check_call(
+        make_default_setup_cmd, cwd=cwd, extra_cmd_args=GEN_ADDON_ICON_EXTRA_ARGS
+    )
 
 
 def main_branch_bot_actions(org, repo, branch, cwd):

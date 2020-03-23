@@ -40,3 +40,13 @@ ODOO_PASSWORD=
 # Root of the PEP 503 simple index where wheels are published
 # (publishing disabled if empty)
 SIMPLE_INDEX_ROOT=/app/run/simple-index
+
+# Space separated list of extra arguments, for the calls of the
+# following command
+# * oca-gen-addons-table
+# * oca-gen-addon-readme
+# * oca-gen-addon-icon
+# Exemple : GEN_ADDON_README_EXTRA_ARGS=--no-gen-html
+#GEN_ADDONS_TABLE_EXTRA_ARGS=
+#GEN_ADDON_README_EXTRA_ARGS=
+#GEN_ADDON_ICON_EXTRA_ARGS=

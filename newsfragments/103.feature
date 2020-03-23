@@ -1,0 +1,1 @@
+Add three new settings available in the ``environment`` file that allow to add extra argument, when calling the libraries ``oca-gen-addons-table``, ``oca-gen-addon-readme`` and ``oca-gen-addon-icon``.
