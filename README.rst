@@ -71,9 +71,10 @@ as merge request comments.
 can be used to ask the bot to do the following:
 
 * merge the PR onto a temporary branch created off the target branch
-* run the main branch operations (see above) on it
 * merge when tests on the rebased branch are green
 * optionally bump the version number of the addons modified by the PR
+* when the version was bumped, udate the changelog with ``oca-towncrier``
+* run the main branch operations (see above) on it
 * when the version was bumped, generate a wheel and rsync it to the PEP 503
   simple index
 
