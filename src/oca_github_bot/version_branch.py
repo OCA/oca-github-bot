@@ -9,7 +9,7 @@ MERGE_BOT_BRANCH_RE = re.compile(
     r"-ocabot-merge"
     r"-pr-(?P<pr>\d+)"
     r"-by-(?P<username>\S+)"
-    r"-bump-(?P<bumpversion>(no|patch|minor|major))"
+    r"-bump-(?P<bumpversion_mode>(no|patch|minor|major))"
 )
 
 
@@ -32,21 +32,21 @@ def is_merge_bot_branch(branch):
 
 def parse_merge_bot_branch(branch):
     mo = MERGE_BOT_BRANCH_RE.match(branch)
-    bumpversion = mo.group("bumpversion")
-    if bumpversion == "no":
-        bumpversion = None
+    bumpversion_mode = mo.group("bumpversion_mode")
+    if bumpversion_mode == "no":
+        bumpversion_mode = None
     return (
         mo.group("pr"),
         mo.group("target_branch"),
         mo.group("username"),
-        bumpversion,
+        bumpversion_mode,
     )
 
 
-def make_merge_bot_branch(pr, target_branch, username, bumpversion):
-    if not bumpversion:
-        bumpversion = "no"
-    return f"{target_branch}-ocabot-merge-pr-{pr}-by-{username}-bump-{bumpversion}"
+def make_merge_bot_branch(pr, target_branch, username, bumpversion_mode):
+    if not bumpversion_mode:
+        bumpversion_mode = "no"
+    return f"{target_branch}-ocabot-merge-pr-{pr}-by-{username}-bump-{bumpversion_mode}"
 
 
 def search_merge_bot_branch(text):

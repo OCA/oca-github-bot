@@ -61,19 +61,19 @@ def test_parse_command_merge():
     cmds = list(parse_commands("/ocabot merge major"))
     assert len(cmds) == 1
     assert cmds[0].name == "merge"
-    assert cmds[0].bumpversion == "major"
+    assert cmds[0].bumpversion_mode == "major"
     cmds = list(parse_commands("/ocabot merge minor"))
     assert len(cmds) == 1
     assert cmds[0].name == "merge"
-    assert cmds[0].bumpversion == "minor"
+    assert cmds[0].bumpversion_mode == "minor"
     cmds = list(parse_commands("/ocabot merge patch"))
     assert len(cmds) == 1
     assert cmds[0].name == "merge"
-    assert cmds[0].bumpversion == "patch"
+    assert cmds[0].bumpversion_mode == "patch"
     cmds = list(parse_commands("/ocabot merge"))
     assert len(cmds) == 1
     assert cmds[0].name == "merge"
-    assert cmds[0].bumpversion is None
+    assert cmds[0].bumpversion_mode is None
     with pytest.raises(InvalidOptionsError):
         list(parse_commands("/ocabot merge brol"))
 
@@ -91,4 +91,4 @@ This is the one {merge_command} patch
     assert len(command) == 1
     command = command[0]
     assert command.name == "merge"
-    assert command.bumpversion == "patch"
+    assert command.bumpversion_mode == "patch"

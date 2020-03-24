@@ -56,7 +56,9 @@ def _get_merge_bot_intro_message():
 
 
 def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
-    pr, target_branch, username, bumpversion = parse_merge_bot_branch(merge_bot_branch)
+    pr, target_branch, username, bumpversion_mode = parse_merge_bot_branch(
+        merge_bot_branch
+    )
     # first check if the merge bot branch is still on top of the target branch
     check_call(["git", "checkout", target_branch], cwd=cwd)
     r = call(
@@ -75,7 +77,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             repo,
             pr,
             username,
-            bumpversion,
+            bumpversion_mode,
             dry_run=dry_run,
             intro_message=intro_message,
         )
@@ -108,12 +110,12 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     for addon_dir in modified_installable_addon_dirs:
         # TODO wlc lock and push
         # TODO msgmerge and commit
-        if bumpversion:
+        if bumpversion_mode:
             # bumpversion is last commit (after readme generation etc
             # and before building wheel),
             # so setuptools-odoo generates a round version number
             # (without .dev suffix).
-            bump_manifest_version(addon_dir, bumpversion, git_commit=True)
+            bump_manifest_version(addon_dir, bumpversion_mode, git_commit=True)
             build_and_check_wheel(addon_dir)
     if dry_run:
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
@@ -123,7 +125,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
         )
     # build and publish wheel
-    if bumpversion and modified_installable_addon_dirs and SIMPLE_INDEX_ROOT:
+    if bumpversion_mode and modified_installable_addon_dirs and SIMPLE_INDEX_ROOT:
         for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT, dry_run)
     # TODO wlc unlock modified_addons
@@ -193,7 +195,7 @@ def merge_bot_start(
     repo,
     pr,
     username,
-    bumpversion=None,
+    bumpversion_mode=None,
     dry_run=False,
     intro_message=None,
     merge_strategy=MergeStrategy.merge,
@@ -202,7 +204,7 @@ def merge_bot_start(
         gh_pr = gh.pull_request(org, repo, pr)
         target_branch = gh_pr.base.ref
         merge_bot_branch = make_merge_bot_branch(
-            pr, target_branch, username, bumpversion
+            pr, target_branch, username, bumpversion_mode
         )
         pr_branch = f"tmp-pr-{pr}"
         try:
