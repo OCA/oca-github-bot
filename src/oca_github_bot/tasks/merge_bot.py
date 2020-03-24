@@ -94,8 +94,6 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.
     check_call(["git", "checkout", merge_bot_branch], cwd=cwd)
-    if modified_addon_dirs:
-        main_branch_bot_actions(org, repo, target_branch, cwd=cwd)
 
     # remove not installable addons (case where an addons becomes no more
     # installable).
@@ -103,10 +101,18 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
     ]
 
+    if modified_addon_dirs:
+        # this includes setup.py and README.rst generation
+        main_branch_bot_actions(org, repo, target_branch, cwd=cwd)
+
     for addon_dir in modified_installable_addon_dirs:
         # TODO wlc lock and push
         # TODO msgmerge and commit
         if bumpversion:
+            # bumpversion is last commit (after readme generation etc
+            # and before building wheel),
+            # so setuptools-odoo generates a round version number
+            # (without .dev suffix).
             bump_manifest_version(addon_dir, bumpversion, git_commit=True)
             build_and_check_wheel(addon_dir)
     if dry_run:
