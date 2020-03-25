@@ -1,0 +1,7 @@
+[tool.towncrier]
+    template = ".towncrier-template.rst"
+    underlines = ["~"]
+    title_format = "{version}"
+    issue_format = "`#{issue} <https://github.com/pypa/pip/issues/{issue}>`_"
+    directory = "newsfragments/"
+    filename = "HISTORY.rst"
