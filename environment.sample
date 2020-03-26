@@ -31,6 +31,8 @@ ODOO_PASSWORD=
 
 # Number of approvals to have the proposal marked as "Approved"
 #APPROVALS_REQUIRED=2
+# Number of days before the proposal can be marked as "Approved"
+#MIN_PR_AGE=5
 
 # Coma separated list of task to run
 # By default all configured tasks are run.
