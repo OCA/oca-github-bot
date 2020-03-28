@@ -68,12 +68,12 @@ One can ask the bot to perform some tasks by entering special commands
 as merge request comments.
 
 ``/ocabot merge`` optionally followed by one of ``major``, ``minor``, ``patch``,
-can be used to ask the bot to the following:
+can be used to ask the bot to do the following:
 
-* rebase the PR on the target branch
+* merge the PR onto a temporary branch created off the target branch
 * run the main branch operations (see above) on it
-* optionally bump the version number of the addons modified by the PR
 * merge when tests on the rebased branch are green
+* optionally bump the version number of the addons modified by the PR
 * when the version was bumped, generate a wheel and rsync it to the PEP 503
   simple index
 
