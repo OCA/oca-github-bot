@@ -42,6 +42,12 @@ ODOO_PASSWORD=
 #  merge_bot,merge_bot_towncrier,tag_needs_review
 #BOT_TASKS=all
 
+# Coma separated list of github status to ignore
+#GITHUB_STATUS_IGNORED=ci/runbot,codecov/project,codecov/patch,coverage/coveralls
+
+# Coma separated list of github Check suites to ignore
+#GITHUB_CHECK_SUITES_IGNORED=Codecov
+
 # Root of the PEP 503 simple index where wheels are published
 # (publishing disabled if empty)
 SIMPLE_INDEX_ROOT=/app/run/simple-index
