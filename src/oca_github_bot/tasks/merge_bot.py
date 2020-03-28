@@ -15,6 +15,8 @@ from ..config import (
 )
 from ..manifest import (
     bump_manifest_version,
+    bump_version,
+    get_manifest,
     git_modified_addon_dirs,
     is_addon_dir,
     is_maintainer,
@@ -67,6 +69,30 @@ def _get_merge_bot_intro_message():
     return MERGE_BOT_INTRO_MESSAGES[i]
 
 
+@switchable("merge_bot_towncrier")
+def _merge_bot_towncrier(org, repo, target_branch, addon_dirs, bumpversion_mode, cwd):
+    for addon_dir in addon_dirs:
+        # Run oca-towncrier: this updates and git add readme/HISTORY.rst
+        # if readme/newsfragments contains files and does nothing otherwise.
+        _logger.info(f"oca-towncrier {org}/{repo}@{target_branch} for {addon_dirs}")
+        version = bump_version(get_manifest(addon_dir)["version"], bumpversion_mode)
+        check_call(
+            [
+                "oca-towncrier",
+                "--org",
+                org,
+                "--repo",
+                repo,
+                "--addon-dir",
+                addon_dir,
+                "--version",
+                version,
+                "--commit",
+            ],
+            cwd=cwd,
+        )
+
+
 def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     pr, target_branch, username, bumpversion_mode = parse_merge_bot_branch(
         merge_bot_branch
@@ -114,6 +140,17 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     modified_installable_addon_dirs = [
         d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
     ]
+
+    # update HISTORY.rst using towncrier, before generating README.rst
+    if bumpversion_mode:
+        _merge_bot_towncrier(
+            org,
+            repo,
+            target_branch,
+            modified_installable_addon_dirs,
+            bumpversion_mode,
+            cwd,
+        )
 
     if modified_addon_dirs:
         # this includes setup.py and README.rst generation
