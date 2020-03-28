@@ -42,6 +42,9 @@ ODOO_PASSWORD=
 #  merge_bot,merge_bot_towncrier,tag_needs_review
 #BOT_TASKS=all
 
+# Coma separated list of task to ignore
+#BOT_TASKS_DISABLED=
+
 # Coma separated list of github status to ignore
 #GITHUB_STATUS_IGNORED=ci/runbot,codecov/project,codecov/patch,coverage/coveralls
 
