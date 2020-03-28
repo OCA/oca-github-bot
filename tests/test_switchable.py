@@ -18,6 +18,10 @@ def test_switchable_method():
     assert config.BOT_TASKS == ["all"]
     assert ping_method("test") == "test"
     assert ping_method_2("test") == "test"
+    config.BOT_TASKS_DISABLED = ["ping_method"]
+    assert ping_method("test") is None
+    assert ping_method_2("test") == "test"
+    config.BOT_TASKS_DISABLED = []
     config.BOT_TASKS = []
     assert ping_method("test") is None
     assert ping_method_2("test") is None

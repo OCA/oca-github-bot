@@ -115,6 +115,8 @@ Tasks performed by the bot can be specified by setting the ``BOT_TASKS``
 variable. This is useful if you want to use this bot for your own GitHub
 organisation.
 
+You can also disable a selection of tasks, using ``BOT_TASKS_DISABLED``.
+
 Using docker-compose
 --------------------
 
