@@ -72,13 +72,15 @@ GEN_ADDON_ICON_EXTRA_ARGS = (
     or []
 )
 
-GITHUB_STATUS_IGNORED = [
-    "ci/runbot",
-    "codecov/project",
-    "codecov/patch",
-    "coverage/coveralls",
-]
-GITHUB_CHECK_SUITES_IGNORED = ["Codecov"]
+GITHUB_STATUS_IGNORED = os.environ.get(
+    "GITHUB_STATUS_IGNORED",
+    "ci/runbot,codecov/project,codecov/patch,coverage/coveralls",
+).split(",")
+
+GITHUB_CHECK_SUITES_IGNORED = os.environ.get(
+    "GITHUB_CHECK_SUITES_IGNORED", "Codecov"
+).split(",")
+
 MERGE_BOT_INTRO_MESSAGES = [
     "On my way to merge this fine PR!",
     "This PR looks fantastic, let's merge it!",
