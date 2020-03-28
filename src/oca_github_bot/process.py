@@ -12,7 +12,9 @@ def call(cmd, cwd):
     return subprocess.call(cmd, cwd=cwd)
 
 
-def check_call(cmd, cwd, log_error=True):
+def check_call(cmd, cwd, log_error=True, extra_cmd_args=False):
+    if extra_cmd_args:
+        cmd += extra_cmd_args
     cp = subprocess.run(
         cmd,
         universal_newlines=True,
