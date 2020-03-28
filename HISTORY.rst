@@ -1,3 +1,23 @@
+20200328
+~~~~~~~~
+
+**Features**
+
+- ocabot merge: add a "bot is merging ⏳" PR label during the test
+  and merge operation. (`#73 <https://github.com/oca/oca-github-bot/issues/73>`_)
+- Add three new settings available in the ``environment`` file that allow to add
+  extra argument, when calling the libraries ``oca-gen-addons-table``,
+  ``oca-gen-addon-readme`` and ``oca-gen-addon-icon``. (`#103
+  <https://github.com/oca/oca-github-bot/issues/103>`_)
+- Make the "ocabot merge" command update ``HISTORY.rst`` from news fragments in
+  ``readme/newsfragments`` using `towncrier
+  <https://pypi.org/project/towncrier/>`_. (`#106
+  <https://github.com/oca/oca-github-bot/issues/106>`_)
+- Add ``APPROVALS_REQUIRED`` and ``MIN_PR_AGE`` configuration options to
+  control the conditions to set the ``Approved`` label. (`#107
+  <https://github.com/oca/oca-github-bot/issues/107>`_)
+
+
 20191226
 ~~~~~~~~
 
