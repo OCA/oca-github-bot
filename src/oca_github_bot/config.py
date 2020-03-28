@@ -86,4 +86,7 @@ MERGE_BOT_INTRO_MESSAGES = [
     "What a great day to merge this nice PR. Let's do it!",
 ]
 
+APPROVALS_REQUIRED = int(os.environ.get("APPROVALS_REQUIRED", "2"))
+MIN_PR_AGE = int(os.environ.get("MIN_PR_AGE", "5"))
+
 SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")

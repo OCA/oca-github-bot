@@ -4,14 +4,13 @@
 from datetime import datetime, timedelta
 
 from .. import github
-from ..config import switchable
+from ..config import MIN_PR_AGE, switchable
 from ..github import gh_call, gh_datetime
 from ..queue import getLogger, task
 
 _logger = getLogger(__name__)
 
 
-MIN_PR_AGE = timedelta(days=5)
 LABEL_READY_TO_MERGE = "ready to merge"
 READY_TO_MERGE_COMMENT = (
     "This PR has the `approved` label and "
@@ -27,7 +26,7 @@ READY_TO_MERGE_COMMENT = (
 def tag_ready_to_merge(org, repo=None, dry_run=False):
     """Add the ``ready to merge`` tag to all PRs where conditions are met."""
     with github.login() as gh:
-        max_created = datetime.utcnow() - MIN_PR_AGE
+        max_created = datetime.utcnow() - timedelta(days=MIN_PR_AGE)
         query = [
             "type:pr",
             "state:open",

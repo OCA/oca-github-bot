@@ -4,14 +4,13 @@
 from collections import defaultdict
 
 from .. import github
-from ..config import switchable
+from ..config import APPROVALS_REQUIRED, switchable
 from ..github import gh_call
 from ..queue import getLogger, task
 from .tag_ready_to_merge import LABEL_READY_TO_MERGE, tag_ready_to_merge
 
 _logger = getLogger(__name__)
 
-APPROVALS_REQUIRED = 2
 LABEL_APPROVED = "approved"
 
 
