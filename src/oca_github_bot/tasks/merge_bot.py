@@ -142,7 +142,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     ]
 
     # update HISTORY.rst using towncrier, before generating README.rst
-    if bumpversion_mode:
+    if bumpversion_mode != "nobump":
         _merge_bot_towncrier(
             org,
             repo,
@@ -159,7 +159,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     for addon_dir in modified_installable_addon_dirs:
         # TODO wlc lock and push
         # TODO msgmerge and commit
-        if bumpversion_mode:
+        if bumpversion_mode != "nobump":
             # bumpversion is last commit (after readme generation etc
             # and before building wheel),
             # so setuptools-odoo generates a round version number
@@ -174,7 +174,11 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
         )
     # build and publish wheel
-    if bumpversion_mode and modified_installable_addon_dirs and SIMPLE_INDEX_ROOT:
+    if (
+        bumpversion_mode != "nobump"
+        and modified_installable_addon_dirs
+        and SIMPLE_INDEX_ROOT
+    ):
         for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT, dry_run)
     # TODO wlc unlock modified_addons
@@ -245,7 +249,7 @@ def merge_bot_start(
     repo,
     pr,
     username,
-    bumpversion_mode=None,
+    bumpversion_mode,
     dry_run=False,
     intro_message=None,
     merge_strategy=MergeStrategy.merge,

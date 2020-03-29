@@ -26,9 +26,22 @@ class InvalidCommandError(Exception):
         super().__init__(f"Invalid command: {name}")
 
 
-class InvalidOptionsError(Exception):
+class OptionsError(Exception):
+    pass
+
+
+class InvalidOptionsError(OptionsError):
     def __init__(self, name, options):
         super().__init__(f"Invalid options for command {name}: {options}")
+
+
+class RequiredOptionError(OptionsError):
+    def __init__(self, name, option, values):
+        values_text = ", ".join(values)
+        super().__init__(
+            f"Required option {option} for command {name}.\n"
+            f"Possible values : {values_text}"
+        )
 
 
 class BotCommand:
@@ -53,24 +66,22 @@ class BotCommand:
 
 
 class BotCommandMerge(BotCommand):
-    bumpversion_mode = None  # optional str: major|minor|patch
+    bumpversion_mode = None
+    bumpversion_mode_list = ["major", "minor", "patch", "nobump"]
 
     def parse_options(self, options):
         if not options:
-            return
-        if len(options) == 1 and options[0] in ("major", "minor", "patch"):
+            raise RequiredOptionError(
+                self.name, "bumpversion_mode", self.bumpversion_mode_list
+            )
+        if len(options) == 1 and options[0] in self.bumpversion_mode_list:
             self.bumpversion_mode = options[0]
         else:
             raise InvalidOptionsError(self.name, options)
 
     def delay(self, org, repo, pr, username, dry_run=False):
         merge_bot.merge_bot_start.delay(
-            org,
-            repo,
-            pr,
-            username,
-            bumpversion_mode=self.bumpversion_mode,
-            dry_run=False,
+            org, repo, pr, username, self.bumpversion_mode, dry_run=False
         )
 
 
