@@ -21,18 +21,23 @@ BOT_COMMAND_RE = re.compile(
 )
 
 
-class InvalidCommandError(Exception):
+class CommandError(Exception):
+    pass
+
+
+class InvalidCommandError(CommandError):
     def __init__(self, name):
         super().__init__(f"Invalid command: {name}")
 
 
-class OptionsError(Exception):
+class OptionsError(CommandError):
     pass
 
 
 class InvalidOptionsError(OptionsError):
     def __init__(self, name, options):
-        super().__init__(f"Invalid options for command {name}: {options}")
+        options_text = " ".join(options)
+        super().__init__(f"Invalid options for command {name}: {options_text}")
 
 
 class RequiredOptionError(OptionsError):

@@ -64,3 +64,8 @@ SIMPLE_INDEX_ROOT=/app/run/simple-index
 #GEN_ADDONS_TABLE_EXTRA_ARGS=
 #GEN_ADDON_README_EXTRA_ARGS=
 #GEN_ADDON_ICON_EXTRA_ARGS=
+
+# Text displayed on github, as a comment,
+# if a user has entered a wrong command
+#OCABOT_USAGE=
+#OCABOT_EXTRA_DOCUMENTATION=

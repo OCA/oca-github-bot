@@ -194,6 +194,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Jose Angel Fentanez <joseangel@vauxoo.com>
 * Simone Rubino <simone.rubino@agilebg.com>
+* Sylvain Le Gal (https://twitter.com/legalsylvain)
 
 Maintainers
 ===========
