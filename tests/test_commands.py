@@ -6,6 +6,8 @@ import pytest
 from oca_github_bot.commands import (
     InvalidCommandError,
     InvalidOptionsError,
+    OptionsError,
+    RequiredOptionError,
     parse_commands,
 )
 
@@ -23,10 +25,10 @@ def test_parse_command_multi():
                 /ocabot merge major
                 /ocabot   merge   patch
                 /ocabot merge patch
-                /ocabot merge, please
+                /ocabot merge nobump, please
                 /ocabot merge  minor, please
                 /ocabot merge minor, please
-                /ocabot merge.
+                /ocabot merge nobump.
                 /ocabot merge patch. blah
                 /ocabot merge minor # ignored
                 ...
@@ -37,10 +39,10 @@ def test_parse_command_multi():
         ("merge", ["major"]),
         ("merge", ["patch"]),
         ("merge", ["patch"]),
-        ("merge", []),
+        ("merge", ["nobump"]),
         ("merge", ["minor"]),
         ("merge", ["minor"]),
-        ("merge", []),
+        ("merge", ["nobump"]),
         ("merge", ["patch"]),
         ("merge", ["minor"]),
     ]
@@ -50,11 +52,11 @@ def test_parse_command_2():
     cmds = list(
         parse_commands(
             "Great contribution, thanks!\r\n\r\n"
-            "/ocabot merge\r\n\r\n"
+            "/ocabot merge nobump\r\n\r\n"
             "Please forward port it to 12.0."
         )
     )
-    assert [(cmd.name, cmd.options) for cmd in cmds] == [("merge", [])]
+    assert [(cmd.name, cmd.options) for cmd in cmds] == [("merge", ["nobump"])]
 
 
 def test_parse_command_merge():
@@ -70,11 +72,15 @@ def test_parse_command_merge():
     assert len(cmds) == 1
     assert cmds[0].name == "merge"
     assert cmds[0].bumpversion_mode == "patch"
-    cmds = list(parse_commands("/ocabot merge"))
+    cmds = list(parse_commands("/ocabot merge nobump"))
     assert len(cmds) == 1
     assert cmds[0].name == "merge"
-    assert cmds[0].bumpversion_mode is None
+    assert cmds[0].bumpversion_mode == "nobump"
+    with pytest.raises(RequiredOptionError):
+        list(parse_commands("/ocabot merge"))
     with pytest.raises(InvalidOptionsError):
+        list(parse_commands("/ocabot merge nobump brol"))
+    with pytest.raises(OptionsError):
         list(parse_commands("/ocabot merge brol"))
 
 

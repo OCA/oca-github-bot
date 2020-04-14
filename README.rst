@@ -67,7 +67,7 @@ Commands
 One can ask the bot to perform some tasks by entering special commands
 as merge request comments.
 
-``/ocabot merge`` optionally followed by one of ``major``, ``minor``, ``patch``,
+``/ocabot merge`` followed by one of ``major``, ``minor``, ``patch`` or ``nobump``
 can be used to ask the bot to do the following:
 
 * merge the PR onto a temporary branch created off the target branch
@@ -194,6 +194,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Jose Angel Fentanez <joseangel@vauxoo.com>
 * Simone Rubino <simone.rubino@agilebg.com>
+* Sylvain Le Gal (https://twitter.com/legalsylvain)
 
 Maintainers
 ===========

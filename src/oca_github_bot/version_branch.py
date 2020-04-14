@@ -34,7 +34,7 @@ def parse_merge_bot_branch(branch):
     mo = MERGE_BOT_BRANCH_RE.match(branch)
     bumpversion_mode = mo.group("bumpversion_mode")
     if bumpversion_mode == "no":
-        bumpversion_mode = None
+        bumpversion_mode = "nobump"
     return (
         mo.group("pr"),
         mo.group("target_branch"),

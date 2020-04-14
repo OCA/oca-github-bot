@@ -50,7 +50,7 @@ def test_parse_merge_bot_branch():
         "100",
         "12.0",
         "toto",
-        None,
+        "nobump",
     )
 
 

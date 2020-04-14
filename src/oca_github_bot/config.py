@@ -91,3 +91,17 @@ APPROVALS_REQUIRED = int(os.environ.get("APPROVALS_REQUIRED", "2"))
 MIN_PR_AGE = int(os.environ.get("MIN_PR_AGE", "5"))
 
 SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")
+
+OCABOT_USAGE = os.environ.get(
+    "OCABOT_USAGE",
+    "**Ocabot commands**\n" "* ``ocabot merge major|minor|patch|nobump``",
+)
+
+OCABOT_EXTRA_DOCUMENTATION = os.environ.get(
+    "OCABOT_EXTRA_DOCUMENTATION",
+    "**More information**\n"
+    " * [ocabot documentation](https://github.com/OCA/oca-github-bot/#commands)\n"
+    " * [OCA guidelines](https://github.com/OCA/odoo-community.org/blob/master/"
+    "website/Contribution/CONTRIBUTING.rst), "
+    'specially the "Version Numbers" section.',
+)

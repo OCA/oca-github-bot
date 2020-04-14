@@ -1,8 +1,10 @@
 # Copyright (c) initOS GmbH 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-from ..commands import parse_commands
+from ..commands import CommandError, parse_commands
+from ..config import OCABOT_EXTRA_DOCUMENTATION, OCABOT_USAGE
 from ..router import router
+from ..tasks.add_pr_comment import add_pr_comment
 
 
 @router.register("issue_comment", action="created")
@@ -16,5 +18,18 @@ async def on_command(event, gh, *args, **kwargs):
     username = event.data["comment"]["user"]["login"]
     text = event.data["comment"]["body"]
 
-    for command in parse_commands(text):
-        command.delay(org, repo, pr, username)
+    try:
+        for command in parse_commands(text):
+            command.delay(org, repo, pr, username)
+    except CommandError as e:
+        # Add a comment on the current PR, if
+        # the command were misunderstood by the bot
+        add_pr_comment.delay(
+            org,
+            repo,
+            pr,
+            f"Hi @{username}. Your command failed:\n\n"
+            f"``{e}``.\n\n"
+            f"{OCABOT_USAGE}\n\n"
+            f"{OCABOT_EXTRA_DOCUMENTATION}",
+        )
