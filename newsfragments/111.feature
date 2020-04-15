@@ -1,1 +1,0 @@
-Make ``GITHUB_STATUS_IGNORED`` and ``GITHUB_CHECK_SUITES_IGNORED`` configurable.

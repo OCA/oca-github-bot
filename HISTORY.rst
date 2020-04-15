@@ -1,3 +1,14 @@
+20200415
+~~~~~~~~
+
+**Features**
+
+- Make ``bumpversion_mode`` option required on ``merge`` command, adding ``nobump`` option that was before implicit.
+  Bot adds comment on github, if the command is wrong. Message are customizable in the ``environment`` file. (`#90 <https://github.com/oca/oca-github-bot/issues/90>`_)
+- Make ``GITHUB_STATUS_IGNORED`` and ``GITHUB_CHECK_SUITES_IGNORED`` configurable. (`#111 <https://github.com/oca/oca-github-bot/issues/111>`_)
+- Add ``BOT_TASKS_DISABLED``. (`#112 <https://github.com/oca/oca-github-bot/issues/112>`_)
+
+
 20200328
 ~~~~~~~~
 
