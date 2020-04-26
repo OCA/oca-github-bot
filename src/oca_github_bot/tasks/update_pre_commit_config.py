@@ -64,6 +64,5 @@ def _update_pre_commit_config(source, target, commit_message, files_to_remove=No
     success = _pre_commit_run(target)
     # git add files modified by the pre-commit run, if any
     check_call(["git", "add", "-u"], cwd=target)
-    if success:
-        git_commit_if_needed(commit_message, cwd=target)
+    git_commit_if_needed(commit_message, cwd=target)
     return success
