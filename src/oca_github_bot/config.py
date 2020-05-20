@@ -77,7 +77,7 @@ GITHUB_STATUS_IGNORED = os.environ.get(
 ).split(",")
 
 GITHUB_CHECK_SUITES_IGNORED = os.environ.get(
-    "GITHUB_CHECK_SUITES_IGNORED", "Codecov"
+    "GITHUB_CHECK_SUITES_IGNORED", "Codecov,Dependabot"
 ).split(",")
 
 MERGE_BOT_INTRO_MESSAGES = [
