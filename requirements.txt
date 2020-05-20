@@ -15,7 +15,7 @@ billiard==3.5.0.4         # via celery
 bleach==3.1.4             # via readme-renderer
 celery[redis]==4.2.1
 certifi==2018.10.15       # via requests
-cffi==1.11.5              # via cryptography
+cffi==1.14.0              # via cryptography
 chardet==3.0.4            # via aiohttp, requests
 cryptography==2.3.1       # via jwcrypto
 docutils==0.14            # via readme-renderer
