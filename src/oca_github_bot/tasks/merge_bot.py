@@ -55,7 +55,7 @@ def _git_delete_branch(remote, branch, cwd):
 
 def _remove_merging_label(github, gh_pr, dry_run=False):
     gh_issue = github.gh_call(gh_pr.issue)
-    labels = [l.name for l in gh_issue.labels()]
+    labels = [label.name for label in gh_issue.labels()]
     if LABEL_MERGING in labels:
         if dry_run:
             _logger.info(f"DRY-RUN remove {LABEL_MERGING} label from PR {gh_pr.url}")

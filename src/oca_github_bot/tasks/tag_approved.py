@@ -42,7 +42,7 @@ def tag_approved(org, repo, pr, dry_run=False):
         for login, state in review_state_by_user.items():
             review_users_by_state[state].add(login)
         gh_issue = gh_call(gh_pr.issue)
-        labels = [l.name for l in gh_issue.labels()]
+        labels = [label.name for label in gh_issue.labels()]
         if (
             len(review_users_by_state["APPROVED"]) >= APPROVALS_REQUIRED
             and not review_users_by_state["CHANGES_REQUESTED"]
