@@ -184,6 +184,15 @@ Here is a recommended procedure to test locally:
 * Then configure a GitHub webhook in a sandbox project in your organization
   so you can start receiving webhook calls to your local machine.
 
+Releasing
+=========
+
+To release a new version, follow these steps:
+- ``towncrier --version YYYYMMDD``
+- git commit the updated `HISTORY.rst` and removed newfragments
+- ``git tag vYYYYMMDD``
+- ``git push --tags``
+
 Contributors
 ============
 
