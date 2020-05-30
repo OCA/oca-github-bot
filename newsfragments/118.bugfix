@@ -1,3 +1,0 @@
-Update maintainer-tools to get the latest ``oca-gen-addon-tables``. It fixes a
-regression where the main branch operations were failing when ``README.md`` is
-absent.

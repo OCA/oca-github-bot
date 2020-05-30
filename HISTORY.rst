@@ -1,3 +1,18 @@
+20200530
+~~~~~~~~
+
+**Features**
+
+- Ignore Dependabot by default in check-suite ignores, along with Codecov. (`#115 <https://github.com/oca/oca-github-bot/issues/115>`_)
+
+
+**Bugfixes**
+
+- Update maintainer-tools to get the latest ``oca-gen-addon-tables``. It fixes a
+  regression where the main branch operations were failing when ``README.md`` is
+  absent. (`#118 <https://github.com/oca/oca-github-bot/issues/118>`_)
+
+
 20200415
 ~~~~~~~~
 
