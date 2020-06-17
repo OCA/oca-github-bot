@@ -331,7 +331,7 @@ def merge_bot_start(
             github.gh_call(gh_issue.add_labels, LABEL_MERGING)
 
 
-def _get_commit_success(gh_commit):
+def _get_commit_success(org, repo, pr, gh_commit):
     """ Test commit status, using both status and check suites APIs """
     success = None  # None means don't know / in progress
     old_travis = False
@@ -341,6 +341,9 @@ def _get_commit_success(gh_commit):
             # ignore
             continue
         if status.state == "success":
+            _logger.info(
+                f"Successful status {status.context} for PR #{pr} of {org}/{repo}"
+            )
             success = True
             # <hack>
             if status.context.startswith("continuous-integration/travis-ci"):
@@ -348,8 +351,15 @@ def _get_commit_success(gh_commit):
             # </hack>
         elif status.state == "pending":
             # in progress
+            _logger.info(
+                f"Pending status {status.context} for PR #{pr} of {org}/{repo}"
+            )
             return None
         else:
+            _logger.info(
+                f"Unsuccessful status {status.context} {status.state} for "
+                f"PR #{pr} of {org}/{repo}"
+            )
             return False
     gh_check_suites = github.gh_call(gh_commit.check_suites)
     for check_suite in gh_check_suites:
@@ -357,6 +367,10 @@ def _get_commit_success(gh_commit):
             # ignore
             continue
         if check_suite.conclusion == "success":
+            _logger.info(
+                f"Successful check_suite {check_suite.app.name} for "
+                f"PR #{pr} of {org}/{repo}"
+            )
             success = True
         elif not check_suite.conclusion:
             # not complete
@@ -365,8 +379,16 @@ def _get_commit_success(gh_commit):
                 # ignore incomplete new Travis when old travis status is ok
                 continue
             # </hack>
+            _logger.info(
+                f"Pending check_suite {check_suite.app.name} for "
+                f"PR #{pr} of {org}/{repo}"
+            )
             return None
         else:
+            _logger.info(
+                f"Unsuccessful check_suite {check_suite.app.name} "
+                f"{check_suite.conclusion} for PR #{pr} of {org}/{repo}"
+            )
             return False
     return success
 
@@ -385,7 +407,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
             gh_repo = gh.repository(org, repo)
             gh_pr = gh.pull_request(org, repo, pr)
             gh_commit = github.gh_call(gh_repo.commit, sha)
-            success = _get_commit_success(gh_commit)
+            success = _get_commit_success(org, repo, pr, gh_commit)
             if success is None:
                 # checks in progress
                 return
