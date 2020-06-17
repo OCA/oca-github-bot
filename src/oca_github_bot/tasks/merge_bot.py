@@ -327,7 +327,7 @@ def merge_bot_start(
             raise
         else:
             gh_issue = github.gh_call(gh_pr.issue)
-            _logger.info(f"add {LABEL_MERGED} label to PR {gh_pr.url}")
+            _logger.info(f"add {LABEL_MERGING} label to PR {gh_pr.url}")
             github.gh_call(gh_issue.add_labels, LABEL_MERGING)
 
 
