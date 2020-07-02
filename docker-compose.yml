@@ -33,7 +33,7 @@ services:
       - ./data/cache:/app/run/.cache
       - ./data/simple-index:/app/run/simple-index
     restart: unless-stopped
-    command: celery worker --concurrency=1 --app=oca_github_bot.queue.app --loglevel=INFO
+    command: celery worker --concurrency=2 --app=oca_github_bot.queue.app --loglevel=INFO
     depends_on:
       - queue
   beat:
