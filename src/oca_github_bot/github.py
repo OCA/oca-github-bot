@@ -57,7 +57,8 @@ class BranchNotFoundError(RuntimeError):
 
 @contextmanager
 def temporary_clone(org, repo, branch):
-    """ context manager that clones a git branch and cd to it, with cache """
+    """ context manager that clones a git branch into a tremporary directory,
+    and yields the temp dir name, with cache """
     # init cache directory
     cache_dir = appdirs.user_cache_dir("oca-mqt")
     repo_cache_dir = os.path.join(cache_dir, "github.com", org.lower(), repo.lower())
