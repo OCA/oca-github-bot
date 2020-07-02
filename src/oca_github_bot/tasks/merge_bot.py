@@ -141,7 +141,10 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
     ]
 
-    # update HISTORY.rst using towncrier, before generating README.rst
+    # Update HISTORY.rst using towncrier, before generating README.rst.
+    # We don't do this if nobump is specified, because updating the changelog
+    # is something we only do when "releasing", and patch|minor|major is
+    # the way to mean "release" in OCA.
     if bumpversion_mode != "nobump":
         _merge_bot_towncrier(
             org,
@@ -165,7 +168,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             # so setuptools-odoo generates a round version number
             # (without .dev suffix).
             bump_manifest_version(addon_dir, bumpversion_mode, git_commit=True)
-            build_and_check_wheel(addon_dir)
+        build_and_check_wheel(addon_dir)
     if dry_run:
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
     else:
@@ -174,11 +177,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
         )
     # build and publish wheel
-    if (
-        bumpversion_mode != "nobump"
-        and modified_installable_addon_dirs
-        and SIMPLE_INDEX_ROOT
-    ):
+    if modified_installable_addon_dirs and SIMPLE_INDEX_ROOT:
         for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, SIMPLE_INDEX_ROOT, dry_run)
     # TODO wlc unlock modified_addons
