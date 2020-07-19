@@ -1,3 +1,14 @@
+20200719
+~~~~~~~~
+
+**Features**
+
+- Add more logging of status and check suites results. (`#121 <https://github.com/oca/oca-github-bot/issues/121>`_)
+- Publish wheels also in nobump mode. This exception was probably done with the
+  goal of saving space, but for migration PRs where people use ``ocabot merge
+  nobump``, we want to publish too. (`#123 <https://github.com/oca/oca-github-bot/issues/123>`_)
+
+
 20200530
 ~~~~~~~~
 
