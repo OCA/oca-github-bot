@@ -21,7 +21,7 @@ RUN set -x \
 # we install them in a separate virtualenv to avoid polluting our main environment
 RUN set -x \
   && python3 -m venv /ocamt \
-  && /ocamt/bin/pip install wheel
+  && /ocamt/bin/pip install --no-cache-dir wheel
 RUN set -x \
   && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@73c47b6835bee3ab0eeeff7c463de6b9c085abbc#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
