@@ -14,7 +14,8 @@ RUN set -x \
     python3-venv \
     rsync \
     openssh-client \
-  && apt-get clean
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 # the main branch bot needs several command line tools from in OCA/maintainer-tools
 # we install them in a separate virtualenv to avoid polluting our main environment
