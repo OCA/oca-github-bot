@@ -23,13 +23,13 @@ RUN set -x \
   && python3 -m venv /ocamt \
   && /ocamt/bin/pip install wheel
 RUN set -x \
-  && /ocamt/bin/pip install -e git+https://github.com/OCA/maintainer-tools@73c47b6835bee3ab0eeeff7c463de6b9c085abbc#egg=oca-maintainers-tools \
+  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@73c47b6835bee3ab0eeeff7c463de6b9c085abbc#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-addon-icon /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/
 RUN set -x \
-  && /ocamt/bin/pip install setuptools-odoo>=2.5.0 \
+  && /ocamt/bin/pip install --no-cache-dir setuptools-odoo>=2.5.0 \
   && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
 
 
@@ -42,7 +42,7 @@ RUN mkdir /app/tmp
 COPY ./requirements.txt /app/tmp
 RUN pip install --no-cache-dir -r /app/tmp/requirements.txt
 COPY . /app/tmp
-RUN pip install /app/tmp && rm -fr /app/tmp
+RUN pip install --no-cache-dir /app/tmp && rm -fr /app/tmp
 
 # make work and home directory
 RUN mkdir /app/run && chmod ogu+rwx /app/run
