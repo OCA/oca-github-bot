@@ -32,17 +32,13 @@ RUN set -x \
   && /ocamt/bin/pip install --no-cache-dir 'setuptools-odoo>=2.5.0' \
   && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
 
-
 # isolate from system python libraries
 RUN python3 -m venv /app
 ENV PATH=/app/bin:$PATH
 
 # install oca_github_bot app
-RUN mkdir /app/tmp
-COPY ./requirements.txt /app/tmp
-RUN pip install --no-cache-dir -r /app/tmp/requirements.txt
-COPY . /app/tmp
-RUN pip install --no-cache-dir /app/tmp && rm -fr /app/tmp
+COPY . /app/src/oca-github-bot
+RUN pip install --no-cache-dir -r /app/src/oca-github-bot/requirements.txt -e /app/src/oca-github-bot
 
 # make work and home directory
 RUN mkdir /app/run && chmod ogu+rwx /app/run
