@@ -4,7 +4,7 @@ from pathlib import Path
 
 from celery.task import task
 
-from .. import github
+from .. import config, github
 from ..config import switchable
 from ..manifest import (
     addon_dirs_in,
@@ -50,8 +50,11 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             modified_addons_maintainers.update(addon_maintainers)
 
         pr_opener = gh_pr.user.login
-        modified_addons_maintainers.discard(pr_opener)
-        all_mentions_comment = get_mention(modified_addons_maintainers)
+        if not modified_addons_maintainers:
+            all_mentions_comment = get_adopt_mention(pr_opener)
+        else:
+            modified_addons_maintainers.discard(pr_opener)
+            all_mentions_comment = get_mention(modified_addons_maintainers)
 
         if not all_mentions_comment:
             return False
@@ -73,6 +76,19 @@ def get_mention(maintainers):
             "check this out!"
         )
     return mentions_comment
+
+
+def get_adopt_mention(pr_opener):
+    """Get a comment inviting to adopt the module."""
+    if config.MAINTAINER_ROLE_PAGE:
+        return (
+            "Hi @" + pr_opener + ",\n"
+            "the module you are changing has no declared maintainer.\n"
+            "Would you like to adopt it? (See %s)\n"
+            "Just add your GitHub name to `maintainers` key of `__manifest__.py`"
+            " file!"
+        ) % config.MAINTAINER_ROLE_PAGE
+    return ""
 
 
 def get_maintainers(addon_dirs):
