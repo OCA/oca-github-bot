@@ -13,19 +13,19 @@ beat_schedule = {
     }
 }
 
-if GITHUB_ORG:
+for org in GITHUB_ORG:
     beat_schedule.update(
         {
             "main_branch_bot_all_repos": {
                 "task": "oca_github_bot.tasks.main_branch_bot."
                 "main_branch_bot_all_repos",
-                "args": (GITHUB_ORG,),
+                "args": (org,),
                 "kwargs": dict(build_wheels=True),
                 "schedule": crontab(hour="2", minute="30"),
             },
             "tag_ready_to_merge": {
                 "task": "oca_github_bot.tasks.tag_ready_to_merge.tag_ready_to_merge",
-                "args": (GITHUB_ORG,),
+                "args": (org,),
                 "schedule": crontab(minute="0"),
             },
         }
