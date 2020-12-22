@@ -19,7 +19,7 @@ _logger = logging.getLogger(__name__)
 
 
 async def webhook(request):
-    """ This is the main webhook dispatcher
+    """This is the main webhook dispatcher
 
     Handlers are declared with the @router.register decorator.
     See https://gidgethub.readthedocs.io/en/latest/routing.html

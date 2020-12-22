@@ -17,7 +17,7 @@ task = app.task
 
 if config.SENTRY_DSN:
     from raven import Client
-    from raven.contrib.celery import register_signal, register_logger_signal
+    from raven.contrib.celery import register_logger_signal, register_signal
 
     client = Client(config.SENTRY_DSN)
 
