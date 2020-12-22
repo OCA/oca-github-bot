@@ -4,10 +4,20 @@
 import os
 import subprocess
 
-from oca_github_bot.build_wheels import build_and_publish_wheels
+from oca_github_bot.build_wheels import (
+    build_and_publish_metapackage_wheel,
+    build_and_publish_wheels,
+)
 
 
-def _make_addon(addons_dir, addon_name, series):
+def _init_git_repo(cwd):
+    subprocess.check_call(["git", "init"], cwd=cwd)
+    subprocess.check_call(["git", "config", "user.name", "test"], cwd=cwd)
+    subprocess.check_call(["git", "config", "commit.gpgsign", "false"], cwd=cwd)
+    subprocess.check_call(["git", "config", "user.email", "test@example.com"], cwd=cwd)
+
+
+def _make_addon(addons_dir, addon_name, series, metapackage=None):
     addon_dir = addons_dir / addon_name
     addon_dir.mkdir()
     manifest_path = addon_dir / "__manifest__.py"
@@ -16,20 +26,16 @@ def _make_addon(addons_dir, addon_name, series):
     subprocess.check_call(["git", "add", addon_name], cwd=addons_dir)
     subprocess.check_call(["git", "commit", "-m", "add " + addon_name], cwd=addons_dir)
     subprocess.check_call(["git", "clean", "-ffdx", "--", "setup"], cwd=addons_dir)
-    subprocess.check_call(
-        ["setuptools-odoo-make-default", "-d", str(addons_dir), "--commit"]
-    )
+    cmd = ["setuptools-odoo-make-default", "-d", str(addons_dir), "--commit"]
+    if metapackage:
+        cmd.extend(["--metapackage", metapackage])
+    subprocess.check_call(cmd)
 
 
 def test_build_and_publish_wheels(tmp_path):
     addons_dir = tmp_path / "addons_dir"
     addons_dir.mkdir()
-    subprocess.check_call(["git", "init"], cwd=addons_dir)
-    subprocess.check_call(["git", "config", "user.name", "test"], cwd=addons_dir)
-    subprocess.check_call(["git", "config", "commit.gpgsign", "false"], cwd=addons_dir)
-    subprocess.check_call(
-        ["git", "config", "user.email", "test@example.com"], cwd=addons_dir
-    )
+    _init_git_repo(addons_dir)
     simple_index_root = tmp_path / "simple_index"
     simple_index_root.mkdir()
     # build with no addons
@@ -66,3 +72,21 @@ def test_build_and_publish_wheels(tmp_path):
     wheels = os.listdir(simple_index_root / "odoo11-addon-addon3")
     assert len(wheels) == 1
     assert "-py2.py3-" in wheels[0]
+
+
+def test_build_and_publish_metapackage(tmp_path):
+    addons_dir = tmp_path / "addons_dir"
+    addons_dir.mkdir()
+    _init_git_repo(addons_dir)
+    simple_index_root = tmp_path / "simple_index"
+    simple_index_root.mkdir()
+    # build with one addon
+    _make_addon(addons_dir, "addon1", "12.0", metapackage="test")
+    build_and_publish_metapackage_wheel(
+        str(addons_dir), str(simple_index_root), (12, 0)
+    )
+    wheels = os.listdir(simple_index_root / "odoo12-addons-test")
+    assert len(wheels) == 1
+    assert wheels[0].startswith("odoo12_addons_test")
+    assert wheels[0].endswith(".whl")
+    assert "-py3-" in wheels[0]

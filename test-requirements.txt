@@ -1,6 +1,0 @@
-pytest
-pytest-asyncio
-pytest-cov
-pytest-mock
-pytest-vcr
-setuptools-odoo  # for setuptools-odoo-make-default

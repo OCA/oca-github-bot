@@ -38,6 +38,16 @@ setup(
         "twine",
         "wheel",
     ],
+    extras_require={
+        "test": [
+            "pytest",
+            "pytest-asyncio",
+            "pytest-cov",
+            "pytest-mock",
+            "pytest-vcr",
+            "setuptools-odoo",  # for setuptools-odoo-make-default
+        ],
+    },
     license="MIT",
     classifiers=[
         # Trove classifiers
