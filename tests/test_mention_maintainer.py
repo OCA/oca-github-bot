@@ -1,5 +1,6 @@
 # Copyright 2019 Simone Rubino - Agile Business Group
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
+import shutil
 
 import pytest
 
@@ -25,6 +26,42 @@ def test_maintainer_mentioned(git_clone, mocker):
 
     github_mock.gh_call.assert_called_once()
     assert "@themaintainer" in github_mock.gh_call.mock_calls[0][1][1]
+
+
+@pytest.mark.vcr()
+def test_added_maintainer_not_mentioned(git_clone, mocker):
+    """Only maintainers existing before the PR will be mentioned."""
+    github_mock = mocker.patch("oca_github_bot.tasks.mention_maintainer.github")
+    github_mock.temporary_clone.return_value.__enter__.return_value = str(git_clone)
+
+    addon_name = "addon1"
+    pre_pr_addon = make_addon(git_clone, addon_name, maintainers=["themaintainer"])
+    pre_pr_addon_mock = mocker.patch(
+        "oca_github_bot.tasks.mention_maintainer.addon_dirs_in"
+    )
+
+    def pr_edited_addon(_args, **_kwargs):
+        shutil.rmtree(pre_pr_addon)
+        edited_addon = make_addon(
+            git_clone, addon_name, maintainers=["themaintainer", "added_maintainer"]
+        )
+        return [str(edited_addon)]
+
+    pre_pr_addon_mock.side_effect = pr_edited_addon
+    pre_pr_addon_mock.return_value = [pre_pr_addon], False
+
+    modified_addons_mock = mocker.patch(
+        "oca_github_bot.tasks.mention_maintainer.git_modified_addon_dirs"
+    )
+    modified_addons_mock.return_value = [pre_pr_addon], False
+
+    mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
+
+    mention_maintainer("org", "repo", "pr")
+
+    github_mock.gh_call.assert_called_once()
+    assert "@themaintainer" in github_mock.gh_call.mock_calls[0][1][1]
+    assert "@added_maintainer" in github_mock.gh_call.mock_calls[0][1][1]
 
 
 @pytest.mark.vcr()

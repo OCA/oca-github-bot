@@ -1,11 +1,17 @@
 # Copyright 2019 Simone Rubino - Agile Business Group
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
+from pathlib import Path
 
 from celery.task import task
 
 from .. import github
 from ..config import switchable
-from ..manifest import get_manifest, git_modified_addon_dirs, is_addon_dir
+from ..manifest import (
+    addon_dirs_in,
+    get_manifest,
+    git_modified_addon_dirs,
+    is_addon_dir,
+)
 from ..process import check_call
 from ..queue import getLogger
 
@@ -19,7 +25,11 @@ def mention_maintainer(org, repo, pr, dry_run=False):
         gh_pr = gh.pull_request(org, repo, pr)
         target_branch = gh_pr.base.ref
         with github.temporary_clone(org, repo, target_branch) as clonedir:
-            # Get modified addons list on the PR.
+            # Get maintainers existing before the PR changes
+            addon_dirs = addon_dirs_in(clonedir, installable_only=True)
+            maintainers_dict = get_maintainers(addon_dirs)
+
+            # Get list of addons modified in the PR.
             pr_branch = f"tmp-pr-{pr}"
             check_call(
                 ["git", "fetch", "origin", f"refs/pull/{pr}/head:{pr_branch}"],
@@ -27,16 +37,21 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             )
             check_call(["git", "checkout", pr_branch], cwd=clonedir)
             modified_addon_dirs, _ = git_modified_addon_dirs(clonedir, target_branch)
+
             # Remove not installable addons
             # (case where an addon becomes no more installable).
-            modified_installable_addon_dirs = [
+            modified_addon_dirs = [
                 d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
             ]
 
-            pr_opener = gh_pr.user.login
-            all_mentions_comment = get_maintainers_mentions(
-                modified_installable_addon_dirs, pr_opener
-            )
+        modified_addons_maintainers = set()
+        for modified_addon in modified_addon_dirs:
+            addon_maintainers = maintainers_dict.get(modified_addon, list())
+            modified_addons_maintainers.update(addon_maintainers)
+
+        pr_opener = gh_pr.user.login
+        modified_addons_maintainers.discard(pr_opener)
+        all_mentions_comment = get_mention(modified_addons_maintainers)
 
         if not all_mentions_comment:
             return False
@@ -47,19 +62,26 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             return github.gh_call(gh_pr.create_comment, all_mentions_comment)
 
 
-def get_maintainers_mentions(addon_dirs, pr_opener):
-    all_maintainers = set()
+def get_mention(maintainers):
+    """Get a comment mentioning all the `maintainers`."""
+    maintainers_mentions = list(map(lambda m: "@" + m, maintainers))
+    mentions_comment = ""
+    if maintainers_mentions:
+        mentions_comment = (
+            "Hi " + ", ".join(maintainers_mentions) + ",\n"
+            "some modules you are maintaining are being modified, "
+            "check this out!"
+        )
+    return mentions_comment
+
+
+def get_maintainers(addon_dirs):
+    """Get maintainer for each addon in `addon_dirs`.
+
+    :return: Dictionary {Path('addon_dir'): <list of addon's maintainers>}
+    """
+    addon_maintainers_dict = dict()
     for addon_dir in addon_dirs:
         maintainers = get_manifest(addon_dir).get("maintainers", [])
-        all_maintainers.update(maintainers)
-    if pr_opener in all_maintainers:
-        all_maintainers.remove(pr_opener)
-    if not all_maintainers:
-        return ""
-    all_mentions = map(lambda m: "@" + m, all_maintainers)
-    all_mentions_comment = (
-        "Hi " + ", ".join(all_mentions) + ",\n"
-        "some modules you are maintaining are being modified, "
-        "check this out!"
-    )
-    return all_mentions_comment
+        addon_maintainers_dict.setdefault(Path(addon_dir), maintainers)
+    return addon_maintainers_dict
