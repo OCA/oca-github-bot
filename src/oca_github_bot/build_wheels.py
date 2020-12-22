@@ -12,6 +12,25 @@ from .process import check_call
 _logger = logging.getLogger(__name__)
 
 
+def _bdist_wheel(setup_dir, dist_dir, python_tag=None):
+    with tempfile.TemporaryDirectory() as tempdir:
+        bdist_dir = os.path.join(tempdir, "build")
+        os.mkdir(bdist_dir)
+        cmd = [
+            sys.executable,
+            "setup.py",
+            "bdist_wheel",
+            "--dist-dir",
+            dist_dir,
+            "--bdist-dir",
+            bdist_dir,
+        ]
+        if python_tag:
+            cmd.extend(["--python-tag", python_tag])
+        check_call(cmd, cwd=setup_dir)
+        _check_wheels(dist_dir)
+
+
 def _build_and_check_wheel(addon_dir, dist_dir):
     manifest = get_manifest(addon_dir)
     if not manifest.get("installable", True):
@@ -24,22 +43,7 @@ def _build_and_check_wheel(addon_dir, dist_dir):
     setup_file = os.path.join(setup_dir, "setup.py")
     if not os.path.isfile(setup_file):
         return False
-    with tempfile.TemporaryDirectory() as tempdir:
-        bdist_dir = os.path.join(tempdir, "build")
-        os.mkdir(bdist_dir)
-        cmd = [
-            sys.executable,
-            "setup.py",
-            "bdist_wheel",
-            "--dist-dir",
-            dist_dir,
-            "--bdist-dir",
-            bdist_dir,
-            "--python-tag",
-            "py2" if series < (11, 0) else "py3",
-        ]
-        check_call(cmd, cwd=setup_dir)
-        _check_wheels(dist_dir)
+    _bdist_wheel(setup_dir, dist_dir, python_tag="py2" if series < (11, 0) else "py3")
     return True
 
 
