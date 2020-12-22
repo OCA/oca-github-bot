@@ -2,7 +2,7 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 from .. import github, manifest
-from ..build_wheels import build_and_publish_wheels
+from ..build_wheels import build_and_publish_metapackage_wheel, build_and_publish_wheels
 from ..config import (
     GEN_ADDON_ICON_EXTRA_ARGS,
     GEN_ADDON_README_EXTRA_ARGS,
@@ -11,6 +11,7 @@ from ..config import (
     switchable,
 )
 from ..github import git_push_if_needed, temporary_clone
+from ..manifest import get_odoo_series_from_branch
 from ..process import check_call
 from ..queue import getLogger, task
 from ..version_branch import is_main_branch_bot_branch
@@ -107,6 +108,12 @@ def main_branch_bot(org, repo, branch, build_wheels, dry_run=False):
             git_push_if_needed("origin", branch, cwd=clone_dir)
         if build_wheels and SIMPLE_INDEX_ROOT:
             build_and_publish_wheels(clone_dir, SIMPLE_INDEX_ROOT, dry_run)
+            build_and_publish_metapackage_wheel(
+                clone_dir,
+                SIMPLE_INDEX_ROOT,
+                get_odoo_series_from_branch(branch),
+                dry_run,
+            )
 
 
 @task()

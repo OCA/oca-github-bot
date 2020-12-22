@@ -68,6 +68,20 @@ def build_and_publish_wheels(addons_dir, simple_index_root, dry_run=False):
         build_and_publish_wheel(addon_dir, simple_index_root, dry_run)
 
 
+def build_and_publish_metapackage_wheel(
+    addons_dir, simple_index_root, series, dry_run=False
+):
+    setup_dir = os.path.join(addons_dir, "setup", "_metapackage")
+    setup_file = os.path.join(setup_dir, "setup.py")
+    if not os.path.isfile(setup_file):
+        return
+    with tempfile.TemporaryDirectory() as dist_dir:
+        _bdist_wheel(
+            setup_dir, dist_dir, python_tag="py2" if series < (11, 0) else "py3"
+        )
+        _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run)
+
+
 def _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run=False):
     pkgname = _find_pkgname(dist_dir)
     # --ignore-existing: never overwrite an existing package
