@@ -12,6 +12,7 @@ MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py", "__terp__.py")
 VERSION_RE = re.compile(
     r"^(?P<series>\d+\.\d+)\.(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$"
 )
+BRANCH_RE = re.compile(r"^(?P<series>\d+\.\d+)$")
 MANIFEST_VERSION_RE = re.compile(
     r"(?P<pre>[\"']version[\"']\s*:\s*[\"'])(?P<version>[\d\.]+)(?P<post>[\"'])"
 )
@@ -193,6 +194,16 @@ def git_modified_addon_dirs(addons_dir, ref):
 
 def get_odoo_series_from_version(version):
     mo = VERSION_RE.match(version)
+    if not mo:
+        raise OdooSeriesNotDetected()
+    series = mo.group("series")
+    if not series:
+        raise OdooSeriesNotDetected()
+    return tuple(int(s) for s in series.split("."))
+
+
+def get_odoo_series_from_branch(branch):
+    mo = BRANCH_RE.match(branch)
     if not mo:
         raise OdooSeriesNotDetected()
     series = mo.group("series")

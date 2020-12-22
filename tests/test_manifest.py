@@ -13,6 +13,7 @@ from oca_github_bot.manifest import (
     bump_version,
     get_manifest,
     get_manifest_path,
+    get_odoo_series_from_branch,
     get_odoo_series_from_version,
     git_modified_addon_dirs,
     git_modified_addons,
@@ -196,6 +197,12 @@ def test_git_modified_addons_merge_base(git_clone):
     subprocess.check_call(["git", "checkout", "addon1"], cwd=git_clone)
     subprocess.check_call(["git", "cherry-pick", commit], cwd=git_clone)
     assert git_modified_addons(git_clone, "master") == ({"addon1"}, False)
+
+
+def test_get_odoo_series_from_branch():
+    assert get_odoo_series_from_branch("12.0") == (12, 0)
+    with pytest.raises(OdooSeriesNotDetected):
+        get_odoo_series_from_branch("12.0.0")
 
 
 def test_get_odoo_series_from_version():
