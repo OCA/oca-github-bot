@@ -1,3 +1,22 @@
+20200131
+~~~~~~~~
+
+**Features**
+
+- Add the possibility to set multiple github organizations in GITHUB_ORG setting
+  (for organization wide scheduled tasks) (`#127 <https://github.com/oca/oca-github-bot/issues/127>`_)
+- Build and publish metapackage wheel from ``setup/_metapackage`` in main branch
+  bot task. (`#133 <https://github.com/oca/oca-github-bot/issues/133>`_)
+
+**Bugfixes**
+
+- ocabot merge: only mention maintainers existing before the PR. (`#131 <https://github.com/oca/oca-github-bot/issues/131>`_)
+
+**Miscellaneous**
+
+- Upgrade ``setuptools-odoo`` to 2.6.3 in Docker image
+
+
 20200719
 ~~~~~~~~
 
