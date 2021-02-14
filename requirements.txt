@@ -2,7 +2,6 @@
 aiohttp==3.4.4
 amqp==2.3.2
 appdirs==1.4.3
-asn1crypto==0.24.0
 async-timeout==3.0.1
 attrs==18.2.0
 Babel==2.6.0
@@ -22,9 +21,11 @@ jwcrypto==0.5.0
 kombu==4.2.1
 multidict==4.4.2
 OdooRPC==0.6.2
+packaging==20.8
 pkginfo==1.5.0.1
 pycparser==2.19
 Pygments==2.4.2
+pyparsing==2.4.7
 python-dateutil==2.7.5
 pytz==2018.7
 raven==6.9.0
