@@ -47,9 +47,7 @@ ODOO_PASSWORD = os.environ.get("ODOO_PASSWORD")
 
 BROKER_URI = os.environ.get("BROKER_URI", os.environ.get("REDIS_URI", "redis://queue"))
 
-MAINTAINER_ROLE_PAGE = os.environ.get(
-    "MAINTAINER_ROLE_PAGE", "https://odoo-community.org/page/maintainer-role"
-)
+MAINTAINER_ROLE_PAGE = os.environ.get("MAINTAINER_ROLE_PAGE")
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 

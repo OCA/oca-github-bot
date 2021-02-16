@@ -7,8 +7,8 @@
 #BROKER_URI=redis://queue
 
 # Maintainer role page URL, used in "adopt a module" message.
-# Set this empty to disable the message
-#MAINTAINER_ROLE_PAGE=https://odoo-community.org/page/maintainer-role
+# Set this to a URL that describes the maintainer role to enable the message.
+#MAINTAINER_ROLE_PAGE=
 
 #HTTP_HOST=0.0.0.0
 #HTTP_PORT=8080

@@ -84,8 +84,8 @@ def get_adopt_mention(pr_opener):
         return (
             "Hi @" + pr_opener + ",\n"
             "the module you are changing has no declared maintainer.\n"
-            "Would you like to adopt it? (See %s)\n"
-            "Just add your GitHub name to `maintainers` key of `__manifest__.py`"
+            "If you would like to adopt it, read the [maintainer role description](%s) \n"
+            "and add your GitHub name to `maintainers` key of `__manifest__.py`"
             " file!"
         ) % config.MAINTAINER_ROLE_PAGE
     return ""
