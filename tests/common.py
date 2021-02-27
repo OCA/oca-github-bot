@@ -2,6 +2,9 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import subprocess
+from contextlib import contextmanager
+
+from oca_github_bot import config
 
 
 class EventMock:
@@ -24,3 +27,16 @@ def commit_addon(git_clone, addon_name):
     addon_dir = git_clone / addon_name
     subprocess.check_call(["git", "add", addon_dir], cwd=git_clone)
     subprocess.check_call(["git", "commit", "-m", f"add {addon_name}"], cwd=git_clone)
+
+
+@contextmanager
+def set_config(**kwargs):
+    saved = {}
+    for key in kwargs:
+        saved[key] = getattr(config, key)
+        setattr(config, key, kwargs[key])
+    try:
+        yield
+    finally:
+        for key in saved:
+            setattr(config, key, kwargs[key])
