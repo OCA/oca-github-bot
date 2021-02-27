@@ -113,7 +113,7 @@ def test_pr_by_maintainer_no_mention(git_clone, mocker):
 
 
 @pytest.mark.vcr()
-def test_no_maintainer_no_mention(git_clone, mocker):
+def test_no_maintainer_adopt_module(git_clone, mocker):
     github_mock = mocker.patch("oca_github_bot.tasks.mention_maintainer.github")
     github_mock.temporary_clone.return_value.__enter__.return_value = str(git_clone)
 
@@ -127,4 +127,4 @@ def test_no_maintainer_no_mention(git_clone, mocker):
     mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
     mention_maintainer("org", "repo", "pr")
 
-    github_mock.gh_call.assert_not_called()
+    github_mock.gh_call.assert_called_once()
