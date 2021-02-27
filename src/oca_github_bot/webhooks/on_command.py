@@ -23,7 +23,7 @@ async def on_command(event, gh, *args, **kwargs):
             command.delay(org, repo, pr, username)
     except CommandError as e:
         # Add a comment on the current PR, if
-        # the command were misunderstood by the bot
+        # the command was misunderstood by the bot
         add_pr_comment.delay(
             org,
             repo,

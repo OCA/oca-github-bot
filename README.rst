@@ -184,7 +184,7 @@ Here is a recommended procedure to test locally:
 * Then you can debug the two processes in your favorite IDE:
 
   - the webhook server: ``python -m oca_github_bot``
-  - the task worker: ``python -m celery worker --app=oca_github_bot.queue.app --pool=solo --loglevel=INFO``
+  - the task worker: ``python -m celery --app=oca_github_bot.queue.app  worker --pool=solo --loglevel=INFO``
 
 * To expose the webhook server on your local machine to internet,
   you can use `ngrok <https://ngrok.com/>`_
