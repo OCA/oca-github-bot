@@ -19,6 +19,13 @@ are spread across cron jobs and ad-hoc scripts.
 Features
 ========
 
+On pull request open
+--------------------
+
+Mention declared maintainers that addons they maintain are being modified.
+
+Comment with a call for maintainers if there are no declared maintainer.
+
 On pull request close
 ---------------------
 

@@ -2,8 +2,6 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 from pathlib import Path
 
-from celery.task import task
-
 from .. import config, github
 from ..config import switchable
 from ..manifest import (
@@ -13,7 +11,7 @@ from ..manifest import (
     is_addon_dir,
 )
 from ..process import check_call
-from ..queue import getLogger
+from ..queue import getLogger, task
 
 _logger = getLogger(__name__)
 
@@ -57,7 +55,8 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             all_mentions_comment = get_mention(modified_addons_maintainers)
 
         if not all_mentions_comment:
-            return False
+            return
+
         if dry_run:
             _logger.info(f"DRY-RUN Comment {all_mentions_comment}")
         else:
@@ -80,15 +79,9 @@ def get_mention(maintainers):
 
 def get_adopt_mention(pr_opener):
     """Get a comment inviting to adopt the module."""
-    if config.MAINTAINER_ROLE_PAGE:
-        return (
-            "Hi @" + pr_opener + ",\n"
-            "the module you are changing has no declared maintainer.\n"
-            "If you would like to adopt it, read the [maintainer role description](%s) \n"
-            "and add your GitHub name to `maintainers` key of `__manifest__.py`"
-            " file!"
-        ) % config.MAINTAINER_ROLE_PAGE
-    return ""
+    if config.ADOPT_AN_ADDON_MENTION:
+        return config.ADOPT_AN_ADDON_MENTION.format(pr_opener=pr_opener)
+    return None
 
 
 def get_maintainers(addon_dirs):
