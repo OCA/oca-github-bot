@@ -6,7 +6,7 @@ import pytest
 
 from oca_github_bot.tasks.mention_maintainer import mention_maintainer
 
-from .common import make_addon
+from .common import make_addon, set_config
 
 
 @pytest.mark.vcr()
@@ -125,6 +125,8 @@ def test_no_maintainer_adopt_module(git_clone, mocker):
     )
     modified_addons_mock.return_value = [addon_dir], False
     mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
-    mention_maintainer("org", "repo", "pr")
+
+    with set_config(ADOPT_AN_ADDON_MENTION="Hi {pr_opener}, would you like to adopt?"):
+        mention_maintainer("org", "repo", "pr")
 
     github_mock.gh_call.assert_called_once()

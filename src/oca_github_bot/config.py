@@ -47,8 +47,6 @@ ODOO_PASSWORD = os.environ.get("ODOO_PASSWORD")
 
 BROKER_URI = os.environ.get("BROKER_URI", os.environ.get("REDIS_URI", "redis://queue"))
 
-MAINTAINER_ROLE_PAGE = os.environ.get("MAINTAINER_ROLE_PAGE")
-
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 
 DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
@@ -109,3 +107,5 @@ OCABOT_EXTRA_DOCUMENTATION = os.environ.get(
     "website/Contribution/CONTRIBUTING.rst), "
     'specially the "Version Numbers" section.',
 )
+
+ADOPT_AN_ADDON_MENTION = os.environ.get("ADOPT_AN_ADDON_MENTION")

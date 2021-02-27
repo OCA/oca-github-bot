@@ -73,3 +73,7 @@ SIMPLE_INDEX_ROOT=/app/run/simple-index
 # if a user has entered a wrong command
 #OCABOT_USAGE=
 #OCABOT_EXTRA_DOCUMENTATION=
+
+# Markdown text to be used to call for maintainers when a PR is made to an
+# addon that has no declared maintainers.
+#ADOPT_AN_ADDON_MENTION=
