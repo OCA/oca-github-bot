@@ -38,7 +38,7 @@ RUN set -x \
 # isolate from system python libraries
 RUN set -x \
   && python3 -m venv /app \
-  && /ocamt/bin/pip install --no-cache-dir -U pip wheel
+  && /app/bin/pip install --no-cache-dir -U pip wheel
 ENV PATH=/app/bin:$PATH
 
 # install oca_github_bot app
