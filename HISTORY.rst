@@ -1,3 +1,15 @@
+202100228
+~~~~~~~~
+
+**Features**
+
+- Add a call to maintainers when a PR is made to addons that have no declared
+  maintainers. (`#130 <https://github.com/oca/oca-github-bot/issues/130>`_)
+- Refresh all pinned dependencies in requirements.txt. (`#140 <https://github.com/oca/oca-github-bot/issues/140>`_)
+- Ignore check suites that have no check runs. This should cope repos that have
+  no ``.travis.yml`` but where Travis is enabled at organization level. (`#141 <https://github.com/oca/oca-github-bot/issues/141>`_)
+
+
 20210131
 ~~~~~~~~
 
