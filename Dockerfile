@@ -20,7 +20,11 @@ RUN set -x \
 # we install them in a separate virtualenv to avoid polluting our main environment
 RUN set -x \
   && python3 -m venv /ocamt \
-  && /ocamt/bin/pip install --no-cache-dir -U pip wheel
+  && /ocamt/bin/pip install --no-cache-dir -U wheel
+# TODO this particular version of maintainer tool does not install with
+# the latest pip version due to https://github.com/OCA/maintainer-tools/pull/483
+# so we don't upgrade pip. Be careful when changing this as it will regenerate
+# all html readmes.
 RUN set -x \
   && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@73c47b6835bee3ab0eeeff7c463de6b9c085abbc#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
