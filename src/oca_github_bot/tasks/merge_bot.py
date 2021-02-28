@@ -333,21 +333,19 @@ def merge_bot_start(
 def _get_commit_success(org, repo, pr, gh_commit):
     """ Test commit status, using both status and check suites APIs """
     success = None  # None means don't know / in progress
-    old_travis = False
     gh_status = github.gh_call(gh_commit.status)
     for status in gh_status.statuses:
         if status.context in GITHUB_STATUS_IGNORED:
             # ignore
+            _logger.info(
+                f"Ignoring status {status.context} for PR #{pr} of {org}/{repo}"
+            )
             continue
         if status.state == "success":
             _logger.info(
                 f"Successful status {status.context} for PR #{pr} of {org}/{repo}"
             )
             success = True
-            # <hack>
-            if status.context.startswith("continuous-integration/travis-ci"):
-                old_travis = True
-            # </hack>
         elif status.state == "pending":
             # in progress
             _logger.info(
@@ -364,28 +362,35 @@ def _get_commit_success(org, repo, pr, gh_commit):
     for check_suite in gh_check_suites:
         if check_suite.app.name in GITHUB_CHECK_SUITES_IGNORED:
             # ignore
+            _logger.info(
+                f"Ignoring check suite {check_suite.app.name} for "
+                f"PR #{pr} of {org}/{repo}"
+            )
             continue
         if check_suite.conclusion == "success":
             _logger.info(
-                f"Successful check_suite {check_suite.app.name} for "
+                f"Successful check suite {check_suite.app.name} for "
                 f"PR #{pr} of {org}/{repo}"
             )
             success = True
         elif not check_suite.conclusion:
             # not complete
-            # <hack>
-            if check_suite.app.name == "Travis CI" and old_travis:
-                # ignore incomplete new Travis when old travis status is ok
+            check_runs = list(github.gh_call(check_suite.check_runs))
+            if not check_runs:
+                _logger.info(
+                    f"Ignoring check suite {check_suite.app.name} "
+                    f"that has no check runs for "
+                    f"PR #{pr} of {org}/{repo}"
+                )
                 continue
-            # </hack>
             _logger.info(
-                f"Pending check_suite {check_suite.app.name} for "
+                f"Pending check suite {check_suite.app.name} for "
                 f"PR #{pr} of {org}/{repo}"
             )
             return None
         else:
             _logger.info(
-                f"Unsuccessful check_suite {check_suite.app.name} "
+                f"Unsuccessful check suite {check_suite.app.name} "
                 f"{check_suite.conclusion} for PR #{pr} of {org}/{repo}"
             )
             return False
