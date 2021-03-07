@@ -66,6 +66,48 @@ class MultiDistPublisher(DistPublisher):
             dist_publisher.publish(dist_dir)
 
 
+class TwineDistPublisher:
+    def __init__(
+        self,
+        index_url: str,
+        repository_url: str,
+        username: str,
+        password: str,
+        dry_run: bool,
+    ):
+        self._index_url = index_url
+        self._repository_url = repository_url
+        self._username = username
+        self._password = password
+        self._dry_run = dry_run
+
+    def publish(self, dist_dir: str) -> None:
+        for filename in os.listdir(dist_dir):
+            if exists_on_index(self._index_url, filename):
+                _logger.info(
+                    f"Not uploading {filename} that already exists "
+                    f"on {self._repository_url}."
+                )
+                continue
+            _logger.info(f"Uploading {filename} to {self._repository_url}")
+            cmd = [
+                "twine",
+                "upload",
+                "--repository-url",
+                self._repository_url,
+                "-u",
+                self._username,
+                os.path.join(dist_dir, filename),
+            ]
+            if self._dry_run:
+                _logger.info("DRY-RUN" + " ".join(cmd))
+            else:
+                _logger.info(" ".join(cmd))
+                check_call(
+                    cmd, cwd=".", env=dict(os.environ, TWINE_PASSWORD=self._password)
+                )
+
+
 class RsyncDistPublisher(DistPublisher):
     def __init__(self, rsync_target, dry_run):
         self._rsync_target = rsync_target

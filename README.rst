@@ -54,7 +54,7 @@ setup.py generator
 These actions are also run nightly on all repos.
 
 Also nightly, wheels are generated for all addons repositories and rsynced
-to a PEP 503 simple index.
+to a PEP 503 simple index or twine uploaded to compatible indexes.
 
 On Pull Request review
 ----------------------
@@ -82,8 +82,8 @@ can be used to ask the bot to do the following:
 * optionally bump the version number of the addons modified by the PR
 * when the version was bumped, udate the changelog with ``oca-towncrier``
 * run the main branch operations (see above) on it
-* when the version was bumped, generate a wheel and rsync it to the PEP 503
-  simple index
+* when the version was bumped, generate a wheel, rsync it to a PEP 503
+  simple index root, or upload it to one or more indexes with twine
 
 TODO (help wanted)
 ------------------

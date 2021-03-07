@@ -12,7 +12,7 @@ def call(cmd, cwd):
     return subprocess.call(cmd, cwd=cwd)
 
 
-def check_call(cmd, cwd, log_error=True, extra_cmd_args=False):
+def check_call(cmd, cwd, log_error=True, extra_cmd_args=False, env=None):
     if extra_cmd_args:
         cmd += extra_cmd_args
     cp = subprocess.run(
@@ -21,6 +21,7 @@ def check_call(cmd, cwd, log_error=True, extra_cmd_args=False):
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         cwd=cwd,
+        env=env,
     )
     if cp.returncode and log_error:
         _logger.error(

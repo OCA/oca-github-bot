@@ -1,11 +1,12 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import ast
 import logging
 import os
 from functools import wraps
 
-from .pypi import MultiDistPublisher, RsyncDistPublisher
+from .pypi import MultiDistPublisher, RsyncDistPublisher, TwineDistPublisher
 
 _logger = logging.getLogger("oca_gihub_bot.tasks")
 
@@ -98,6 +99,13 @@ dist_publisher = MultiDistPublisher()
 SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")
 if SIMPLE_INDEX_ROOT:
     dist_publisher.add(RsyncDistPublisher(SIMPLE_INDEX_ROOT, DRY_RUN))
+if os.environ.get("OCABOT_TWINE_REPOSITORIES"):
+    for index_url, repository_url, username, password in ast.literal_eval(
+        os.environ["OCABOT_TWINE_REPOSITORIES"]
+    ):
+        dist_publisher.add(
+            TwineDistPublisher(index_url, repository_url, username, password, DRY_RUN)
+        )
 
 OCABOT_USAGE = os.environ.get(
     "OCABOT_USAGE",

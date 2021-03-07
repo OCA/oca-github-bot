@@ -55,9 +55,18 @@ ODOO_PASSWORD=
 # Coma separated list of github Check suites to ignore
 #GITHUB_CHECK_SUITES_IGNORED=Codecov
 
-# Root of the PEP 503 simple index where wheels are published
-# (publishing disabled if empty)
+# Root of the PEP 503 simple index where wheels are published with rsync
+# (publishing disabled if empty).
 SIMPLE_INDEX_ROOT=/app/run/simple-index
+# Repositories where wheels are published using twine (publishing disabled if empty).
+# This must be a list of tuples with the following items
+# - PEP 503 index based url, to check if the file already exists
+# - repo url, for twine --repository-url
+# - username for twine --username option
+# - password for twine --password option
+OCABOT_TWINE_REPOSITORIES="[
+    ('https://pypi.org/simple', 'https://upload.pypi.org/legacy/', 'pypiuser', 'pypipassword'),
+]"
 
 # Space separated list of extra arguments, for the calls of the
 # following command
