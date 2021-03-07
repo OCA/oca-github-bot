@@ -6,6 +6,8 @@ import os
 import sys
 import tempfile
 
+from oca_github_bot.pypi import RsyncDistPublisher
+
 from .manifest import addon_dirs_in, get_manifest, get_odoo_series_from_version
 from .process import check_call
 
@@ -83,34 +85,4 @@ def build_and_publish_metapackage_wheel(
 
 
 def _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run=False):
-    pkgname = _find_pkgname(dist_dir)
-    # --ignore-existing: never overwrite an existing package
-    # os.path.join: make sure directory names end with /
-    cmd = [
-        "rsync",
-        "-rv",
-        "--ignore-existing",
-        "--no-perms",
-        "--chmod=ugo=rwX",
-        os.path.join(dist_dir, ""),
-        os.path.join(simple_index_root, pkgname, ""),
-    ]
-    if dry_run:
-        _logger.info("DRY-RUN" + " ".join(cmd))
-    else:
-        _logger.info(" ".join(cmd))
-        check_call(cmd, cwd=".")
-
-
-def _find_pkgname(dist_dir):
-    """ Find the package name by looking at .whl files """
-    pkgname = None
-    for f in os.listdir(dist_dir):
-        if f.endswith(".whl"):
-            new_pkgname = f.split("-")[0].replace("_", "-")
-            if pkgname and new_pkgname != pkgname:
-                raise RuntimeError(f"Multiple packages names in {dist_dir}")
-            pkgname = new_pkgname
-    if not pkgname:
-        raise RuntimeError(f"Package name not found in {dist_dir}")
-    return pkgname
+    RsyncDistPublisher(simple_index_root, dry_run).publish(dist_dir)

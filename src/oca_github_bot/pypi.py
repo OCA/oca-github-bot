@@ -1,4 +1,7 @@
 # Copyright (c) ACSONE SA/NV 2021
+"""Utilities to work with PEP 503 package indexes."""
+import logging
+import os
 from io import StringIO
 from pathlib import PosixPath
 from typing import Iterator, Optional, Tuple
@@ -6,6 +9,10 @@ from urllib.parse import urljoin, urlparse
 
 import requests
 from lxml import etree
+
+from .process import check_call
+
+_logger = logging.getLogger(__name__)
 
 
 def files_on_index(
@@ -39,3 +46,59 @@ def exists_on_index(index_url: str, filename: str) -> bool:
         if filename_on_index == filename:
             return True
     return False
+
+
+class DistPublisher:
+    def publish(self, dist_dir: str) -> None:
+        raise NotImplementedError()
+
+
+class MultiDistPublisher(DistPublisher):
+    def __init__(self):
+        self._dist_publishers = []
+
+    def add(self, dist_publisher: DistPublisher) -> None:
+        self._dist_publishers.append(dist_publisher)
+
+    def publish(self, dist_dir: str) -> None:
+        for dist_publisher in self._dist_publishers:
+            dist_publisher.publish(dist_dir)
+
+
+class RsyncDistPublisher(DistPublisher):
+    def __init__(self, rsync_target, dry_run):
+        self._rsync_target = rsync_target
+        self._dry_run = dry_run
+
+    def publish(self, dist_dir: str) -> None:
+        pkgname = _find_pkgname_in_dist_dir(dist_dir)
+        # --ignore-existing: never overwrite an existing package
+        # os.path.join: make sure directory names end with /
+        cmd = [
+            "rsync",
+            "-rv",
+            "--ignore-existing",
+            "--no-perms",
+            "--chmod=ugo=rwX",
+            os.path.join(dist_dir, ""),
+            os.path.join(self._rsync_target, pkgname, ""),
+        ]
+        if self._dry_run:
+            _logger.info("DRY-RUN" + " ".join(cmd))
+        else:
+            _logger.info(" ".join(cmd))
+            check_call(cmd, cwd=".")
+
+
+def _find_pkgname_in_dist_dir(dist_dir: str) -> str:
+    """ Find the package name by looking at .whl files """
+    pkgname = None
+    for f in os.listdir(dist_dir):
+        if f.endswith(".whl"):
+            new_pkgname = f.split("-")[0].replace("_", "-")
+            if pkgname and new_pkgname != pkgname:
+                raise RuntimeError(f"Multiple packages names in {dist_dir}")
+            pkgname = new_pkgname
+    if not pkgname:
+        raise RuntimeError(f"Package name not found in {dist_dir}")
+    return pkgname
