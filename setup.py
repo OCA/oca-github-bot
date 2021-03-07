@@ -40,6 +40,7 @@ setup(
         # setuptools-odoo so setup.py bdist_wheel does not need
         # to re-download it for each and every build
         "setuptools-odoo",
+        "lxml",
     ],
     extras_require={
         "test": [
