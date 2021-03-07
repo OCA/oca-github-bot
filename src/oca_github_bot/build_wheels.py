@@ -6,8 +6,6 @@ import os
 import sys
 import tempfile
 
-from oca_github_bot.pypi import RsyncDistPublisher
-
 from .manifest import addon_dirs_in, get_manifest, get_odoo_series_from_version
 from .process import check_call
 
@@ -59,20 +57,18 @@ def build_and_check_wheel(addon_dir):
         _build_and_check_wheel(addon_dir, dist_dir)
 
 
-def build_and_publish_wheel(addon_dir, simple_index_root, dry_run=False):
+def build_and_publish_wheel(addon_dir, dist_publisher):
     with tempfile.TemporaryDirectory() as dist_dir:
         if _build_and_check_wheel(addon_dir, dist_dir):
-            _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run)
+            dist_publisher.publish(dist_dir)
 
 
-def build_and_publish_wheels(addons_dir, simple_index_root, dry_run=False):
+def build_and_publish_wheels(addons_dir, dist_publisher):
     for addon_dir in addon_dirs_in(addons_dir, installable_only=True):
-        build_and_publish_wheel(addon_dir, simple_index_root, dry_run)
+        build_and_publish_wheel(addon_dir, dist_publisher)
 
 
-def build_and_publish_metapackage_wheel(
-    addons_dir, simple_index_root, series, dry_run=False
-):
+def build_and_publish_metapackage_wheel(addons_dir, dist_publisher, series):
     setup_dir = os.path.join(addons_dir, "setup", "_metapackage")
     setup_file = os.path.join(setup_dir, "setup.py")
     if not os.path.isfile(setup_file):
@@ -81,8 +77,4 @@ def build_and_publish_metapackage_wheel(
         _bdist_wheel(
             setup_dir, dist_dir, python_tag="py2" if series < (11, 0) else "py3"
         )
-        _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run)
-
-
-def _publish_dist_dir_to_simple_index(dist_dir, simple_index_root, dry_run=False):
-    RsyncDistPublisher(simple_index_root, dry_run).publish(dist_dir)
+        dist_publisher.publish(dist_dir)
