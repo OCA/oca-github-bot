@@ -1,4 +1,5 @@
 # Copyright (c) ACSONE SA/NV 2021
+# Distributed under the MIT License (http://opensource.org/licenses/MIT).
 """Utilities to work with PEP 503 package indexes."""
 import logging
 import os

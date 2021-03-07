@@ -1,4 +1,5 @@
 # Copyright (c) ACSONE SA/NV 2021
+# Distributed under the MIT License (http://opensource.org/licenses/MIT).
 import pytest
 
 from oca_github_bot.pypi import exists_on_index
