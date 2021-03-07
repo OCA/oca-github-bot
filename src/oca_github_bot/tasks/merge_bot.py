@@ -4,15 +4,13 @@
 import random
 from enum import Enum
 
-from oca_github_bot.pypi import RsyncDistPublisher
-
 from .. import github
 from ..build_wheels import build_and_check_wheel, build_and_publish_wheel
 from ..config import (
     GITHUB_CHECK_SUITES_IGNORED,
     GITHUB_STATUS_IGNORED,
     MERGE_BOT_INTRO_MESSAGES,
-    SIMPLE_INDEX_ROOT,
+    dist_publisher,
     switchable,
 )
 from ..manifest import (
@@ -179,8 +177,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
         )
     # build and publish wheel
-    if modified_installable_addon_dirs and SIMPLE_INDEX_ROOT:
-        dist_publisher = RsyncDistPublisher(SIMPLE_INDEX_ROOT, dry_run)
+    if modified_installable_addon_dirs:
         for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, dist_publisher)
     # TODO wlc unlock modified_addons

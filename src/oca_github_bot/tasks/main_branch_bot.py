@@ -7,13 +7,12 @@ from ..config import (
     GEN_ADDON_ICON_EXTRA_ARGS,
     GEN_ADDON_README_EXTRA_ARGS,
     GEN_ADDONS_TABLE_EXTRA_ARGS,
-    SIMPLE_INDEX_ROOT,
+    dist_publisher,
     switchable,
 )
 from ..github import git_push_if_needed, temporary_clone
 from ..manifest import get_odoo_series_from_branch
 from ..process import check_call
-from ..pypi import RsyncDistPublisher
 from ..queue import getLogger, task
 from ..version_branch import is_main_branch_bot_branch
 
@@ -107,8 +106,7 @@ def main_branch_bot(org, repo, branch, build_wheels, dry_run=False):
         else:
             _logger.info(f"git push in {org}/{repo}@{branch}")
             git_push_if_needed("origin", branch, cwd=clone_dir)
-        if build_wheels and SIMPLE_INDEX_ROOT:
-            dist_publisher = RsyncDistPublisher(SIMPLE_INDEX_ROOT, dry_run)
+        if build_wheels:
             build_and_publish_wheels(clone_dir, dist_publisher)
             build_and_publish_metapackage_wheel(
                 clone_dir,

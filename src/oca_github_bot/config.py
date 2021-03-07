@@ -5,6 +5,8 @@ import logging
 import os
 from functools import wraps
 
+from .pypi import MultiDistPublisher, RsyncDistPublisher
+
 _logger = logging.getLogger("oca_gihub_bot.tasks")
 
 
@@ -92,7 +94,10 @@ MERGE_BOT_INTRO_MESSAGES = [
 APPROVALS_REQUIRED = int(os.environ.get("APPROVALS_REQUIRED", "2"))
 MIN_PR_AGE = int(os.environ.get("MIN_PR_AGE", "5"))
 
+dist_publisher = MultiDistPublisher()
 SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")
+if SIMPLE_INDEX_ROOT:
+    dist_publisher.add(RsyncDistPublisher(SIMPLE_INDEX_ROOT, DRY_RUN))
 
 OCABOT_USAGE = os.environ.get(
     "OCABOT_USAGE",
