@@ -37,6 +37,9 @@ setup(
         "setuptools",
         "twine",
         "wheel",
+        # setuptools-odoo so setup.py bdist_wheel does not need
+        # to re-download it for each and every build
+        "setuptools-odoo",
     ],
     extras_require={
         "test": [
@@ -45,7 +48,6 @@ setup(
             "pytest-cov",
             "pytest-mock",
             "pytest-vcr",
-            "setuptools-odoo",  # for setuptools-odoo-make-default
         ],
     },
     license="MIT",
