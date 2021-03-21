@@ -1,4 +1,12 @@
-202100228
+20210321
+~~~~~~~~
+
+**Feature**
+
+- Upload wheels to a package index with twine.
+- Pre-install setuptools-odoo in the docker image, so wheel builds run faster.
+
+20210228
 ~~~~~~~~
 
 **Features**
