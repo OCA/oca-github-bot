@@ -50,7 +50,7 @@ def exists_on_index(index_url: str, filename: str) -> bool:
 
 
 class DistPublisher:
-    def publish(self, dist_dir: str) -> None:
+    def publish(self, dist_dir: str, dry_run: bool) -> None:
         raise NotImplementedError()
 
 
@@ -61,9 +61,9 @@ class MultiDistPublisher(DistPublisher):
     def add(self, dist_publisher: DistPublisher) -> None:
         self._dist_publishers.append(dist_publisher)
 
-    def publish(self, dist_dir: str) -> None:
+    def publish(self, dist_dir: str, dry_run: bool) -> None:
         for dist_publisher in self._dist_publishers:
-            dist_publisher.publish(dist_dir)
+            dist_publisher.publish(dist_dir, dry_run)
 
 
 class TwineDistPublisher:
@@ -73,15 +73,13 @@ class TwineDistPublisher:
         repository_url: str,
         username: str,
         password: str,
-        dry_run: bool,
     ):
         self._index_url = index_url
         self._repository_url = repository_url
         self._username = username
         self._password = password
-        self._dry_run = dry_run
 
-    def publish(self, dist_dir: str) -> None:
+    def publish(self, dist_dir: str, dry_run: bool) -> None:
         for filename in os.listdir(dist_dir):
             if exists_on_index(self._index_url, filename):
                 _logger.info(
@@ -99,7 +97,7 @@ class TwineDistPublisher:
                 self._username,
                 os.path.join(dist_dir, filename),
             ]
-            if self._dry_run:
+            if dry_run:
                 _logger.info("DRY-RUN" + " ".join(cmd))
             else:
                 _logger.info(" ".join(cmd))
@@ -109,11 +107,10 @@ class TwineDistPublisher:
 
 
 class RsyncDistPublisher(DistPublisher):
-    def __init__(self, rsync_target, dry_run):
+    def __init__(self, rsync_target):
         self._rsync_target = rsync_target
-        self._dry_run = dry_run
 
-    def publish(self, dist_dir: str) -> None:
+    def publish(self, dist_dir: str, dry_run: bool) -> None:
         pkgname = _find_pkgname_in_dist_dir(dist_dir)
         # --ignore-existing: never overwrite an existing package
         # os.path.join: make sure directory names end with /
@@ -126,7 +123,7 @@ class RsyncDistPublisher(DistPublisher):
             os.path.join(dist_dir, ""),
             os.path.join(self._rsync_target, pkgname, ""),
         ]
-        if self._dry_run:
+        if dry_run:
             _logger.info("DRY-RUN" + " ".join(cmd))
         else:
             _logger.info(" ".join(cmd))

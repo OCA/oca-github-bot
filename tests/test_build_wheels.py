@@ -39,13 +39,13 @@ def test_build_and_publish_wheels(tmp_path):
     _init_git_repo(addons_dir)
     simple_index_root = tmp_path / "simple_index"
     simple_index_root.mkdir()
-    dist_publisher = RsyncDistPublisher(simple_index_root, dry_run=False)
+    dist_publisher = RsyncDistPublisher(simple_index_root)
     # build with no addons
-    build_and_publish_wheels(addons_dir, dist_publisher)
+    build_and_publish_wheels(addons_dir, dist_publisher, dry_run=False)
     assert not os.listdir(simple_index_root)
     # build with one addon
     _make_addon(addons_dir, "addon1", "12.0")
-    build_and_publish_wheels(str(addons_dir), dist_publisher)
+    build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = os.listdir(simple_index_root)
     assert len(wheel_dirs) == 1
     assert wheel_dirs[0] == "odoo12-addon-addon1"
@@ -56,7 +56,7 @@ def test_build_and_publish_wheels(tmp_path):
     assert "-py3-" in wheels[0]
     # build with two addons
     _make_addon(addons_dir, "addon2", "10.0")
-    build_and_publish_wheels(str(addons_dir), dist_publisher)
+    build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = sorted(os.listdir(simple_index_root))
     assert len(wheel_dirs) == 2
     assert wheel_dirs[0] == "odoo10-addon-addon2"
@@ -67,7 +67,7 @@ def test_build_and_publish_wheels(tmp_path):
     assert "-py2-" in wheels[0]
     # test tag for Odoo 11
     _make_addon(addons_dir, "addon3", "11.0")
-    build_and_publish_wheels(str(addons_dir), dist_publisher)
+    build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = sorted(os.listdir(simple_index_root))
     assert len(wheel_dirs) == 3
     assert wheel_dirs[1] == "odoo11-addon-addon3"
@@ -82,10 +82,12 @@ def test_build_and_publish_metapackage(tmp_path):
     _init_git_repo(addons_dir)
     simple_index_root = tmp_path / "simple_index"
     simple_index_root.mkdir()
-    dist_publisher = RsyncDistPublisher(simple_index_root, dry_run=False)
+    dist_publisher = RsyncDistPublisher(simple_index_root)
     # build with one addon
     _make_addon(addons_dir, "addon1", "12.0", metapackage="test")
-    build_and_publish_metapackage_wheel(str(addons_dir), dist_publisher, (12, 0))
+    build_and_publish_metapackage_wheel(
+        str(addons_dir), dist_publisher, (12, 0), dry_run=False
+    )
     wheels = os.listdir(simple_index_root / "odoo12-addons-test")
     assert len(wheels) == 1
     assert wheels[0].startswith("odoo12_addons_test")

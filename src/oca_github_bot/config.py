@@ -98,13 +98,13 @@ MIN_PR_AGE = int(os.environ.get("MIN_PR_AGE", "5"))
 dist_publisher = MultiDistPublisher()
 SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")
 if SIMPLE_INDEX_ROOT:
-    dist_publisher.add(RsyncDistPublisher(SIMPLE_INDEX_ROOT, DRY_RUN))
+    dist_publisher.add(RsyncDistPublisher(SIMPLE_INDEX_ROOT))
 if os.environ.get("OCABOT_TWINE_REPOSITORIES"):
     for index_url, repository_url, username, password in ast.literal_eval(
         os.environ["OCABOT_TWINE_REPOSITORIES"]
     ):
         dist_publisher.add(
-            TwineDistPublisher(index_url, repository_url, username, password, DRY_RUN)
+            TwineDistPublisher(index_url, repository_url, username, password)
         )
 
 OCABOT_USAGE = os.environ.get(

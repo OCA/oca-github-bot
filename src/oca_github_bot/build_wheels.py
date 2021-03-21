@@ -57,18 +57,18 @@ def build_and_check_wheel(addon_dir):
         _build_and_check_wheel(addon_dir, dist_dir)
 
 
-def build_and_publish_wheel(addon_dir, dist_publisher):
+def build_and_publish_wheel(addon_dir, dist_publisher, dry_run):
     with tempfile.TemporaryDirectory() as dist_dir:
         if _build_and_check_wheel(addon_dir, dist_dir):
-            dist_publisher.publish(dist_dir)
+            dist_publisher.publish(dist_dir, dry_run)
 
 
-def build_and_publish_wheels(addons_dir, dist_publisher):
+def build_and_publish_wheels(addons_dir, dist_publisher, dry_run):
     for addon_dir in addon_dirs_in(addons_dir, installable_only=True):
-        build_and_publish_wheel(addon_dir, dist_publisher)
+        build_and_publish_wheel(addon_dir, dist_publisher, dry_run)
 
 
-def build_and_publish_metapackage_wheel(addons_dir, dist_publisher, series):
+def build_and_publish_metapackage_wheel(addons_dir, dist_publisher, series, dry_run):
     setup_dir = os.path.join(addons_dir, "setup", "_metapackage")
     setup_file = os.path.join(setup_dir, "setup.py")
     if not os.path.isfile(setup_file):
@@ -77,4 +77,4 @@ def build_and_publish_metapackage_wheel(addons_dir, dist_publisher, series):
         _bdist_wheel(
             setup_dir, dist_dir, python_tag="py2" if series < (11, 0) else "py3"
         )
-        dist_publisher.publish(dist_dir)
+        dist_publisher.publish(dist_dir, dry_run)

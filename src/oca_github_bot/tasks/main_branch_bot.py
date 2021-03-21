@@ -107,11 +107,12 @@ def main_branch_bot(org, repo, branch, build_wheels, dry_run=False):
             _logger.info(f"git push in {org}/{repo}@{branch}")
             git_push_if_needed("origin", branch, cwd=clone_dir)
         if build_wheels:
-            build_and_publish_wheels(clone_dir, dist_publisher)
+            build_and_publish_wheels(clone_dir, dist_publisher, dry_run)
             build_and_publish_metapackage_wheel(
                 clone_dir,
                 dist_publisher,
                 get_odoo_series_from_branch(branch),
+                dry_run,
             )
 
 
