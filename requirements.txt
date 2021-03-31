@@ -26,7 +26,7 @@ jeepney==0.6.0
 jwcrypto==0.8
 keyring==22.2.0
 kombu==5.0.2
-lxml==4.6.2
+lxml==4.6.3
 multidict==5.1.0
 OdooRPC==0.7.0
 packaging==20.9
