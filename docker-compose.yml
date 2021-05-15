@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./data/queue:/data
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --auto-aof-rewrite-min-size 64mb --auto-aof-rewrite-percentage 10
   bot:
     build: .
     links:
