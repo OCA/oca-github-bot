@@ -50,6 +50,8 @@ async def on_check_run_merge_bot(event, gh, *args, **kwargs):
         # we should get the corresponding check suite call later
         # so we do nothing with this check_run call
         return
+    if not output:
+        return
     branch_name = search_merge_bot_branch(output)
     if not branch_name:
         # this check_run is not for a merge bot branch
