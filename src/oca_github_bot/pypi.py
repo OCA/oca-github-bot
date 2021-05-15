@@ -5,6 +5,7 @@ import logging
 import os
 from io import StringIO
 from pathlib import PosixPath
+from subprocess import CalledProcessError
 from typing import Iterator, Optional, Tuple
 from urllib.parse import urljoin, urlparse
 
@@ -101,9 +102,21 @@ class TwineDistPublisher:
                 _logger.info("DRY-RUN" + " ".join(cmd))
             else:
                 _logger.info(" ".join(cmd))
-                check_call(
-                    cmd, cwd=".", env=dict(os.environ, TWINE_PASSWORD=self._password)
-                )
+                try:
+                    check_call(
+                        cmd,
+                        cwd=".",
+                        env=dict(os.environ, TWINE_PASSWORD=self._password),
+                    )
+                except CalledProcessError as e:
+                    if "File already exists" in e.output:
+                        # in case exist_on_index() received an outdated index page
+                        _logger.warning(
+                            f"Could not upload {filename} that already exists "
+                            f"on {self._repository_url}."
+                        )
+                    else:
+                        raise
 
 
 class RsyncDistPublisher(DistPublisher):
@@ -131,7 +144,7 @@ class RsyncDistPublisher(DistPublisher):
 
 
 def _find_pkgname_in_dist_dir(dist_dir: str) -> str:
-    """ Find the package name by looking at .whl files """
+    """Find the package name by looking at .whl files"""
     pkgname = None
     for f in os.listdir(dist_dir):
         if f.endswith(".whl"):
