@@ -179,7 +179,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     # build and publish wheel
     if modified_installable_addon_dirs:
         for addon_dir in modified_installable_addon_dirs:
-            build_and_publish_wheel(addon_dir, dist_publisher)
+            build_and_publish_wheel(addon_dir, dist_publisher, dry_run)
     # TODO wlc unlock modified_addons
     _git_delete_branch("origin", merge_bot_branch, cwd=cwd)
     with github.login() as gh:
