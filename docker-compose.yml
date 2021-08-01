@@ -60,6 +60,6 @@ services:
     env_file:
       - ./environment
     restart: unless-stopped
-    command: flower --app=oca_github_bot.queue.app
+    command: celery --app=oca_github_bot.queue.app flower
     depends_on:
       - queue
