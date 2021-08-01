@@ -48,7 +48,7 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             modified_addons_maintainers.update(addon_maintainers)
 
         pr_opener = gh_pr.user.login
-        if not modified_addons_maintainers:
+        if modified_addon_dirs and not modified_addons_maintainers:
             all_mentions_comment = get_adopt_mention(pr_opener)
         else:
             modified_addons_maintainers.discard(pr_opener)
