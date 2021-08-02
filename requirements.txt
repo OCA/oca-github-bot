@@ -17,10 +17,10 @@ click-repl==0.1.6
 colorama==0.4.4
 cryptography==3.4.6
 docutils==0.16
-flower==0.9.5
+flower==1.0.0
 gidgethub==5.0.0
 github3.py==2.0.0
-humanize==3.2.0
+humanize==3.10.0
 idna==2.10
 jeepney==0.6.0
 jwcrypto==0.8
