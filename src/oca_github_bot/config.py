@@ -109,7 +109,9 @@ if os.environ.get("OCABOT_TWINE_REPOSITORIES"):
 
 OCABOT_USAGE = os.environ.get(
     "OCABOT_USAGE",
-    "**Ocabot commands**\n" "* ``ocabot merge major|minor|patch|nobump``",
+    "**Ocabot commands**\n"
+    "* ``ocabot merge major|minor|patch|nobump``\n"
+    "* ``ocabot rebase``",
 )
 
 OCABOT_EXTRA_DOCUMENTATION = os.environ.get(

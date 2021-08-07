@@ -5,7 +5,7 @@ import ast
 import os
 import re
 
-from .github import git_get_current_branch
+from .github import git_get_current_branch, github_user_can_push
 from .process import check_call, check_output
 
 MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py", "__terp__.py")
@@ -210,3 +210,30 @@ def get_odoo_series_from_branch(branch):
     if not series:
         raise OdooSeriesNotDetected()
     return tuple(int(s) for s in series.split("."))
+
+
+def user_can_push(gh, org, repo, username, addons_dir, target_branch):
+    """
+    Check if the user is maintainer of all modified addons.
+
+    Assuming, addons_dir is a git clone of an addons repository,
+    return true if username is declared in the maintainers key
+    on the target branch, for all addons modified in the current branch
+    compared to the target_branch.
+    """
+    gh_repo = gh.repository(org, repo)
+    if github_user_can_push(gh_repo, username):
+        return True
+    modified_addon_dirs, other_changes = git_modified_addon_dirs(
+        addons_dir, target_branch
+    )
+    if other_changes or not modified_addon_dirs:
+        return False
+    # if we are modifying addons only, then the user must be maintainer of
+    # all of them on the target branch
+    current_branch = git_get_current_branch(cwd=addons_dir)
+    try:
+        check_call(["git", "checkout", target_branch], cwd=addons_dir)
+        return is_maintainer(username, modified_addon_dirs)
+    finally:
+        check_call(["git", "checkout", current_branch], cwd=addons_dir)

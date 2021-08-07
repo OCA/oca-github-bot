@@ -5,14 +5,14 @@ import subprocess
 
 import pytest
 
-from oca_github_bot.tasks.merge_bot import _user_can_merge
+from oca_github_bot.manifest import user_can_push
 
 from .common import commit_addon, make_addon
 
 
 @pytest.mark.vcr()
 def test_user_can_merge_team_member(git_clone, gh):
-    assert _user_can_merge(gh, "OCA", "mis-builder", "sbidoul", git_clone, "master")
+    assert user_can_push(gh, "OCA", "mis-builder", "sbidoul", git_clone, "master")
 
 
 @pytest.mark.vcr()
@@ -22,9 +22,7 @@ def test_user_can_merge_maintainer(git_clone, gh):
     subprocess.check_call(["git", "checkout", "-b", "thebranch"], cwd=git_clone)
     (git_clone / "addon1" / "data").write_text("")
     commit_addon(git_clone, "addon1")
-    assert _user_can_merge(
-        gh, "OCA", "mis-builder", "themaintainer", git_clone, "master"
-    )
+    assert user_can_push(gh, "OCA", "mis-builder", "themaintainer", git_clone, "master")
 
 
 @pytest.mark.vcr()
@@ -34,7 +32,7 @@ def test_user_can_merge_not_maintainer(git_clone, gh):
     subprocess.check_call(["git", "checkout", "-b", "thebranch"], cwd=git_clone)
     (git_clone / "addon1" / "data").write_text("")
     commit_addon(git_clone, "addon1")
-    assert not _user_can_merge(
+    assert not user_can_push(
         gh, "OCA", "mis-builder", "themaintainer", git_clone, "master"
     )
 
@@ -49,6 +47,6 @@ def test_user_can_merge_not_maintainer_hacker(git_clone, gh):
         "{'name': 'addon1', 'maintainers': ['themaintainer']}"
     )
     commit_addon(git_clone, "addon1")
-    assert not _user_can_merge(
+    assert not user_can_push(
         gh, "OCA", "mis-builder", "themaintainer", git_clone, "master"
     )

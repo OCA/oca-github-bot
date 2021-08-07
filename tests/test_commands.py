@@ -31,6 +31,7 @@ def test_parse_command_multi():
                 /ocabot merge nobump.
                 /ocabot merge patch. blah
                 /ocabot merge minor # ignored
+                /ocabot rebase, please
                 ...
             """
         )
@@ -45,6 +46,7 @@ def test_parse_command_multi():
         ("merge", ["nobump"]),
         ("merge", ["patch"]),
         ("merge", ["minor"]),
+        ("rebase", []),
     ]
 
 
@@ -82,6 +84,14 @@ def test_parse_command_merge():
         list(parse_commands("/ocabot merge nobump brol"))
     with pytest.raises(OptionsError):
         list(parse_commands("/ocabot merge brol"))
+
+
+def test_parse_command_rebase():
+    cmds = list(parse_commands("/ocabot rebase"))
+    assert len(cmds) == 1
+    assert cmds[0].name == "rebase"
+    with pytest.raises(InvalidOptionsError):
+        list(parse_commands("/ocabot rebase brol"))
 
 
 def test_parse_command_comment():
