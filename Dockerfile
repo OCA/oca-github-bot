@@ -20,7 +20,7 @@ RUN set -x \
 # we install them in a separate virtualenv to avoid polluting our main environment.
 
 # Install a specific version of readme and icon generator, to ensure stability
-# as any tiny change in generated output many create many commits on all addons.
+# as any tiny change in generated output may create many commits on all addons.
 # TODO: this particular version of maintainer tool does not install with
 # the latest pip version due to https://github.com/OCA/maintainer-tools/pull/483
 # so we don't upgrade pip. Be careful when changing this as it will regenerate
