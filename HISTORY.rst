@@ -1,3 +1,18 @@
+20210813
+~~~~~~~~
+
+**Feature**
+
+- Dockerfile: new version of oca-gen-addons-table
+- Improved dry-run mode for the wheel publisher
+- Better handling of non-fresh index pages in wheel publisher
+- Do not call for maintainers when the PR does not modifies any addon
+- Add /ocabot rebase command
+
+**Other**
+
+- Use Celery 5
+
 20210321
 ~~~~~~~~
 
