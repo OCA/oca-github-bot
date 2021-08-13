@@ -109,7 +109,10 @@ class TwineDistPublisher:
                         env=dict(os.environ, TWINE_PASSWORD=self._password),
                     )
                 except CalledProcessError as e:
-                    if "File already exists" in e.output:
+                    if (
+                        "File already exists" in e.output
+                        or "This filename has already been used" in e.output
+                    ):
                         # in case exist_on_index() received an outdated index page
                         _logger.warning(
                             f"Could not upload {filename} that already exists "
