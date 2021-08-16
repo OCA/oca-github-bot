@@ -96,7 +96,7 @@ class TwineDistPublisher:
                 self._repository_url,
                 "-u",
                 self._username,
-                os.path.join(dist_dir, filename),
+                filename,
             ]
             if dry_run:
                 _logger.info("DRY-RUN" + " ".join(cmd))
@@ -105,7 +105,7 @@ class TwineDistPublisher:
                 try:
                     check_call(
                         cmd,
-                        cwd=".",
+                        cwd=dist_dir,
                         env=dict(os.environ, TWINE_PASSWORD=self._password),
                     )
                 except CalledProcessError as e:
