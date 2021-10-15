@@ -74,6 +74,17 @@ def test_build_and_publish_wheels(tmp_path):
     wheels = os.listdir(simple_index_root / "odoo11-addon-addon3")
     assert len(wheels) == 1
     assert "-py2.py3-" in wheels[0]
+    # test Odoo 15+ default addon naming scheme
+    _make_addon(addons_dir, "addon4", "15.0")
+    build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
+    wheel_dirs = sorted(os.listdir(simple_index_root))
+    assert len(wheel_dirs) == 4
+    assert wheel_dirs[0] == "odoo-addon-addon4"
+    wheels = os.listdir(simple_index_root / "odoo-addon-addon4")
+    assert len(wheels) == 1
+    assert wheels[0].startswith("odoo_addon_addon4")
+    assert wheels[0].endswith(".whl")
+    assert "-py3-" in wheels[0]
 
 
 def test_build_and_publish_metapackage(tmp_path):
