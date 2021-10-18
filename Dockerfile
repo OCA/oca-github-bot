@@ -42,7 +42,7 @@ RUN set -x \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/
 RUN set -x \
-  && /ocamt/bin/pip install --no-cache-dir 'setuptools-odoo>=3.0.2' \
+  && /ocamt/bin/pip install --no-cache-dir 'setuptools-odoo>=3.0.3' \
   && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
 
 # isolate from system python libraries

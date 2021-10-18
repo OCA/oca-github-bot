@@ -39,7 +39,7 @@ setup(
         "wheel",
         # setuptools-odoo so setup.py bdist_wheel does not need
         # to re-download it for each and every build
-        "setuptools-odoo>=3.0.2",
+        "setuptools-odoo>=3.0.3",
         "lxml",
     ],
     extras_require={

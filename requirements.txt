@@ -46,7 +46,7 @@ requests==2.25.1
 requests-toolbelt==0.9.1
 rfc3986==1.4.0
 SecretStorage==3.3.1
-setuptools-odoo==3.0.2
+setuptools-odoo==3.0.3
 setuptools-scm==6.0.1
 six==1.15.0
 tornado==6.1
