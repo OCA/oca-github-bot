@@ -53,7 +53,8 @@ ENV PATH=/app/bin:$PATH
 
 # install oca_github_bot app
 COPY . /app/src/oca-github-bot
-RUN pip install --no-cache-dir -r /app/src/oca-github-bot/requirements.txt -e /app/src/oca-github-bot
+RUN pip install --no-cache-dir -r /app/src/oca-github-bot/requirements.txt
+RUN pip install --no-cache-dir -e /app/src/oca-github-bot
 
 # make work and home directory
 RUN mkdir /app/run && chmod ogu+rwx /app/run
