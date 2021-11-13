@@ -3,7 +3,7 @@
 
 import re
 
-from .tasks import merge_bot, rebase_bot
+from .tasks import merge_bot, migration_issue_bot, rebase_bot
 
 BOT_COMMAND_RE = re.compile(
     # Do not start with > (Github comment), not consuming it
@@ -61,6 +61,8 @@ class BotCommand:
             return BotCommandMerge(name, options)
         elif name == "rebase":
             return BotCommandRebase(name, options)
+        elif name == "migration":
+            return BotCommandMigrationIssue(name, options)
         else:
             raise InvalidCommandError(name)
 
@@ -100,6 +102,21 @@ class BotCommandRebase(BotCommand):
 
     def delay(self, org, repo, pr, username, dry_run=False):
         rebase_bot.rebase_bot_start.delay(org, repo, pr, username, dry_run=False)
+
+
+class BotCommandMigrationIssue(BotCommand):
+    module = None  # mandatory str: module name
+
+    def parse_options(self, options):
+        if len(options) == 1:
+            self.module = options[0]
+        else:
+            raise InvalidOptionsError(self.name, options)
+
+    def delay(self, org, repo, pr, username, dry_run=False):
+        migration_issue_bot.migration_issue_start.delay(
+            org, repo, pr, username, module=self.module, dry_run=dry_run
+        )
 
 
 def parse_commands(text):
