@@ -34,10 +34,17 @@ def _set_lines_issue(gh_pr, issue, module):
     module_list = False
     new_line = f"- [ ] {module} - By @{gh_pr.user.login} - #{gh_pr.number}"
     for line in issue.body.split("\n"):
-        if line.startswith(f"- [ ] {module}"):
-            lines.append(new_line)
+        if added:  # Bypass the checks for faster completion
+            lines.append(line)
             continue
-        elif not added:
+        groups = re.match(fr"^- \[( |x)\] {module}( |$)", line)
+        if groups:  # Line found
+            # Respect check mark status if existing
+            new_line = new_line[:3] + groups[1] + new_line[4:]
+            lines.append(new_line)
+            added = True
+            continue
+        else:
             splits = re.split(r"- \[ \] ([0-9a-zA-Z_]*)", line)
             if len(splits) >= 2:
                 # Flag for detecting if we have passed already module list
