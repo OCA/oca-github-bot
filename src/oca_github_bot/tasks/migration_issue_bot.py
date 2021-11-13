@@ -8,22 +8,20 @@ from .. import github
 from ..config import switchable
 from ..manifest import user_can_push
 from ..process import check_call
-from ..queue import getLogger, task
-
-_logger = getLogger(__name__)
+from ..queue import task
 
 
-def _create_or_find_branch_milestone(repo, branch):
-    for milestone in repo.milestones():
+def _create_or_find_branch_milestone(gh_repo, branch):
+    for milestone in gh_repo.milestones():
         if milestone.title == branch:
             return milestone
-    return repo.create_milestone(branch)
+    return gh_repo.create_milestone(branch)
 
 
-def _find_issue(repo, milestone, target_branch):
+def _find_issue(gh_repo, milestone, target_branch):
     issue_title = f"Migration to version {target_branch}"
     issue = False
-    for i in repo.issues(milestone=milestone.number):
+    for i in gh_repo.issues(milestone=milestone.number):
         if i.title == issue_title:
             issue = i
             break
@@ -60,6 +58,7 @@ def _set_lines_issue(gh_pr, issue, module):
 def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
+        gh_repo = gh.repository(org, repo)
         target_branch = gh_pr.base.ref
         pr_branch = f"tmp-pr-{pr}"
         try:
@@ -88,10 +87,10 @@ def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
                     )
                     return
             # Assign milestone to PR
-            milestone = _create_or_find_branch_milestone(repo, target_branch)
+            milestone = _create_or_find_branch_milestone(gh_repo, target_branch)
             gh_pr.issue().edit(milestone=milestone.number)
             # Find issue
-            issue = _find_issue(repo, milestone, target_branch)
+            issue = _find_issue(gh_repo, milestone, target_branch)
             if not issue:
                 issue_title = f"Migration to version {target_branch}"
                 github.gh_call(
