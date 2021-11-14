@@ -37,7 +37,7 @@ def _set_lines_issue(gh_pr, issue, module):
         if added:  # Bypass the checks for faster completion
             lines.append(line)
             continue
-        groups = re.match(fr"^- \[( |x)\] {module}( |$)", line)
+        groups = re.match(fr"^- \[( |x)\] {module}( |\r)", line)
         if groups:  # Line found
             # Respect check mark status if existing
             new_line = new_line[:3] + groups[1] + new_line[4:]
@@ -45,7 +45,7 @@ def _set_lines_issue(gh_pr, issue, module):
             added = True
             continue
         else:
-            splits = re.split(r"- \[ \] ([0-9a-zA-Z_]*)", line)
+            splits = re.split(r"- \[[ |x]\] ([0-9a-zA-Z_]*)", line)
             if len(splits) >= 2:
                 # Flag for detecting if we have passed already module list
                 module_list = True
