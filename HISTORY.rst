@@ -1,3 +1,21 @@
+v20211206
+~~~~~~~~~
+
+**Bugfixes**
+
+The GitHub token used by the bot could be leaked into GitHub comments on pull requests
+in some circumstances. Please upgrade and rotate tokens.
+
+**Features**
+
+- Add "/ocabot migration" command, to link a PR to the migration issue and set the
+  milestone. (`#97 <https://github.com/oca/oca-github-bot/issues/97>`_)
+- Added support for Odoo 15 (via a setuptools-odoo and maintainer-tools update). (`#156 <https://github.com/oca/oca-github-bot/issues/156>`_)
+
+**Other**
+
+- Improved layer caching in the Dockerfile
+
 20210813
 ~~~~~~~~
 
