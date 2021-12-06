@@ -9,6 +9,7 @@ from ..config import switchable
 from ..manifest import user_can_push
 from ..process import check_call
 from ..queue import task
+from ..utils import hide_secrets
 
 
 def _create_or_find_branch_milestone(gh_repo, branch):
@@ -113,7 +114,9 @@ def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
         except Exception as e:
             github.gh_call(
                 gh_pr.create_comment,
-                f"@{username} The migration issue commenter process could not "
-                f"start, because of exception {e}.",
+                hide_secrets(
+                    f"@{username} The migration issue commenter process could not "
+                    f"start, because of exception {e}."
+                ),
             )
             raise
