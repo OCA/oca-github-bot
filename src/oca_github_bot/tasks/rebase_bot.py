@@ -6,6 +6,7 @@ from ..config import switchable
 from ..manifest import user_can_push
 from ..process import CalledProcessError, check_call
 from ..queue import getLogger, task
+from ..utils import hide_secrets
 
 _logger = getLogger(__name__)
 
@@ -99,13 +100,17 @@ def rebase_bot_start(org, repo, pr, username, dry_run=False):
             cmd = " ".join(e.cmd)
             github.gh_call(
                 gh_pr.create_comment,
-                f"@{username} The rebase process failed, because "
-                f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
+                hide_secrets(
+                    f"@{username} The rebase process failed, because "
+                    f"command `{cmd}` failed with output:\n```\n{e.output}\n```"
+                ),
             )
             raise
         except Exception as e:
             github.gh_call(
                 gh_pr.create_comment,
-                f"@{username} The rebase process failed, because of exception {e}.",
+                hide_secrets(
+                    f"@{username} The rebase process failed, because of exception {e}."
+                ),
             )
             raise

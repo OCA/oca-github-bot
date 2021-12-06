@@ -23,6 +23,7 @@ from ..manifest import (
 )
 from ..process import CalledProcessError, call, check_call
 from ..queue import getLogger, task
+from ..utils import hide_secrets
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
 from .main_branch_bot import main_branch_bot_actions
 
@@ -287,15 +288,19 @@ def merge_bot_start(
             cmd = " ".join(e.cmd)
             github.gh_call(
                 gh_pr.create_comment,
-                f"@{username} The merge process could not start, because "
-                f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
+                hide_secrets(
+                    f"@{username} The merge process could not start, because "
+                    f"command `{cmd}` failed with output:\n```\n{e.output}\n```"
+                ),
             )
             raise
         except Exception as e:
             github.gh_call(
                 gh_pr.create_comment,
-                f"@{username} The merge process could not start, because "
-                f"of exception {e}.",
+                hide_secrets(
+                    f"@{username} The merge process could not start, because "
+                    f"of exception {e}."
+                ),
             )
             raise
         else:
@@ -305,7 +310,7 @@ def merge_bot_start(
 
 
 def _get_commit_success(org, repo, pr, gh_commit):
-    """ Test commit status, using both status and check suites APIs """
+    """Test commit status, using both status and check suites APIs"""
     success = None  # None means don't know / in progress
     gh_status = github.gh_call(gh_commit.status)
     for status in gh_status.statuses:
@@ -396,17 +401,21 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                     cmd = " ".join(e.cmd)
                     github.gh_call(
                         gh_pr.create_comment,
-                        f"@{username} The merge process could not be "
-                        f"finalized, because "
-                        f"command `{cmd}` failed with output:\n```\n{e.output}\n```",
+                        hide_secrets(
+                            f"@{username} The merge process could not be "
+                            f"finalized, because "
+                            f"command `{cmd}` failed with output:\n```\n{e.output}\n```"
+                        ),
                     )
                     _remove_merging_label(github, gh_pr)
                     raise
                 except Exception as e:
                     github.gh_call(
                         gh_pr.create_comment,
-                        f"@{username} The merge process could not be "
-                        f"finalized because an exception was raised: {e}.",
+                        hide_secrets(
+                            f"@{username} The merge process could not be "
+                            f"finalized because an exception was raised: {e}."
+                        ),
                     )
                     _remove_merging_label(github, gh_pr)
                     raise
