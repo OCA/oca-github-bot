@@ -38,7 +38,7 @@ RUN set -x \
   && python3 -m venv /ocamt \
   && /ocamt/bin/pip install --no-cache-dir -U pip wheel
 RUN set -x \
-  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@d3f8cd3f3a3edded0c3eee9cbfa8274c7440516c#egg=oca-maintainers-tools \
+  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@7214f9584abebfc503968547d06a2c9377a083b9#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/
 RUN set -x \
