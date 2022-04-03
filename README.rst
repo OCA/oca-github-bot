@@ -2,6 +2,13 @@
 OCA GitHub bot
 ##############
 
+.. image:: https://results.pre-commit.ci/badge/github/OCA/oca-github-bot/master.svg
+   :target: https://results.pre-commit.ci/latest/github/OCA/oca-github-bot/master
+   :alt: pre-commit.ci status
+.. image:: https://github.com/OCA/oca-github-bot/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/OCA/oca-github-bot/actions/workflows/ci.yml
+   :alt: GitHub CI status
+
 The goal of this project is to collect in one place:
 
 * all operations that react to GitHub events,
