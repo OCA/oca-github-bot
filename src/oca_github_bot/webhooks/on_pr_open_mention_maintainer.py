@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 @router.register("pull_request", action="opened")
+@router.register("pull_request", action="reopened")
 async def on_pr_open_mention_maintainer(event, *args, **kwargs):
     """
     Whenever a PR is opened, mention the maintainers of modified addons.
