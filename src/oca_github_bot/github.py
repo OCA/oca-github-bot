@@ -1,6 +1,7 @@
 # Copyright (c) ACSONE SA/NV 2018-2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import functools
 import logging
 import os
 import shutil
@@ -13,6 +14,7 @@ from celery.exceptions import Retry
 
 from . import config
 from .process import CalledProcessError, call, check_call, check_output
+from .utils import retry_on_exception
 
 _logger = logging.getLogger(__name__)
 
@@ -77,7 +79,11 @@ def temporary_clone(org, repo, branch):
         repo_url,
         "refs/heads/*:refs/heads/*",
     ]
-    check_call(fetch_cmd, cwd=repo_cache_dir)
+    retry_on_exception(
+        functools.partial(check_call, fetch_cmd, cwd=repo_cache_dir),
+        "error: cannot lock ref",
+        sleep_time=10.0,
+    )
     # check if branch exist
     branches = check_output(["git", "branch"], cwd=repo_cache_dir)
     branches = [b.strip() for b in branches.split()]
