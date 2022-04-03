@@ -70,7 +70,7 @@ class BotCommand:
         pass
 
     def delay(self, org, repo, pr, username, dry_run=False):
-        """ Run the command on a given pull request on behalf of a GitHub user """
+        """Run the command on a given pull request on behalf of a GitHub user"""
         raise NotImplementedError()
 
 
@@ -120,7 +120,7 @@ class BotCommandMigrationIssue(BotCommand):
 
 
 def parse_commands(text):
-    """ Parse a text and return an iterator of BotCommand objects. """
+    """Parse a text and return an iterator of BotCommand objects."""
     for mo in BOT_COMMAND_RE.finditer(text):
         yield BotCommand.create(
             mo.group("command"), mo.group("options").strip().split()

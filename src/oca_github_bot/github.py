@@ -147,7 +147,7 @@ def github_user_can_push(gh_repo, username):
 
 
 def git_get_head_sha(cwd):
-    """ Get the sha of the git HEAD in current directory """
+    """Get the sha of the git HEAD in current directory"""
     return check_output(["git", "rev-parse", "HEAD"], cwd=cwd).strip()
 
 

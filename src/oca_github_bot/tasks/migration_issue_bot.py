@@ -38,7 +38,7 @@ def _set_lines_issue(gh_pr, issue, module):
         if added:  # Bypass the checks for faster completion
             lines.append(line)
             continue
-        groups = re.match(fr"^- \[( |x)\] {module}( |\r)", line)
+        groups = re.match(rf"^- \[( |x)\] {module}( |\r)", line)
         if groups:  # Line found
             # Respect check mark status if existing
             new_line = new_line[:3] + groups[1] + new_line[4:]

@@ -27,12 +27,12 @@ class OdooSeriesNotDetected(Exception):
 
 
 def is_addons_dir(addons_dir, installable_only=False):
-    """ Test if an directory contains Odoo addons. """
+    """Test if an directory contains Odoo addons."""
     return any(addon_dirs_in(addons_dir, installable_only))
 
 
 def is_addon_dir(addon_dir, installable_only=False):
-    """ Test if a directory contains an Odoo addon. """
+    """Test if a directory contains an Odoo addon."""
     if not installable_only:
         return bool(get_manifest_path(addon_dir))
     else:
@@ -43,7 +43,7 @@ def is_addon_dir(addon_dir, installable_only=False):
 
 
 def addon_dirs_in(addons_dir, installable_only=False):
-    """ Enumerate addon directories """
+    """Enumerate addon directories"""
     for d in os.listdir(addons_dir):
         addon_dir = os.path.join(addons_dir, d)
         if is_addon_dir(addon_dir, installable_only):
@@ -55,7 +55,7 @@ def get_addon_name(addon_dir):
 
 
 def get_manifest_file_name(addon_dir):
-    """ Return the name of the manifest file, without path """
+    """Return the name of the manifest file, without path"""
     for manifest_name in MANIFEST_NAMES:
         manifest_path = os.path.join(addon_dir, manifest_name)
         if os.path.exists(manifest_path):
