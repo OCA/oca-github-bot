@@ -1,3 +1,22 @@
+v20220403
+~~~~~~~~~
+
+**Features**
+
+- Added support for Odoo 15 (via a setuptools-odoo and maintainer-tools update). (`#156 <https://github.com/oca/oca-github-bot/issues/156>`_)
+
+
+**Bugfixes**
+
+- Fixed the mention to maintainers on new pull requests. Also mention maintainers
+  when a PR is reopened. (`#166 <https://github.com/oca/oca-github-bot/issues/166>`_)
+
+
+**Misc**
+
+- `#175 <https://github.com/oca/oca-github-bot/issues/175>`_
+
+
 v20211206
 ~~~~~~~~~
 
