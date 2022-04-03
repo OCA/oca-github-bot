@@ -51,9 +51,12 @@ RUN set -x \
   && /app/bin/pip install --no-cache-dir -U pip wheel
 ENV PATH=/app/bin:$PATH
 
+# install oca_github_bot dependencies, in a separate layer for improved caching
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
 # install oca_github_bot app
 COPY . /app/src/oca-github-bot
-RUN pip install --no-cache-dir -r /app/src/oca-github-bot/requirements.txt
 RUN pip install --no-cache-dir -e /app/src/oca-github-bot
 
 # make work and home directory
