@@ -1,2 +1,0 @@
-Try to avoid git fetch lock issues and sentry alerts pollution by retrying
-automatically.

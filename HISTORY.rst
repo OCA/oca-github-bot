@@ -10,11 +10,14 @@ v20220403
 
 - Fixed the mention to maintainers on new pull requests. Also mention maintainers
   when a PR is reopened. (`#166 <https://github.com/oca/oca-github-bot/issues/166>`_)
+- Try to avoid git fetch lock issues and sentry alerts pollution by retrying
+  automatically. (`#177 <https://github.com/oca/oca-github-bot/issues/177>`_)
 
 
 **Misc**
 
-- `#175 <https://github.com/oca/oca-github-bot/issues/175>`_
+- Update dependencies, drop support for python 3.6 and 3.7. Test with python 3.10. `#175
+  <https://github.com/oca/oca-github-bot/issues/175>`_
 
 
 v20211206
