@@ -1,6 +1,7 @@
 # Copyright (c) ACSONE SA/NV 2019
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import contextlib
 import random
 from enum import Enum
 
@@ -379,58 +380,60 @@ def _get_commit_success(org, repo, pr, gh_commit):
 @task()
 @switchable("merge_bot")
 def merge_bot_status(org, repo, merge_bot_branch, sha):
-    with github.temporary_clone(org, repo, merge_bot_branch) as clone_dir:
-        head_sha = github.git_get_head_sha(cwd=clone_dir)
-        if head_sha != sha:
-            # the branch has evolved, this means that this status
-            # does not correspond to the last commit of the bot, ignore it
-            return
-        pr, _, username, _ = parse_merge_bot_branch(merge_bot_branch)
-        with github.login() as gh:
-            gh_repo = gh.repository(org, repo)
-            gh_pr = gh.pull_request(org, repo, pr)
-            gh_commit = github.gh_call(gh_repo.commit, sha)
-            success = _get_commit_success(org, repo, pr, gh_commit)
-            if success is None:
-                # checks in progress
+    with contextlib.suppress(github.BranchNotFoundError):
+        with github.temporary_clone(org, repo, merge_bot_branch) as clone_dir:
+            head_sha = github.git_get_head_sha(cwd=clone_dir)
+            if head_sha != sha:
+                # the branch has evolved, this means that this status
+                # does not correspond to the last commit of the bot, ignore it
                 return
-            elif success:
-                try:
-                    _merge_bot_merge_pr(org, repo, merge_bot_branch, clone_dir)
-                except CalledProcessError as e:
-                    cmd = " ".join(e.cmd)
+            pr, _, username, _ = parse_merge_bot_branch(merge_bot_branch)
+            with github.login() as gh:
+                gh_repo = gh.repository(org, repo)
+                gh_pr = gh.pull_request(org, repo, pr)
+                gh_commit = github.gh_call(gh_repo.commit, sha)
+                success = _get_commit_success(org, repo, pr, gh_commit)
+                if success is None:
+                    # checks in progress
+                    return
+                elif success:
+                    try:
+                        _merge_bot_merge_pr(org, repo, merge_bot_branch, clone_dir)
+                    except CalledProcessError as e:
+                        cmd = " ".join(e.cmd)
+                        github.gh_call(
+                            gh_pr.create_comment,
+                            hide_secrets(
+                                f"@{username} The merge process could not be "
+                                f"finalized, because "
+                                f"command `{cmd}` failed with output:\n```\n"
+                                f"{e.output}\n```"
+                            ),
+                        )
+                        _remove_merging_label(github, gh_pr)
+                        raise
+                    except Exception as e:
+                        github.gh_call(
+                            gh_pr.create_comment,
+                            hide_secrets(
+                                f"@{username} The merge process could not be "
+                                f"finalized because an exception was raised: {e}."
+                            ),
+                        )
+                        _remove_merging_label(github, gh_pr)
+                        raise
+                else:
                     github.gh_call(
                         gh_pr.create_comment,
-                        hide_secrets(
-                            f"@{username} The merge process could not be "
-                            f"finalized, because "
-                            f"command `{cmd}` failed with output:\n```\n{e.output}\n```"
-                        ),
+                        f"@{username} your merge command was aborted due to failed "
+                        f"check(s), which you can inspect on "
+                        f"[this commit of {merge_bot_branch}]"
+                        f"(https://github.com/{org}/{repo}/commits/{sha}).\n\n"
+                        f"After fixing the problem, you can re-issue a merge command. "
+                        f"Please refrain from merging manually as it will most "
+                        f"probably make the target branch red.",
+                    )
+                    check_call(
+                        ["git", "push", "origin", f":{merge_bot_branch}"], cwd=clone_dir
                     )
                     _remove_merging_label(github, gh_pr)
-                    raise
-                except Exception as e:
-                    github.gh_call(
-                        gh_pr.create_comment,
-                        hide_secrets(
-                            f"@{username} The merge process could not be "
-                            f"finalized because an exception was raised: {e}."
-                        ),
-                    )
-                    _remove_merging_label(github, gh_pr)
-                    raise
-            else:
-                github.gh_call(
-                    gh_pr.create_comment,
-                    f"@{username} your merge command was aborted due to failed "
-                    f"check(s), which you can inspect on "
-                    f"[this commit of {merge_bot_branch}]"
-                    f"(https://github.com/{org}/{repo}/commits/{sha}).\n\n"
-                    f"After fixing the problem, you can re-issue a merge command. "
-                    f"Please refrain from merging manually as it will most probably "
-                    f"make the target branch red.",
-                )
-                check_call(
-                    ["git", "push", "origin", f":{merge_bot_branch}"], cwd=clone_dir
-                )
-                _remove_merging_label(github, gh_pr)

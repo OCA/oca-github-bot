@@ -1,0 +1,2 @@
+Reduce error noise by suppressing BranchNotFoundError in then merge branch status
+handler.
