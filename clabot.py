@@ -133,14 +133,14 @@ class GithubHookHandler(BaseHTTPRequestHandler):
         content_type = self.headers['Content-Type']
         hub_signature = self.headers['X-Hub-Signature']
         github_event = self.headers['X-GitHub-Event']
-
+        _logger.info('Event: %s', github_event)
         if github_event == 'ping':
-            self.send_response(200)
+            self.send_response(200, 'pong')
             self.end_headers()
             return
 
         if github_event not in self._github_allowed_events:
-            self.send_response(400)
+            self.send_response(400, 'unallowed message')
             self.end_headers()
             return
 
@@ -157,22 +157,30 @@ class GithubHookHandler(BaseHTTPRequestHandler):
 
             payload = json.loads(json_data)
             repo = payload['repository']['name']
-        except:
-            self.send_response(400)
+        except Exception as exc:
+            self.send_response(400, str(exc))
             self.end_headers()
             return
 
         if not self._validate_signature(repo, post_data, hub_signature):
-            self.send_response(401)
-            self.end_headers()
-            return
+           self.send_response(401, 'invalid signature')
+           self.end_headers()
+           return
 
         if self.handle_payload(payload):
-            self.send_response(200)
-            self.end_headers()
+            self.send_response(200, 'OK')
         else:
-            self.send_response(400)
-            self.end_headers()
+            self.send_response(400, 'error handling payload')
+        self.end_headers()
+
+    def send_response(self, code, message=None):
+        _logger.info('response: %s %s', code, message)
+        if message is None:
+            if code == 200:
+                message = 'OK'
+            else:
+                message = 'NOK'
+        return super().send_response(code, message)
 
 
 class PullRequestHandler(GithubHookHandler):
@@ -204,6 +212,7 @@ class PullRequestHandler(GithubHookHandler):
             config['odoo_user'],
             config['odoo_password']
         )
+        client.context['active_test'] = False
         for user in users:
 
             condition = [(config['odoo_github_login_field'], '=', user)]
