@@ -17,7 +17,10 @@ async def on_command(event, gh, *args, **kwargs):
     pr = event.data["issue"]["number"]
     username = event.data["comment"]["user"]["login"]
     text = event.data["comment"]["body"]
+    await _on_command(org, repo, pr, username, text)
 
+
+async def _on_command(org, repo, pr, username, text):
     try:
         for command in parse_commands(text):
             command.delay(org, repo, pr, username)
