@@ -2,9 +2,13 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import ast
+import logging
 import os
 import re
 
+import requests
+
+from . import config
 from .github import git_get_current_branch, github_user_can_push
 from .process import check_call, check_output
 
@@ -16,6 +20,8 @@ BRANCH_RE = re.compile(r"^(?P<series>\d+\.\d+)$")
 MANIFEST_VERSION_RE = re.compile(
     r"(?P<pre>[\"']version[\"']\s*:\s*[\"'])(?P<version>[\d\.]+)(?P<post>[\"'])"
 )
+
+_logger = logging.getLogger(__name__)
 
 
 class NoManifestFound(Exception):
@@ -189,7 +195,11 @@ def git_modified_addons(addons_dir, ref):
 
 def git_modified_addon_dirs(addons_dir, ref):
     modified_addons, other_changes = git_modified_addons(addons_dir, ref)
-    return [os.path.join(addons_dir, addon) for addon in modified_addons], other_changes
+    return (
+        [os.path.join(addons_dir, addon) for addon in modified_addons],
+        other_changes,
+        modified_addons,
+    )
 
 
 def get_odoo_series_from_version(version):
@@ -220,11 +230,13 @@ def user_can_push(gh, org, repo, username, addons_dir, target_branch):
     return true if username is declared in the maintainers key
     on the target branch, for all addons modified in the current branch
     compared to the target_branch.
+    If the username is not declared as maintainer on the current branch,
+    check if the user is maintainer in other branches.
     """
     gh_repo = gh.repository(org, repo)
     if github_user_can_push(gh_repo, username):
         return True
-    modified_addon_dirs, other_changes = git_modified_addon_dirs(
+    modified_addon_dirs, other_changes, modified_addons = git_modified_addon_dirs(
         addons_dir, target_branch
     )
     if other_changes or not modified_addon_dirs:
@@ -234,6 +246,43 @@ def user_can_push(gh, org, repo, username, addons_dir, target_branch):
     current_branch = git_get_current_branch(cwd=addons_dir)
     try:
         check_call(["git", "checkout", target_branch], cwd=addons_dir)
-        return is_maintainer(username, modified_addon_dirs)
+        result = is_maintainer(username, modified_addon_dirs)
     finally:
         check_call(["git", "checkout", current_branch], cwd=addons_dir)
+
+    if result:
+        return True
+
+    other_branches = config.MAINTAINER_CHECK_ODOO_RELEASES
+    if target_branch in other_branches:
+        other_branches.remove(target_branch)
+
+    return is_maintainer_other_branches(
+        org, repo, username, modified_addons, other_branches
+    )
+
+
+def is_maintainer_other_branches(org, repo, username, modified_addons, other_branches):
+    for addon in modified_addons:
+        is_maintainer = False
+        for branch in other_branches:
+            manifest_file = (
+                float(branch) < 10.0 and "__openerp__.py" or "__manifest__.py"
+            )
+            url = (
+                f"https://raw.githubusercontent.com/{org}/{repo}/{branch}/"
+                f"{addon}/{manifest_file}"
+            )
+            _logger.debug("Looking for maintainers in %s" % url)
+            r = requests.get(
+                url, allow_redirects=True, headers={"Cache-Control": "no-cache"}
+            )
+            if r.ok:
+                manifest = ast.literal_eval(r.content.decode("utf-8"))
+                if username in manifest.get("maintainers", []):
+                    is_maintainer = True
+                    break
+
+        if not is_maintainer:
+            return False
+    return True

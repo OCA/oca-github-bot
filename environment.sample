@@ -80,3 +80,7 @@ OCABOT_TWINE_REPOSITORIES="[('https://pypi.org/simple','https://upload.pypi.org/
 # Markdown text to be used to call for maintainers when a PR is made to an
 # addon that has no declared maintainers.
 #ADOPT_AN_ADDON_MENTION=
+
+# List of branches the bot will check to verify if user is the maintainer
+# of module(s)
+MAINTAINER_CHECK_ODOO_RELEASES=8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0

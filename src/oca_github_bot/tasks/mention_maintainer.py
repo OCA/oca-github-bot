@@ -33,7 +33,7 @@ def mention_maintainer(org, repo, pr, dry_run=False):
                 cwd=clonedir,
             )
             check_call(["git", "checkout", pr_branch], cwd=clonedir)
-            modified_addon_dirs, _ = git_modified_addon_dirs(clonedir, target_branch)
+            modified_addon_dirs, _, _ = git_modified_addon_dirs(clonedir, target_branch)
 
             # Remove not installable addons
             # (case where an addon becomes no more installable).
