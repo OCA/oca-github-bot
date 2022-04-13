@@ -60,9 +60,7 @@ SIMPLE_INDEX_ROOT=/app/run/simple-index
 # - repo url, for twine --repository-url
 # - username for twine --username option
 # - password for twine --password option
-OCABOT_TWINE_REPOSITORIES="[
-    ('https://pypi.org/simple', 'https://upload.pypi.org/legacy/', 'pypiuser', 'pypipassword'),
-]"
+OCABOT_TWINE_REPOSITORIES="[('https://pypi.org/simple','https://upload.pypi.org/legacy/','pypiuser','pypipassword')]"
 
 # Space separated list of extra arguments, for the calls of the
 # following command
