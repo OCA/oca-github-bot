@@ -1,10 +1,9 @@
-v20220403
+v20220518
 ~~~~~~~~~
 
 **Features**
 
 - Added support for Odoo 15 (via a setuptools-odoo and maintainer-tools update). (`#156 <https://github.com/oca/oca-github-bot/issues/156>`_)
-
 
 **Bugfixes**
 
@@ -12,7 +11,10 @@ v20220403
   when a PR is reopened. (`#166 <https://github.com/oca/oca-github-bot/issues/166>`_)
 - Try to avoid git fetch lock issues and sentry alerts pollution by retrying
   automatically. (`#177 <https://github.com/oca/oca-github-bot/issues/177>`_)
-
+- Reduce error noise by suppressing BranchNotFoundError in then merge branch status
+  handler. (`#178 <https://github.com/oca/oca-github-bot/issues/178>`_)
+- Consider comment made when reviewing Pull request. It so allow users
+  to review and launch commands in a single action. (`#182 <https://github.com/oca/oca-github-bot/issues/182>`_)
 
 **Misc**
 
