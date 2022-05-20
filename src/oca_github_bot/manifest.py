@@ -77,12 +77,15 @@ def get_manifest_path(addon_dir):
     return None
 
 
+def parse_manifest(manifest: bytes)-> dict:
+    return ast.literal_eval(manifest.decode("utf-8"))
+
 def get_manifest(addon_dir):
     manifest_path = get_manifest_path(addon_dir)
     if not manifest_path:
         raise NoManifestFound(f"no manifest found in {addon_dir}")
-    with open(manifest_path, "r") as f:
-        return ast.literal_eval(f.read())
+    with open(manifest_path, "rb") as f:
+        return parse_manifest(f.read())
 
 
 def set_manifest_version(addon_dir, version):
@@ -277,7 +280,7 @@ def is_maintainer_other_branches(org, repo, username, modified_addons, other_bra
                 url, allow_redirects=True, headers={"Cache-Control": "no-cache"}
             )
             if r.ok:
-                manifest = ast.literal_eval(r.content.decode("utf-8"))
+                manifest = parse_manifest(r.content)
                 if username in manifest.get("maintainers", []):
                     is_maintainer = True
                     break
