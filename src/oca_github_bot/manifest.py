@@ -267,11 +267,10 @@ def is_maintainer_other_branches(org, repo, username, modified_addons, other_bra
         is_maintainer = False
         for branch in other_branches:
             manifest_file = (
-                float(branch) < 10.0 and "__openerp__.py" or "__manifest__.py"
+                "__openerp__.py" if float(branch) < 10.0 else "__manifest__.py"
             )
             url = (
-                f"https://raw.githubusercontent.com/{org}/{repo}/{branch}/"
-                f"{addon}/{manifest_file}"
+                f"https://github.com/{org}/{repo}/raw/{branch}/{addon}/{manifest_file}"
             )
             _logger.debug("Looking for maintainers in %s" % url)
             r = requests.get(
