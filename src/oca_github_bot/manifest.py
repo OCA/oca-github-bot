@@ -77,8 +77,9 @@ def get_manifest_path(addon_dir):
     return None
 
 
-def parse_manifest(manifest: bytes)-> dict:
+def parse_manifest(manifest: bytes) -> dict:
     return ast.literal_eval(manifest.decode("utf-8"))
+
 
 def get_manifest(addon_dir):
     manifest_path = get_manifest_path(addon_dir)
