@@ -117,7 +117,8 @@ OCABOT_USAGE = os.environ.get(
     "OCABOT_USAGE",
     "**Ocabot commands**\n"
     "* ``ocabot merge major|minor|patch|nobump``\n"
-    "* ``ocabot rebase``",
+    "* ``ocabot rebase``"
+    "* ``ocabot migration {MODULE_NAME}``",
 )
 
 OCABOT_EXTRA_DOCUMENTATION = os.environ.get(
