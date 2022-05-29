@@ -131,3 +131,9 @@ OCABOT_EXTRA_DOCUMENTATION = os.environ.get(
 )
 
 ADOPT_AN_ADDON_MENTION = os.environ.get("ADOPT_AN_ADDON_MENTION")
+
+MAINTAINER_CHECK_ODOO_RELEASES = (
+    os.environ.get("MAINTAINER_CHECK_ODOO_RELEASES")
+    and os.environ.get("MAINTAINER_CHECK_ODOO_RELEASES").split(",")
+    or []
+)

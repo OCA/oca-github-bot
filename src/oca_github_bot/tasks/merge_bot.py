@@ -131,7 +131,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     # to the PR.
     check_call(["git", "fetch", "origin", f"refs/pull/{pr}/head:tmp-pr-{pr}"], cwd=cwd)
     check_call(["git", "checkout", f"tmp-pr-{pr}"], cwd=cwd)
-    modified_addon_dirs, _ = git_modified_addon_dirs(cwd, target_branch)
+    modified_addon_dirs, _, _ = git_modified_addon_dirs(cwd, target_branch)
     # Run main branch bot actions before bump version.
     # Do not run the main branch bot if there are no modified addons,
     # because it is dedicated to addons repos.

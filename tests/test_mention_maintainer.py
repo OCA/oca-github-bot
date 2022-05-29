@@ -20,7 +20,7 @@ def test_maintainer_mentioned(git_clone, mocker):
     modified_addons_mock = mocker.patch(
         "oca_github_bot.tasks.mention_maintainer.git_modified_addon_dirs"
     )
-    modified_addons_mock.return_value = [addon_dir], False
+    modified_addons_mock.return_value = [addon_dir], False, {addon_name}
     mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
     mention_maintainer("org", "repo", "pr")
 
@@ -53,7 +53,7 @@ def test_added_maintainer_not_mentioned(git_clone, mocker):
     modified_addons_mock = mocker.patch(
         "oca_github_bot.tasks.mention_maintainer.git_modified_addon_dirs"
     )
-    modified_addons_mock.return_value = [pre_pr_addon], False
+    modified_addons_mock.return_value = [pre_pr_addon], False, {addon_name}
 
     mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
 
@@ -79,7 +79,7 @@ def test_multi_maintainer_one_mention(git_clone, mocker):
     modified_addons_mock = mocker.patch(
         "oca_github_bot.tasks.mention_maintainer.git_modified_addon_dirs"
     )
-    modified_addons_mock.return_value = addon_dirs, False
+    modified_addons_mock.return_value = addon_dirs, False, set(addon_names)
     mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
     mention_maintainer("org", "repo", "pr")
 
@@ -105,7 +105,7 @@ def test_pr_by_maintainer_no_mention(git_clone, mocker):
     modified_addons_mock = mocker.patch(
         "oca_github_bot.tasks.mention_maintainer.git_modified_addon_dirs"
     )
-    modified_addons_mock.return_value = addon_dirs, False
+    modified_addons_mock.return_value = addon_dirs, False, set(addon_names)
     mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
     mention_maintainer("org", "repo", "pr")
 
@@ -123,7 +123,7 @@ def test_no_maintainer_adopt_module(git_clone, mocker):
     modified_addons_mock = mocker.patch(
         "oca_github_bot.tasks.mention_maintainer.git_modified_addon_dirs"
     )
-    modified_addons_mock.return_value = [addon_dir], False
+    modified_addons_mock.return_value = [addon_dir], False, {addon_name}
     mocker.patch("oca_github_bot.tasks.mention_maintainer.check_call")
 
     with set_config(ADOPT_AN_ADDON_MENTION="Hi {pr_opener}, would you like to adopt?"):

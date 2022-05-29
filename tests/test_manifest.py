@@ -20,6 +20,7 @@ from oca_github_bot.manifest import (
     is_addon_dir,
     is_addons_dir,
     is_maintainer,
+    is_maintainer_other_branches,
     set_manifest_version,
 )
 
@@ -140,6 +141,7 @@ def test_git_modified_addons(git_clone):
     assert git_modified_addon_dirs(git_clone, "origin/master") == (
         [str(git_clone / "addon")],
         False,
+        {"addon"},
     )
     # add a second addon, and change the first one
     addon2_dir = git_clone / "addon2"
@@ -234,3 +236,12 @@ def test_is_maintainer(tmp_path):
     assert is_maintainer("u2", [addon1, addon2])
     assert not is_maintainer("u2", [addon1, addon2, addon3])
     assert not is_maintainer("u1", [tmp_path / "not_an_addon"])
+
+
+def test_is_maintainer_other_branches():
+    assert is_maintainer_other_branches(
+        "OCA", "mis-builder", "sbidoul", {"mis_builder"}, ["12.0"]
+    )
+    assert not is_maintainer_other_branches(
+        "OCA", "mis-builder", "fpdoo", {"mis_builder"}, ["12.0"]
+    )
