@@ -58,6 +58,10 @@ def _set_lines_issue(gh_pr, issue, module):
                 lines.append(new_line)
                 added = True
         lines.append(line)
+
+    # make the addition working on an empty migration issue
+    if not added:
+        lines.append(new_line)
     return lines
 
 
