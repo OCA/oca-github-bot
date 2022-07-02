@@ -29,12 +29,12 @@ def _find_issue(gh_repo, milestone, target_branch):
     return issue
 
 
-def _set_lines_issue(gh_pr, issue, module):
+def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
     lines = []
     added = False
     module_list = False
-    new_line = f"- [ ] {module} - By @{gh_pr.user.login} - #{gh_pr.number}"
-    for line in issue.body.split("\n"):
+    new_line = f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}"
+    for line in issue_body.split("\n"):
         if added:  # Bypass the checks for faster completion
             lines.append(line)
             continue
@@ -62,7 +62,7 @@ def _set_lines_issue(gh_pr, issue, module):
     # make the addition working on an empty migration issue
     if not added:
         lines.append(new_line)
-    return lines
+    return "\n".join(lines)
 
 
 @task()
@@ -113,8 +113,10 @@ def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
                 )
                 return
             # Change issue to add the PR in the module list
-            lines = _set_lines_issue(gh_pr, issue, module)
-            issue.edit(body="\n".join(lines))
+            new_body = _set_lines_issue(
+                gh_pr.user.login, gh_pr.number, issue.body, module
+            )
+            issue.edit(body=new_body)
         except Exception as e:
             github.gh_call(
                 gh_pr.create_comment,
