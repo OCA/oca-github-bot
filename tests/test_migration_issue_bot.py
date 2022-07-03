@@ -4,6 +4,7 @@
 import pytest
 
 from oca_github_bot.tasks.migration_issue_bot import (
+    _check_line_issue,
     _create_or_find_branch_milestone,
     _find_issue,
     _set_lines_issue,
@@ -70,3 +71,25 @@ def test_set_lines_issue(gh):
     for old_body, new_body_expected in body_transformation:
         new_body, _ = _set_lines_issue(gh_pr_user_login, gh_pr_number, old_body, module)
         assert new_body == new_body_expected
+
+
+@pytest.mark.vcr()
+def test_check_line_issue(gh):
+    module = "mis_builder"
+    gh_pr_user_login = "sbidoul"
+    gh_pr_number = 11
+
+    old_body = (
+        f"Issue with list containing the module\n"
+        f"- [ ] a_module_1 - By @legalsylvain - #1\n"
+        f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
+        f"- [ ] z_module_1 - By @pedrobaeza - #2"
+    )
+    new_body_expected = (
+        f"Issue with list containing the module\n"
+        f"- [ ] a_module_1 - By @legalsylvain - #1\n"
+        f"- [x] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
+        f"- [ ] z_module_1 - By @pedrobaeza - #2"
+    )
+    new_body = _check_line_issue(gh_pr_number, old_body)
+    assert new_body == new_body_expected

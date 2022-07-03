@@ -29,6 +29,18 @@ def _find_issue(gh_repo, milestone, target_branch):
     return issue
 
 
+def _check_line_issue(gh_pr_number, issue_body):
+    lines = []
+    regex = r"\#%s\b" % gh_pr_number
+    for line in issue_body.split("\n"):
+        if re.findall(regex, line):
+            checked_line = line.replace("[ ]", "[x]", 1)
+            lines.append(checked_line)
+            continue
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
     lines = []
     added = False

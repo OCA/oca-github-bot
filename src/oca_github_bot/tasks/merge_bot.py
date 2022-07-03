@@ -27,6 +27,7 @@ from ..queue import getLogger, task
 from ..utils import hide_secrets
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
 from .main_branch_bot import main_branch_bot_actions
+from .migration_issue_bot import _check_line_issue, _find_issue
 
 _logger = getLogger(__name__)
 
@@ -186,6 +187,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     _git_delete_branch("origin", merge_bot_branch, cwd=cwd)
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
+        gh_repo = gh.repository(org, repo)
         merge_sha = github.git_get_head_sha(cwd=cwd)
         github.gh_call(
             gh_pr.create_comment,
@@ -200,6 +202,12 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             _logger.info(f"add {LABEL_MERGED} label to PR {gh_pr.url}")
             github.gh_call(gh_issue.add_labels, LABEL_MERGED)
         github.gh_call(gh_pr.close)
+
+        # Check line in migration issue if required
+        migration_issue = _find_issue(gh_repo, target_branch)
+        if migration_issue:
+            new_body = _check_line_issue(gh_pr.number, migration_issue.body)
+            migration_issue.edit(body=new_body)
     return True
 
 
