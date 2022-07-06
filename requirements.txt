@@ -29,7 +29,7 @@ importlib-metadata==4.11.3
 jeepney==0.7.1
 keyring==23.5.0
 kombu==5.2.4
-lxml==4.8.0
+lxml==4.9.1
 multidict==6.0.2
 OdooRPC==0.8.0
 packaging==21.3
