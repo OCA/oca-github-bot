@@ -33,6 +33,7 @@ def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
     lines = []
     added = False
     module_list = False
+    old_pr_number = False
     new_line = f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}"
     for line in issue_body.split("\n"):
         if added:  # Bypass the checks for faster completion
@@ -40,6 +41,11 @@ def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
             continue
         groups = re.match(rf"^- \[( |x)\] {module}( |\r)", line)
         if groups:  # Line found
+            # Get the Old PR value
+            regex = r"\#(\d*)"
+            old_pr_result = re.findall(regex, line)
+            if old_pr_result:
+                old_pr_number = int(old_pr_result[0])
             # Respect check mark status if existing
             new_line = new_line[:3] + groups[1] + new_line[4:]
             lines.append(new_line)
@@ -62,7 +68,7 @@ def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
     # make the addition working on an empty migration issue
     if not added:
         lines.append(new_line)
-    return "\n".join(lines)
+    return "\n".join(lines), old_pr_number
 
 
 @task()
@@ -113,10 +119,21 @@ def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
                 )
                 return
             # Change issue to add the PR in the module list
-            new_body = _set_lines_issue(
+            new_body, old_pr_number = _set_lines_issue(
                 gh_pr.user.login, gh_pr.number, issue.body, module
             )
             issue.edit(body=new_body)
+            if old_pr_number and old_pr_number != pr:
+                old_pr = gh.pull_request(org, repo, old_pr_number)
+                github.gh_call(
+                    gh_pr.create_comment,
+                    f"The migration issue (#{issue.number}) has been updated"
+                    f" to reference the current pull request.\n"
+                    f"however, a previous pull request was referenced :"
+                    f" #{old_pr_number}.\n"
+                    f"Perhaps you should check that there is no duplicate work.\n"
+                    f"CC : @{old_pr.user.login}",
+                )
         except Exception as e:
             github.gh_call(
                 gh_pr.create_comment,
