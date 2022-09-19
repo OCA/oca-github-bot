@@ -34,7 +34,7 @@ repos:
     args: [--extend-ignore=F401]  # ignore imported unused in __init__.py
     files: __init__.py
 - repo: https://github.com/asottile/pyupgrade
-  rev: v2.37.3
+  rev: v2.38.0
   hooks:
   - id: pyupgrade
 - repo: https://github.com/asottile/seed-isort-config
