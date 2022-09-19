@@ -208,7 +208,7 @@ class PullRequestHandler(GithubHookHandler):
             config["odoo_user"],
             config["odoo_password"],
         )
-        client.context["active_test"] = False
+        client.context = {"active_test": False}
         for user in users:
 
             condition = [(config["odoo_github_login_field"], "=", user)]
