@@ -5,6 +5,7 @@ import ast
 import logging
 import os
 import re
+from typing import Tuple
 
 import requests
 
@@ -216,7 +217,7 @@ def get_odoo_series_from_version(version):
     return tuple(int(s) for s in series.split("."))
 
 
-def get_odoo_series_from_branch(branch):
+def get_odoo_series_from_branch(branch) -> Tuple[int, int]:
     mo = BRANCH_RE.match(branch)
     if not mo:
         raise OdooSeriesNotDetected()
