@@ -33,14 +33,12 @@ setup(
         "odoorpc",
         # Sentry
         "raven",
-        # setuptools and twine to build, check and upload wheels
-        "setuptools",
+        # twine to check and upload wheels
         "twine",
-        "wheel",
-        # setuptools-odoo so setup.py bdist_wheel does not need
-        # to re-download it for each and every build
-        "setuptools-odoo>=3.0.3",
+        # lxml for parsing PyPI index pages
         "lxml",
+        # for setuptools-odoo-make-default
+        "setuptools-odoo",
     ],
     extras_require={
         "test": [
