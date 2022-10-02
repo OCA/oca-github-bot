@@ -137,3 +137,8 @@ MAINTAINER_CHECK_ODOO_RELEASES = (
     and os.environ.get("MAINTAINER_CHECK_ODOO_RELEASES").split(",")
     or []
 )
+
+WHEEL_BUILD_TOOLS = os.environ.get(
+    "WHEEL_BUILD_TOOLS",
+    "build,pip,setuptools<58,wheel,setuptools-odoo,whool",
+).split(",")

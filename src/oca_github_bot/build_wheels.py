@@ -10,6 +10,7 @@ import tempfile
 from pathlib import Path
 from typing import Tuple, Union
 
+from .config import WHEEL_BUILD_TOOLS
 from .manifest import addon_dirs_in, get_manifest, get_odoo_series_from_version
 from .process import check_call
 from .pypi import DistPublisher
@@ -18,13 +19,6 @@ _logger = logging.getLogger(__name__)
 
 
 class Builder:
-    BUILD_TOOLS = [
-        "pip",
-        "setuptools<58",
-        "wheel",
-        "setuptools-odoo",
-        "whool",
-    ]
     _builder: Union["Builder", None] = None
 
     @classmethod
@@ -42,7 +36,7 @@ class Builder:
             cwd=".",
         )
         check_call(
-            [self.env_python, "-m", "pip", "install", "--upgrade"] + self.BUILD_TOOLS,
+            [self.env_python, "-m", "pip", "install", "--upgrade"] + WHEEL_BUILD_TOOLS,
             cwd=".",
         )
 
