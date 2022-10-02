@@ -27,7 +27,15 @@ def _make_addon(
     addon_dir = addons_dir / addon_name
     addon_dir.mkdir()
     manifest_path = addon_dir / "__manifest__.py"
-    manifest_path.write_text(repr({"name": addon_name, "version": series + ".1.0.0"}))
+    manifest_path.write_text(
+        repr(
+            {
+                "name": addon_name,
+                "version": series + ".1.0.0",
+                "description": "...",
+            }
+        )
+    )
     (addon_dir / "__init__.py").write_text("")
     if pyproject:
         (addon_dir / "pyproject.toml").write_text(
@@ -71,8 +79,8 @@ def test_build_and_publish_wheels(setup_py, tmp_path):
     assert wheels[0].startswith("odoo12_addon_addon1")
     assert wheels[0].endswith(".whl")
     assert "-py3-" in wheels[0]
-    # build with two addons
-    _make_addon(addons_dir, "addon2", "10.0", setup_py=setup_py, pyproject=not setup_py)
+    # build with two addons, don't use pyproject.toml for this version
+    _make_addon(addons_dir, "addon2", "10.0", setup_py=True, pyproject=False)
     build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = sorted(os.listdir(simple_index_root))
     assert len(wheel_dirs) == 2
@@ -82,8 +90,8 @@ def test_build_and_publish_wheels(setup_py, tmp_path):
     assert wheels[0].startswith("odoo10_addon_addon2")
     assert wheels[0].endswith(".whl")
     assert "-py2-" in wheels[0]
-    # test tag for Odoo 11
-    _make_addon(addons_dir, "addon3", "11.0", setup_py=setup_py, pyproject=not setup_py)
+    # test tag for Odoo 11, don't use pyproject.toml for this version
+    _make_addon(addons_dir, "addon3", "11.0", setup_py=True, pyproject=False)
     build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = sorted(os.listdir(simple_index_root))
     assert len(wheel_dirs) == 3
