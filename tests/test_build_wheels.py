@@ -3,6 +3,9 @@
 
 import os
 import subprocess
+import textwrap
+
+import pytest
 
 from oca_github_bot.build_wheels import (
     build_and_publish_metapackage_wheel,
@@ -18,22 +21,44 @@ def _init_git_repo(cwd):
     subprocess.check_call(["git", "config", "user.email", "test@example.com"], cwd=cwd)
 
 
-def _make_addon(addons_dir, addon_name, series, metapackage=None):
+def _make_addon(
+    addons_dir, addon_name, series, metapackage=None, setup_py=True, pyproject=False
+):
     addon_dir = addons_dir / addon_name
     addon_dir.mkdir()
     manifest_path = addon_dir / "__manifest__.py"
-    manifest_path.write_text(repr({"name": addon_name, "version": series + ".1.0.0"}))
-    (addon_dir / "__ini__.py").write_text("")
+    manifest_path.write_text(
+        repr(
+            {
+                "name": addon_name,
+                "version": series + ".1.0.0",
+                "description": "...",
+            }
+        )
+    )
+    (addon_dir / "__init__.py").write_text("")
+    if pyproject:
+        (addon_dir / "pyproject.toml").write_text(
+            textwrap.dedent(
+                """\
+                [build-system]
+                requires = ["whool"]
+                build-backend = "whool.buildapi"
+                """
+            )
+        )
     subprocess.check_call(["git", "add", addon_name], cwd=addons_dir)
     subprocess.check_call(["git", "commit", "-m", "add " + addon_name], cwd=addons_dir)
     subprocess.check_call(["git", "clean", "-ffdx", "--", "setup"], cwd=addons_dir)
-    cmd = ["setuptools-odoo-make-default", "-d", str(addons_dir), "--commit"]
-    if metapackage:
-        cmd.extend(["--metapackage", metapackage])
-    subprocess.check_call(cmd)
+    if setup_py:
+        cmd = ["setuptools-odoo-make-default", "-d", str(addons_dir), "--commit"]
+        if metapackage:
+            cmd.extend(["--metapackage", metapackage])
+        subprocess.check_call(cmd)
 
 
-def test_build_and_publish_wheels(tmp_path):
+@pytest.mark.parametrize("setup_py", [True, False])
+def test_build_and_publish_wheels(setup_py, tmp_path):
     addons_dir = tmp_path / "addons_dir"
     addons_dir.mkdir()
     _init_git_repo(addons_dir)
@@ -44,7 +69,7 @@ def test_build_and_publish_wheels(tmp_path):
     build_and_publish_wheels(addons_dir, dist_publisher, dry_run=False)
     assert not os.listdir(simple_index_root)
     # build with one addon
-    _make_addon(addons_dir, "addon1", "12.0")
+    _make_addon(addons_dir, "addon1", "12.0", setup_py=setup_py, pyproject=not setup_py)
     build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = os.listdir(simple_index_root)
     assert len(wheel_dirs) == 1
@@ -54,8 +79,8 @@ def test_build_and_publish_wheels(tmp_path):
     assert wheels[0].startswith("odoo12_addon_addon1")
     assert wheels[0].endswith(".whl")
     assert "-py3-" in wheels[0]
-    # build with two addons
-    _make_addon(addons_dir, "addon2", "10.0")
+    # build with two addons, don't use pyproject.toml for this version
+    _make_addon(addons_dir, "addon2", "10.0", setup_py=True, pyproject=False)
     build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = sorted(os.listdir(simple_index_root))
     assert len(wheel_dirs) == 2
@@ -65,8 +90,8 @@ def test_build_and_publish_wheels(tmp_path):
     assert wheels[0].startswith("odoo10_addon_addon2")
     assert wheels[0].endswith(".whl")
     assert "-py2-" in wheels[0]
-    # test tag for Odoo 11
-    _make_addon(addons_dir, "addon3", "11.0")
+    # test tag for Odoo 11, don't use pyproject.toml for this version
+    _make_addon(addons_dir, "addon3", "11.0", setup_py=True, pyproject=False)
     build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = sorted(os.listdir(simple_index_root))
     assert len(wheel_dirs) == 3
@@ -75,7 +100,7 @@ def test_build_and_publish_wheels(tmp_path):
     assert len(wheels) == 1
     assert "-py2.py3-" in wheels[0]
     # test Odoo 15+ default addon naming scheme
-    _make_addon(addons_dir, "addon4", "15.0")
+    _make_addon(addons_dir, "addon4", "15.0", setup_py=setup_py, pyproject=not setup_py)
     build_and_publish_wheels(str(addons_dir), dist_publisher, dry_run=False)
     wheel_dirs = sorted(os.listdir(simple_index_root))
     assert len(wheel_dirs) == 4
