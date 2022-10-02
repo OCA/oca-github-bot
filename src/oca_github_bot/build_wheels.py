@@ -86,7 +86,7 @@ class Builder:
 
         series = get_odoo_series_from_version(manifest.get("version", ""))
 
-        if series >= (11, 0) and (addon_dir / "pyproject.toml").is_file():
+        if series >= (12, 0) and (addon_dir / "pyproject.toml").is_file():
             return self.build_wheel(addon_dir, dist_dir)
 
         setup_py_dir = addon_dir / ".." / "setup" / addon_dir.name
