@@ -122,18 +122,22 @@ def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
             new_body, old_pr_number = _set_lines_issue(
                 gh_pr.user.login, gh_pr.number, issue.body, module
             )
-            issue.edit(body=new_body)
             if old_pr_number and old_pr_number != pr:
                 old_pr = gh.pull_request(org, repo, old_pr_number)
-                github.gh_call(
-                    gh_pr.create_comment,
-                    f"The migration issue (#{issue.number}) has been updated"
-                    f" to reference the current pull request.\n"
-                    f"however, a previous pull request was referenced :"
-                    f" #{old_pr_number}.\n"
-                    f"Perhaps you should check that there is no duplicate work.\n"
-                    f"CC : @{old_pr.user.login}",
-                )
+                if old_pr.state == "closed":
+                    issue.edit(body=new_body)
+                else:
+                    github.gh_call(
+                        gh_pr.create_comment,
+                        f"The migration issue (#{issue.number})"
+                        f" has not been updated to reference the current pull request"
+                        f" because a previous pull request (#{old_pr_number})"
+                        f" is not closed.\n"
+                        f"Perhaps you should check that there is no duplicate work.\n"
+                        f"CC @{old_pr.user.login}",
+                    )
+            else:
+                issue.edit(body=new_body)
         except Exception as e:
             github.gh_call(
                 gh_pr.create_comment,
