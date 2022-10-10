@@ -54,6 +54,14 @@ def test_set_lines_issue(gh):
             f"- [ ] z_module_1 - By @pedrobaeza - #2",
         ),
         (
+            f"Issue with list containing the module with no PR\n"
+            f"- [x] {module}\n"
+            f"- [ ] z_module_1 - By @pedrobaeza - #2",
+            f"Issue with list containing the module with no PR\n"
+            f"- [x] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
+            f"- [ ] z_module_1 - By @pedrobaeza - #2",
+        ),
+        (
             "Issue with no list",
             f"Issue with no list\n"
             f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}",
