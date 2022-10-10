@@ -92,7 +92,7 @@ def get_manifest(addon_dir):
 
 def set_manifest_version(addon_dir, version):
     manifest_path = get_manifest_path(addon_dir)
-    with open(manifest_path, "r") as f:
+    with open(manifest_path) as f:
         manifest = f.read()
     manifest = MANIFEST_VERSION_RE.sub(r"\g<pre>" + version + r"\g<post>", manifest)
     with open(manifest_path, "w") as f:
