@@ -22,7 +22,7 @@ def _create_or_find_branch_milestone(gh_repo, branch):
 def _find_issue(gh_repo, milestone, target_branch):
     issue_title = f"Migration to version {target_branch}"
     issue = False
-    for i in gh_repo.issues(milestone=milestone.number):
+    for i in gh_repo.issues(milestone=milestone.number, state="all"):
         if i.title == issue_title:
             issue = i
             break
