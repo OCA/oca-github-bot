@@ -142,3 +142,20 @@ WHEEL_BUILD_TOOLS = os.environ.get(
     "WHEEL_BUILD_TOOLS",
     "build,pip,setuptools<58,wheel,setuptools-odoo,whool",
 ).split(",")
+
+MIGRATION_GUIDELINES_REMINDER = os.environ.get(
+    "MIGRATION_GUIDELINES_REMINDER",
+    """Thanks for the contribution!
+This appears to be a migration, \
+so here you have a gentle reminder about the migration guidelines.
+
+Please preserve commit history following technical method \
+explained in https://github.com/OCA/maintainer-tools/wiki/#migration.
+If the jump is between several versions, \
+you have to modify the source branch in the main command \
+to accommodate it to this circumstance.
+
+You can also take a look on the project \
+https://github.com/OCA/odoo-module-migrator/ to make easier migration.
+""",
+)
