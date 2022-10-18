@@ -39,7 +39,7 @@ def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
         if added:  # Bypass the checks for faster completion
             lines.append(line)
             continue
-        groups = re.match(rf"^- \[( |x)\] {module}( |\r)", line)
+        groups = re.match(rf"^- \[( |x)\] \b{module}\b", line)
         if groups:  # Line found
             # Get the Old PR value
             regex = r"\#(\d*)"
