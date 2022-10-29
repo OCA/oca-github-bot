@@ -1,3 +1,21 @@
+v20221019
+~~~~~~~~~
+
+**Features**
+
+- When calling ``/ocabot migration`` if a previous Pull Request was referenced in the migration issue, post an alert on the new Pull Request to mention the previous work. (`#191 <https://github.com/oca/oca-github-bot/issues/191>`_)
+- Refactored wheel builder, adding support for ``pyproject.toml`` in addon directories,
+  towards removing ``setup`` directories. (`#212 <https://github.com/oca/oca-github-bot/issues/212>`_)
+- Update pinned dependencies. (`#213 <https://github.com/oca/oca-github-bot/issues/213>`_)
+
+
+**Bugfixes**
+
+- Search for addons maintainers in all the branches of the current repository. (`#183 <https://github.com/oca/oca-github-bot/issues/183>`_)
+- Make the command ``/ocabot migration`` working when migration issue doesn't contain migration module lines. (`#190 <https://github.com/oca/oca-github-bot/issues/190>`_)
+- Tweak /ocabot usage presentation. (`#199 <https://github.com/oca/oca-github-bot/issues/199>`_)
+
+
 v20220518
 ~~~~~~~~~
 

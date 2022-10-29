@@ -1,1 +1,0 @@
-Make the command ``/ocabot migration`` working when migration issue doesn't contain migration module lines.
