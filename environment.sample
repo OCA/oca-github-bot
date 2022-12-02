@@ -15,6 +15,8 @@ GITHUB_SECRET=
 GITHUB_LOGIN=
 # GitHub oauth token
 GITHUB_TOKEN=
+# Repo is private
+GITHUB_REPO_PRIVATE=True
 # Coma separated list of github organisations names (for organization wide scheduled tasks)
 #GITHUB_ORG=
 # Git name and email used for creating commits (default: user git config,

@@ -67,8 +67,10 @@ def temporary_clone(org, repo, branch):
     if not os.path.isdir(repo_cache_dir):
         os.makedirs(repo_cache_dir)
         check_call(["git", "init", "--bare"], cwd=repo_cache_dir)
-    repo_url = f"https://github.com/{org}/{repo}"
+    repo_url_no_token = f"https://github.com/{org}/{repo}"
     repo_url_with_token = f"https://{config.GITHUB_TOKEN}@github.com/{org}/{repo}"
+
+    repo_url = repo_url_with_token if config.GITHUB_REPO_PRIVATE else repo_url_no_token
     # fetch all branches into cache
     fetch_cmd = [
         "git",

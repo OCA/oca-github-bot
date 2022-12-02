@@ -40,6 +40,7 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 GITHUB_ORG = (
     os.environ.get("GITHUB_ORG") and os.environ.get("GITHUB_ORG").split(",") or []
 )
+GITHUB_REPO_PRIVATE = os.environ.get("GITHUB_REPO_PRIVATE")
 GIT_NAME = os.environ.get("GIT_NAME")
 GIT_EMAIL = os.environ.get("GIT_EMAIL")
 
