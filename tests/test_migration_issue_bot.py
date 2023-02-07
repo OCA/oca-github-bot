@@ -67,6 +67,6 @@ def test_set_lines_issue(gh):
             f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}",
         ),
     ]
-    for (old_body, new_body_expected) in body_transformation:
+    for old_body, new_body_expected in body_transformation:
         new_body, _ = _set_lines_issue(gh_pr_user_login, gh_pr_number, old_body, module)
         assert new_body == new_body_expected
