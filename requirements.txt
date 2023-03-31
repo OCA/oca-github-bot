@@ -46,7 +46,7 @@ python-dateutil==2.8.2
 pytz==2022.4
 raven==6.10.0
 readme-renderer==37.2
-redis==4.5.3
+redis==4.5.4
 requests==2.28.1
 requests-toolbelt==0.9.1
 rfc3986==2.0.0
