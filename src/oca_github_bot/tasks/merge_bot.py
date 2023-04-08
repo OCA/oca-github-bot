@@ -27,7 +27,7 @@ from ..queue import getLogger, task
 from ..utils import hide_secrets
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
 from .main_branch_bot import main_branch_bot_actions
-from .migration_issue_bot import _check_line_issue, _find_issue
+from .migration_issue_bot import _mark_migration_done_in_migration_issue
 
 _logger = getLogger(__name__)
 
@@ -204,10 +204,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         github.gh_call(gh_pr.close)
 
         # Check line in migration issue if required
-        migration_issue = _find_issue(gh_repo, target_branch)
-        if migration_issue:
-            new_body = _check_line_issue(gh_pr.number, migration_issue.body)
-            migration_issue.edit(body=new_body)
+        _mark_migration_done_in_migration_issue(gh_repo, target_branch, gh_pr)
     return True
 
 

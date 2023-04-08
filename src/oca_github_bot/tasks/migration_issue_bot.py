@@ -83,6 +83,13 @@ def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
     return "\n".join(lines), old_pr_number
 
 
+def _mark_migration_done_in_migration_issue(gh_repo, target_branch, gh_pr):
+    migration_issue = _find_issue(gh_repo, target_branch)
+    if migration_issue:
+        new_body = _check_line_issue(gh_pr.number, migration_issue.body)
+        migration_issue.edit(body=new_body)
+
+
 @task()
 @switchable("migration_issue_bot")
 def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
