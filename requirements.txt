@@ -56,7 +56,7 @@ setuptools-odoo==3.1.6
 setuptools-scm==7.0.5
 six==1.16.0
 tomli==2.0.1
-tornado==6.2
+tornado==6.3.2
 twine==4.0.1
 types-cryptography==3.3.23
 typing_extensions==4.3.0
