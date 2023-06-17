@@ -14,7 +14,7 @@ setup(
     author="Odoo Community Association (OCA)",
     author_email="info@odoo-community.org",
     url="https://github.com/OCA/oca-github-bot",
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     setup_requires=["setuptools_scm"],
     packages=find_packages("src"),
     package_dir={"": "src"},
