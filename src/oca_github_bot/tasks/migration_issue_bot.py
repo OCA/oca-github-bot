@@ -29,6 +29,18 @@ def _find_issue(gh_repo, milestone, target_branch):
     return issue
 
 
+def _check_line_issue(gh_pr_number, issue_body):
+    lines = []
+    regex = r"\#%s\b" % gh_pr_number
+    for line in issue_body.split("\n"):
+        if re.findall(regex, line):
+            checked_line = line.replace("[ ]", "[x]", 1)
+            lines.append(checked_line)
+            continue
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
     lines = []
     added = False
@@ -69,6 +81,13 @@ def _set_lines_issue(gh_pr_user_login, gh_pr_number, issue_body, module):
     if not added:
         lines.append(new_line)
     return "\n".join(lines), old_pr_number
+
+
+def _mark_migration_done_in_migration_issue(gh_repo, target_branch, gh_pr):
+    migration_issue = _find_issue(gh_repo, target_branch)
+    if migration_issue:
+        new_body = _check_line_issue(gh_pr.number, migration_issue.body)
+        migration_issue.edit(body=new_body)
 
 
 @task()
