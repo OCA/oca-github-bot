@@ -39,6 +39,10 @@ class Builder:
             [self.env_python, "-m", "pip", "install", "--upgrade"] + WHEEL_BUILD_TOOLS,
             cwd=".",
         )
+        check_call(
+            [self.env_python, "-m", "pip", "check"],
+            cwd=".",
+        )
 
     def build_wheel(self, project_dir: Path, dist_dir: str) -> None:
         check_call(
