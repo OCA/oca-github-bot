@@ -1,3 +1,11 @@
+v20230617.1
+~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix issue where some command errors where not reported as comments on the PR. (`#244 <https://github.com/oca/oca-github-bot/issues/244>`_)
+
+
 v20230617
 ~~~~~~~~~
 
