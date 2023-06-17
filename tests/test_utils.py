@@ -1,7 +1,11 @@
 # Copyright (c) ACSONE SA/NV 2021
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-from oca_github_bot.utils import hide_secrets, retry_on_exception
+from pathlib import Path
+
+import pytest
+
+from oca_github_bot.utils import cmd_to_str, hide_secrets, retry_on_exception
 
 from .common import set_config
 
@@ -82,3 +86,15 @@ def test_retry_on_exception_no_raise():
         sleep_time=sleep_time,
     )
     assert counter == 1
+
+
+@pytest.mark.parametrize(
+    "cmd, expected",
+    [
+        (["a", "b"], "a b"),
+        (["ls", Path("./user name")], "ls 'user name'"),
+        (["a", "b c"], "a 'b c'"),
+    ],
+)
+def test_cmd_to_str(cmd, expected):
+    assert cmd_to_str(cmd) == expected

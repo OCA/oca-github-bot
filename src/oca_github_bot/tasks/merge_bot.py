@@ -24,7 +24,7 @@ from ..manifest import (
 )
 from ..process import CalledProcessError, call, check_call
 from ..queue import getLogger, task
-from ..utils import hide_secrets
+from ..utils import cmd_to_str, hide_secrets
 from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
 from .main_branch_bot import main_branch_bot_actions
 from .migration_issue_bot import _mark_migration_done_in_migration_issue
@@ -291,7 +291,7 @@ def merge_bot_start(
                     f"awaiting test results.",
                 )
         except CalledProcessError as e:
-            cmd = " ".join(e.cmd)
+            cmd = cmd_to_str(e.cmd)
             github.gh_call(
                 gh_pr.create_comment,
                 hide_secrets(
@@ -405,7 +405,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                     try:
                         _merge_bot_merge_pr(org, repo, merge_bot_branch, clone_dir)
                     except CalledProcessError as e:
-                        cmd = " ".join(e.cmd)
+                        cmd = cmd_to_str(e.cmd)
                         github.gh_call(
                             gh_pr.create_comment,
                             hide_secrets(
