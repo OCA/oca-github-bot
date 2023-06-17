@@ -1,3 +1,11 @@
+v20230617
+~~~~~~~~~
+
+**Bugfixes**
+
+- ``/ocabot migration``: Automaticaly check line in Migration issue when merging the according Pull Request. (`#192 <https://github.com/oca/oca-github-bot/issues/192>`_)
+- ``/ocabot migration``: A new migration PR can overwrite the PR in the migration issue only if the latter is closed. (`#218 <https://github.com/oca/oca-github-bot/issues/218>`_)
+
 v20221019
 ~~~~~~~~~
 
