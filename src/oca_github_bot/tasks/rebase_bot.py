@@ -6,7 +6,7 @@ from ..config import switchable
 from ..manifest import user_can_push
 from ..process import CalledProcessError, check_call
 from ..queue import getLogger, task
-from ..utils import hide_secrets
+from ..utils import cmd_to_str, hide_secrets
 
 _logger = getLogger(__name__)
 
@@ -97,7 +97,7 @@ def rebase_bot_start(org, repo, pr, username, dry_run=False):
                     f"(https://github.com/{org}/{repo}/commits/{target_branch}).",
                 )
         except CalledProcessError as e:
-            cmd = " ".join(e.cmd)
+            cmd = cmd_to_str(e.cmd)
             github.gh_call(
                 gh_pr.create_comment,
                 hide_secrets(

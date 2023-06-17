@@ -2,7 +2,9 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 import re
+import shlex
 import time
+from typing import Sequence
 
 from . import config
 
@@ -27,3 +29,7 @@ def retry_on_exception(
                 raise
             counter += 1
             time.sleep(sleep_time)
+
+
+def cmd_to_str(cmd: Sequence[str]) -> str:
+    return shlex.join(str(c) for c in cmd)
