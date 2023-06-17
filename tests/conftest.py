@@ -17,7 +17,9 @@ def git_clone(tmp_path):
     """
     remote = tmp_path / "remote"
     remote.mkdir()
-    subprocess.check_call(["git", "init", "--bare"], cwd=remote)
+    subprocess.check_call(
+        ["git", "init", "--bare", "--initial-branch=master"], cwd=remote
+    )
     clone = tmp_path / "clone"
     subprocess.check_call(["git", "clone", str(remote), "clone"], cwd=tmp_path)
     subprocess.check_call(["git", "config", "user.name", "test"], cwd=clone)
