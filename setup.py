@@ -25,6 +25,7 @@ setup(
         "appdirs",
         # GitHub client
         "github3.py>=1.3.0",
+        "urllib3<2",  # for compatibility with github3.py
         # celery and celery monitoring for the task queue
         "flower",
         "celery[redis]",
