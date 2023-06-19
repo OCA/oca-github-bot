@@ -1,3 +1,10 @@
+v20230619
+~~~~~~~~~
+
+**Bugfixes**
+
+- Fix merge command regression introduced in previous release. (`#246 <https://github.com/oca/oca-github-bot/issues/246>`_)
+
 v20230617.1
 ~~~~~~~~~~~
 
