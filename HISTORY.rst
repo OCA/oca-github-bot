@@ -4,6 +4,7 @@ v20230619
 **Bugfixes**
 
 - Fix merge command regression introduced in previous release. (`#246 <https://github.com/oca/oca-github-bot/issues/246>`_)
+- Sanity check the virtual environment used to build wheels.
 
 v20230617.1
 ~~~~~~~~~~~
