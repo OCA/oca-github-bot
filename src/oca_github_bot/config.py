@@ -142,3 +142,5 @@ WHEEL_BUILD_TOOLS = os.environ.get(
     "WHEEL_BUILD_TOOLS",
     "build,pip,setuptools<58,wheel,setuptools-odoo,whool",
 ).split(",")
+
+MAIN_BRANCH_BOT_MIN_VERSION = os.environ.get("MAIN_BRANCH_BOT_MIN_VERSION", "8.0")
