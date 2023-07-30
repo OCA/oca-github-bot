@@ -10,6 +10,8 @@ from oca_github_bot.version_branch import (
     search_merge_bot_branch,
 )
 
+from .common import set_config
+
 
 def test_is_main_branch_bot_branch():
     assert not is_main_branch_bot_branch("6.1")
@@ -17,6 +19,10 @@ def test_is_main_branch_bot_branch():
     assert is_main_branch_bot_branch("8.0")
     assert is_main_branch_bot_branch("12.0")
     assert not is_main_branch_bot_branch("10.0-something")
+    with set_config(MAIN_BRANCH_BOT_MIN_VERSION="10.0"):
+        assert is_main_branch_bot_branch("10.0")
+        assert is_main_branch_bot_branch("12.0")
+        assert not is_main_branch_bot_branch("7.0")
 
 
 def test_is_protected_branch():

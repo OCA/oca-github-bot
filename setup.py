@@ -38,6 +38,8 @@ setup(
         "lxml",
         # for setuptools-odoo-make-default
         "setuptools-odoo",
+        # packaging
+        "packaging>=22",
     ],
     extras_require={
         "test": [
