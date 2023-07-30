@@ -5,3 +5,6 @@
     issue_format = "`#{issue} <https://github.com/oca/oca-github-bot/issues/{issue}>`_"
     directory = "newsfragments/"
     filename = "HISTORY.rst"
+
+[tool.pip-deepfreeze.sync]
+extras = "test"
