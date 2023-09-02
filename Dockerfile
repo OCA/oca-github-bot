@@ -25,7 +25,7 @@ RUN set -x \
   && python3 -m venv /ocamt-pinned \
   && /ocamt-pinned/bin/pip install --no-cache-dir -U pip wheel
 RUN set -x \
-  && /ocamt-pinned/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@9a5d4cbe17a7fe9921e4157d74e64461019e03f3#egg=oca-maintainers-tools \
+  && /ocamt-pinned/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@417169ef3ca0db077c9236a1bf7b64c9511cbe09#egg=oca-maintainers-tools \
   && ln -s /ocamt-pinned/bin/oca-gen-addon-icon /usr/local/bin/
 
 # Other oca maintainer tools that are less sensitive to changes. The README generator is
@@ -35,7 +35,7 @@ RUN set -x \
   && python3 -m venv /ocamt \
   && /ocamt/bin/pip install --no-cache-dir -U pip wheel
 RUN set -x \
-  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@9a5d4cbe17a7fe9921e4157d74e64461019e03f3#egg=oca-maintainers-tools \
+  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@417169ef3ca0db077c9236a1bf7b64c9511cbe09#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/
