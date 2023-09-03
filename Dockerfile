@@ -19,27 +19,25 @@ RUN set -x \
 # The main branch bot needs several other command line tools from in OCA/maintainer-tools
 # we install them in a separate virtualenv to avoid polluting our main environment.
 
-# Install a specific version of readme and icon generator, to ensure stability
-# as any tiny change in generated output may create many commits on all addons.
-# TODO: this particular version of maintainer tool does not install with
-# the latest pip version due to https://github.com/OCA/maintainer-tools/pull/483
-# so we don't upgrade pip. Be careful when changing this as it will regenerate
-# all html readmes.
+# Install a specific version of icon generator, to ensure stability as any tiny change
+# in generated output may create many commits on all addons.
 RUN set -x \
-  && python3 -m venv /ocamt-readme \
-  && /ocamt-readme/bin/pip install --no-cache-dir -U wheel
+  && python3 -m venv /ocamt-pinned \
+  && /ocamt-pinned/bin/pip install --no-cache-dir -U pip wheel
 RUN set -x \
-  && /ocamt-readme/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@73c47b6835bee3ab0eeeff7c463de6b9c085abbc#egg=oca-maintainers-tools \
-  && ln -s /ocamt-readme/bin/oca-gen-addon-readme /usr/local/bin/ \
-  && ln -s /ocamt-readme/bin/oca-gen-addon-icon /usr/local/bin/
+  && /ocamt-pinned/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@417169ef3ca0db077c9236a1bf7b64c9511cbe09#egg=oca-maintainers-tools \
+  && ln -s /ocamt-pinned/bin/oca-gen-addon-icon /usr/local/bin/
 
-# Other oca maintainer tools that are less sensitive to changes
+# Other oca maintainer tools that are less sensitive to changes. The README generator is
+# not as sensitive as before because it now stores a hash of the fragments in the
+# generated README.rst, so it will only regenerate if the fragments have changed.
 RUN set -x \
   && python3 -m venv /ocamt \
   && /ocamt/bin/pip install --no-cache-dir -U pip wheel
 RUN set -x \
-  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@7214f9584abebfc503968547d06a2c9377a083b9#egg=oca-maintainers-tools \
+  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@417169ef3ca0db077c9236a1bf7b64c9511cbe09#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
+  && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/
 RUN set -x \
   && /ocamt/bin/pip install --no-cache-dir 'setuptools-odoo>=3.0.3' \

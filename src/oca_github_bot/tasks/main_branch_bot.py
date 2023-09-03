@@ -33,6 +33,7 @@ def _gen_addons_readme(org, repo, branch, cwd):
     _logger.info("oca-gen-addon-readme in %s/%s@%s", org, repo, branch)
     gen_addon_readme_cmd = [
         "oca-gen-addon-readme",
+        "--if-source-changed",
         "--org-name",
         org,
         "--repo-name",
