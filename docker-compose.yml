@@ -14,7 +14,7 @@ services:
       - 8080:8080
     user: "${UID}:${GID}"
     env_file:
-      - ./environment
+      - ./.env
     volumes:
       - ./data/cache:/app/run/.cache
       - ./data/simple-index:/app/run/simple-index
@@ -28,7 +28,7 @@ services:
       - queue
     user: "${UID}:${GID}"
     env_file:
-      - ./environment
+      - ./.env
     volumes:
       - ./data/cache:/app/run/.cache
       - ./data/simple-index:/app/run/simple-index
@@ -42,7 +42,7 @@ services:
       - queue
     user: "${UID}:${GID}"
     env_file:
-      - ./environment
+      - ./.env
     volumes:
       - ./data/cache:/app/run/.cache
       - ./data/simple-index:/app/run/simple-index

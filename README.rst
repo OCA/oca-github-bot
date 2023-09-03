@@ -135,7 +135,7 @@ Running it
 Environment variables
 ---------------------
 
-First create and customize a file named ``environment``,
+First create and customize a file named ``.env``,
 based on `environment.sample <./environment.sample>`_.
 
 Tasks performed by the bot can be specified by setting the ``BOT_TASKS``
