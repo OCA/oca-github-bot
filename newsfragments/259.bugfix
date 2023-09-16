@@ -1,0 +1,1 @@
+Add binutils to Dockerfile to fix pandoc installer.
