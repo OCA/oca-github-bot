@@ -5,9 +5,11 @@ ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 
+# binutils is needed for the ar command, used by pypandoc.ensure_pandoc_installed()
 RUN set -x \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
+    binutils \
     ca-certificates \
     curl \
     git \
