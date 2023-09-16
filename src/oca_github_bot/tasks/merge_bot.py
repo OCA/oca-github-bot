@@ -172,6 +172,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             # (without .dev suffix).
             bump_manifest_version(addon_dir, bumpversion_mode, git_commit=True)
         build_and_check_wheel(addon_dir)
+
     if dry_run:
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
     else:
@@ -179,12 +180,18 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         check_call(
             ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
         )
+
     # build and publish wheel
     if modified_installable_addon_dirs:
         for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, dist_publisher, dry_run)
+
     # TODO wlc unlock modified_addons
+
+    # delete merge bot branch
     _git_delete_branch("origin", merge_bot_branch, cwd=cwd)
+
+    # notify sucessful merge in PR comments and labels
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
         gh_repo = gh.repository(org, repo)
