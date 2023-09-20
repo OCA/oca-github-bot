@@ -15,7 +15,7 @@ def test_git_push_if_needed(git_clone):
     with afile.open("w"):
         pass
     subprocess.check_call(["git", "add", "afile"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add afile"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] add afile"], cwd=git_clone)
     assert git_push_if_needed("origin", "master", cwd=git_clone)
     assert not git_push_if_needed("origin", "master", cwd=git_clone)
     subprocess.check_call(["git", "reset", "--hard", "HEAD^"], cwd=git_clone)
