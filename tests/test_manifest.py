@@ -121,7 +121,7 @@ def test_git_modified_addons(git_clone):
     manifest_path = addon_dir / "__manifest__.py"
     manifest_path.write_text("{'name': 'the addon'}")
     subprocess.check_call(["git", "add", "."], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add addon"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] add addon"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == ({"addon"}, False)
     # push and check addon is not modified
     subprocess.check_call(["git", "push", "origin", "master"], cwd=git_clone)
@@ -131,12 +131,16 @@ def test_git_modified_addons(git_clone):
     setup_dir.mkdir(parents=True)
     (setup_dir / "setup.py").write_text("")
     subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
+    subprocess.check_call(
+        ["git", "commit", "-m", "[BOT] add addon setup"], cwd=git_clone
+    )
     assert git_modified_addons(git_clone, "origin/master") == (set(), True)
     (setup_dir / "odoo" / "addons").mkdir(parents=True)
     (setup_dir / "odoo" / "addons" / "addon").symlink_to("../../../../addon")
     subprocess.check_call(["git", "add", "setup"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add addon setup"], cwd=git_clone)
+    subprocess.check_call(
+        ["git", "commit", "-m", "[BOT] add addon setup"], cwd=git_clone
+    )
     assert git_modified_addons(git_clone, "origin/master") == ({"addon"}, False)
     assert git_modified_addon_dirs(git_clone, "origin/master") == (
         [str(git_clone / "addon")],
@@ -151,7 +155,7 @@ def test_git_modified_addons(git_clone):
     (addon_dir / "__init__.py").write_text("")
     (git_clone / "README").write_text("")
     subprocess.check_call(["git", "add", "."], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] add addon2"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == (
         {"addon", "addon2"},
         True,  # because of README at repo root
@@ -159,7 +163,7 @@ def test_git_modified_addons(git_clone):
     # remove the first and test it does not appear in result
     subprocess.check_call(["git", "tag", "beforerm"], cwd=git_clone)
     subprocess.check_call(["git", "rm", "-r", "addon"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "rm addon"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] rm addon"], cwd=git_clone)
     assert git_modified_addons(git_clone, "beforerm") == (set(), True)
 
 
@@ -169,7 +173,7 @@ def test_git_modified_addons_merge_base(git_clone):
     addon2_dir.mkdir()
     (addon2_dir / "__manifest__.py").write_text("{'name': 'addon2'}")
     subprocess.check_call(["git", "add", "addon2"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add addon2"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] add addon2"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == ({"addon2"}, False)
     # create addon1 on a new branch
     subprocess.check_call(["git", "checkout", "-b" "addon1"], cwd=git_clone)
@@ -177,13 +181,13 @@ def test_git_modified_addons_merge_base(git_clone):
     addon1_dir.mkdir()
     (addon1_dir / "__manifest__.py").write_text("{'name': 'addon1'}")
     subprocess.check_call(["git", "add", "addon1"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add addon1"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] add addon1"], cwd=git_clone)
     assert git_modified_addons(git_clone, "master") == ({"addon1"}, False)
     # modify addon2 on master
     subprocess.check_call(["git", "checkout", "master"], cwd=git_clone)
     (addon2_dir / "__manifest__.py").write_text("{'name': 'modified addon2'}")
     subprocess.check_call(["git", "add", "addon2"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "upd addon2"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] upd addon2"], cwd=git_clone)
     # check comparison of addon1 to master only gives addon1
     subprocess.check_call(["git", "checkout", "addon1"], cwd=git_clone)
     assert git_modified_addons(git_clone, "master") == ({"addon1"}, False)
@@ -193,7 +197,7 @@ def test_git_modified_addons_merge_base(git_clone):
     addon3_dir.mkdir()
     (addon3_dir / "__manifest__.py").write_text("{'name': 'addon3'}")
     subprocess.check_call(["git", "add", "addon3"], cwd=git_clone)
-    subprocess.check_call(["git", "commit", "-m", "add addon3"], cwd=git_clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] add addon3"], cwd=git_clone)
     assert git_modified_addons(git_clone, "HEAD^") == ({"addon3"}, False)
     commit = git_get_head_sha(cwd=git_clone)
     subprocess.check_call(["git", "checkout", "addon1"], cwd=git_clone)

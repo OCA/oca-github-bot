@@ -175,9 +175,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     # to avoid a proliferation of automated actions commits
     if github.git_get_head_sha(cwd) != head_sha:
         check_call(["git", "reset", "--soft", head_sha], cwd=cwd)
-        check_call(
-            ["git", "commit", "-m", "oca-github-bot post-merge updates"], cwd=cwd
-        )
+        check_call(["git", "commit", "-m", "[BOT] post-merge updates"], cwd=cwd)
 
     for addon_dir in modified_installable_addon_dirs:
         build_and_check_wheel(addon_dir)
