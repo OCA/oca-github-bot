@@ -59,7 +59,7 @@ twine==4.0.1
 types-cryptography==3.3.23
 typing_extensions==4.3.0
 uritemplate==4.1.1
-urllib3==1.26.12
+urllib3==1.26.17
 vine==5.0.0
 wcwidth==0.2.5
 webencodings==0.5.1
