@@ -16,7 +16,7 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
 commonmark==0.9.1
-cryptography==41.0.3
+cryptography==41.0.4
 docutils==0.19
 flower==1.2.0
 frozenlist==1.3.1
