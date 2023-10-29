@@ -7,14 +7,15 @@ from ..config import (
     GEN_ADDON_ICON_EXTRA_ARGS,
     GEN_ADDON_README_EXTRA_ARGS,
     GEN_ADDONS_TABLE_EXTRA_ARGS,
+    GEN_PYPROJECT_MIN_VERSION,
     dist_publisher,
     switchable,
 )
-from ..github import git_push_if_needed, temporary_clone
+from ..github import git_commit_if_needed, git_push_if_needed, temporary_clone
 from ..manifest import get_odoo_series_from_branch
 from ..process import check_call
 from ..queue import getLogger, task
-from ..version_branch import is_main_branch_bot_branch
+from ..version_branch import is_main_branch_bot_branch, is_supported_main_branch
 
 _logger = getLogger(__name__)
 
@@ -73,6 +74,32 @@ def _setuptools_odoo_make_default(org, repo, branch, cwd):
     )
 
 
+@switchable("whool_init")
+def _whool_init(org, repo, branch, cwd):
+    _logger.info(
+        "generate pyproejct.toml with whool init in %s/%s@%s\n", org, repo, branch
+    )
+    whool_init_cmd = ["whool", "init"]
+    check_call(whool_init_cmd, cwd=cwd)
+    git_commit_if_needed("*/pyproject.toml", "[BOT] add pyproject.toml", cwd=cwd)
+
+
+@switchable("gen_metapackage")
+def _gen_metapackage(org, repo, branch, cwd):
+    if not is_supported_main_branch(branch, min_version="15.0"):
+        # We don't support branches < 15 because I don't want to worry about
+        # the package name prefix. From 15.0 on, the package name is always prefixed
+        # with "odoo-addons-".
+        _logger.warning("gen_metapackage not supported for branch %s", branch)
+        return
+    _logger.info("oca-gen-metapackage in %s/%s@%s\n", org, repo, branch)
+    gen_metapackage_cmd = ["oca-gen-metapackage", f"odoo-addons-{org.lower()}-{repo}"]
+    check_call(gen_metapackage_cmd, cwd=cwd)
+    git_commit_if_needed(
+        "setup/_metapackage", "[BOT] add or update setup/_metapackage", cwd=cwd
+    )
+
+
 def main_branch_bot_actions(org, repo, branch, cwd):
     """
     Run main branch bot actions on a local git checkout.
@@ -86,8 +113,13 @@ def main_branch_bot_actions(org, repo, branch, cwd):
     _gen_addons_readme(org, repo, branch, cwd)
     # generate icon
     _gen_addons_icon(org, repo, branch, cwd)
-    # generate/clean default setup.py
-    _setuptools_odoo_make_default(org, repo, branch, cwd)
+    if is_supported_main_branch(branch, min_version=GEN_PYPROJECT_MIN_VERSION):
+        # generate pyproject.toml for addons and metapackage
+        _whool_init(org, repo, branch, cwd)
+        _gen_metapackage(org, repo, branch, cwd)
+    else:
+        # generate/clean default setup.py and metapackage
+        _setuptools_odoo_make_default(org, repo, branch, cwd)
 
 
 @task()

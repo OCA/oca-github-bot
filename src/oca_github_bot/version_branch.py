@@ -17,11 +17,18 @@ MERGE_BOT_BRANCH_RE = re.compile(
 )
 
 
-def is_main_branch_bot_branch(branch_name):
+def is_supported_main_branch(branch_name, min_version=None):
     if not ODOO_VERSION_RE.match(branch_name):
         return False
-    return version.parse(branch_name) >= version.parse(
-        config.MAIN_BRANCH_BOT_MIN_VERSION
+    branch_version = version.parse(branch_name)
+    if min_version and branch_version < version.parse(min_version):
+        return False
+    return True
+
+
+def is_main_branch_bot_branch(branch_name):
+    return is_supported_main_branch(
+        branch_name, min_version=config.MAIN_BRANCH_BOT_MIN_VERSION
     )
 
 

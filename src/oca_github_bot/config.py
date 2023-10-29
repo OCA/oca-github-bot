@@ -59,7 +59,7 @@ DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
 # Available tasks:
 #  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,merge_bot,tag_needs_review,
-#  migration_issue_bot
+#  migration_issue_bot,whool_init,gen_metapackage
 BOT_TASKS = os.environ.get("BOT_TASKS", "all").split(",")
 
 BOT_TASKS_DISABLED = os.environ.get("BOT_TASKS_DISABLED", "").split(",")
@@ -143,4 +143,10 @@ WHEEL_BUILD_TOOLS = os.environ.get(
     "build,pip,setuptools<58,wheel,setuptools-odoo,whool",
 ).split(",")
 
+# minimum Odoo series supported by the bot
 MAIN_BRANCH_BOT_MIN_VERSION = os.environ.get("MAIN_BRANCH_BOT_MIN_VERSION", "8.0")
+
+# First Odoo Series for which the whool_init and gen_metapackage tasks are run on main
+# branches. For previous versions, the setuptools_odoo task is run and generates
+# setup.py instead of pyproject.toml.
+GEN_PYPROJECT_MIN_VERSION = os.environ.get("GEN_PYPROJECT_MIN_VERSION", "17.0")
