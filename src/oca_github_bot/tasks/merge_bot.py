@@ -161,7 +161,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         for addon_dir in modified_installable_addon_dirs:
             # bumpversion is last commit (after readme generation etc
             # and before building wheel),
-            # so setuptools-odoo generates a round version number
+            # so setuptools-odoo and whool generate a round version number
             # (without .dev suffix).
             bump_manifest_version(addon_dir, bumpversion_mode, git_commit=True)
 
