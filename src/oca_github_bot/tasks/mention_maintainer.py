@@ -5,7 +5,7 @@ from .. import config, github
 from ..config import switchable
 from ..manifest import (
     addon_dirs_in,
-    get_manifest,
+    get_maintainers,
     git_modified_addon_dirs,
     is_addon_dir,
 )
@@ -24,7 +24,10 @@ def mention_maintainer(org, repo, pr, dry_run=False):
         with github.temporary_clone(org, repo, target_branch) as clonedir:
             # Get maintainers existing before the PR changes
             addon_dirs = addon_dirs_in(clonedir, installable_only=True)
-            maintainers_dict = get_maintainers(addon_dirs)
+            maintainers_dict = get_maintainers(
+                addon_dirs,
+                cwd=clonedir,
+            )
 
             # Get list of addons modified in the PR.
             pr_branch = f"tmp-pr-{pr}"
@@ -81,15 +84,3 @@ def get_adopt_mention(pr_opener):
     if config.ADOPT_AN_ADDON_MENTION:
         return config.ADOPT_AN_ADDON_MENTION.format(pr_opener=pr_opener)
     return None
-
-
-def get_maintainers(addon_dirs):
-    """Get maintainer for each addon in `addon_dirs`.
-
-    :return: Dictionary {'addon_dir': <list of addon's maintainers>}
-    """
-    addon_maintainers_dict = dict()
-    for addon_dir in addon_dirs:
-        maintainers = get_manifest(addon_dir).get("maintainers", [])
-        addon_maintainers_dict.setdefault(addon_dir, maintainers)
-    return addon_maintainers_dict

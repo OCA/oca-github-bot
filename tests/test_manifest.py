@@ -1,6 +1,6 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
-
+import json
 import subprocess
 
 import pytest
@@ -20,7 +20,6 @@ from oca_github_bot.manifest import (
     is_addon_dir,
     is_addons_dir,
     is_maintainer,
-    is_maintainer_other_branches,
     set_manifest_version,
 )
 
@@ -242,10 +241,44 @@ def test_is_maintainer(tmp_path):
     assert not is_maintainer("u1", [tmp_path / "not_an_addon"])
 
 
-def test_is_maintainer_other_branches():
-    assert is_maintainer_other_branches(
-        "OCA", "mis-builder", "sbidoul", {"mis_builder"}, ["12.0"]
+def test_is_maintainer_other_branches(git_clone):
+    addon_name = "addon_maintainer_other_branches"
+
+    # create `addon_name` on `other_branch` with maintainer `maintainer`
+    maintainer = "maintainer"
+    other_branch = "other_branch_maintainer"
+    subprocess.check_call(["git", "checkout", "-b", other_branch], cwd=git_clone)
+    addon1_dir = git_clone / addon_name
+    addon1_dir.mkdir(exist_ok=True)
+    manifest = {
+        "name": addon_name,
+        "maintainers": [
+            maintainer,
+        ],
+    }
+    (addon1_dir / "__manifest__.py").write_text(json.dumps(manifest))
+    subprocess.check_call(["git", "add", addon_name], cwd=git_clone)
+    subprocess.check_call(
+        ["git", "commit", "-m", "[BOT] Add with maintainer"], cwd=git_clone
     )
-    assert not is_maintainer_other_branches(
-        "OCA", "mis-builder", "fpdoo", {"mis_builder"}, ["12.0"]
+
+    # create `addon_name` on current branch with no maintainers
+    branch = "current_branch_no_maintainer"
+    subprocess.check_call(["git", "checkout", "-b", branch], cwd=git_clone)
+    addon1_dir = git_clone / addon_name
+    addon1_dir.mkdir(exist_ok=True)
+    manifest = {
+        "name": addon_name,
+    }
+    (addon1_dir / "__manifest__.py").write_text(json.dumps(manifest))
+    subprocess.check_call(["git", "add", addon_name], cwd=git_clone)
+    subprocess.check_call(
+        ["git", "commit", "-m", "[BOT] Add without maintainer"], cwd=git_clone
+    )
+
+    assert is_maintainer(
+        maintainer, {addon_name}, main_branches=[other_branch], cwd=git_clone
+    )
+    assert not is_maintainer(
+        "fpdoo", {addon_name}, main_branches=[other_branch], cwd=git_clone
     )
