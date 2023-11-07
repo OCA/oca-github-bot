@@ -36,13 +36,13 @@ def is_addons_dir(addons_dir, installable_only=False):
     return any(addon_dirs_in(addons_dir, installable_only))
 
 
-def is_addon_dir(addon_dir, installable_only=False):
+def is_addon_dir(addon_dir, installable_only=False, cwd=None):
     """Test if a directory contains an Odoo addon."""
     if not installable_only:
-        return bool(get_manifest_path(addon_dir))
+        return bool(get_manifest_path(addon_dir, cwd=cwd))
     else:
         try:
-            return get_manifest(addon_dir).get("installable", True)
+            return get_manifest(addon_dir, cwd=cwd).get("installable", True)
         except NoManifestFound:
             return False
 

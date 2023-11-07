@@ -24,8 +24,11 @@ def mention_maintainer(org, repo, pr, dry_run=False):
         with github.temporary_clone(org, repo, target_branch) as clonedir:
             # Get maintainers existing before the PR changes
             addon_dirs = addon_dirs_in(clonedir, installable_only=True)
+            other_branches = config.MAINTAINER_CHECK_ODOO_RELEASES
+            main_branches = [target_branch] + other_branches
             maintainers_dict = get_maintainers(
                 addon_dirs,
+                main_branches=main_branches,
                 cwd=clonedir,
             )
 
@@ -41,8 +44,29 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             # Remove not installable addons
             # (case where an addon becomes no more installable).
             modified_addon_dirs = [
-                d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
+                d
+                for d in modified_addon_dirs
+                if is_addon_dir(d, installable_only=True, cwd=clonedir)
             ]
+
+            # Get maintainer of new addons in other branches
+            if other_branches:
+                new_addons = {
+                    addon for addon in modified_addon_dirs if addon not in addon_dirs
+                }
+                if new_addons:
+                    new_maintainers_dict = get_maintainers(
+                        new_addons,
+                        main_branches=other_branches,
+                        cwd=clonedir,
+                    )
+                    maintainers_dict.update(
+                        {
+                            new_addon: new_maintainers_dict[new_addon]
+                            for new_addon in new_addons
+                        }
+                    )
+                    modified_addon_dirs.extend(new_addons)
 
         modified_addons_maintainers = set()
         for modified_addon in modified_addon_dirs:
