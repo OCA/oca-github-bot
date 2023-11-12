@@ -37,12 +37,11 @@ RUN set -x \
   && python3 -m venv /ocamt \
   && /ocamt/bin/pip install --no-cache-dir -U pip wheel
 RUN set -x \
-  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@969238e47c07d0c40573acff81d170f63245d738#egg=oca-maintainers-tools \
+  && /ocamt/bin/pip install --no-cache-dir -e git+https://github.com/OCA/maintainer-tools@568cacd1d6eef453063a524a5ce63dcd49c7259b#egg=oca-maintainers-tools \
   && ln -s /ocamt/bin/oca-gen-addons-table /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
-  && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/
-RUN set -x \
-  && /ocamt/bin/pip install --no-cache-dir 'setuptools-odoo>=3.0.3' \
+  && ln -s /ocamt/bin/oca-gen-metapackage /usr/local/bin/ \
+  && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/ \
   && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
 
 # isolate from system python libraries

@@ -7,6 +7,7 @@ import os
 import shutil
 import tempfile
 from contextlib import contextmanager
+from pathlib import Path
 
 import appdirs
 import github3
@@ -159,3 +160,13 @@ def git_get_head_sha(cwd):
 
 def git_get_current_branch(cwd):
     return check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=cwd).strip()
+
+
+def git_commit_if_needed(glob_pattern, msg, cwd):
+    files = [p.absolute() for p in Path(cwd).glob(glob_pattern)]
+    if not files:
+        return  # no match nothing to commit
+    check_call(["git", "add", *files], cwd=cwd)
+    if call(["git", "diff", "--cached", "--quiet", "--exit-code"], cwd=cwd) == 0:
+        return  # nothing added
+    return check_call(["git", "commit", "-m", msg], cwd=cwd)
