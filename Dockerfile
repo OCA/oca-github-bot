@@ -42,7 +42,8 @@ RUN set -x \
   && ln -s /ocamt/bin/oca-gen-addon-readme /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-gen-metapackage /usr/local/bin/ \
   && ln -s /ocamt/bin/oca-towncrier /usr/local/bin/ \
-  && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/
+  && ln -s /ocamt/bin/setuptools-odoo-make-default /usr/local/bin/ \
+  && ln -s /ocamt/bin/whool /usr/local/bin
 
 # isolate from system python libraries
 RUN set -x \
