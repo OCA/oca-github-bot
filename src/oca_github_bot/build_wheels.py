@@ -45,18 +45,22 @@ class Builder:
         )
 
     def build_wheel(self, project_dir: Path, dist_dir: str) -> None:
-        check_call(
-            [
-                self.env_python,
-                "-m",
-                "build",
-                "--wheel",
-                "--outdir",
-                dist_dir,
-                "--no-isolation",
-            ],
-            cwd=project_dir,
-        )
+        with tempfile.TemporaryDirectory() as empty_dir:
+            # Start build from an empty directory, to avoid accidentally importing
+            # python files from the addon root directory during the build process.
+            check_call(
+                [
+                    self.env_python,
+                    "-m",
+                    "build",
+                    "--wheel",
+                    "--outdir",
+                    dist_dir,
+                    "--no-isolation",
+                    project_dir,
+                ],
+                cwd=empty_dir,
+            )
         self._check_wheels(dist_dir)
         return True
 

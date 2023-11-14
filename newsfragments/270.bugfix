@@ -1,0 +1,2 @@
+Start wheel build from an empty directory, to avoid accidentally importing
+python files from the addon root directory during the build process.
