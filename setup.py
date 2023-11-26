@@ -38,6 +38,8 @@ setup(
         "lxml",
         # for setuptools-odoo-make-default
         "setuptools-odoo",
+        # for whool-init
+        "whool",
         # packaging
         "packaging>=22",
     ],

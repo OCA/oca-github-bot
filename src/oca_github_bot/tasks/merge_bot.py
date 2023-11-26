@@ -133,13 +133,11 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
     check_call(["git", "fetch", "origin", f"refs/pull/{pr}/head:tmp-pr-{pr}"], cwd=cwd)
     check_call(["git", "checkout", f"tmp-pr-{pr}"], cwd=cwd)
     modified_addon_dirs, _, _ = git_modified_addon_dirs(cwd, target_branch)
-    # Run main branch bot actions before bump version.
-    # Do not run the main branch bot if there are no modified addons,
-    # because it is dedicated to addons repos.
     check_call(["git", "checkout", merge_bot_branch], cwd=cwd)
 
-    # remove not installable addons (case where an addons becomes no more
-    # installable).
+    head_sha = github.git_get_head_sha(cwd)
+
+    # list installable modified addons only
     modified_installable_addon_dirs = [
         d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
     ]
@@ -158,20 +156,30 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
             cwd,
         )
 
+    # bump manifest version of modified installable addons
+    if bumpversion_mode != "nobump":
+        for addon_dir in modified_installable_addon_dirs:
+            # bumpversion is last commit (after readme generation etc
+            # and before building wheel),
+            # so setuptools-odoo and whool generate a round version number
+            # (without .dev suffix).
+            bump_manifest_version(addon_dir, bumpversion_mode, git_commit=True)
+
+    # run the main branch bot actions only if there are modified addon directories,
+    # so we don't run them when the merge bot branch for non-addons repos
     if modified_addon_dirs:
         # this includes setup.py and README.rst generation
         main_branch_bot_actions(org, repo, target_branch, cwd=cwd)
 
+    # squash post merge commits into one (bumpversion, readme generator, etc),
+    # to avoid a proliferation of automated actions commits
+    if github.git_get_head_sha(cwd) != head_sha:
+        check_call(["git", "reset", "--soft", head_sha], cwd=cwd)
+        check_call(["git", "commit", "-m", "[BOT] post-merge updates"], cwd=cwd)
+
     for addon_dir in modified_installable_addon_dirs:
-        # TODO wlc lock and push
-        # TODO msgmerge and commit
-        if bumpversion_mode != "nobump":
-            # bumpversion is last commit (after readme generation etc
-            # and before building wheel),
-            # so setuptools-odoo generates a round version number
-            # (without .dev suffix).
-            bump_manifest_version(addon_dir, bumpversion_mode, git_commit=True)
         build_and_check_wheel(addon_dir)
+
     if dry_run:
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
     else:
@@ -179,12 +187,18 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         check_call(
             ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
         )
+
     # build and publish wheel
     if modified_installable_addon_dirs:
         for addon_dir in modified_installable_addon_dirs:
             build_and_publish_wheel(addon_dir, dist_publisher, dry_run)
+
     # TODO wlc unlock modified_addons
+
+    # delete merge bot branch
     _git_delete_branch("origin", merge_bot_branch, cwd=cwd)
+
+    # notify sucessful merge in PR comments and labels
     with github.login() as gh:
         gh_pr = gh.pull_request(org, repo, pr)
         gh_repo = gh.repository(org, repo)

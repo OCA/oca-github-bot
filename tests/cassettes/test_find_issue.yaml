@@ -615,7 +615,7 @@ interactions:
       authorization:
       - DUMMY
     method: GET
-    uri: https://api.github.com/repos/OCA/contract/issues?milestone=8&per_page=100
+    uri: https://api.github.com/repos/OCA/contract/issues?milestone=8&per_page=100&state=all
   response:
     body:
       string: |-

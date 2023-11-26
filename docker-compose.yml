@@ -58,7 +58,7 @@ services:
       - 5555:5555
     user: "${UID}:${GID}"
     env_file:
-      - ./environment
+      - ./.env
     restart: unless-stopped
     command: celery --app=oca_github_bot.queue.app flower
     depends_on:

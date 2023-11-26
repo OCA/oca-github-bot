@@ -144,7 +144,7 @@ def bump_manifest_version(addon_dir, mode, git_commit=False):
                 "git",
                 "commit",
                 "-m",
-                f"{addon_name} {version}",
+                f"[BOT] {addon_name} {version}",
                 "--",
                 get_manifest_file_name(addon_dir),
             ],

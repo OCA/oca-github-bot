@@ -1,10 +1,13 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import pytest
+
 from oca_github_bot.version_branch import (
     is_main_branch_bot_branch,
     is_merge_bot_branch,
     is_protected_branch,
+    is_supported_main_branch,
     make_merge_bot_branch,
     parse_merge_bot_branch,
     search_merge_bot_branch,
@@ -72,3 +75,15 @@ def test_search_merge_bot_branch():
     assert search_merge_bot_branch(text) == "12.0-ocabot-merge-pr-100-by-toto-bump-no"
     text = "blah blah more stuff"
     assert search_merge_bot_branch(text) is None
+
+
+@pytest.mark.parametrize(
+    ("branch_name", "min_version", "expected"),
+    [
+        ("8.0", None, True),
+        ("8.0", "8.0", True),
+        ("8.0", "9.0", False),
+    ],
+)
+def test_is_supported_branch(branch_name, min_version, expected):
+    assert is_supported_main_branch(branch_name, min_version) is expected

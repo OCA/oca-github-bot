@@ -48,7 +48,9 @@ def _make_addon(
             )
         )
     subprocess.check_call(["git", "add", addon_name], cwd=addons_dir)
-    subprocess.check_call(["git", "commit", "-m", "add " + addon_name], cwd=addons_dir)
+    subprocess.check_call(
+        ["git", "commit", "-m", "[BOT] add " + addon_name], cwd=addons_dir
+    )
     subprocess.check_call(["git", "clean", "-ffdx", "--", "setup"], cwd=addons_dir)
     if setup_py:
         cmd = ["setuptools-odoo-make-default", "-d", str(addons_dir), "--commit"]

@@ -1,3 +1,20 @@
+v20231013
+~~~~~~~~~
+
+**Features**
+
+- Add ``MAIN_BRANCH_BOT_MIN_VERSION`` config option to declare the minimum Odoo series
+  for which the main branch bot actions runs. (`#252 <https://github.com/oca/oca-github-bot/issues/252>`_)
+- Upgrade to latest ``maintainer-tools``, and use ``oca-gen-addon-readme
+  --if-source-changed`` to avoid full regenaration of all readme when we upgrade
+  the README generator. (`#256 <https://github.com/oca/oca-github-bot/issues/256>`_)
+
+
+**Bugfixes**
+
+- Add binutils to Dockerfile to fix pandoc installer. (`#259 <https://github.com/oca/oca-github-bot/issues/259>`_)
+
+
 v20230619
 ~~~~~~~~~
 

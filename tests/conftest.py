@@ -31,7 +31,7 @@ def git_clone(tmp_path):
     with somefile.open("w"):
         pass
     subprocess.check_call(["git", "add", "somefile"], cwd=clone)
-    subprocess.check_call(["git", "commit", "-m", "add somefile"], cwd=clone)
+    subprocess.check_call(["git", "commit", "-m", "[BOT] add somefile"], cwd=clone)
     subprocess.check_call(["git", "push", "origin", "master"], cwd=clone)
     yield clone
 
