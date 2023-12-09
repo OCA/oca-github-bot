@@ -30,7 +30,8 @@ class NoManifestFound(Exception):
 
 
 class OdooSeriesNotDetected(Exception):
-    pass
+    def __init__(self, msg=None):
+        super().__init__(msg or "Odoo series could not be detected")
 
 
 def is_addons_dir(addons_dir, installable_only=False):
