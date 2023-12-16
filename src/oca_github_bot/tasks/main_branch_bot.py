@@ -153,6 +153,8 @@ def main_branch_bot(org, repo, branch, build_wheels, dry_run=False):
 def main_branch_bot_all_repos(org, build_wheels, dry_run=False):
     with github.login() as gh:
         for repo in gh.repositories_by(org):
+            if repo.fork:
+                continue
             for branch in repo.branches():
                 if not is_main_branch_bot_branch(branch):
                     continue
