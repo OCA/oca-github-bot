@@ -7,13 +7,13 @@ v20231216
   with a large number of forks. (`#277 <https://github.com/oca/oca-github-bot/issues/277>`_)
 - Support generating ``pyproject.toml`` instead of ``setup.py`` (`#266 <https://github.com/oca/oca-github-bot/issues/266>`_)
 - Upgraded maintainer-tools (`#275 <https://github.com/oca/oca-github-bot/issues/275>`_)
-- Fixed rendering of OdooSeriesNotFound exceptions (`#274 <https://github.com/oca/oca-github-bot/issues/274>`_)
-
+- Look for migration issues in all states in ``/ocabot migration`` command (`#216 <https://github.com/OCA/oca-github-bot/pull/216>`_)
 
 **Bugfixes**
 
 - Start wheel build from an empty directory, to avoid accidentally importing
   python files from the addon root directory during the build process. (`#270 <https://github.com/oca/oca-github-bot/issues/270>`_)
+- Fixed rendering of OdooSeriesNotFound exceptions (`#274 <https://github.com/oca/oca-github-bot/issues/274>`_)
 
 
 v20231013
