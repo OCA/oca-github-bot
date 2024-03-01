@@ -156,7 +156,7 @@ def main_branch_bot_all_repos(org, build_wheels, dry_run=False):
             if repo.fork:
                 continue
             for branch in repo.branches():
-                if not is_main_branch_bot_branch(branch):
+                if not is_main_branch_bot_branch(branch.name):
                     continue
                 main_branch_bot.delay(
                     org, repo.name, branch.name, build_wheels, dry_run
