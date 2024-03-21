@@ -150,3 +150,20 @@ MAIN_BRANCH_BOT_MIN_VERSION = os.environ.get("MAIN_BRANCH_BOT_MIN_VERSION", "8.0
 # branches. For previous versions, the setuptools_odoo task is run and generates
 # setup.py instead of pyproject.toml.
 GEN_PYPROJECT_MIN_VERSION = os.environ.get("GEN_PYPROJECT_MIN_VERSION", "17.0")
+
+MIGRATION_GUIDELINES_REMINDER = os.environ.get(
+    "MIGRATION_GUIDELINES_REMINDER",
+    """Thanks for the contribution!
+This appears to be a migration, \
+so here you have a gentle reminder about the migration guidelines.
+
+Please preserve commit history following technical method \
+explained in https://github.com/OCA/maintainer-tools/wiki/#migration.
+If the jump is between several versions, \
+you have to modify the source branch in the main command \
+to accommodate it to this circumstance.
+
+You can also take a look on the project \
+https://github.com/OCA/odoo-module-migrator/ to make easier migration.
+""",
+)
