@@ -12,11 +12,18 @@ from ..queue import task
 from ..utils import hide_secrets
 
 
-def _create_or_find_branch_milestone(gh_repo, branch):
+def _find_branch_milestone(gh_repo, branch):
     for milestone in gh_repo.milestones():
         if milestone.title == branch:
             return milestone
-    return gh_repo.create_milestone(branch)
+    return None
+
+
+def _create_or_find_branch_milestone(gh_repo, branch):
+    branch_milestone = _find_branch_milestone(gh_repo, branch)
+    if not branch_milestone:
+        branch_milestone = gh_repo.create_milestone(branch)
+    return branch_milestone
 
 
 def _find_issue(gh_repo, milestone, target_branch):
