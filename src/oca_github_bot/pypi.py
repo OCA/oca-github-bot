@@ -31,7 +31,7 @@ def files_on_index(
     r.raise_for_status()
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(r.text), parser)
-    for a in tree.iterfind("//a"):
+    for a in tree.iterfind(".//a"):
         parsed_url = urlparse(a.get("href"))
         p = PosixPath(parsed_url.path)
         if parsed_url.fragment:
