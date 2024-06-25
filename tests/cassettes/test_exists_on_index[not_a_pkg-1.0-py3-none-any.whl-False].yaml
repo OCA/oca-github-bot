@@ -9,7 +9,7 @@ interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.32.3
     method: GET
     uri: https://pypi.org/simple/not-a-pkg/
   response:
@@ -27,11 +27,11 @@ interactions:
       Content-Type:
       - text/plain; charset=UTF-8
       Date:
-      - Sun, 07 Mar 2021 15:14:01 GMT
+      - Tue, 25 Jun 2024 21:52:36 GMT
+      Permissions-Policy:
+      - publickey-credentials-create=(self),publickey-credentials-get=(self),accelerometer=(),ambient-light-sensor=(),autoplay=(),battery=(),camera=(),display-capture=(),document-domain=(),encrypted-media=(),execution-while-not-rendered=(),execution-while-out-of-viewport=(),fullscreen=(),gamepad=(),geolocation=(),gyroscope=(),hid=(),identity-credentials-get=(),idle-detection=(),local-fonts=(),magnetometer=(),microphone=(),midi=(),otp-credentials=(),payment=(),picture-in-picture=(),screen-wake-lock=(),serial=(),speaker-selection=(),storage-access=(),usb=(),web-share=(),xr-spatial-tracking=()
       Referrer-Policy:
       - origin-when-cross-origin
-      Server:
-      - nginx/1.13.9
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Vary:
@@ -47,9 +47,9 @@ interactions:
       X-Permitted-Cross-Domain-Policies:
       - none
       X-Served-By:
-      - cache-bwi5121-BWI, cache-ams21063-AMS
+      - cache-iad-kiad7000068-IAD, cache-bru1480058-BRU
       X-Timer:
-      - S1615130042.600947,VS0,VE109
+      - S1719352357.609813,VS0,VE113
       X-XSS-Protection:
       - 1; mode=block
     status:
