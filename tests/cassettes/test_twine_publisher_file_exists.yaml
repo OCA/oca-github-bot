@@ -9,99 +9,174 @@ interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.32.3
     method: GET
     uri: https://pypi.org/simple/odoo9-addon-mis-builder/
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAC/7WcTY8cyXVF9/4VFL1uZrwX8eJDIAcwbC0MCLBheePVID5FQjNsmmzJ4Ma/3Sea
-        FLxRdRXV2RgS5DR7WFk3Xtx7T2bUvP3Nv/zbP//nf/377169f/j1l5/+4e23X169evt+1rF/w29/
-        nQ/11cf663z3+tPXTx9++3l+uv/y4eH+89e7v8zPXz7cf3z9qt9/fJgfH969ljfu9ff/7uHDwy/z
-        p99/+PinL6/W/edX9+P+vtzVMe4/3v364ctd+/OHX8b8/Pb49o37VY+/vuzbdj++fv973sstfwnf
-        9e3b66v3n+d69/r9w8OnL789jvXhl/nlzaevD+/vP76///Iwx5v7z388PtX+p/rH+eVIdsx0rJir
-        byVaj2FlZzl5zSGbl2ixJleXy9Fc1SzVxaJ5OK3B+Waaj8eL+vnxon7mon7+flF35Y17o/yUN6W8
-        GfMvevfpq959vP847+rHr2/+5/0v//jlfVWL77TWVbwPKVgbqeQ1srRkXbMLcawZQhoxrjzi7M1b
-        ncGLK9PnHObS0V7/9Pdfw9uj/vS2fT7+Tv10HJYOGXFJr9FPXcu1mCQUaS41rnSKeDeylRlNYhNJ
-        s+RYSw1zdOvpZv38Rf1Gb5aq9Jwm2jkfQhguJSvRpdhSKG1Vt/z0vRaXfG5tDGcpVPG2Uom36+fP
-        1i/GLeGMrRbr5pipFWIU5Q0MC71K9EH7KNq9ptycZN+GZd51cbM76XazfvHy/DltvUtftaNVSLVn
-        cVpcWckn9TP3sGocfNWvIW300ltLXHGZMlja2/WLZ+vn/eHTMYefKybGYOQ5ZKaGgKGwoYJZaD3l
-        VMrYA1Jl9p7rjGvUVNnv82b9xF0UcJnNoAx9SS0wdCpxxNxmMh+WWqk4h7M6REqzWbsz8aPE3lZo
-        ac1+u4B/4yKeq6AePh+56Wolac4zrZXDmMK1YUQllRRl1FlCGRrYOyvVxmiGNlo3i12vKnjZ+bp3
-        XodU49VmF1ywa8Ld2LldWu6GT7jogs/TLwQVnTWIa5YLP5y/Ltzpjlf74evhbElcsU8z6ep9jSl3
-        jaXgdWkUS+Ij/1bEd+YuGcYecx9phXF9x+rVxPA+NVZBfVuRhag6llNlrNnKbGRXJOSwWpjeGDqv
-        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
-        H//6T79/lRlA2tPd3U//B2CQZfziQAAA
+      string: "<!DOCTYPE html>\n<html>\n  <head>\n    <meta name=\"pypi:repository-version\"
+        content=\"1.1\">\n    <title>Links for odoo9-addon-mis-builder</title>\n  </head>\n
+        \ <body>\n    <h1>Links for odoo9-addon-mis-builder</h1>\n<a href=\"https://files.pythonhosted.org/packages/75/e7/f68a3b965c64f8058732848531656a70af08650a281a06928d02a403b528/odoo9_addon_mis_builder-9.0.2.0.1.99.dev2-py2-none-any.whl#sha256=2aaf9334745bd798fd81b75c28046dfe447d66f8d6ecb35ae43109e3884ef2db\"
+        data-dist-info-metadata=\"sha256=9f969a5c7011dadbdab06eb2ec1f5eaf93b50c511b69ffcfe96402d4a747469a\"
+        data-core-metadata=\"sha256=9f969a5c7011dadbdab06eb2ec1f5eaf93b50c511b69ffcfe96402d4a747469a\">odoo9_addon_mis_builder-9.0.2.0.1.99.dev2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/2d/57/1d6f1ca63e2ff0b671491b07be43e1130d859e6516b117e986a9a4edc5c7/odoo9_addon_mis_builder-9.0.2.0.1.99.dev3-py2-none-any.whl#sha256=dcb57a1c87e8fd03444d077596076b749bfa0f3e3ca90738bbdd0574a135f796\"
+        data-dist-info-metadata=\"sha256=9878c148a9247354e8289e64808100023d206221e4af31240bd9eecea45b0deb\"
+        data-core-metadata=\"sha256=9878c148a9247354e8289e64808100023d206221e4af31240bd9eecea45b0deb\">odoo9_addon_mis_builder-9.0.2.0.1.99.dev3-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/66/2d/e6ba95c50403f466124d0d54ca16342cd92c3278b0183bd5825690ec01c5/odoo9_addon_mis_builder-9.0.2.0.1.99.dev6-py2-none-any.whl#sha256=202bcc1cfac49b47ac8102909f73723e8c4fa6dc813fd1bdc9cbb7a959e1dd85\"
+        data-dist-info-metadata=\"sha256=486ad15a2fd616f2d139a332209dba4cf4db56902009cdd224bb456758c8fba9\"
+        data-core-metadata=\"sha256=486ad15a2fd616f2d139a332209dba4cf4db56902009cdd224bb456758c8fba9\">odoo9_addon_mis_builder-9.0.2.0.1.99.dev6-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/33/37/ed3ef67cb5d8ed1e7b24d494744554bc78799d1c87a1ecc8ae6fda7a5c6e/odoo9_addon_mis_builder-9.0.2.0.1.99.dev10-py2-none-any.whl#sha256=f55e4214997b4607216d68be7534f259aa2805ad119b5eac0513d96cbf4b7fec\"
+        data-dist-info-metadata=\"sha256=a2bf2a10e27de482e20334b483d7fa81de60ec56da03117ce586b88d4c25e2d1\"
+        data-core-metadata=\"sha256=a2bf2a10e27de482e20334b483d7fa81de60ec56da03117ce586b88d4c25e2d1\">odoo9_addon_mis_builder-9.0.2.0.1.99.dev10-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/32/38/8b2fb97288e7ff84de1f4bfd8979761dae949d248bbf7ab54c4bdbc556c2/odoo9_addon_mis_builder-9.0.2.0.2-py2-none-any.whl#sha256=c3032d1a51f4ec1f93c27431960c1b8c5a9a060438e3f8be12ea410b58958903\"
+        data-dist-info-metadata=\"sha256=a1b5fe20a6adb2f2536b2b49efb4abab00c5359f1ec6381d8086fb03d5a765d0\"
+        data-core-metadata=\"sha256=a1b5fe20a6adb2f2536b2b49efb4abab00c5359f1ec6381d8086fb03d5a765d0\">odoo9_addon_mis_builder-9.0.2.0.2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/ac/3a/05f16f6ce551c233a678c269930d7d957136699913cd1c755bd68cd7f4d5/odoo9_addon_mis_builder-9.0.2.0.2.99.dev2-py2-none-any.whl#sha256=337bab523bf64bda2df022ae6202c1c091484fb4e35d113296e0e768e7fa56d9\"
+        data-dist-info-metadata=\"sha256=4f63ab57b8682df3dce3c3a354534eb86e1bb5698c1cea35110d726535f7aa21\"
+        data-core-metadata=\"sha256=4f63ab57b8682df3dce3c3a354534eb86e1bb5698c1cea35110d726535f7aa21\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/38/47/b37414bb9ee6b76258abce9f795194bec95cce39afd3e79ef6fe31addb23/odoo9_addon_mis_builder-9.0.2.0.2.99.dev3-py2-none-any.whl#sha256=b2d37b4ebc96990d13ffdbecf6e20789a1477d973c0809b2abe9509f96634ba6\"
+        data-dist-info-metadata=\"sha256=272b0b3a542661b26c00b834971024c34dabe4b028f931474d19f2eee75468d6\"
+        data-core-metadata=\"sha256=272b0b3a542661b26c00b834971024c34dabe4b028f931474d19f2eee75468d6\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev3-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/09/48/9ef64c09ec49574c631188f0b37c86d0dbeb3595924c516e16cddd50f650/odoo9_addon_mis_builder-9.0.2.0.2.99.dev4-py2-none-any.whl#sha256=654ea41a893d8b5a58c29d2735606b767ac45ff8085d3f8c756271b9543e04fa\"
+        data-dist-info-metadata=\"sha256=2ff2188737e352c7d57dedd22ac7a37f2d2af3d3a64be7f95c0ec851de311e37\"
+        data-core-metadata=\"sha256=2ff2188737e352c7d57dedd22ac7a37f2d2af3d3a64be7f95c0ec851de311e37\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev4-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/6f/d3/7a3df0e022dde78ffbc57e754c57da907048c986e6e16c6bab6bc5d0e121/odoo9_addon_mis_builder-9.0.2.0.2.99.dev5-py2-none-any.whl#sha256=0b9a1090fec5599388ee1209a68fa1da510d75dbcd78fd15d25aa84a610d77ae\"
+        data-dist-info-metadata=\"sha256=88b0a23ba738b95473e72886612237671f9308d0579f862ae526f63048f9a9b4\"
+        data-core-metadata=\"sha256=88b0a23ba738b95473e72886612237671f9308d0579f862ae526f63048f9a9b4\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev5-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/94/6f/3a17193391339d2b7cc2b027a8cb29c9e07baddd81de99f1b42712712d22/odoo9_addon_mis_builder-9.0.2.0.2.99.dev6-py2-none-any.whl#sha256=a793a2fd145cd77afbb0d770863f6f41480af8c0508a4181c19bf93f5bfe352e\"
+        data-dist-info-metadata=\"sha256=2af2a299f5636022da156ab135e289a8ef2c9f45049e15903054108b229c524a\"
+        data-core-metadata=\"sha256=2af2a299f5636022da156ab135e289a8ef2c9f45049e15903054108b229c524a\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev6-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/fa/24/34739730edf18bf6c023f628818514d0c64845ccc0205b527014f2a35de1/odoo9_addon_mis_builder-9.0.2.0.2.99.dev7-py2-none-any.whl#sha256=612c981d8b243279463ce7fb2e843af372a4569e7e4ae48f7407bb2a2bba0d81\"
+        data-dist-info-metadata=\"sha256=fd4afda9edcc4b27cd5c4293c52e42fdf116168fff5c48831d0a2212fe1188a9\"
+        data-core-metadata=\"sha256=fd4afda9edcc4b27cd5c4293c52e42fdf116168fff5c48831d0a2212fe1188a9\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev7-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/0e/97/e5a64d1285798c7c6c290d9bf0adbcf81817ade1eefc7066d2fbcb89a989/odoo9_addon_mis_builder-9.0.2.0.2.99.dev8-py2-none-any.whl#sha256=c482aa262a0de7e1e873c7494f56d8aa778cbab25b2899e265e98a85005585da\"
+        data-dist-info-metadata=\"sha256=9a136acc3d02a45ed2912b8b6b9265bb4cfad7ebf029fcdc97018179822f6b81\"
+        data-core-metadata=\"sha256=9a136acc3d02a45ed2912b8b6b9265bb4cfad7ebf029fcdc97018179822f6b81\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev8-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/6e/43/30101d0f7e270536530f77d606698753ae4ca59a53baccb49ba1df3b87ae/odoo9_addon_mis_builder-9.0.2.0.2.99.dev9-py2-none-any.whl#sha256=65c2afa5e923fec0edbb9d1659655ba61087a5158275719ff3eb01fc77dbf435\"
+        data-dist-info-metadata=\"sha256=7880a6c1593d38a209f82063f5b949889dbfa0c57b1a6ba870e5f2306ca48a1e\"
+        data-core-metadata=\"sha256=7880a6c1593d38a209f82063f5b949889dbfa0c57b1a6ba870e5f2306ca48a1e\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev9-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/f0/c7/7d8db0f6b5c8e6a7764c0734086a5054b5ac06ef9f1271662b426c2cc9cf/odoo9_addon_mis_builder-9.0.2.0.2.99.dev10-py2-none-any.whl#sha256=66a2e318c5341a09c00b1f3edc6ea51149e870e660c6add6b3b8fc39dc63f5b8\"
+        data-dist-info-metadata=\"sha256=3dc7b52018ccb91c6cff72c170514fd43f1e194be39d1c7fc741b4ede060ac11\"
+        data-core-metadata=\"sha256=3dc7b52018ccb91c6cff72c170514fd43f1e194be39d1c7fc741b4ede060ac11\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev10-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/1c/f4/75aec97e9a71fa0ba986238ab85035bc957d9f5df88d94930a70963d84e6/odoo9_addon_mis_builder-9.0.2.0.2.99.dev11-py2-none-any.whl#sha256=2d2ef60faaedab2f2fecd0ab54a8fa1fed70df9a73b6069ec7b6152382d77ab7\"
+        data-dist-info-metadata=\"sha256=136e6fdc86972f959689442e410bb686222e3905d8708c0b83fb56496884b944\"
+        data-core-metadata=\"sha256=136e6fdc86972f959689442e410bb686222e3905d8708c0b83fb56496884b944\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev11-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/4b/25/b54d36c0e2c78421603be2eafecf81b312e62f40afc3db336d39f216ecfd/odoo9_addon_mis_builder-9.0.2.0.2.99.dev12-py2-none-any.whl#sha256=49239d6f66f4da107598630e9ec2bf7f94028691def00c490c013df1afc73909\"
+        data-dist-info-metadata=\"sha256=58a25a1ec1e68ce423ddd89058fa6e0d85478014e07c9f055a9fa163f1bc4277\"
+        data-core-metadata=\"sha256=58a25a1ec1e68ce423ddd89058fa6e0d85478014e07c9f055a9fa163f1bc4277\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev12-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/5d/a3/54d93ecbb6e95fe9a6e2ef75eab1063830294432b56bcbda3089429ef4cb/odoo9_addon_mis_builder-9.0.2.0.2.99.dev13-py2-none-any.whl#sha256=9a6f456ea585f8b3d0ab2df3616f9e057c28fc2820534e45316c4d31da789ddf\"
+        data-dist-info-metadata=\"sha256=3c37ce7d50a7a2fcb2a396091f98d5ea1b672735ffb0173b489c0376d2248f0a\"
+        data-core-metadata=\"sha256=3c37ce7d50a7a2fcb2a396091f98d5ea1b672735ffb0173b489c0376d2248f0a\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev13-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/a9/6f/f1f71acd37c47f95765a2d7a323996f79a11210cc86a1e1ea9798b13e56c/odoo9_addon_mis_builder-9.0.2.0.2.99.dev14-py2-none-any.whl#sha256=918d39ce44d2455710cf0f1c83ec6e618c3f4125e8c5568621473d3c40f43cc5\"
+        data-dist-info-metadata=\"sha256=fe295cb865df2fb9768173847c91d9b66c654a9e1bdc11c9b73edf92f8a295c4\"
+        data-core-metadata=\"sha256=fe295cb865df2fb9768173847c91d9b66c654a9e1bdc11c9b73edf92f8a295c4\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev14-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/02/f9/d752152b2bd54a60f0b4762ad79ce1262a3f74d0e014a1743b22edfdb0d9/odoo9_addon_mis_builder-9.0.2.0.2.99.dev16-py2-none-any.whl#sha256=1ddc1315024eccddaea2dba8707a98580e462e994e48f8e371596cac12a3d8bd\"
+        data-dist-info-metadata=\"sha256=99b73842bef5049f1c53372b7055debc806fc2b7267512503a9c022fc84e83b2\"
+        data-core-metadata=\"sha256=99b73842bef5049f1c53372b7055debc806fc2b7267512503a9c022fc84e83b2\">odoo9_addon_mis_builder-9.0.2.0.2.99.dev16-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/1e/f1/24280547c172a30c69c8ec28b7874b1ecbead242bc46852466a50ad99084/odoo9_addon_mis_builder-9.0.3.0.0-py2-none-any.whl#sha256=29bbee3895ff5a41da2266bfad8d8327e75dfe028a6845cad288f99dbf36ad20\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=5f86470bb32ac1dd9fce4697c9dd9e89961da107130546373c7507fc44b1aaad\"
+        data-core-metadata=\"sha256=5f86470bb32ac1dd9fce4697c9dd9e89961da107130546373c7507fc44b1aaad\">odoo9_addon_mis_builder-9.0.3.0.0-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/3c/a5/afbf753c98d62e9acca3a29377122e878935e01066caafe43120890c18e2/odoo9_addon_mis_builder-9.0.3.0.1.99.dev5-py2-none-any.whl#sha256=13e9d477aa0a6e47f3d8fdd9f649a1be69d6ae320663cd5d31e62479046bbcbd\"
+        data-dist-info-metadata=\"sha256=673ef141b183ea4438eba6c6e56b61f8727f1e19b913cf0f0b8514018e10abb8\"
+        data-core-metadata=\"sha256=673ef141b183ea4438eba6c6e56b61f8727f1e19b913cf0f0b8514018e10abb8\">odoo9_addon_mis_builder-9.0.3.0.1.99.dev5-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/04/28/a15f55daad29ee67629fe0892a05c0a617c0280ae0f90e2f6decada62e92/odoo9_addon_mis_builder-9.0.3.0.3-py2-none-any.whl#sha256=8ff8ee6f0dd29041c9a9ac347db347954ca8ca8675bfe16f4d7bfff16aae08d5\"
+        data-dist-info-metadata=\"sha256=6aa64778fe949d91d3e5720a1df0c22b7abe2eb19883889d7d729bc92232db98\"
+        data-core-metadata=\"sha256=6aa64778fe949d91d3e5720a1df0c22b7abe2eb19883889d7d729bc92232db98\">odoo9_addon_mis_builder-9.0.3.0.3-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/8a/77/735e4cb5e3601a51f84a3da52987f2627dcbda8fcdffcebe516fd0fa2e2a/odoo9_addon_mis_builder-9.0.3.0.4-py2-none-any.whl#sha256=586c7a8e621363d6e4c7130837f228062211698bd0bba27c00e8085dbbde7928\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=6191cc53323d544b7b39b6ccc6ea8594290f614624de5a5dd6e9688a92e0f5fa\"
+        data-core-metadata=\"sha256=6191cc53323d544b7b39b6ccc6ea8594290f614624de5a5dd6e9688a92e0f5fa\">odoo9_addon_mis_builder-9.0.3.0.4-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/eb/4d/f394e820f57abd7ac9af4a85bdefd071036bcec454fbc5da417d286844f5/odoo9_addon_mis_builder-9.0.3.0.4.99.dev1-py2-none-any.whl#sha256=c8b2e56b7a6932cab5562fd6fc80503d6c3b17e151fe4546e1ab00d9e87d1214\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=914da31d29eb460cbefc56dd38217a9809ba94912fc613a1ebb404680b50933f\"
+        data-core-metadata=\"sha256=914da31d29eb460cbefc56dd38217a9809ba94912fc613a1ebb404680b50933f\">odoo9_addon_mis_builder-9.0.3.0.4.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/05/6c/80bf9111f2dab0cedb38e8c2f0b8970efc7a5443215691a41f3ad72ec747/odoo9_addon_mis_builder-9.0.3.1.1.99.dev1-py2-none-any.whl#sha256=7d0838fd91786cb667b2370c020c6b73aaf139d403582d2ec0683cb48a700fbf\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=a69ee254ae0e22a037a9676b2efd5718992b8a5a02dd4cc72875ef402b73bcb3\"
+        data-core-metadata=\"sha256=a69ee254ae0e22a037a9676b2efd5718992b8a5a02dd4cc72875ef402b73bcb3\">odoo9_addon_mis_builder-9.0.3.1.1.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/4f/60/8ea36464832ed2092364cbdaffbdbef41381b18a9cc4f2830884f2a98536/odoo9_addon_mis_builder-9.0.3.1.1.99.dev2-py2-none-any.whl#sha256=b1d62d8bb8f747087e415eae5377e073bcbda072ea5f1d81e2c4d9f343118a58\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=6b7cb1e5642c5062cf6c1633c2451658a9315db9bca95fcb832a93e4b571c616\"
+        data-core-metadata=\"sha256=6b7cb1e5642c5062cf6c1633c2451658a9315db9bca95fcb832a93e4b571c616\">odoo9_addon_mis_builder-9.0.3.1.1.99.dev2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/ed/53/4de441a6358eece44b067dcf7a79aa80490f082157e202b3cca02ea343aa/odoo9_addon_mis_builder-9.0.3.1.1.99.dev8-py2-none-any.whl#sha256=ce6de54112b253a3bc22584a8ca75973cd1b7b832253669751947622954d4128\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=181e8edf9471a4f8c2ca4f269ae66f353c40cc7dcca7da77e104ccf973330260\"
+        data-core-metadata=\"sha256=181e8edf9471a4f8c2ca4f269ae66f353c40cc7dcca7da77e104ccf973330260\">odoo9_addon_mis_builder-9.0.3.1.1.99.dev8-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/23/61/713b1551153f2bbe67f9ca00fc727eea5ddae6022a1117e956626baf8e48/odoo9_addon_mis_builder-9.0.3.1.2-py2-none-any.whl#sha256=f52c62795ed36b6e5e2e136c9b6c7f4686c98533067907450b452f1909d0cf50\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=1590663c00282dd8422693989bd540527fd34a57a7c6d4cc8c2336a4cb6cabe0\"
+        data-core-metadata=\"sha256=1590663c00282dd8422693989bd540527fd34a57a7c6d4cc8c2336a4cb6cabe0\">odoo9_addon_mis_builder-9.0.3.1.2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/db/5c/6f8f89fcadbbffe0011f150cae63634f9c525a511b5c43d7bf30f0aa7885/odoo9_addon_mis_builder-9.0.3.2.0-py2-none-any.whl#sha256=1d56dde90762aa659d101450d9874209e6758a4559d45e09ab76574556a42bcc\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=ef1598b2222f25a631ad600079884af46b0f7ca8a2cb31b87a57ff3dd6cd755a\"
+        data-core-metadata=\"sha256=ef1598b2222f25a631ad600079884af46b0f7ca8a2cb31b87a57ff3dd6cd755a\">odoo9_addon_mis_builder-9.0.3.2.0-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/1d/1f/959fb220ff268a7866a77cdedd85ea5bc125a41e2a41799fe0e709a92b16/odoo9_addon_mis_builder-9.0.3.2.0.99.dev1-py2-none-any.whl#sha256=0f22ec43cd29d5024fc8222b760ee77b2616bd9b1b60e22801e97659def2c729\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=b81d1b0af59a99c90959ff627cdb93c63d4e472c2be32e5bc9035cca6e3fd114\"
+        data-core-metadata=\"sha256=b81d1b0af59a99c90959ff627cdb93c63d4e472c2be32e5bc9035cca6e3fd114\">odoo9_addon_mis_builder-9.0.3.2.0.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/aa/28/0c333a4326e6d16ad0090293925d5ad461852280dfd573e995205af9467e/odoo9_addon_mis_builder-9.0.3.2.1.99.dev1-py2-none-any.whl#sha256=9795355784d7aa016a5a16c5ef12f93a392ad481b108b58965ab780a963db110\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=c891556175be83c6a64080c54457656705501ed24b2b89b6ee9b9e317ea8f547\"
+        data-core-metadata=\"sha256=c891556175be83c6a64080c54457656705501ed24b2b89b6ee9b9e317ea8f547\">odoo9_addon_mis_builder-9.0.3.2.1.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/a1/6b/ce926d635f0daa8428704dfac96ff682a7bd79a3c272eb1a655f377d3f1d/odoo9_addon_mis_builder-9.0.3.2.1.99.dev2-py2-none-any.whl#sha256=acd41dcf6537b0d59bfdb7bc15deec7efed156a9d1e8c74a37af81b9b2180202\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=7395a913fe15484406e236370a993ec1710b0c862cb8d7e1f520e2d3a3451298\"
+        data-core-metadata=\"sha256=7395a913fe15484406e236370a993ec1710b0c862cb8d7e1f520e2d3a3451298\">odoo9_addon_mis_builder-9.0.3.2.1.99.dev2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/7e/30/53671b1e0752a464513dea7a3e560d0eeec3a700a70d9785c00a56484e46/odoo9_addon_mis_builder-9.0.3.2.1.99.dev3-py2-none-any.whl#sha256=225d49da1df141b59279c59eead41cf6693e118dc94ec97408813ca5a8ea4c75\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=643c488c24e0c5f1ac06d4103747f2d86fa22867ab48bcac416638a311e50882\"
+        data-core-metadata=\"sha256=643c488c24e0c5f1ac06d4103747f2d86fa22867ab48bcac416638a311e50882\">odoo9_addon_mis_builder-9.0.3.2.1.99.dev3-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/33/49/1cd8b7c8545a98ba1a926b379bcc78edb020f14b2c37e722fc6f88b07916/odoo9_addon_mis_builder-9.0.3.2.1.99.dev4-py2-none-any.whl#sha256=aaab90707472b5d45ce4e364ce01325c76f47cdb2bd145036259f575ec2372e4\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=1c7a2e7c292a787c708bd5a003885f2c312e3ed2ef8b08ff8e2da22ff76f8755\"
+        data-core-metadata=\"sha256=1c7a2e7c292a787c708bd5a003885f2c312e3ed2ef8b08ff8e2da22ff76f8755\">odoo9_addon_mis_builder-9.0.3.2.1.99.dev4-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/56/fd/f2ff87bc945e0ad3f3d98414b3e0b5ff7394f30602b93faad49eaa15a83d/odoo9_addon_mis_builder-9.0.3.2.1.99.dev5-py2-none-any.whl#sha256=7c2d6449b18a2c1d1b7b7d618a894e1772dc25537c99572c68010cf50a9a54c1\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=aa030d28510779dc7584c6a7ab37adf5bd53ec685841bffdd0405c65cd385c46\"
+        data-core-metadata=\"sha256=aa030d28510779dc7584c6a7ab37adf5bd53ec685841bffdd0405c65cd385c46\">odoo9_addon_mis_builder-9.0.3.2.1.99.dev5-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/0c/22/34493257a322ffcc60acfb57b078b3c18656ed11963bd5e066a6968e2df5/odoo9_addon_mis_builder-9.0.3.2.2.99.dev1-py2-none-any.whl#sha256=3e1b65741b502279e5598da0d42d407506463c2b46fe7dc2e3614704289755a0\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=10be25535b19e47e652ae0297fe4331097141394f26b65915cd51aa431085b60\"
+        data-core-metadata=\"sha256=10be25535b19e47e652ae0297fe4331097141394f26b65915cd51aa431085b60\">odoo9_addon_mis_builder-9.0.3.2.2.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/1c/08/15d17354cbedbd74c65409801062b8461b54de5db543f9359f689813220a/odoo9_addon_mis_builder-9.0.3.2.2.99.dev2-py2-none-any.whl#sha256=b68e63c896128f850878aa74b8373732bed74d08ee26eaf46b3b732f4488d141\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=505c8d97f1bb122dd7d854a278f977c2098ac3357975eff85eca17ab0ff3dd65\"
+        data-core-metadata=\"sha256=505c8d97f1bb122dd7d854a278f977c2098ac3357975eff85eca17ab0ff3dd65\">odoo9_addon_mis_builder-9.0.3.2.2.99.dev2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/7e/76/9ce00c67a1b0e85cdd5a55e9ad1e76106368acb4a410453dd4b11bb89e59/odoo9_addon_mis_builder-9.0.3.2.2.99.dev3-py2-none-any.whl#sha256=c056c5005d42f191038ba5e236a8a7fd6ecb5c136fa356dd0a2be5c40917ff1f\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=ab7597885fefc4e0b1bcdb1ca5afe5d64f86940a604f9dfaa516addeb80069e1\"
+        data-core-metadata=\"sha256=ab7597885fefc4e0b1bcdb1ca5afe5d64f86940a604f9dfaa516addeb80069e1\">odoo9_addon_mis_builder-9.0.3.2.2.99.dev3-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/27/93/aa12517e9560b9d2d4730fffcf7a2fd7e94667c3e17eef4b5c903274dd18/odoo9_addon_mis_builder-9.0.3.3.0-py2-none-any.whl#sha256=c9476509b611cd4180486bbc3be305464228ec3ffc18b5ae970f20429d1aef6a\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=72f6c138680e8cd6d86775064075542bbfaaee405847173d727b66f9ad4be240\"
+        data-core-metadata=\"sha256=72f6c138680e8cd6d86775064075542bbfaaee405847173d727b66f9ad4be240\">odoo9_addon_mis_builder-9.0.3.3.0-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/2a/5a/93ad469c94b43f981470f94a59182aea8a26065aaed87193391c50dc9ce6/odoo9_addon_mis_builder-9.0.3.3.0.99.dev1-py2-none-any.whl#sha256=766b7758ba850e94d16270a0b9d2707dce98a63d1b7e4c61b4d2dd44d5d21097\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=45f706509889a270cee1c9214ef1ba2c58d97359224c7f1a8426a6352644caad\"
+        data-core-metadata=\"sha256=45f706509889a270cee1c9214ef1ba2c58d97359224c7f1a8426a6352644caad\">odoo9_addon_mis_builder-9.0.3.3.0.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/99/b2/374116ae7ec02527b5265d61344a05c5e823e335c5da7fdff86035174f52/odoo9_addon_mis_builder-9.0.3.3.0.99.dev3-py2-none-any.whl#sha256=9d453815ddb12f6a22a30ab302def9f1bcb76b52949e5b420769b1ec93144fec\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=9f8d14ef4930aa420cb360b3a2e63be6e7bccabf90d9d065312d7b8a06fe21fc\"
+        data-core-metadata=\"sha256=9f8d14ef4930aa420cb360b3a2e63be6e7bccabf90d9d065312d7b8a06fe21fc\">odoo9_addon_mis_builder-9.0.3.3.0.99.dev3-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/eb/94/5a8db071ad9cdd7940a1eabdd3e4df72cd6a9cd17e39424cf42da54c37c9/odoo9_addon_mis_builder-9.0.3.4.0-py2-none-any.whl#sha256=152eb51b45f931c9b8d3552be99315acc7c6639e4781947a5ba3f3ef2d2aad55\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=454a59402c6e63225b4fde9d327f760139be1736e7932a1319535cfbe30b2f67\"
+        data-core-metadata=\"sha256=454a59402c6e63225b4fde9d327f760139be1736e7932a1319535cfbe30b2f67\">odoo9_addon_mis_builder-9.0.3.4.0-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/f2/03/a5bc44c2a70c6ed744846313b15ca46cc0c99091101c2fa56cec425733f3/odoo9_addon_mis_builder-9.0.3.4.0.99.dev1-py2-none-any.whl#sha256=55515e5b8038d0806b78d2a105fb86eda57efc6954e3901073f25036c295fc0f\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=8f9d84be2c1485a005f7d5a7d6bca3fff8658f7ad77935e6093542d0fd933e3d\"
+        data-core-metadata=\"sha256=8f9d84be2c1485a005f7d5a7d6bca3fff8658f7ad77935e6093542d0fd933e3d\">odoo9_addon_mis_builder-9.0.3.4.0.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/f6/2d/262098aeaf9340ed7ef0faddd97bbf278d5adba7189a6fdf41b842f0dbd1/odoo9_addon_mis_builder-9.0.3.4.0.99.dev2-py2-none-any.whl#sha256=06efc5d9c6e5c4f69f69a9009c651c36282ef652388a6eac28075d13ac868fbe\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=e4346be59d920ebf5762bb4eaa96c748040e69cb95872b4c67e3bbebf0885349\"
+        data-core-metadata=\"sha256=e4346be59d920ebf5762bb4eaa96c748040e69cb95872b4c67e3bbebf0885349\">odoo9_addon_mis_builder-9.0.3.4.0.99.dev2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/ba/80/279b9cbfda365152d0f60ada5fca22570a431dc7ec6a5eba66816834aca6/odoo9_addon_mis_builder-9.0.3.4.0.99.dev3-py2-none-any.whl#sha256=391aad7608719e77a4c0ac39e8229bb576935c09d71643d29f66129f5c93acce\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=3dba840bdea4eff8bd84960596e1112da3eecba2c0d0c55905bec754806e054f\"
+        data-core-metadata=\"sha256=3dba840bdea4eff8bd84960596e1112da3eecba2c0d0c55905bec754806e054f\">odoo9_addon_mis_builder-9.0.3.4.0.99.dev3-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/b7/08/5f373afce6bcc20038f0230dce725e7b414a70b894dc4e908b915aa83250/odoo9_addon_mis_builder-9.0.3.5.0-py2-none-any.whl#sha256=783567487e6f21bea951c7d10a5ea4e2a7023744968bc6016d123e16a808bc00\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=e798f18eae719c7525e579a021b0111db7e97508d1b5aac050b685cb7b18d18b\"
+        data-core-metadata=\"sha256=e798f18eae719c7525e579a021b0111db7e97508d1b5aac050b685cb7b18d18b\">odoo9_addon_mis_builder-9.0.3.5.0-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/f8/b1/a999d1cdda371fff040ba3a64a4f15cf187ee800beccc311a961372acb2c/odoo9_addon_mis_builder-9.0.3.5.0.99.dev1-py2-none-any.whl#sha256=c1e92eadc29768d9bc8844a6698c19c835d90a882fb7907b0dae15571108ce93\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=f4e56d0145dac979c041887a54be801442d2d83f4d3d4d992975bd716f116a94\"
+        data-core-metadata=\"sha256=f4e56d0145dac979c041887a54be801442d2d83f4d3d4d992975bd716f116a94\">odoo9_addon_mis_builder-9.0.3.5.0.99.dev1-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/9f/3c/2a6da053bc02f0d43f0941ed40e8e3725c2e01346079699eafcceda01f2e/odoo9_addon_mis_builder-9.0.3.5.0.99.dev2-py2-none-any.whl#sha256=e3fb588140eef94d87dc159d66c166b7495125187d2997fa832c0d516c54de17\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=8f6b071aabc474c5766843e11a56c44064b6bab6d0a8db1c5e31caa3026b59c8\"
+        data-core-metadata=\"sha256=8f6b071aabc474c5766843e11a56c44064b6bab6d0a8db1c5e31caa3026b59c8\">odoo9_addon_mis_builder-9.0.3.5.0.99.dev2-py2-none-any.whl</a><br
+        />\n<a href=\"https://files.pythonhosted.org/packages/1e/8b/4318fabb09cea819c2eb9b01596fc6d1f4ae0135dfca471180e3910fd53e/odoo9_addon_mis_builder-9.0.3.5.0.99.dev3-py2-none-any.whl#sha256=d9f3fdf1afa690d12dbd4e87c1d12589984812fdedd9307e4a8e8695b670be44\"
+        data-requires-python=\"~=2.7\" data-dist-info-metadata=\"sha256=30eaf06dd207da94cdbf2398ed99d09e4556b9714bc6ebfe0cba9bf010a57100\"
+        data-core-metadata=\"sha256=30eaf06dd207da94cdbf2398ed99d09e4556b9714bc6ebfe0cba9bf010a57100\">odoo9_addon_mis_builder-9.0.3.5.0.99.dev3-py2-none-any.whl</a><br
+        />\n</body>\n</html>\n<!--SERIAL 8725091-->"
     headers:
       Accept-Ranges:
       - bytes
+      Access-Control-Allow-Headers:
+      - Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-PyPI-Last-Serial
+      Access-Control-Max-Age:
+      - '86400'
       Cache-Control:
       - max-age=600, public
       Connection:
@@ -109,27 +184,27 @@ interactions:
       Content-Encoding:
       - gzip
       Content-Length:
-      - '4755'
+      - '7084'
       Content-Security-Policy:
       - default-src 'none'; sandbox allow-top-navigation
       Content-Type:
-      - text/html; charset=UTF-8
+      - text/html
       Date:
-      - Sun, 21 Mar 2021 20:49:51 GMT
+      - Tue, 25 Jun 2024 21:49:31 GMT
       ETag:
-      - '"kBLMM7MFEOjFbdqsqq8ZJg"'
+      - '"ucmQZysFBnzC20IAVR9UOg"'
+      Permissions-Policy:
+      - publickey-credentials-create=(self),publickey-credentials-get=(self),accelerometer=(),ambient-light-sensor=(),autoplay=(),battery=(),camera=(),display-capture=(),document-domain=(),encrypted-media=(),execution-while-not-rendered=(),execution-while-out-of-viewport=(),fullscreen=(),gamepad=(),geolocation=(),gyroscope=(),hid=(),identity-credentials-get=(),idle-detection=(),local-fonts=(),magnetometer=(),microphone=(),midi=(),otp-credentials=(),payment=(),picture-in-picture=(),screen-wake-lock=(),serial=(),speaker-selection=(),storage-access=(),usb=(),web-share=(),xr-spatial-tracking=()
       Referrer-Policy:
       - origin-when-cross-origin
-      Server:
-      - nginx/1.13.9
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Vary:
-      - Accept-Encoding
+      - Accept, Accept-Encoding
       X-Cache:
       - HIT, HIT
       X-Cache-Hits:
-      - 1, 1
+      - 80, 0
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -139,9 +214,9 @@ interactions:
       X-PyPI-Last-Serial:
       - '8725091'
       X-Served-By:
-      - cache-bwi5168-BWI, cache-ams21081-AMS
+      - cache-iad-kcgs7200158-IAD, cache-bru1480054-BRU
       X-Timer:
-      - S1616359792.605243,VS0,VE1
+      - S1719352172.530396,VS0,VE1
       X-XSS-Protection:
       - 1; mode=block
     status:

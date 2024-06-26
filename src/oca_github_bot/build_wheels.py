@@ -134,12 +134,20 @@ def build_and_publish_metapackage_wheel(
     series: Tuple[int, int],
     dry_run: bool,
 ):
-    setup_dir = os.path.join(addons_dir, "setup", "_metapackage")
-    setup_file = os.path.join(setup_dir, "setup.py")
-    if not os.path.isfile(setup_file):
+    setup_dir = Path(addons_dir) / "setup" / "_metapackage"
+    setup_file = setup_dir / "setup.py"
+    if not setup_file.is_file():
         return
     with tempfile.TemporaryDirectory() as dist_dir:
+        # Workaround for recent setuptools not generating long_description
+        # anymore (before it was generating UNKNOWN), and a long_description
+        # is required by twine check. We could fix setuptools-odoo-makedefault
+        # but that would not backfill the legacy. So here we are...
+        if "long_description" not in setup_file.read_text():
+            setup_dir.joinpath("setup.cfg").write_text(
+                "[metadata]\nlong_description = UNKNOWN\n"
+            )
         if Builder.get().build_wheel_legacy(
-            Path(setup_dir), dist_dir, python_tag="py2" if series < (11, 0) else "py3"
+            setup_dir, dist_dir, python_tag="py2" if series < (11, 0) else "py3"
         ):
             dist_publisher.publish(dist_dir, dry_run)

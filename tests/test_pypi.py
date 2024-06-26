@@ -29,7 +29,7 @@ def test_twine_publisher_file_exists():
     so no upload is attempted.
     """
     publisher = TwineDistPublisher(
-        "https://pypi.org/simple/", "bogus", "username", "password"
+        "https://pypi.org/simple/", "https://pypi.org/legacy", "username", "password"
     )
     with tempfile.TemporaryDirectory() as tmpdir:
         filepath = Path(tmpdir) / "odoo9_addon_mis_builder-9.0.3.5.0-py2-none-any.whl"
