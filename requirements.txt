@@ -52,7 +52,7 @@ requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==13.7.1
 secretstorage==3.3.3
-sentry-sdk==2.7.1
+sentry-sdk==1.45.0
 setuptools==70.2.0
 setuptools-odoo==3.3
 setuptools-scm==8.1.0
