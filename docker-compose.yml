@@ -11,7 +11,7 @@ services:
     links:
       - queue
     ports:
-      - 8080:8080
+      - 127.0.0.1:8080:8080
     user: "${UID}:${GID}"
     env_file:
       - ./.env
@@ -55,7 +55,7 @@ services:
     links:
       - queue
     ports:
-      - 5555:5555
+      - 127.0.0.1:5555:5555
     user: "${UID}:${GID}"
     env_file:
       - ./.env
