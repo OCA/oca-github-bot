@@ -45,7 +45,6 @@ pygments==2.18.0
 pyjwt==2.8.0
 python-dateutil==2.9.0.post0
 pytz==2024.1
-raven==6.10.0
 readme-renderer==43.0
 redis==5.0.7
 requests==2.32.3
@@ -53,6 +52,7 @@ requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==13.7.1
 secretstorage==3.3.3
+sentry-sdk==2.7.1
 setuptools==70.2.0
 setuptools-odoo==3.3
 setuptools-scm==8.1.0

@@ -31,7 +31,7 @@ setup(
         # Odoo
         "odoorpc",
         # Sentry
-        "raven",
+        "sentry-sdk[celery]",
         # twine to check and upload wheels
         "twine",
         # lxml for parsing PyPI index pages
