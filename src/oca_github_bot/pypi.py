@@ -92,6 +92,8 @@ class TwineDistPublisher:
             cmd = [
                 "twine",
                 "upload",
+                "--disable-progress-bar",
+                "--non-interactive",
                 "--repository-url",
                 self._repository_url,
                 "-u",
