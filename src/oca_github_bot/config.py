@@ -140,7 +140,7 @@ MAINTAINER_CHECK_ODOO_RELEASES = (
 
 WHEEL_BUILD_TOOLS = os.environ.get(
     "WHEEL_BUILD_TOOLS",
-    "build,pip,setuptools<58,wheel,setuptools-odoo,whool",
+    "build,pip,setuptools<70,wheel,setuptools-odoo,whool",
 ).split(",")
 
 # minimum Odoo series supported by the bot
