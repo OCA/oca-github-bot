@@ -1,3 +1,14 @@
+v20240706
+~~~~~~~~~
+
+**Bugfixes**
+
+- Fix regression in nightly main branch bot. (`#279 <https://github.com/oca/oca-github-bot/issues/279>`_)
+- Upgrade to Python 3.12 (`#293 <https://github.com/oca/oca-github-bot/pull/293>`_)
+- Upgrade sentry client
+- Upgrade to latest OCA/maintainer-tools
+
+
 v20231216
 ~~~~~~~~~
 
