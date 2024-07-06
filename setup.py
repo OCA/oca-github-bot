@@ -30,8 +30,8 @@ setup(
         "celery[redis]",
         # Odoo
         "odoorpc",
-        # Sentry
-        "sentry-sdk[celery]",
+        # Sentry SDK (<2 because we use an old version of self-hosted Sentry)
+        "sentry-sdk[celery]<2",
         # twine to check and upload wheels
         "twine",
         # lxml for parsing PyPI index pages

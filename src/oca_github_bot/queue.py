@@ -6,7 +6,11 @@ from celery.utils.log import get_task_logger
 
 from . import config
 
-app = celery.Celery(broker=config.BROKER_URI)
+app = celery.Celery(
+    broker=config.BROKER_URI,
+    broker_connection_retry_on_startup=True,
+    broker_conn_retry=True,
+)
 
 getLogger = get_task_logger
 
