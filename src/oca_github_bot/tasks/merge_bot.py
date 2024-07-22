@@ -6,7 +6,7 @@ import random
 from enum import Enum
 
 from .. import github
-from ..build_wheels import build_and_check_wheel, build_and_publish_wheel
+from ..build_wheels import build_and_publish_wheel
 from ..config import (
     GITHUB_CHECK_SUITES_IGNORED,
     GITHUB_STATUS_IGNORED,
@@ -177,8 +177,12 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         check_call(["git", "reset", "--soft", head_sha], cwd=cwd)
         check_call(["git", "commit", "-m", "[BOT] post-merge updates"], cwd=cwd)
 
+    # We publish to PyPI before merging, because we don't want to merge
+    # if PyPI rejects the upload for any reason. There is a possibility
+    # that the upload succeeds and then the merge fails, but that should be
+    # exceptional, and it is better than the contrary.
     for addon_dir in modified_installable_addon_dirs:
-        build_and_check_wheel(addon_dir)
+        build_and_publish_wheel(addon_dir, dist_publisher, dry_run)
 
     if dry_run:
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
@@ -187,11 +191,6 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         check_call(
             ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
         )
-
-    # build and publish wheel
-    if modified_installable_addon_dirs:
-        for addon_dir in modified_installable_addon_dirs:
-            build_and_publish_wheel(addon_dir, dist_publisher, dry_run)
 
     # TODO wlc unlock modified_addons
 
