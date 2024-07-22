@@ -5,7 +5,7 @@ from .. import config, github
 from ..config import switchable
 from ..manifest import (
     addon_dirs_in,
-    get_manifest,
+    get_maintainers,
     git_modified_addon_dirs,
     is_addon_dir,
 )
@@ -24,7 +24,13 @@ def mention_maintainer(org, repo, pr, dry_run=False):
         with github.temporary_clone(org, repo, target_branch) as clonedir:
             # Get maintainers existing before the PR changes
             addon_dirs = addon_dirs_in(clonedir, installable_only=True)
-            maintainers_dict = get_maintainers(addon_dirs)
+            other_branches = config.MAINTAINER_CHECK_ODOO_RELEASES
+            main_branches = [target_branch] + other_branches
+            maintainers_dict = get_maintainers(
+                addon_dirs,
+                main_branches=main_branches,
+                cwd=clonedir,
+            )
 
             # Get list of addons modified in the PR.
             pr_branch = f"tmp-pr-{pr}"
@@ -38,8 +44,29 @@ def mention_maintainer(org, repo, pr, dry_run=False):
             # Remove not installable addons
             # (case where an addon becomes no more installable).
             modified_addon_dirs = [
-                d for d in modified_addon_dirs if is_addon_dir(d, installable_only=True)
+                d
+                for d in modified_addon_dirs
+                if is_addon_dir(d, installable_only=True, cwd=clonedir)
             ]
+
+            # Get maintainer of new addons in other branches
+            if other_branches:
+                new_addons = {
+                    addon for addon in modified_addon_dirs if addon not in addon_dirs
+                }
+                if new_addons:
+                    new_maintainers_dict = get_maintainers(
+                        new_addons,
+                        main_branches=other_branches,
+                        cwd=clonedir,
+                    )
+                    maintainers_dict.update(
+                        {
+                            new_addon: new_maintainers_dict[new_addon]
+                            for new_addon in new_addons
+                        }
+                    )
+                    modified_addon_dirs.extend(new_addons)
 
         modified_addons_maintainers = set()
         for modified_addon in modified_addon_dirs:
@@ -81,15 +108,3 @@ def get_adopt_mention(pr_opener):
     if config.ADOPT_AN_ADDON_MENTION:
         return config.ADOPT_AN_ADDON_MENTION.format(pr_opener=pr_opener)
     return None
-
-
-def get_maintainers(addon_dirs):
-    """Get maintainer for each addon in `addon_dirs`.
-
-    :return: Dictionary {'addon_dir': <list of addon's maintainers>}
-    """
-    addon_maintainers_dict = dict()
-    for addon_dir in addon_dirs:
-        maintainers = get_manifest(addon_dir).get("maintainers", [])
-        addon_maintainers_dict.setdefault(addon_dir, maintainers)
-    return addon_maintainers_dict
