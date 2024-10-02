@@ -51,6 +51,7 @@ class Builder:
             check_call(
                 [
                     self.env_python,
+                    "-P",
                     "-m",
                     "build",
                     "--wheel",
