@@ -111,7 +111,7 @@ def migration_issue_start(org, repo, pr, username, module=None, dry_run=False):
                 if not user_can_push(gh, org, repo, username, clone_dir, target_branch):
                     github.gh_call(
                         gh_pr.create_comment,
-                        f"Sorry @{username} you are not allowed to mark the addon to"
+                        f"Sorry @{username} you are not allowed to mark the addon to "
                         f"be migrated.\n\n"
                         f"To do so you must either have push permissions on "
                         f"the repository, or be a declared maintainer of all "
