@@ -7,8 +7,6 @@ import os
 import re
 from typing import Tuple
 
-import requests
-
 from . import config
 from .github import git_get_current_branch, github_user_can_push
 from .process import check_call, check_output
@@ -39,13 +37,13 @@ def is_addons_dir(addons_dir, installable_only=False):
     return any(addon_dirs_in(addons_dir, installable_only))
 
 
-def is_addon_dir(addon_dir, installable_only=False):
+def is_addon_dir(addon_dir, installable_only=False, cwd=None):
     """Test if a directory contains an Odoo addon."""
     if not installable_only:
-        return bool(get_manifest_path(addon_dir))
+        return bool(get_manifest_path(addon_dir, cwd=cwd))
     else:
         try:
-            return get_manifest(addon_dir).get("installable", True)
+            return get_manifest(addon_dir, cwd=cwd).get("installable", True)
         except NoManifestFound:
             return False
 
@@ -71,9 +69,11 @@ def get_manifest_file_name(addon_dir):
     return None
 
 
-def get_manifest_path(addon_dir):
+def get_manifest_path(addon_dir, cwd=None):
+    if cwd is None:
+        cwd = os.getcwd()
     for manifest_name in MANIFEST_NAMES:
-        manifest_path = os.path.join(addon_dir, manifest_name)
+        manifest_path = os.path.join(cwd, addon_dir, manifest_name)
         if os.path.exists(manifest_path):
             return manifest_path
     return None
@@ -83,8 +83,8 @@ def parse_manifest(manifest: bytes) -> dict:
     return ast.literal_eval(manifest.decode("utf-8"))
 
 
-def get_manifest(addon_dir):
-    manifest_path = get_manifest_path(addon_dir)
+def get_manifest(addon_dir, cwd=None):
+    manifest_path = get_manifest_path(addon_dir, cwd=cwd)
     if not manifest_path:
         raise NoManifestFound(f"no manifest found in {addon_dir}")
     with open(manifest_path, "rb") as f:
@@ -100,13 +100,11 @@ def set_manifest_version(addon_dir, version):
         f.write(manifest)
 
 
-def is_maintainer(username, addon_dirs):
-    for addon_dir in addon_dirs:
-        try:
-            manifest = get_manifest(addon_dir)
-        except NoManifestFound:
-            return False
-        maintainers = manifest.get("maintainers", [])
+def is_maintainer(username, addon_dirs, main_branches=None, cwd=None):
+    addon_to_maintainers = get_maintainers(
+        addon_dirs, main_branches=main_branches, cwd=cwd
+    )
+    for _addon, maintainers in addon_to_maintainers.items():
         if username not in maintainers:
             return False
     return True
@@ -248,46 +246,72 @@ def user_can_push(gh, org, repo, username, addons_dir, target_branch):
     if other_changes or not modified_addon_dirs:
         return False
     # if we are modifying addons only, then the user must be maintainer of
-    # all of them on the target branch
-    current_branch = git_get_current_branch(cwd=addons_dir)
-    try:
-        check_call(["git", "checkout", target_branch], cwd=addons_dir)
-        result = is_maintainer(username, modified_addon_dirs)
-    finally:
-        check_call(["git", "checkout", current_branch], cwd=addons_dir)
-
-    if result:
-        return True
-
-    other_branches = config.MAINTAINER_CHECK_ODOO_RELEASES
-    if target_branch in other_branches:
-        other_branches.remove(target_branch)
-
-    return is_maintainer_other_branches(
-        org, repo, username, modified_addons, other_branches
+    # all of them
+    main_branches = [target_branch] + config.MAINTAINER_CHECK_ODOO_RELEASES
+    return is_maintainer(
+        username, modified_addon_dirs, main_branches=main_branches, cwd=addons_dir
     )
 
 
-def is_maintainer_other_branches(org, repo, username, modified_addons, other_branches):
-    for addon in modified_addons:
-        is_maintainer = False
-        for branch in other_branches:
-            manifest_file = (
-                "__openerp__.py" if float(branch) < 10.0 else "__manifest__.py"
-            )
-            url = (
-                f"https://github.com/{org}/{repo}/raw/{branch}/{addon}/{manifest_file}"
-            )
-            _logger.debug("Looking for maintainers in %s" % url)
-            r = requests.get(
-                url, allow_redirects=True, headers={"Cache-Control": "no-cache"}
-            )
-            if r.ok:
-                manifest = parse_manifest(r.content)
-                if username in manifest.get("maintainers", []):
-                    is_maintainer = True
-                    break
+def get_maintainers_current_branch(addon_dirs, cwd=None):
+    """Get maintainer for each addon in `addon_dirs`.
 
-        if not is_maintainer:
-            return False
-    return True
+    :return: Dictionary {'addon_dir': <set of addon's maintainers>}
+    """
+    addon_to_maintainers = dict()
+    for addon_dir in addon_dirs:
+        try:
+            manifest = get_manifest(addon_dir, cwd=cwd)
+        except NoManifestFound:
+            maintainers = set()
+        else:
+            maintainers = manifest.get("maintainers", set())
+        addon_to_maintainers[addon_dir] = maintainers
+    return addon_to_maintainers
+
+
+def get_maintainers(addon_dirs, main_branches=None, cwd=None):
+    if cwd is None:
+        cwd = os.getcwd()
+    current_branch = git_get_current_branch(cwd=cwd)
+    if main_branches is None:
+        main_branches = [current_branch]
+
+    branch_to_addon_to_maintainers = {}
+    for branch in main_branches:
+        try:
+            check_call(["git", "checkout", branch], cwd=cwd)
+            branch_to_addon_to_maintainers[branch] = get_maintainers_current_branch(
+                addon_dirs,
+                cwd=cwd,
+            )
+        finally:
+            check_call(["git", "checkout", current_branch], cwd=cwd)
+
+    # Transform
+    # {
+    #     "16.0": {
+    #         "date_range": {
+    #             "user_1",
+    #         },
+    #     },
+    #     "14.0": {
+    #         "date_range": {
+    #             "user_2",
+    #         },
+    #     }
+    # }
+    # to
+    # {
+    #     "date_range": {
+    #         "user_1",
+    #         "user_2",
+    #     },
+    # }
+
+    result = {}
+    for _branch, addon_to_maintainers in branch_to_addon_to_maintainers.items():
+        for addon, maintainers in addon_to_maintainers.items():
+            addon_maintainers = result.setdefault(addon, set())
+            addon_maintainers.update(maintainers)
+    return result
