@@ -3,6 +3,7 @@
 
 from . import (
     heartbeat,
+    label_modified_addons,
     main_branch_bot,
     mention_maintainer,
     migration_issue_bot,
