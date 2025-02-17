@@ -1,7 +1,7 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-""" OCA GitHub Bot
+"""OCA GitHub Bot
 
 This is the main program, which provides the dispatching
 mechanisms for webhook calls from github.
