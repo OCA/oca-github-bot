@@ -6,6 +6,9 @@ ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 
 ARG PY=3.12
+# UID / GID needed for git by ssh
+ARG UID
+ARG GID
 
 # binutils is needed for the ar command, used by pypandoc.ensure_pandoc_installed()
 RUN set -x \
@@ -55,5 +58,17 @@ RUN pip install --no-cache-dir -e /app/src/oca-github-bot
 
 # make work and home directory
 RUN mkdir /app/run && chmod ogu+rwx /app/run
+RUN groupadd -g $GID -o app
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash app
+
 ENV HOME=/app/run
 WORKDIR /app/run
+
+# git: change all url to ssh instead of HTTP
+# in order to avoid GITHUB_TOKEN leaks in error messages
+RUN git config --global url.ssh://git@github.com/.insteadOf https://github.com/
+COPY ./ssh /home/app/.ssh/
+RUN chown app /home/app/.ssh
+RUN chown app /home/app/.ssh/*
+
+USER app

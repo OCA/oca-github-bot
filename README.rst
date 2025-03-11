@@ -158,6 +158,14 @@ The bot URL must be exposed on the internet through a reverse
 proxy and configured as a GitHub webhook, using the secret configured
 in ``GITHUB_SECRET``.
 
+Private repo support
+===========
+
+If the bot needs to access private github repository, you should generate
+a new key, and give access to this key on github.
+If running from docker, it should be placed on a `ssh` directory on the root of this
+repo.
+
 Development
 ===========
 
@@ -233,6 +241,7 @@ Contributors
 * Sylvain Le Gal (https://twitter.com/legalsylvain)
 * Tecnativa - Pedro M. Baeza
 * Tecnativa - Víctor Martínez
+* Raphaël Reverdy <raphael.reverdy@akretion.com>
 
 Maintainers
 ===========
