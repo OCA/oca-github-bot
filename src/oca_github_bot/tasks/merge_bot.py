@@ -371,6 +371,13 @@ def _get_commit_success(org, repo, pr, gh_commit):
                 f"PR #{pr} of {org}/{repo}"
             )
             success = True
+        elif check_suite.conclusion == "skipped":
+            # skipped
+            _logger.info(
+                f"Ignoring skipped check suite {check_suite.app.name} for "
+                f"PR #{pr} of {org}/{repo}"
+            )
+            continue
         elif not check_suite.conclusion:
             # not complete
             check_runs = list(github.gh_call(check_suite.check_runs))
