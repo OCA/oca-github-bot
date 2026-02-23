@@ -54,8 +54,8 @@ rfc3986==2.0.0
 rich==14.2.0
 secretstorage==3.4.0
 sentry-sdk==1.45.1
-setuptools==80.9.0
-setuptools-odoo==3.3.1
+setuptools==81.0.0
+setuptools-odoo==3.3.2
 setuptools-scm==9.2.2
 six==1.17.0
 tornado==6.5.2

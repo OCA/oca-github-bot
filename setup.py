@@ -37,7 +37,7 @@ setup(
         # lxml for parsing PyPI index pages
         "lxml",
         # for setuptools-odoo-make-default
-        "setuptools-odoo",
+        "setuptools-odoo>=3.3.2",
         "setuptools",
         # for whool-init
         "whool",
