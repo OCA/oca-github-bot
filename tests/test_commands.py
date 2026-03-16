@@ -18,9 +18,7 @@ def test_parse_command_not_a_command():
 
 
 def test_parse_command_multi():
-    cmds = list(
-        parse_commands(
-            """
+    cmds = list(parse_commands("""
                 ...
                 /ocabot merge major
                 /ocabot   merge   patch
@@ -33,9 +31,7 @@ def test_parse_command_multi():
                 /ocabot merge minor # ignored
                 /ocabot rebase, please
                 ...
-            """
-        )
-    )
+            """))
     assert [(cmd.name, cmd.options) for cmd in cmds] == [
         ("merge", ["major"]),
         ("merge", ["patch"]),
@@ -100,9 +96,7 @@ def test_parse_command_comment():
 > Some comment {merge_command}
 >> Double comment! {merge_command}
 This is the one {merge_command} patch
-    """.format(
-        merge_command="/ocabot merge"
-    )
+    """.format(merge_command="/ocabot merge")
     command = list(parse_commands(body))
     assert len(command) == 1
     command = command[0]
