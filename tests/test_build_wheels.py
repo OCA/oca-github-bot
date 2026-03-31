@@ -38,11 +38,13 @@ def _make_addon(
     )
     (addon_dir / "__init__.py").write_text("")
     if pyproject:
-        (addon_dir / "pyproject.toml").write_text(textwrap.dedent("""\
+        (addon_dir / "pyproject.toml").write_text(
+            textwrap.dedent("""\
                 [build-system]
                 requires = ["whool"]
                 build-backend = "whool.buildapi"
-                """))
+                """)
+        )
     subprocess.check_call(["git", "add", addon_name], cwd=addons_dir)
     subprocess.check_call(
         ["git", "commit", "-m", "[BOT] add " + addon_name], cwd=addons_dir

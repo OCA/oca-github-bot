@@ -5,7 +5,6 @@ import ast
 import logging
 import os
 import re
-from typing import Tuple
 
 import requests
 
@@ -218,7 +217,7 @@ def get_odoo_series_from_version(version):
     return tuple(int(s) for s in series.split("."))
 
 
-def get_odoo_series_from_branch(branch) -> Tuple[int, int]:
+def get_odoo_series_from_branch(branch) -> tuple[int, int]:
     mo = BRANCH_RE.match(branch)
     if not mo:
         raise OdooSeriesNotDetected()
@@ -278,7 +277,7 @@ def is_maintainer_other_branches(org, repo, username, modified_addons, other_bra
             url = (
                 f"https://github.com/{org}/{repo}/raw/{branch}/{addon}/{manifest_file}"
             )
-            _logger.debug("Looking for maintainers in %s" % url)
+            _logger.debug("Looking for maintainers in %s", url)
             r = requests.get(
                 url, allow_redirects=True, headers={"Cache-Control": "no-cache"}
             )

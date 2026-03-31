@@ -11,7 +11,8 @@ import logging
 
 import aiohttp
 from aiohttp import web
-from gidgethub import aiohttp as gh_aiohttp, sansio as gh_sansio
+from gidgethub import aiohttp as gh_aiohttp
+from gidgethub import sansio as gh_sansio
 
 from . import config
 from .router import router

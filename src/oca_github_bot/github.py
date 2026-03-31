@@ -42,7 +42,7 @@ def gh_call(func, *args, **kwargs):
                 message="Retry task after rate limit reset",
                 exc=e,
                 when=e.response.headers.get("X-RateLimit-Reset"),
-            )
+            ) from e
         raise
 
 
@@ -136,7 +136,7 @@ def git_push_if_needed(remote, branch, cwd=None):
             raise Retry(
                 exc=e,
                 message="Retrying because a non-fast-forward git push was attempted.",
-            )
+            ) from e
         else:
             _logger.error(
                 f"command {e.cmd} failed with return code {e.returncode} "

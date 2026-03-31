@@ -4,10 +4,10 @@
 
 import logging
 import os
+from collections.abc import Iterator
 from io import StringIO
 from pathlib import PosixPath
 from subprocess import CalledProcessError
-from typing import Iterator, Optional, Tuple
 from urllib.parse import urljoin, urlparse
 
 import requests
@@ -20,7 +20,7 @@ _logger = logging.getLogger(__name__)
 
 def files_on_index(
     index_url: str, project_name: str
-) -> Iterator[Tuple[str, Optional[Tuple[str, str]]]]:
+) -> Iterator[tuple[str, tuple[str, str] | None]]:
     """Iterate files available on an index for a given project name."""
     project_name = project_name.replace("_", "-")
     base_url = urljoin(index_url, project_name + "/")
