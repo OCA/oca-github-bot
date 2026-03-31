@@ -4,7 +4,7 @@
 import re
 import shlex
 import time
-from typing import Sequence
+from collections.abc import Sequence
 
 from . import config
 

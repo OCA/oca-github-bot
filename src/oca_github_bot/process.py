@@ -17,7 +17,7 @@ def check_call(cmd, cwd, log_error=True, extra_cmd_args=False, env=None):
         cmd += extra_cmd_args
     cp = subprocess.run(
         cmd,
-        universal_newlines=True,
+        text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         cwd=cwd,
@@ -34,7 +34,7 @@ def check_call(cmd, cwd, log_error=True, extra_cmd_args=False, env=None):
 def check_output(cmd, cwd, log_error=True):
     cp = subprocess.run(
         cmd,
-        universal_newlines=True,
+        text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         cwd=cwd,
