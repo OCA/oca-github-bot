@@ -43,7 +43,7 @@ prompt-toolkit==3.0.52
 propcache==0.4.1
 pycparser==2.23
 pygments==2.20.0
-pyjwt==2.10.1
+pyjwt==2.12.0
 python-dateutil==2.9.0.post0
 pytz==2025.2
 readme-renderer==44.0
