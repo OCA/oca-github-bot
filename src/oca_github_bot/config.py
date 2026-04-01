@@ -101,6 +101,8 @@ MERGE_BOT_INTRO_MESSAGES = [
 APPROVALS_REQUIRED = int(os.environ.get("APPROVALS_REQUIRED", "2"))
 MIN_PR_AGE = int(os.environ.get("MIN_PR_AGE", "5"))
 
+MODULE_LABEL_COLOR = os.environ.get("MODULE_LABEL_COLOR", "#ffc")
+
 dist_publisher = MultiDistPublisher()
 SIMPLE_INDEX_ROOT = os.environ.get("SIMPLE_INDEX_ROOT")
 if SIMPLE_INDEX_ROOT:
