@@ -34,6 +34,6 @@ def _label_modified_addons(gh, org, repo, pr, dry_run):
 
 @task()
 @switchable("label_modified_addons")
-def label_modified_addons(org, repo, pr, dry_run):
+def label_modified_addons(org, repo, pr, dry_run=False):
     with github.login() as gh:
         _label_modified_addons(gh, org, repo, pr, dry_run)
