@@ -5,7 +5,12 @@ from pathlib import Path
 
 import pytest
 
-from oca_github_bot.utils import cmd_to_str, hide_secrets, retry_on_exception
+from oca_github_bot.utils import (
+    cmd_to_str,
+    compute_module_label_name,
+    hide_secrets,
+    retry_on_exception,
+)
 
 from .common import set_config
 
@@ -98,3 +103,11 @@ def test_retry_on_exception_no_raise():
 )
 def test_cmd_to_str(cmd, expected):
     assert cmd_to_str(cmd) == expected
+
+
+def test_compute_module_label_name():
+    assert compute_module_label_name("web_responsive") == "mod:web_responsive"
+    assert (
+        compute_module_label_name("account_invoice_supplierinfo_update_triple_discount")
+        == "mod:account_invoice_supplierinfo_update_trip bf3f3"
+    )
