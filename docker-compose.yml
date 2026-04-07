@@ -1,3 +1,4 @@
+version: '2.4'
 services:
   queue:
     image: redis:4-alpine
