@@ -26,6 +26,7 @@ def _label_modified_addons(gh, org, repo, pr, dry_run):
             return
         gh_issue = github.gh_call(gh_pr.issue)
         repo_label_names = [label.name for label in gh_repo.labels()]
+        issue_label_names = [label.name for label in gh_issue.labels()]
 
         new_labels = set()
         for modified_addon in modified_addons:
@@ -44,10 +45,14 @@ def _label_modified_addons(gh, org, repo, pr, dry_run):
 
         if is_main_branch_bot_branch(target_branch):
             new_labels.add(f"series:{target_branch}")
-        new_labels = new_labels - {label.name for label in gh_issue.labels()}
-        if new_labels and not dry_run:
-            for new_label in new_labels:
-                github.gh_call(gh_issue.add_labels, new_label)
+        new_labels |= {
+            x
+            for x in issue_label_names
+            if not (x.startswith("mod:") or x.startswith("series:"))
+        }
+
+        if not dry_run and new_labels != set(issue_label_names):
+            github.gh_call(gh_issue.replace_labels, list(new_labels))
 
 
 @task()
