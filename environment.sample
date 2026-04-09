@@ -34,6 +34,9 @@ ODOO_PASSWORD=
 # Number of days before the proposal can be marked as "Approved"
 #MIN_PR_AGE=5
 
+# Color of the github label that contains the name of the module
+#MODULE_LABEL_COLOR=#ffc
+
 # Coma separated list of task to run
 # By default all configured tasks are run.
 # Available tasks:
