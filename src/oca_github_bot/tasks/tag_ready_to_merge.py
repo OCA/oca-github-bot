@@ -42,8 +42,7 @@ def tag_ready_to_merge(org, repo=None, dry_run=False):
         for issue in gh.search_issues(" ".join(query)):
             if dry_run:
                 _logger.info(
-                    f"DRY-RUN add {LABEL_READY_TO_MERGE} "
-                    f"label to PR {issue.html_url}"
+                    f"DRY-RUN add {LABEL_READY_TO_MERGE} label to PR {issue.html_url}"
                 )
             else:
                 _logger.info(f"add {LABEL_READY_TO_MERGE} label to PR {issue.html_url}")
