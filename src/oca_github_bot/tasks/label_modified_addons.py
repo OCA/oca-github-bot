@@ -25,6 +25,8 @@ def _label_modified_addons(gh, org, repo, pr, dry_run):
         if not modified_addons:
             return
         gh_issue = github.gh_call(gh_pr.issue)
+        repo_label_names = [label.name for label in gh_repo.labels()]
+        issue_label_names = [label.name for label in gh_issue.labels()]
 
         new_labels = set()
         for modified_addon in modified_addons:
@@ -32,7 +34,7 @@ def _label_modified_addons(gh, org, repo, pr, dry_run):
             # We create label at repo level, because it is possible to
             # to set description in create_label() function
             # (and not in issue.add_labels())
-            if label_name not in [x.name for x in gh_repo.labels()] and not dry_run:
+            if label_name not in repo_label_names and not dry_run:
                 github.gh_call(
                     gh_repo.create_label,
                     name=label_name,
@@ -43,10 +45,14 @@ def _label_modified_addons(gh, org, repo, pr, dry_run):
 
         if is_main_branch_bot_branch(target_branch):
             new_labels.add(f"series:{target_branch}")
-        new_labels = new_labels - {label.name for label in gh_issue.labels()}
-        if new_labels and not dry_run:
-            for new_label in new_labels:
-                github.gh_call(gh_issue.add_labels, new_label)
+        new_labels |= {
+            x
+            for x in issue_label_names
+            if not (x.startswith("mod:") or x.startswith("series:"))
+        }
+
+        if not dry_run and new_labels != set(issue_label_names):
+            github.gh_call(gh_issue.replace_labels, list(new_labels))
 
 
 @task()
