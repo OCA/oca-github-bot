@@ -33,7 +33,7 @@ def is_main_branch_bot_branch(branch_name):
 
 
 def is_protected_branch(branch_name):
-    if branch_name == "master":
+    if branch_name in ("master", "main"):
         return True
     return bool(ODOO_VERSION_RE.match(branch_name))
 
