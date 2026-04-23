@@ -86,7 +86,7 @@ can be used to ask the bot to do the following:
 
 * merge the PR onto a temporary branch created off the target branch
 * merge when tests on the rebased branch are green
-* optionally bump the version number of the addons modified by the PR
+* optionally bump the version number of the addons modified by the PR. (e.g. 19.0. ``major`` . ``minor`` . ``patch``)
 * when the version was bumped, udate the changelog with ``oca-towncrier``
 * run the main branch operations (see above) on it
 * when the version was bumped, generate a wheel, rsync it to a PEP 503
