@@ -258,34 +258,95 @@ def user_can_push(gh, org, repo, username, addons_dir, target_branch):
     if result:
         return True
 
-    other_branches = config.MAINTAINER_CHECK_ODOO_RELEASES
+    other_branches = list(config.MAINTAINER_CHECK_ODOO_RELEASES)
     if target_branch in other_branches:
         other_branches.remove(target_branch)
 
     return is_maintainer_other_branches(
-        org, repo, username, modified_addons, other_branches
+        org, repo, username, modified_addons, other_branches, gh=gh
     )
 
 
-def is_maintainer_other_branches(org, repo, username, modified_addons, other_branches):
+def _get_manifest_from_api(gh_repo, addon, branch, manifest_file):
+    """Read an addon manifest from a GitHub branch using the authenticated API.
+
+    Returns the parsed manifest dict, or None if the file does not exist or
+    cannot be read.
+    """
+    path = f"{addon}/{manifest_file}"
+    try:
+        file_contents = gh_repo.file_contents(path, ref=branch)
+    except Exception as e:
+        _logger.debug("Could not read %s@%s via GitHub API: %s", path, branch, e)
+        return None
+    if file_contents is None:
+        return None
+    try:
+        return parse_manifest(file_contents.content)
+    except Exception as e:
+        _logger.warning(
+            "Failed to parse manifest %s@%s from GitHub API: %s", path, branch, e
+        )
+        return None
+
+
+def _get_manifest_from_raw(org, repo, addon, branch, manifest_file):
+    """Fallback to read an addon manifest from github raw URLs.
+
+    Returns the parsed manifest dict, or None if the file does not exist or
+    cannot be read.
+    """
+    url = f"https://github.com/{org}/{repo}/raw/{branch}/{addon}/{manifest_file}"
+    _logger.debug("Looking for maintainers in %s", url)
+    try:
+        r = requests.get(
+            url, allow_redirects=True, headers={"Cache-Control": "no-cache"}
+        )
+    except requests.RequestException as e:
+        _logger.warning("Failed to fetch %s: %s", url, e)
+        return None
+    if not r.ok:
+        return None
+    try:
+        return parse_manifest(r.content)
+    except Exception as e:
+        _logger.warning("Failed to parse manifest from %s: %s", url, e)
+        return None
+
+
+def is_maintainer_other_branches(
+    org, repo, username, modified_addons, other_branches, gh=None
+):
+    """Check if username is maintainer of modified_addons in any configured branch.
+
+    When an authenticated GitHub session is available, the GitHub contents API
+    is used instead of unauthenticated raw.githubusercontent.com requests. This
+    avoids rate-limiting and transient network errors that could spuriously deny
+    maintainer privileges during migrations.
+    """
+    gh_repo = None
+    if gh is not None:
+        try:
+            gh_repo = gh.repository(org, repo)
+        except Exception as e:
+            _logger.warning("Could not get repository %s/%s from API: %s", org, repo, e)
+
     for addon in modified_addons:
         is_maintainer = False
         for branch in other_branches:
             manifest_file = (
                 "__openerp__.py" if float(branch) < 10.0 else "__manifest__.py"
             )
-            url = (
-                f"https://github.com/{org}/{repo}/raw/{branch}/{addon}/{manifest_file}"
-            )
-            _logger.debug("Looking for maintainers in %s", url)
-            r = requests.get(
-                url, allow_redirects=True, headers={"Cache-Control": "no-cache"}
-            )
-            if r.ok:
-                manifest = parse_manifest(r.content)
-                if username in manifest.get("maintainers", []):
-                    is_maintainer = True
-                    break
+            manifest = None
+            if gh_repo is not None:
+                manifest = _get_manifest_from_api(gh_repo, addon, branch, manifest_file)
+            if manifest is None:
+                manifest = _get_manifest_from_raw(
+                    org, repo, addon, branch, manifest_file
+                )
+            if manifest and username in manifest.get("maintainers", []):
+                is_maintainer = True
+                break
 
         if not is_maintainer:
             return False
