@@ -249,3 +249,40 @@ def test_is_maintainer_other_branches():
     assert not is_maintainer_other_branches(
         "OCA", "mis-builder", "fpdoo", {"mis_builder"}, ["12.0"]
     )
+
+
+def test_is_maintainer_other_branches_with_gh(mocker):
+    """When an authenticated GitHub session is provided, the API is used.
+
+    The raw URL fallback must not be hit if the API returns a valid manifest.
+    """
+    gh_mock = mocker.MagicMock()
+    file_contents_mock = mocker.MagicMock()
+    file_contents_mock.content = b"{'name': 'addon1', 'maintainers': ['u1']}"
+    gh_repo_mock = mocker.MagicMock()
+    gh_repo_mock.file_contents.return_value = file_contents_mock
+    gh_mock.repository.return_value = gh_repo_mock
+
+    assert is_maintainer_other_branches(
+        "OCA", "repo", "u1", {"addon1"}, ["15.0"], gh=gh_mock
+    )
+    gh_repo_mock.file_contents.assert_called_once_with(
+        "addon1/__manifest__.py", ref="15.0"
+    )
+
+
+def test_is_maintainer_other_branches_api_fallback_to_raw(mocker):
+    """If the GitHub API returns no manifest, the raw URL fallback is used."""
+    gh_mock = mocker.MagicMock()
+    gh_repo_mock = mocker.MagicMock()
+    gh_repo_mock.file_contents.return_value = None
+    gh_mock.repository.return_value = gh_repo_mock
+    raw_mock = mocker.patch(
+        "oca_github_bot.manifest._get_manifest_from_raw",
+        return_value={"name": "addon1", "maintainers": ["u1"]},
+    )
+
+    assert is_maintainer_other_branches(
+        "OCA", "repo", "u1", {"addon1"}, ["15.0"], gh=gh_mock
+    )
+    raw_mock.assert_called_once_with("OCA", "repo", "addon1", "15.0", "__manifest__.py")
