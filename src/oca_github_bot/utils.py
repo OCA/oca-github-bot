@@ -57,7 +57,7 @@ def compute_module_label_name(module_name: str) -> str:
     if len(label_name) > _MAX_LABEL_SIZE:
         module_hash = hashlib.sha256(bytes(module_name, "utf-8")).hexdigest()
         label_name = (
-            f"{label_name[:(_MAX_LABEL_SIZE - (_HASH_SIZE + 1))]}"
+            f"{label_name[: (_MAX_LABEL_SIZE - (_HASH_SIZE + 1))]}"
             f" {module_hash[:_HASH_SIZE]}"
         )
     return label_name

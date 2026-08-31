@@ -176,7 +176,7 @@ def test_git_modified_addons_merge_base(git_clone):
     subprocess.check_call(["git", "commit", "-m", "[BOT] add addon2"], cwd=git_clone)
     assert git_modified_addons(git_clone, "origin/master") == ({"addon2"}, False)
     # create addon1 on a new branch
-    subprocess.check_call(["git", "checkout", "-b" "addon1"], cwd=git_clone)
+    subprocess.check_call(["git", "checkout", "-baddon1"], cwd=git_clone)
     addon1_dir = git_clone / "addon1"
     addon1_dir.mkdir()
     (addon1_dir / "__manifest__.py").write_text("{'name': 'addon1'}")
