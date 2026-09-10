@@ -6,8 +6,6 @@ import logging
 import os
 import re
 
-import requests
-
 from . import config
 from .github import git_get_current_branch, github_user_can_push
 from .process import check_call, check_output
@@ -258,34 +256,55 @@ def user_can_push(gh, org, repo, username, addons_dir, target_branch):
     if result:
         return True
 
-    other_branches = config.MAINTAINER_CHECK_ODOO_RELEASES
+    other_branches = list(config.MAINTAINER_CHECK_ODOO_RELEASES)
     if target_branch in other_branches:
         other_branches.remove(target_branch)
 
     return is_maintainer_other_branches(
-        org, repo, username, modified_addons, other_branches
+        gh_repo, username, modified_addons, other_branches
     )
 
 
-def is_maintainer_other_branches(org, repo, username, modified_addons, other_branches):
+def _get_manifest_from_api(gh_repo, addon, branch, manifest_file):
+    """Read an addon manifest from a GitHub branch using the authenticated API.
+
+    Returns the parsed manifest dict, or None if the file does not exist or
+    cannot be read.
+    """
+    path = f"{addon}/{manifest_file}"
+    try:
+        file_contents = gh_repo.file_contents(path, ref=branch)
+    except Exception as e:
+        _logger.debug("Could not read %s@%s via GitHub API: %s", path, branch, e)
+        return None
+    if file_contents is None:
+        return None
+    try:
+        return parse_manifest(file_contents.content)
+    except Exception as e:
+        _logger.warning(
+            "Failed to parse manifest %s@%s from GitHub API: %s", path, branch, e
+        )
+        return None
+
+
+def is_maintainer_other_branches(gh_repo, username, modified_addons, other_branches):
+    """Check if username is maintainer of modified_addons in any configured branch.
+
+    The authenticated GitHub contents API is used to read manifests. This
+    avoids rate-limiting and transient network errors that could spuriously deny
+    maintainer privileges during migrations.
+    """
     for addon in modified_addons:
         is_maintainer = False
         for branch in other_branches:
             manifest_file = (
                 "__openerp__.py" if float(branch) < 10.0 else "__manifest__.py"
             )
-            url = (
-                f"https://github.com/{org}/{repo}/raw/{branch}/{addon}/{manifest_file}"
-            )
-            _logger.debug("Looking for maintainers in %s", url)
-            r = requests.get(
-                url, allow_redirects=True, headers={"Cache-Control": "no-cache"}
-            )
-            if r.ok:
-                manifest = parse_manifest(r.content)
-                if username in manifest.get("maintainers", []):
-                    is_maintainer = True
-                    break
+            manifest = _get_manifest_from_api(gh_repo, addon, branch, manifest_file)
+            if manifest and username in manifest.get("maintainers", []):
+                is_maintainer = True
+                break
 
         if not is_maintainer:
             return False
