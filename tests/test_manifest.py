@@ -1,6 +1,7 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import logging
 import subprocess
 
 import pytest
@@ -242,10 +243,51 @@ def test_is_maintainer(tmp_path):
     assert not is_maintainer("u1", [tmp_path / "not_an_addon"])
 
 
-def test_is_maintainer_other_branches():
+def test_is_maintainer_other_branches(mocker):
+    gh_repo_mock = mocker.MagicMock()
+
+    def _file_contents(path, ref=None):
+        # Mimic the real OCA/mis-builder 12.0 manifest maintainers.
+        if ref == "12.0" and path == "mis_builder/__manifest__.py":
+            content = b"{'name': 'mis_builder', 'maintainers': ['sbidoul']}"
+        else:
+            content = b"{'name': 'other'}"
+        file_contents = mocker.MagicMock()
+        file_contents.content = content
+        return file_contents
+
+    gh_repo_mock.file_contents.side_effect = _file_contents
+
     assert is_maintainer_other_branches(
-        "OCA", "mis-builder", "sbidoul", {"mis_builder"}, ["12.0"]
+        gh_repo_mock, "sbidoul", {"mis_builder"}, ["12.0"]
     )
     assert not is_maintainer_other_branches(
-        "OCA", "mis-builder", "fpdoo", {"mis_builder"}, ["12.0"]
+        gh_repo_mock, "fpdoo", {"mis_builder"}, ["12.0"]
     )
+
+
+def test_is_maintainer_other_branches_with_gh(mocker):
+    """The manifest is read through the authenticated GitHub contents API."""
+    gh_repo_mock = mocker.MagicMock()
+    file_contents_mock = mocker.MagicMock()
+    file_contents_mock.content = b"{'name': 'addon1', 'maintainers': ['u1']}"
+    gh_repo_mock.file_contents.return_value = file_contents_mock
+
+    assert is_maintainer_other_branches(gh_repo_mock, "u1", {"addon1"}, ["15.0"])
+    gh_repo_mock.file_contents.assert_called_once_with(
+        "addon1/__manifest__.py", ref="15.0"
+    )
+
+
+def test_is_maintainer_other_branches_api_errors(mocker, caplog):
+    """A missing or unparseable manifest is ignored, not raised."""
+    gh_repo_mock = mocker.MagicMock()
+    file_contents_mock = mocker.MagicMock()
+    file_contents_mock.content = b"garbage{"
+    gh_repo_mock.file_contents.side_effect = [None, file_contents_mock]
+    caplog.set_level(logging.WARNING, logger="oca_github_bot.manifest")
+
+    assert not is_maintainer_other_branches(
+        gh_repo_mock, "u1", {"addon1"}, ["15.0", "14.0"]
+    )
+    assert "Failed to parse manifest addon1/__manifest__.py@14.0" in caplog.text
