@@ -1,11 +1,11 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 LABEL maintainer="Odoo Community Association (OCA)"
 
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 
-ARG PY=3.12
+ARG PY=3.14
 
 # binutils is needed for the ar command, used by pypandoc.ensure_pandoc_installed()
 RUN set -x \
