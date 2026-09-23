@@ -97,18 +97,6 @@ def set_manifest_version(addon_dir, version):
         f.write(manifest)
 
 
-def is_maintainer(username, addon_dirs):
-    for addon_dir in addon_dirs:
-        try:
-            manifest = get_manifest(addon_dir)
-        except NoManifestFound:
-            return False
-        maintainers = manifest.get("maintainers", [])
-        if username not in maintainers:
-            return False
-    return True
-
-
 def bump_version(version, mode):
     mo = VERSION_RE.match(version)
     if not mo:
@@ -249,20 +237,14 @@ def user_can_push(gh, org, repo, username, addons_dir, target_branch):
     current_branch = git_get_current_branch(cwd=addons_dir)
     try:
         check_call(["git", "checkout", target_branch], cwd=addons_dir)
-        result = is_maintainer(username, modified_addon_dirs)
+        result = is_maintainer(gh_repo, username, modified_addon_dirs)
     finally:
         check_call(["git", "checkout", current_branch], cwd=addons_dir)
 
     if result:
         return True
 
-    other_branches = list(config.MAINTAINER_CHECK_ODOO_RELEASES)
-    if target_branch in other_branches:
-        other_branches.remove(target_branch)
-
-    return is_maintainer_other_branches(
-        gh_repo, username, modified_addons, other_branches
-    )
+    return is_maintainer(gh_repo, username, modified_addons)
 
 
 def _get_manifest_from_api(gh_repo, addon, branch, manifest_file):
@@ -288,24 +270,49 @@ def _get_manifest_from_api(gh_repo, addon, branch, manifest_file):
         return None
 
 
-def is_maintainer_other_branches(gh_repo, username, modified_addons, other_branches):
+def get_maintainers(gh_repo, modified_addons, branches=None):
+    """Get maintainers of modified_addons in `branches`.
+
+    The authenticated GitHub contents API is used to read manifests. This
+    avoids rate-limiting and transient network errors that could spuriously deny
+    maintainer privileges during migrations.
+    """
+    if not branches:
+        branches = config.MAINTAINER_CHECK_ODOO_RELEASES
+
+    maintainers_dict = dict()
+    for addon in modified_addons:
+        maintainers_dict[addon] = set()
+        for branch in branches:
+            try:
+                branch_version = float(branch)
+            except ValueError:
+                # master, main, ...
+                manifest_file = "__manifest__.py"
+            else:
+                manifest_file = (
+                    "__openerp__.py" if branch_version < 10.0 else "__manifest__.py"
+                )
+            manifest = _get_manifest_from_api(gh_repo, addon, branch, manifest_file)
+            if manifest:
+                branch_maintainers = manifest.get("maintainers", set())
+                maintainers_dict[addon] = maintainers_dict[addon].union(
+                    branch_maintainers
+                )
+    return maintainers_dict
+
+
+def is_maintainer(gh_repo, username, modified_addons, branches=None):
     """Check if username is maintainer of modified_addons in any configured branch.
 
     The authenticated GitHub contents API is used to read manifests. This
     avoids rate-limiting and transient network errors that could spuriously deny
     maintainer privileges during migrations.
     """
-    for addon in modified_addons:
-        is_maintainer = False
-        for branch in other_branches:
-            manifest_file = (
-                "__openerp__.py" if float(branch) < 10.0 else "__manifest__.py"
-            )
-            manifest = _get_manifest_from_api(gh_repo, addon, branch, manifest_file)
-            if manifest and username in manifest.get("maintainers", []):
-                is_maintainer = True
-                break
-
-        if not is_maintainer:
+    if not branches:
+        branches = config.MAINTAINER_CHECK_ODOO_RELEASES
+    maintainers_dict = get_maintainers(gh_repo, modified_addons, branches=branches)
+    for _addon, maintainers in maintainers_dict.items():
+        if username not in maintainers:
             return False
     return True
