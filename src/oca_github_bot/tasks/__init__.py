@@ -2,11 +2,13 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 from . import (
+    escalate_review,
     heartbeat,
     label_modified_addons,
     main_branch_bot,
     mention_maintainer,
     migration_issue_bot,
+    review_gate,
     tag_approved,
     tag_needs_review,
     tag_ready_to_merge,
