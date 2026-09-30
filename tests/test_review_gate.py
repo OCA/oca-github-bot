@@ -80,12 +80,7 @@ def test_escalate_steps_ladder():
     created14 = now - timedelta(days=15)
     assert next_escalate_step(created14, now, [STEP_MARKERS[0]]) == 1
     created21 = now - timedelta(days=22)
-    assert (
-        next_escalate_step(
-            created21, now, [STEP_MARKERS[0], STEP_MARKERS[1]]
-        )
-        == 2
-    )
+    assert next_escalate_step(created21, now, [STEP_MARKERS[0], STEP_MARKERS[1]]) == 2
     assert next_escalate_step(now - timedelta(days=2), now, []) is None
 
 
