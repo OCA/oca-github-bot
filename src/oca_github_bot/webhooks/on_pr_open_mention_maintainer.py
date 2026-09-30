@@ -3,6 +3,7 @@
 
 import logging
 
+from ..config import REVIEW_GATE_AS_FIRST_FILTER
 from ..router import router
 from ..tasks.mention_maintainer import mention_maintainer
 
@@ -15,6 +16,9 @@ async def on_pr_open_mention_maintainer(event, *args, **kwargs):
     """
     Whenever a PR is opened, mention the maintainers of modified addons.
     """
+    if REVIEW_GATE_AS_FIRST_FILTER:
+        # Mentions wait until mechanical checks + CI are green.
+        return
     org, repo = event.data["repository"]["full_name"].split("/")
     pr = event.data["pull_request"]["number"]
     mention_maintainer.delay(org, repo, pr)

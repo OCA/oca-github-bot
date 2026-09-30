@@ -17,7 +17,8 @@ READY_TO_MERGE_COMMENT = (
     "has been created more than 5 days ago. "
     "It should therefore be ready to merge by a maintainer "
     "(or a PSC member if the concerned addon has "
-    "no declared maintainer). 🤖"
+    "no declared maintainer). 🤖\n\n"
+    "Who to ping: https://oca.github.io/repo-maintainer-conf/repos.html"
 )
 
 

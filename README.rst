@@ -33,6 +33,28 @@ Mention declared maintainers that addons they maintain are being modified.
 
 Comment with a call for maintainers if there are no declared maintainer.
 
+Run **mechanical checks** (volume filter, not a review): missing
+``development_status``, new addons without ``ir.model.access.csv`` when they
+define models, flag addons that are not Alpha / that look like a name collision.
+The bot comments a checklist, sets or removes the ``bot checks passed`` label,
+and never treats this as an approval or a merge.
+
+When ``REVIEW_GATE_AS_FIRST_FILTER`` is enabled, maintainer pings and the
+``needs review`` label wait until those checks pass **and** CI is green, so
+reviewer time is spent on ready PRs.
+
+On pull request CI status
+-------------------------
+
+When the CI in a Pull Request goes green, set the ``needs review`` label,
+unless it has ``wip:``  or ``[wip]`` in it's title.
+
+If the first-filter is enabled, also require ``bot checks passed``.
+
+Silence is not treated as a request to ping more people, and never grants
+``/ocabot merge``.
+
+
 On pull request close
 ---------------------
 
@@ -68,12 +90,8 @@ On Pull Request review
 
 When there are two approvals, set the ``approved`` label.
 When the PR is at least 5 days old, set the ``ready to merge`` label.
-
-On Pull Request CI status
--------------------------
-
-When the CI in a Pull Request goes green, set the ``needs review`` label,
-unless it has ``wip:``  or ``[wip]`` in it's title.
+The ready-to-merge comment includes the PSC list:
+https://oca.github.io/repo-maintainer-conf/repos.html
 
 Commands
 --------
@@ -233,6 +251,7 @@ Contributors
 * Sylvain Le Gal (https://twitter.com/legalsylvain)
 * Tecnativa - Pedro M. Baeza
 * Tecnativa - Víctor Martínez
+* Maxime Chambreuil <maxime.chambreuil@graymatterlogic.com>
 
 Maintainers
 ===========
