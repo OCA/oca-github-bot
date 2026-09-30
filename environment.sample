@@ -47,7 +47,7 @@ ODOO_PASSWORD=
 #  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,mention_maintainer,
 #  merge_bot,rebase_bot,merge_bot_towncrier,tag_needs_review,
-#  review_gate,escalate_review
+#  review_gate
 #BOT_TASKS=all
 
 # Coma separated list of task to ignore

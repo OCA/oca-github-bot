@@ -1,15 +1,9 @@
 # Copyright 2026 Maxime Chambreuil - Gray Matter Logic
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from oca_github_bot.review_gate import check_addon, format_comment, merge_results
-from oca_github_bot.tasks.escalate_review import (
-    STEP_MARKERS,
-    escalate_comment,
-    next_escalate_step,
-)
 
 from .common import make_addon
 
@@ -70,22 +64,3 @@ def test_format_comment_contains_marker():
     body = format_comment(result)
     assert "ocabot-review-gate" in body
     assert "not a review" in body.lower() or "volume filter" in body.lower()
-
-
-def test_escalate_steps_ladder():
-    now = datetime(2026, 9, 30, tzinfo=timezone.utc)
-    created = now - timedelta(days=8)
-    assert next_escalate_step(created, now, []) == 0
-    assert next_escalate_step(created, now, [STEP_MARKERS[0]]) is None
-    created14 = now - timedelta(days=15)
-    assert next_escalate_step(created14, now, [STEP_MARKERS[0]]) == 1
-    created21 = now - timedelta(days=22)
-    assert next_escalate_step(created21, now, [STEP_MARKERS[0], STEP_MARKERS[1]]) == 2
-    assert next_escalate_step(now - timedelta(days=2), now, []) is None
-
-
-def test_escalate_comment_does_not_claim_merge():
-    body = escalate_comment("field-service", 0)
-    assert "ocabot-escalate:1" in body
-    assert "will not merge" in body.lower() or "not a merge" in body.lower()
-    assert "/ocabot merge" in escalate_comment("field-service", 2)

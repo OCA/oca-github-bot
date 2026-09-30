@@ -51,9 +51,8 @@ unless it has ``wip:``  or ``[wip]`` in it's title.
 
 If the first-filter is enabled, also require ``bot checks passed``.
 
-If a PR stays on ``needs review`` with no human review, a daily job escalates
-who is asked (7 days: repo maintainer team, 14 days: PSC link,
-21 days: core maintainers). Silence does **not** grant ``/ocabot merge``.
+Silence is not treated as a request to ping more people, and never grants
+``/ocabot merge``.
 
 
 On pull request close
@@ -250,6 +249,8 @@ Contributors
 * Jose Angel Fentanez <joseangel@vauxoo.com>
 * Simone Rubino <simone.rubino@agilebg.com>
 * Sylvain Le Gal (https://twitter.com/legalsylvain)
+* Tecnativa - Pedro M. Baeza
+* Tecnativa - Víctor Martínez
 * Maxime Chambreuil <maxime.chambreuil@graymatterlogic.com>
 
 Maintainers

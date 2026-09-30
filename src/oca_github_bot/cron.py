@@ -28,11 +28,6 @@ for org in GITHUB_ORG:
                 "args": (org,),
                 "schedule": crontab(minute="0"),
             },
-            "escalate_review": {
-                "task": "oca_github_bot.tasks.escalate_review.escalate_review",
-                "args": (org,),
-                "schedule": crontab(hour="8", minute="0"),
-            },
         }
     )
 

@@ -2,7 +2,6 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
 from . import (
-    escalate_review,
     heartbeat,
     label_modified_addons,
     main_branch_bot,

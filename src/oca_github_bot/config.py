@@ -60,7 +60,7 @@ DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
 #  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,merge_bot,tag_needs_review,
 #  migration_issue_bot,whool_init,gen_metapackage,label_modified_addons,
-#  review_gate,escalate_review
+#  review_gate
 BOT_TASKS = os.environ.get("BOT_TASKS", "all").split(",")
 
 BOT_TASKS_DISABLED = os.environ.get("BOT_TASKS_DISABLED", "").split(",")

@@ -1,1 +1,1 @@
-Add a mechanical review gate (volume filter, not a human review) and escalate silent PRs to a wider human set without merging.
+Add a mechanical review gate (volume filter, not a human review). Silence is not escalated into extra reviewer pings, and the bot never merges.
