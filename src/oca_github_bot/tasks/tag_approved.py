@@ -43,8 +43,12 @@ def tag_approved(org, repo, pr, dry_run=False):
             review_users_by_state[state].add(login)
         gh_issue = gh_call(gh_pr.issue)
         labels = [label.name for label in gh_issue.labels()]
+        if gh_pr.draft:
+            # a draft PR is not ready for review, so it can't be approved
+            _logger.info(f"{gh_pr.url} is a draft, not approved")
         if (
-            len(review_users_by_state["APPROVED"]) >= APPROVALS_REQUIRED
+            not gh_pr.draft
+            and len(review_users_by_state["APPROVED"]) >= APPROVALS_REQUIRED
             and not review_users_by_state["CHANGES_REQUESTED"]
         ):
             if LABEL_APPROVED not in labels:

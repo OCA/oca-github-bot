@@ -67,6 +67,8 @@ On Pull Request review
 ----------------------
 
 When there are two approvals, set the ``approved`` label.
+A draft PR is never ``approved``: converting a PR to draft removes the
+``approved`` and ``ready to merge`` labels.
 When the PR is at least 5 days old, set the ``ready to merge`` label.
 
 On Pull Request CI status

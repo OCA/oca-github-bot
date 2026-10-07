@@ -4,6 +4,7 @@
 from . import (
     on_command,
     on_pr_close_delete_branch,
+    on_pr_draft,
     on_pr_green_label_needs_review,
     on_pr_label_modified_addons,
     on_pr_open_label_new_contributor,

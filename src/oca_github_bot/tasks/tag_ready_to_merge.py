@@ -30,6 +30,7 @@ def tag_ready_to_merge(org, repo=None, dry_run=False):
         query = [
             "type:pr",
             "state:open",
+            "draft:false",
             "status:success",
             "label:approved",
             '-label:"ready to merge"',

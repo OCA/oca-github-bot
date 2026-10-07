@@ -1,0 +1,2 @@
+Do not set the ``approved`` and ``ready to merge`` labels on draft PRs, and remove
+them when an approved PR is converted to draft.
