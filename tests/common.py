@@ -41,4 +41,4 @@ def set_config(**kwargs):
         yield
     finally:
         for key in saved:
-            setattr(config, key, kwargs[key])
+            setattr(config, key, saved[key])
