@@ -172,44 +172,52 @@ To run tests, type ``tox``. Test are written with pytest.
 
 Here is a recommended procedure to test locally:
 
-* Prepare an ``environment`` file by cloning and adapting ``environment.sample``.
+* You will need to be able to receive webhooks on your local machine from the internet, you can use `ngrok <https://ngrok.com/>`_. You will be assigned a randomly generated URL. Launch ngrok, and forward calls to port 8080.
+
+* Create a webhook in a sandbox repository that you own on Github. Fill the Payload URL with the URL you got from ngrok and choose a secret. Save this for later. In the event triggers section, make sure to select "Send me everything".
+
+* Prepare an ``environment`` file by cloning ``environment.sample``. Make sure to fill at least the ``GITHUB_*`` and ``GIT_*`` variables
+
+  * Optionally, you can name the file ``.env`` to have it automatically loaded by docker compose and also some terminal programs
+  * ``GITHUB_SECRET``: the secret you chose when creating the webhook on Github.
+  * ``GITHUB_TOKEN``: create a classic token with the appropriate ``repo`` permissions. For example if your repository is public you can simply choose "public repo" .
 * Load ``environment`` in your shell, for instance with bash:
 
-.. code::
+  .. code::
 
-  set -o allexport
-  source environment
-  set +o allexport
+    set -o allexport
+    source environment
+    set +o allexport
 
 * Launch the ``redis`` message queue:
 
-.. code::
+  .. code::
 
-  docker run -p 6379:6379 redis
+    docker run --rm -p 6379:6379 redis
 
-* Install the `maintainer tools <https://github.com/OCA/maintainer-tools>`_ and add the generated binaries to your path:
 
-.. code::
+  * In the ``environment`` configuration file, make sure to set ``BROKER_URI`` to ``redis://localhost`` to connect to the instance you just launched
 
-  PATH=/path/to/maintainer-tools/env/bin/:$PATH
+* Install the `maintainer tools <https://github.com/OCA/maintainer-tools>`_ and add the generated binaries to your PATH:
+
+  .. code::
+
+    PATH=/path/to/maintainer-tools/env/bin/:$PATH
+
+  * If you installed it with ``pipx`` they should already be in your PATH.
 
 * Create a virtual environment and install the project in it:
 
-.. code::
+  .. code::
 
-  python3 -m venv venv
-  source venv/bin/activate
-  pip install -r requirements.txt -e .
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt -e .
 
 * Then you can debug the two processes in your favorite IDE:
 
   - the webhook server: ``python -m oca_github_bot``
   - the task worker: ``python -m celery --app=oca_github_bot.queue.app  worker --pool=solo --loglevel=INFO``
-
-* To expose the webhook server on your local machine to internet,
-  you can use `ngrok <https://ngrok.com/>`_
-* Then configure a GitHub webhook in a sandbox project in your organization
-  so you can start receiving webhook calls to your local machine.
 
 Releasing
 =========
