@@ -236,6 +236,7 @@ def test_is_maintainer(tmp_path):
     addon3.mkdir()
     (addon3 / "__manifest__.py").write_text("{'name': 'addon3'}")
     assert is_maintainer("u1", [addon1])
+    assert is_maintainer("U1", [addon1])
     assert not is_maintainer("u1", [addon2])
     assert not is_maintainer("u1", [addon1, addon2])
     assert is_maintainer("u2", [addon1, addon2])
@@ -260,6 +261,9 @@ def test_is_maintainer_other_branches(mocker):
 
     assert is_maintainer_other_branches(
         gh_repo_mock, "sbidoul", {"mis_builder"}, ["12.0"]
+    )
+    assert is_maintainer_other_branches(
+        gh_repo_mock, "SBidoul", {"mis_builder"}, ["12.0"]
     )
     assert not is_maintainer_other_branches(
         gh_repo_mock, "fpdoo", {"mis_builder"}, ["12.0"]
