@@ -1,10 +1,13 @@
 # Copyright (c) ACSONE SA/NV 2018
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
+import base64
 import logging
 import subprocess
 
 import pytest
+from github3.repos.contents import Contents
+from github3.session import GitHubSession
 
 from oca_github_bot.github import git_get_head_sha
 from oca_github_bot.manifest import (
@@ -243,6 +246,27 @@ def test_is_maintainer(tmp_path):
     assert not is_maintainer("u1", [tmp_path / "not_an_addon"])
 
 
+def _contents(manifest):
+    """A github3 Contents as the API returns it: the file base64-encoded."""
+    return Contents(
+        {
+            "url": "",
+            "content": base64.b64encode(manifest).decode(),
+            "encoding": "base64",
+            "download_url": "",
+            "git_url": "",
+            "html_url": "",
+            "_links": {},
+            "name": "__manifest__.py",
+            "path": "",
+            "sha": "",
+            "size": len(manifest),
+            "type": "file",
+        },
+        GitHubSession(),
+    )
+
+
 def test_is_maintainer_other_branches(mocker):
     gh_repo_mock = mocker.MagicMock()
 
@@ -252,9 +276,7 @@ def test_is_maintainer_other_branches(mocker):
             content = b"{'name': 'mis_builder', 'maintainers': ['sbidoul']}"
         else:
             content = b"{'name': 'other'}"
-        file_contents = mocker.MagicMock()
-        file_contents.content = content
-        return file_contents
+        return _contents(content)
 
     gh_repo_mock.file_contents.side_effect = _file_contents
 
@@ -269,9 +291,9 @@ def test_is_maintainer_other_branches(mocker):
 def test_is_maintainer_other_branches_with_gh(mocker):
     """The manifest is read through the authenticated GitHub contents API."""
     gh_repo_mock = mocker.MagicMock()
-    file_contents_mock = mocker.MagicMock()
-    file_contents_mock.content = b"{'name': 'addon1', 'maintainers': ['u1']}"
-    gh_repo_mock.file_contents.return_value = file_contents_mock
+    gh_repo_mock.file_contents.return_value = _contents(
+        b"{'name': 'addon1', 'maintainers': ['u1']}"
+    )
 
     assert is_maintainer_other_branches(gh_repo_mock, "u1", {"addon1"}, ["15.0"])
     gh_repo_mock.file_contents.assert_called_once_with(
@@ -282,12 +304,11 @@ def test_is_maintainer_other_branches_with_gh(mocker):
 def test_is_maintainer_other_branches_api_errors(mocker, caplog):
     """A missing or unparseable manifest is ignored, not raised."""
     gh_repo_mock = mocker.MagicMock()
-    file_contents_mock = mocker.MagicMock()
-    file_contents_mock.content = b"garbage{"
-    gh_repo_mock.file_contents.side_effect = [None, file_contents_mock]
+    gh_repo_mock.file_contents.side_effect = [None, _contents(b"garbage{")]
     caplog.set_level(logging.WARNING, logger="oca_github_bot.manifest")
 
     assert not is_maintainer_other_branches(
         gh_repo_mock, "u1", {"addon1"}, ["15.0", "14.0"]
     )
     assert "Failed to parse manifest addon1/__manifest__.py@14.0" in caplog.text
+    assert isinstance(caplog.records[-1].args[2], SyntaxError)
