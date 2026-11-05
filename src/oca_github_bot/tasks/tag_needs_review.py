@@ -1,8 +1,10 @@
 # Distributed under the MIT License (http://opensource.org/licenses/MIT).
 
-from ..config import switchable
+from ..config import REVIEW_GATE_AS_FIRST_FILTER, switchable
 from ..github import gh_call, repository
 from ..queue import getLogger, task
+from ..review_gate import LABEL_BOT_CHECKS_PASSED
+from .mention_maintainer import mention_maintainer
 
 _logger = getLogger(__name__)
 
@@ -26,7 +28,15 @@ def tag_needs_review(org, pr, repo, status, dry_run=False):
             gh_pr.title.lower().startswith(("wip:", "[wip]")) or LABEL_WIP in labels
         )
         if status == "success" and not has_wip:
+            if REVIEW_GATE_AS_FIRST_FILTER and LABEL_BOT_CHECKS_PASSED not in labels:
+                _logger.info(
+                    "skip %s: mechanical checks have not passed yet", LABEL_NEEDS_REVIEW
+                )
+                return
+            already = LABEL_NEEDS_REVIEW in labels
             if dry_run:
                 _logger.info(f"DRY-RUN add {LABEL_NEEDS_REVIEW} label")
-            else:
+            elif not already:
                 gh_call(gh_issue.add_labels, LABEL_NEEDS_REVIEW)
+            if REVIEW_GATE_AS_FIRST_FILTER and not already:
+                mention_maintainer.delay(org, repo, pr)

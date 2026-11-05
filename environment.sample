@@ -34,6 +34,10 @@ ODOO_PASSWORD=
 # Number of days before the proposal can be marked as "Approved"
 #MIN_PR_AGE=5
 
+# If true, do not ping maintainers or set `needs review` until mechanical
+# checks (review_gate) pass and CI is green. Default: false (current behaviour).
+#REVIEW_GATE_AS_FIRST_FILTER=false
+
 # Color of the github label that contains the name of the module
 #MODULE_LABEL_COLOR=#ffc
 
@@ -42,7 +46,8 @@ ODOO_PASSWORD=
 # Available tasks:
 #  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,mention_maintainer,
-#  merge_bot,rebase_bot,merge_bot_towncrier,tag_needs_review
+#  merge_bot,rebase_bot,merge_bot_towncrier,tag_needs_review,
+#  review_gate
 #BOT_TASKS=all
 
 # Coma separated list of task to ignore

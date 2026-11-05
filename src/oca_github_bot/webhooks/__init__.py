@@ -9,6 +9,7 @@ from . import (
     on_pr_open_label_new_contributor,
     on_pr_open_mention_maintainer,
     on_pr_review,
+    on_pr_review_gate,
     on_push_to_main_branch,
     on_status_merge_bot,
 )
