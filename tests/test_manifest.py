@@ -21,9 +21,10 @@ from oca_github_bot.manifest import (
     is_addon_dir,
     is_addons_dir,
     is_maintainer,
-    is_maintainer_other_branches,
     set_manifest_version,
 )
+
+from .common import set_config
 
 
 def test_is_addons_dir_empty(tmpdir):
@@ -223,7 +224,7 @@ def test_get_odoo_series_from_version():
         get_odoo_series_from_version("12.0.1")
 
 
-def test_is_maintainer(tmp_path):
+def test_is_maintainer(mocker, tmp_path):
     addon1 = tmp_path / "addon1"
     addon1.mkdir()
     (addon1 / "__manifest__.py").write_text(
@@ -235,12 +236,22 @@ def test_is_maintainer(tmp_path):
     addon3 = tmp_path / "addon3"
     addon3.mkdir()
     (addon3 / "__manifest__.py").write_text("{'name': 'addon3'}")
-    assert is_maintainer("u1", [addon1])
-    assert not is_maintainer("u1", [addon2])
-    assert not is_maintainer("u1", [addon1, addon2])
-    assert is_maintainer("u2", [addon1, addon2])
-    assert not is_maintainer("u2", [addon1, addon2, addon3])
-    assert not is_maintainer("u1", [tmp_path / "not_an_addon"])
+    gh_repo_mock = mocker.MagicMock()
+
+    def _file_contents(path, ref=None):
+        file_contents = mocker.MagicMock()
+        file_contents.content = (tmp_path / path).read_bytes()
+        return file_contents
+
+    gh_repo_mock.file_contents.side_effect = _file_contents
+
+    with set_config(MAINTAINER_CHECK_ODOO_RELEASES="10.0"):
+        assert is_maintainer(gh_repo_mock, "u1", [addon1])
+        assert not is_maintainer(gh_repo_mock, "u1", [addon2])
+        assert not is_maintainer(gh_repo_mock, "u1", [addon1, addon2])
+        assert is_maintainer(gh_repo_mock, "u2", [addon1, addon2])
+        assert not is_maintainer(gh_repo_mock, "u2", [addon1, addon2, addon3])
+        assert not is_maintainer(gh_repo_mock, "u1", [tmp_path / "not_an_addon"])
 
 
 def test_is_maintainer_other_branches(mocker):
@@ -258,12 +269,8 @@ def test_is_maintainer_other_branches(mocker):
 
     gh_repo_mock.file_contents.side_effect = _file_contents
 
-    assert is_maintainer_other_branches(
-        gh_repo_mock, "sbidoul", {"mis_builder"}, ["12.0"]
-    )
-    assert not is_maintainer_other_branches(
-        gh_repo_mock, "fpdoo", {"mis_builder"}, ["12.0"]
-    )
+    assert is_maintainer(gh_repo_mock, "sbidoul", {"mis_builder"}, ["12.0"])
+    assert not is_maintainer(gh_repo_mock, "fpdoo", {"mis_builder"}, ["12.0"])
 
 
 def test_is_maintainer_other_branches_with_gh(mocker):
@@ -273,7 +280,7 @@ def test_is_maintainer_other_branches_with_gh(mocker):
     file_contents_mock.content = b"{'name': 'addon1', 'maintainers': ['u1']}"
     gh_repo_mock.file_contents.return_value = file_contents_mock
 
-    assert is_maintainer_other_branches(gh_repo_mock, "u1", {"addon1"}, ["15.0"])
+    assert is_maintainer(gh_repo_mock, "u1", {"addon1"}, ["15.0"])
     gh_repo_mock.file_contents.assert_called_once_with(
         "addon1/__manifest__.py", ref="15.0"
     )
@@ -287,7 +294,5 @@ def test_is_maintainer_other_branches_api_errors(mocker, caplog):
     gh_repo_mock.file_contents.side_effect = [None, file_contents_mock]
     caplog.set_level(logging.WARNING, logger="oca_github_bot.manifest")
 
-    assert not is_maintainer_other_branches(
-        gh_repo_mock, "u1", {"addon1"}, ["15.0", "14.0"]
-    )
+    assert not is_maintainer(gh_repo_mock, "u1", {"addon1"}, ["15.0", "14.0"])
     assert "Failed to parse manifest addon1/__manifest__.py@14.0" in caplog.text
