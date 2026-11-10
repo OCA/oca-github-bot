@@ -97,14 +97,19 @@ def set_manifest_version(addon_dir, version):
         f.write(manifest)
 
 
+def _is_listed_maintainer(username, manifest):
+    """Whether username is in the manifest's maintainers, ignoring case."""
+    maintainers = {m.lower() for m in manifest.get("maintainers", [])}
+    return username.lower() in maintainers
+
+
 def is_maintainer(username, addon_dirs):
     for addon_dir in addon_dirs:
         try:
             manifest = get_manifest(addon_dir)
         except NoManifestFound:
             return False
-        maintainers = manifest.get("maintainers", [])
-        if username not in maintainers:
+        if not _is_listed_maintainer(username, manifest):
             return False
     return True
 
@@ -302,7 +307,7 @@ def is_maintainer_other_branches(gh_repo, username, modified_addons, other_branc
                 "__openerp__.py" if float(branch) < 10.0 else "__manifest__.py"
             )
             manifest = _get_manifest_from_api(gh_repo, addon, branch, manifest_file)
-            if manifest and username in manifest.get("maintainers", []):
+            if manifest and _is_listed_maintainer(username, manifest):
                 is_maintainer = True
                 break
 

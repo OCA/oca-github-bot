@@ -50,7 +50,9 @@ def mention_maintainer(org, repo, pr, dry_run=False):
         if modified_addon_dirs and not modified_addons_maintainers:
             all_mentions_comment = get_adopt_mention(pr_opener)
         else:
-            modified_addons_maintainers.discard(pr_opener)
+            modified_addons_maintainers = {
+                m for m in modified_addons_maintainers if m.lower() != pr_opener.lower()
+            }
             all_mentions_comment = get_mention(modified_addons_maintainers)
 
         if not all_mentions_comment:
