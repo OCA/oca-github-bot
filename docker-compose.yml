@@ -1,7 +1,7 @@
 version: '2'
 services:
   queue:
-    image: redis:4-alpine
+    image: redis:8-alpine
     restart: unless-stopped
     volumes:
       - ./data/queue:/data
