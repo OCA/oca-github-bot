@@ -43,7 +43,7 @@ def mention_maintainer(org, repo, pr, dry_run=False):
 
         modified_addons_maintainers = set()
         for modified_addon in modified_addon_dirs:
-            addon_maintainers = maintainers_dict.get(modified_addon, list())
+            addon_maintainers = maintainers_dict.get(modified_addon, [])
             modified_addons_maintainers.update(addon_maintainers)
 
         pr_opener = gh_pr.user.login
@@ -67,7 +67,7 @@ def mention_maintainer(org, repo, pr, dry_run=False):
 
 def get_mention(maintainers):
     """Get a comment mentioning all the `maintainers`."""
-    maintainers_mentions = list(map(lambda m: "@" + m, maintainers))
+    maintainers_mentions = ["@" + m for m in maintainers]
     mentions_comment = ""
     if maintainers_mentions:
         mentions_comment = (
@@ -90,7 +90,7 @@ def get_maintainers(addon_dirs):
 
     :return: Dictionary {'addon_dir': <list of addon's maintainers>}
     """
-    addon_maintainers_dict = dict()
+    addon_maintainers_dict = {}
     for addon_dir in addon_dirs:
         maintainers = get_manifest(addon_dir).get("maintainers", [])
         addon_maintainers_dict.setdefault(addon_dir, maintainers)

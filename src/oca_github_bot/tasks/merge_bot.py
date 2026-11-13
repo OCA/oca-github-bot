@@ -405,7 +405,7 @@ def _get_commit_success(org, repo, pr, gh_commit):
 @task()
 @switchable("merge_bot")
 def merge_bot_status(org, repo, merge_bot_branch, sha):
-    with contextlib.suppress(github.BranchNotFoundError):
+    with contextlib.suppress(github.BranchNotFoundError):  # noqa: SIM117
         with github.temporary_clone(org, repo, merge_bot_branch) as clone_dir:
             head_sha = github.git_get_head_sha(cwd=clone_dir)
             if head_sha != sha:

@@ -76,7 +76,7 @@ class BotCommand:
 
 class BotCommandMerge(BotCommand):
     bumpversion_mode = None
-    bumpversion_mode_list = ["major", "minor", "patch", "nobump"]
+    bumpversion_mode_list = ("major", "minor", "patch", "nobump")
 
     def parse_options(self, options):
         if not options:

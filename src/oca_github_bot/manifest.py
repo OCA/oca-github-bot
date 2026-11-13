@@ -279,14 +279,14 @@ def _get_manifest_from_api(gh_repo, addon, branch, manifest_file):
     path = f"{addon}/{manifest_file}"
     try:
         file_contents = gh_repo.file_contents(path, ref=branch)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         _logger.debug("Could not read %s@%s via GitHub API: %s", path, branch, e)
         return None
     if file_contents is None:
         return None
     try:
         return parse_manifest(file_contents.decoded)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         _logger.warning(
             "Failed to parse manifest %s@%s from GitHub API: %s", path, branch, e
         )

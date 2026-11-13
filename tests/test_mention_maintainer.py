@@ -69,7 +69,7 @@ def test_multi_maintainer_one_mention(git_clone, mocker):
     github_mock = mocker.patch("oca_github_bot.tasks.mention_maintainer.github")
     github_mock.temporary_clone.return_value.__enter__.return_value = str(git_clone)
 
-    addon_dirs = list()
+    addon_dirs = []
     addon_names = ["addon1", "addon2"]
     themaintainer = "themaintainer"
     for addon_name in addon_names:
@@ -96,7 +96,7 @@ def test_pr_by_maintainer_no_mention(git_clone, mocker, pr_opener):
     pr_mock = github_mock.login.return_value.__enter__.return_value.pull_request
     pr_mock.return_value.user.login = pr_opener
 
-    addon_dirs = list()
+    addon_dirs = []
     addon_names = ["addon1", "addon2"]
     for addon_name in addon_names:
         addon_dir = make_addon(git_clone, addon_name, maintainers=["themaintainer"])
