@@ -15,4 +15,3 @@ async def on_pr_open_label_new_contributor(event, gh, *args, **kwargs):
     if the author has less than 4 commits in OCA repositories.
     """
     # TODO
-    pass

@@ -46,9 +46,7 @@ def _label_modified_addons(gh, org, repo, pr, dry_run):
         if is_main_branch_bot_branch(target_branch):
             new_labels.add(f"series:{target_branch}")
         new_labels |= {
-            x
-            for x in issue_label_names
-            if not (x.startswith("mod:") or x.startswith("series:"))
+            x for x in issue_label_names if not (x.startswith(("mod:", "series:")))
         }
 
         if not dry_run and new_labels != set(issue_label_names):

@@ -33,7 +33,7 @@ def test_retry_on_exception_raise_match():
     def func_that_raises():
         nonlocal counter
         counter += 1
-        raise Exception("something")
+        raise Exception("something")  # noqa: TRY002
 
     max_retries = 2
     sleep_time = 0.1
@@ -45,7 +45,7 @@ def test_retry_on_exception_raise_match():
             max_retries=max_retries,
             sleep_time=sleep_time,
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         assert "something" in str(e)
         assert counter == max_retries + 1
 
@@ -56,7 +56,7 @@ def test_retry_on_exception_raise_no_match():
     def func_that_raises():
         nonlocal counter
         counter += 1
-        raise Exception("somestuff")
+        raise Exception("somestuff")  # noqa: TRY002
 
     max_retries = 2
     sleep_time = 0.1
@@ -68,7 +68,7 @@ def test_retry_on_exception_raise_no_match():
             max_retries=max_retries,
             sleep_time=sleep_time,
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         assert "somestuff" in str(e)
         assert counter == 1
 

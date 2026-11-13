@@ -34,9 +34,9 @@ def commit_addon(git_clone, addon_name):
 @contextmanager
 def set_config(**kwargs):
     saved = {}
-    for key in kwargs:
+    for key, value in kwargs.items():
         saved[key] = getattr(config, key)
-        setattr(config, key, kwargs[key])
+        setattr(config, key, value)
     try:
         yield
     finally:

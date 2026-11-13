@@ -20,7 +20,7 @@ for org in GITHUB_ORG:
                 "task": "oca_github_bot.tasks.main_branch_bot."
                 "main_branch_bot_all_repos",
                 "args": (org,),
-                "kwargs": dict(build_wheels=True),
+                "kwargs": {"build_wheels": True},
                 "schedule": crontab(hour="2", minute="30"),
             },
             "tag_ready_to_merge": {

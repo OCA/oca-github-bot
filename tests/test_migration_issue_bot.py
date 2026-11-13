@@ -38,34 +38,48 @@ def test_set_lines_issue(gh):
 
     body_transformation = [
         (
-            "Issue with list but not the module\n"
-            "- [ ] a_module_1 - By @legalsylvain - #1\n"
-            "- [ ] z_module_1 - By @pedrobaeza - #2",
-            f"Issue with list but not the module\n"
-            f"- [ ] a_module_1 - By @legalsylvain - #1\n"
-            f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
-            f"- [ ] z_module_1 - By @pedrobaeza - #2",
+            (
+                "Issue with list but not the module\n"
+                "- [ ] a_module_1 - By @legalsylvain - #1\n"
+                "- [ ] z_module_1 - By @pedrobaeza - #2"
+            ),
+            (
+                f"Issue with list but not the module\n"
+                f"- [ ] a_module_1 - By @legalsylvain - #1\n"
+                f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
+                f"- [ ] z_module_1 - By @pedrobaeza - #2"
+            ),
         ),
         (
-            f"Issue with list containing the module\n"
-            f"- [x] {module} - By @legalsylvain - #1\n"
-            f"- [ ] z_module_1 - By @pedrobaeza - #2",
-            f"Issue with list containing the module\n"
-            f"- [x] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
-            f"- [ ] z_module_1 - By @pedrobaeza - #2",
+            (
+                f"Issue with list containing the module\n"
+                f"- [x] {module} - By @legalsylvain - #1\n"
+                f"- [ ] z_module_1 - By @pedrobaeza - #2"
+            ),
+            (
+                f"Issue with list containing the module\n"
+                f"- [x] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
+                f"- [ ] z_module_1 - By @pedrobaeza - #2"
+            ),
         ),
         (
-            f"Issue with list containing the module with no PR\n"
-            f"- [x] {module}\n"
-            f"- [ ] z_module_1 - By @pedrobaeza - #2",
-            f"Issue with list containing the module with no PR\n"
-            f"- [x] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
-            f"- [ ] z_module_1 - By @pedrobaeza - #2",
+            (
+                f"Issue with list containing the module with no PR\n"
+                f"- [x] {module}\n"
+                f"- [ ] z_module_1 - By @pedrobaeza - #2"
+            ),
+            (
+                f"Issue with list containing the module with no PR\n"
+                f"- [x] {module} - By @{gh_pr_user_login} - #{gh_pr_number}\n"
+                f"- [ ] z_module_1 - By @pedrobaeza - #2"
+            ),
         ),
         (
             "Issue with no list",
-            f"Issue with no list\n"
-            f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}",
+            (
+                f"Issue with no list\n"
+                f"- [ ] {module} - By @{gh_pr_user_login} - #{gh_pr_number}"
+            ),
         ),
     ]
     for old_body, new_body_expected in body_transformation:
