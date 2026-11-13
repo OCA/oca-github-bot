@@ -59,7 +59,8 @@ DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
 # Available tasks:
 #  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,merge_bot,tag_needs_review,
-#  migration_issue_bot,whool_init,gen_metapackage,label_modified_addons
+#  migration_issue_bot,whool_init,gen_metapackage,label_modified_addons,
+#  review_gate
 BOT_TASKS = os.environ.get("BOT_TASKS", "all").split(",")
 
 BOT_TASKS_DISABLED = os.environ.get("BOT_TASKS_DISABLED", "").split(",")
@@ -100,6 +101,9 @@ MERGE_BOT_INTRO_MESSAGES = [
 
 APPROVALS_REQUIRED = int(os.environ.get("APPROVALS_REQUIRED", "2"))
 MIN_PR_AGE = int(os.environ.get("MIN_PR_AGE", "5"))
+REVIEW_GATE_AS_FIRST_FILTER = os.environ.get(
+    "REVIEW_GATE_AS_FIRST_FILTER", ""
+).lower() in ("1", "true", "yes")
 
 MODULE_LABEL_COLOR = os.environ.get("MODULE_LABEL_COLOR", "#ffc")
 
