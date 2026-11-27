@@ -3,9 +3,11 @@
 
 import contextlib
 import random
+import re
+from datetime import UTC, datetime, timedelta
 from enum import Enum
 
-from .. import github
+from .. import config, github
 from ..build_wheels import build_and_publish_wheel
 from ..config import (
     GITHUB_CHECK_SUITES_IGNORED,
@@ -22,10 +24,14 @@ from ..manifest import (
     is_addon_dir,
     user_can_push,
 )
-from ..process import CalledProcessError, call, check_call
+from ..process import CalledProcessError, call, check_call, check_output
 from ..queue import getLogger, task
 from ..utils import cmd_to_str, hide_secrets
-from ..version_branch import make_merge_bot_branch, parse_merge_bot_branch
+from ..version_branch import (
+    MERGE_BOT_BRANCH_RE,
+    make_merge_bot_branch,
+    parse_merge_bot_branch,
+)
 from .main_branch_bot import main_branch_bot_actions
 from .migration_issue_bot import _mark_migration_done_in_migration_issue
 
@@ -33,6 +39,20 @@ _logger = getLogger(__name__)
 
 LABEL_MERGED = "merged 🎉"
 LABEL_MERGING = "bot is merging ⏳"
+LABEL_QUEUED = "bot merge queued"
+
+MERGE_QUEUE_MARKER = (
+    "<!-- ocabot-merge-queue username={username} "
+    "bumpversion_mode={bumpversion_mode} -->"
+)
+MERGE_QUEUE_MARKER_RE = re.compile(
+    r"<!-- ocabot-merge-queue username=(?P<username>\S+) "
+    r"bumpversion_mode=(?P<bumpversion_mode>\S+) -->"
+)
+
+# git push errors meaning that someone else pushed to the target branch
+# between our last fetch and our push
+PUSH_RACE_ERRORS = ("(fetch first)", "(non-fast-forward)", "cannot lock ref")
 
 
 class MergeStrategy(Enum):
@@ -67,9 +87,173 @@ def _remove_merging_label(github, gh_pr, dry_run=False):
             github.gh_call(gh_issue.remove_label, LABEL_MERGING)
 
 
+def _remove_queued_label(gh_pr):
+    gh_issue = github.gh_call(gh_pr.issue)
+    if LABEL_QUEUED in [label.name for label in gh_issue.labels()]:
+        _logger.info(f"remove {LABEL_QUEUED} label from PR {gh_pr.url}")
+        github.gh_call(gh_issue.remove_label, LABEL_QUEUED)
+
+
 def _get_merge_bot_intro_message():
     i = random.randint(0, len(MERGE_BOT_INTRO_MESSAGES) - 1)
     return MERGE_BOT_INTRO_MESSAGES[i]
+
+
+def _git_merge_bot_branches(repo_url, target_branch):
+    """List the merge bot branches of target_branch present on repo_url.
+
+    Return a list of (pr, branch, sha) tuples, pr being an int.
+    """
+    output = check_output(
+        [
+            "git",
+            "ls-remote",
+            "--heads",
+            repo_url,
+            f"refs/heads/{target_branch}-ocabot-merge-pr-*",
+        ],
+        cwd=".",
+    )
+    branches = []
+    for line in output.splitlines():
+        sha, _, ref = line.partition("\t")
+        branch = ref.removeprefix("refs/heads/")
+        mo = MERGE_BOT_BRANCH_RE.match(branch)
+        if not mo or mo.group("target_branch") != target_branch:
+            continue
+        branches.append((int(mo.group("pr")), branch, sha))
+    return branches
+
+
+def _gh_commit_datetime(gh_repo, sha):
+    gh_commit = github.gh_call(gh_repo.commit, sha)
+    return datetime.fromisoformat(gh_commit.commit.committer["date"])
+
+
+@switchable("merge_bot_queue")
+def _merge_bot_active_pr(gh, org, repo, target_branch, exclude_pr=None):
+    """Return the number of the PR being merged on target_branch, or None.
+
+    A PR holds the merge queue of its target branch while its merge bot
+    branch exists, the PR is open and has the merging label, and the merge
+    bot branch was prepared less than MERGE_BOT_QUEUE_TIMEOUT hours ago.
+    This ignores the merge bot branches left behind by failed merges.
+    """
+    min_date = datetime.now(tz=UTC) - timedelta(hours=config.MERGE_BOT_QUEUE_TIMEOUT)
+    repo_url = f"https://github.com/{org}/{repo}"
+    gh_repo = None
+    for pr, branch, sha in _git_merge_bot_branches(repo_url, target_branch):
+        if exclude_pr is not None and pr == int(exclude_pr):
+            continue
+        gh_issue = github.gh_call(gh.issue, org, repo, pr)
+        if gh_issue.state != "open":
+            continue
+        if LABEL_MERGING not in [label.name for label in gh_issue.labels()]:
+            continue
+        gh_repo = gh_repo or gh.repository(org, repo)
+        if _gh_commit_datetime(gh_repo, sha) < min_date:
+            _logger.info(f"ignoring stuck merge bot branch {branch} of {org}/{repo}")
+            continue
+        return pr
+    return None
+
+
+def _merge_bot_enqueue(gh_pr, username, bumpversion_mode, active_pr):
+    target_branch = gh_pr.base.ref
+    marker = MERGE_QUEUE_MARKER.format(
+        username=username, bumpversion_mode=bumpversion_mode
+    )
+    _logger.info(f"queue merge of PR {gh_pr.url} behind #{active_pr}")
+    github.gh_call(
+        gh_pr.create_comment,
+        f"#{active_pr} is being merged on `{target_branch}`, so your merge "
+        f"command is queued. It will start as soon as that merge is finished "
+        f"(no action is required from you).\n\n{marker}",
+    )
+    gh_issue = github.gh_call(gh_pr.issue)
+    github.gh_call(gh_issue.add_labels, LABEL_QUEUED)
+    # when a merge in progress is queued again (retry), it must not hold
+    # the queue anymore
+    _remove_merging_label(github, gh_pr)
+
+
+def _merge_bot_queued_command(gh_issue, bot_login):
+    """Return the last merge command queued by the bot on a PR.
+
+    Return a (queued_at, username, bumpversion_mode) tuple, or None.
+    Only comments of the bot are considered, so nobody can queue a merge
+    on behalf of someone else.
+    """
+    command = None
+    for comment in github.gh_call(gh_issue.comments):
+        if comment.user.login != bot_login:
+            continue
+        mo = MERGE_QUEUE_MARKER_RE.search(comment.body or "")
+        if mo:
+            command = (
+                comment.created_at,
+                mo.group("username"),
+                mo.group("bumpversion_mode"),
+            )
+    return command
+
+
+def _merge_bot_queue(gh, org, repo, target_branch):
+    """Return the merge commands queued on target_branch, oldest first.
+
+    Each item is a (queued_at, pr, username, bumpversion_mode) tuple.
+    """
+    gh_repo = gh.repository(org, repo)
+    bot_login = config.GITHUB_LOGIN or gh.me().login
+    queue = []
+    for gh_issue in github.gh_call(gh_repo.issues, state="open", labels=LABEL_QUEUED):
+        gh_pr = github.gh_call(gh_issue.pull_request)
+        if not gh_pr or gh_pr.base.ref != target_branch:
+            continue
+        command = _merge_bot_queued_command(gh_issue, bot_login)
+        if not command:
+            continue
+        queued_at, username, bumpversion_mode = command
+        queue.append((queued_at, gh_issue.number, username, bumpversion_mode))
+    return sorted(queue)
+
+
+@task()
+@switchable("merge_bot_queue")
+def merge_bot_dequeue(org, repo, target_branch, dry_run=False):
+    """Start the oldest merge queued on target_branch, unless a merge is
+    in progress on it."""
+    with github.login() as gh:
+        active_pr = _merge_bot_active_pr(gh, org, repo, target_branch)
+        if active_pr:
+            _logger.info(
+                f"#{active_pr} is being merged on {org}/{repo}@{target_branch}, "
+                f"the queue waits"
+            )
+            return
+        queue = _merge_bot_queue(gh, org, repo, target_branch)
+        if not queue:
+            return
+        _, pr, username, bumpversion_mode = queue[0]
+    _logger.info(f"dequeue merge of {org}/{repo}#{pr} on {target_branch}")
+    merge_bot_start(org, repo, pr, username, bumpversion_mode, dry_run=dry_run)
+
+
+@task()
+@switchable("merge_bot_queue")
+def merge_bot_queue_sweep(org):
+    """Restart the merge queues that nothing restarted (lost webhook,
+    stuck merge)."""
+    targets = set()
+    with github.login() as gh:
+        query = f'type:pr state:open label:"{LABEL_QUEUED}" org:{org}'
+        for result in gh.search_issues(query):
+            gh_pr = github.gh_call(result.issue.pull_request)
+            # html_url is https://github.com/{org}/{repo}/pull/{number}
+            repo = result.issue.html_url.split("/")[4]
+            targets.add((repo, gh_pr.base.ref))
+    for repo, target_branch in sorted(targets):
+        merge_bot_dequeue.delay(org, repo, target_branch)
 
 
 @switchable("merge_bot_towncrier")
@@ -96,8 +280,34 @@ def _merge_bot_towncrier(org, repo, target_branch, addon_dirs, bumpversion_mode,
         )
 
 
-def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
+def _merge_bot_retry(org, repo, merge_bot_branch, dry_run=False):
     pr, target_branch, username, bumpversion_mode = parse_merge_bot_branch(
+        merge_bot_branch
+    )
+    _logger.info(
+        f"{merge_bot_branch} can't be fast forwarded on {target_branch}, retrying."
+    )
+    intro_message = (
+        f"It looks like something changed on `{target_branch}` in the meantime.\n"
+        f"Let me try again (no action is required from you)."
+    )
+    merge_bot_start(
+        org,
+        repo,
+        pr,
+        username,
+        bumpversion_mode,
+        dry_run=dry_run,
+        intro_message=intro_message,
+    )
+
+
+def _is_push_race(e):
+    return any(error in (e.output or "") for error in PUSH_RACE_ERRORS)
+
+
+def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
+    pr, target_branch, _username, bumpversion_mode = parse_merge_bot_branch(
         merge_bot_branch
     )
     # first check if the merge bot branch is still on top of the target branch
@@ -106,22 +316,7 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         ["git", "merge-base", "--is-ancestor", target_branch, merge_bot_branch], cwd=cwd
     )
     if r != 0:
-        _logger.info(
-            f"{merge_bot_branch} can't be fast forwarded on {target_branch}, retrying."
-        )
-        intro_message = (
-            f"It looks like something changed on `{target_branch}` in the meantime.\n"
-            f"Let me try again (no action is required from you)."
-        )
-        merge_bot_start(
-            org,
-            repo,
-            pr,
-            username,
-            bumpversion_mode,
-            dry_run=dry_run,
-            intro_message=intro_message,
-        )
+        _merge_bot_retry(org, repo, merge_bot_branch, dry_run=dry_run)
         return False
     # Get modified addons list on the PR and not on the merge bot branch
     # because travis .pot generation may sometimes touch
@@ -188,9 +383,19 @@ def _merge_bot_merge_pr(org, repo, merge_bot_branch, cwd, dry_run=False):
         _logger.info(f"DRY-RUN git push in {org}/{repo}@{target_branch}")
     else:
         _logger.info(f"git push in {org}/{repo}@{target_branch}")
-        check_call(
-            ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"], cwd=cwd
-        )
+        try:
+            check_call(
+                ["git", "push", "origin", f"{merge_bot_branch}:{target_branch}"],
+                cwd=cwd,
+            )
+        except CalledProcessError as e:
+            # Someone pushed to the target branch since we checked it above:
+            # same situation, so retry instead of failing. The wheels already
+            # published will not be uploaded again, as they exist on the index.
+            if not _is_push_race(e):
+                raise
+            _merge_bot_retry(org, repo, merge_bot_branch, dry_run=dry_run)
+            return False
 
     # TODO wlc unlock modified_addons
 
@@ -257,6 +462,15 @@ def merge_bot_start(
         )
         pr_branch = f"tmp-pr-{pr}"
         try:
+            active_pr = _merge_bot_active_pr(
+                gh, org, repo, target_branch, exclude_pr=pr
+            )
+            if active_pr:
+                # one merge at a time per target branch: merging in parallel
+                # means re-running the tests of all but the first one
+                _merge_bot_enqueue(gh_pr, username, bumpversion_mode, active_pr)
+                return
+            _remove_queued_label(gh_pr)
             with github.temporary_clone(org, repo, target_branch) as clone_dir:
                 # create merge bot branch from PR and rebase it on target branch
                 check_call(
@@ -278,6 +492,7 @@ def merge_bot_start(
                         f"your GitHub login to the `maintainers` key of its "
                         f"manifest.",
                     )
+                    merge_bot_dequeue.delay(org, repo, target_branch)
                     return
                 # TODO for each modified addon, wlc lock / commit / push
                 # TODO then pull target_branch again
@@ -290,6 +505,11 @@ def merge_bot_start(
                     merge_strategy,
                     cwd=clone_dir,
                 )
+                # label before pushing, so the merge holds the queue of the
+                # target branch as soon as its merge bot branch exists
+                gh_issue = github.gh_call(gh_pr.issue)
+                _logger.info(f"add {LABEL_MERGING} label to PR {gh_pr.url}")
+                github.gh_call(gh_issue.add_labels, LABEL_MERGING)
                 # push and let tests run again; delete on origin
                 # to be sure GitHub sees it as a new branch and relaunches all checks
                 _git_delete_branch("origin", merge_bot_branch, cwd=clone_dir)
@@ -312,6 +532,8 @@ def merge_bot_start(
                     f"command `{cmd}` failed with output:\n```\n{e.output}\n```"
                 ),
             )
+            _remove_merging_label(github, gh_pr)
+            merge_bot_dequeue.delay(org, repo, target_branch)
             raise
         except Exception as e:
             github.gh_call(
@@ -321,11 +543,9 @@ def merge_bot_start(
                     f"of exception {e}."
                 ),
             )
+            _remove_merging_label(github, gh_pr)
+            merge_bot_dequeue.delay(org, repo, target_branch)
             raise
-        else:
-            gh_issue = github.gh_call(gh_pr.issue)
-            _logger.info(f"add {LABEL_MERGING} label to PR {gh_pr.url}")
-            github.gh_call(gh_issue.add_labels, LABEL_MERGING)
 
 
 def _get_commit_success(org, repo, pr, gh_commit):
@@ -412,7 +632,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                 # the branch has evolved, this means that this status
                 # does not correspond to the last commit of the bot, ignore it
                 return
-            pr, _, username, _ = parse_merge_bot_branch(merge_bot_branch)
+            pr, target_branch, username, _ = parse_merge_bot_branch(merge_bot_branch)
             with github.login() as gh:
                 gh_repo = gh.repository(org, repo)
                 gh_pr = gh.pull_request(org, repo, pr)
@@ -423,7 +643,9 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                     return
                 elif success:
                     try:
-                        _merge_bot_merge_pr(org, repo, merge_bot_branch, clone_dir)
+                        merged = _merge_bot_merge_pr(
+                            org, repo, merge_bot_branch, clone_dir
+                        )
                     except CalledProcessError as e:
                         cmd = cmd_to_str(e.cmd)
                         github.gh_call(
@@ -436,6 +658,7 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                             ),
                         )
                         _remove_merging_label(github, gh_pr)
+                        merge_bot_dequeue.delay(org, repo, target_branch)
                         raise
                     except Exception as e:
                         github.gh_call(
@@ -446,7 +669,10 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                             ),
                         )
                         _remove_merging_label(github, gh_pr)
+                        merge_bot_dequeue.delay(org, repo, target_branch)
                         raise
+                    if merged:
+                        merge_bot_dequeue.delay(org, repo, target_branch)
                 else:
                     github.gh_call(
                         gh_pr.create_comment,
@@ -462,3 +688,4 @@ def merge_bot_status(org, repo, merge_bot_branch, sha):
                         ["git", "push", "origin", f":{merge_bot_branch}"], cwd=clone_dir
                     )
                     _remove_merging_label(github, gh_pr)
+                    merge_bot_dequeue.delay(org, repo, target_branch)

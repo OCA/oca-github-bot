@@ -98,6 +98,10 @@ MERGE_BOT_INTRO_MESSAGES = [
     "What a great day to merge this nice PR. Let's do it!",
 ]
 
+# A merge bot branch older than this many hours does not hold the merge queue
+# of its target branch anymore (the merge is considered stuck).
+MERGE_BOT_QUEUE_TIMEOUT = int(os.environ.get("MERGE_BOT_QUEUE_TIMEOUT", "12"))
+
 APPROVALS_REQUIRED = int(os.environ.get("APPROVALS_REQUIRED", "2"))
 MIN_PR_AGE = int(os.environ.get("MIN_PR_AGE", "5"))
 

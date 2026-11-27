@@ -34,6 +34,10 @@ ODOO_PASSWORD=
 # Number of days before the proposal can be marked as "Approved"
 #MIN_PR_AGE=5
 
+# Hours after which a merge in progress does not hold the merge queue
+# of its target branch anymore
+#MERGE_BOT_QUEUE_TIMEOUT=12
+
 # Color of the github label that contains the name of the module
 #MODULE_LABEL_COLOR=#ffc
 
@@ -42,7 +46,7 @@ ODOO_PASSWORD=
 # Available tasks:
 #  delete_branch,tag_approved,tag_ready_to_merge,gen_addons_table,
 #  gen_addons_readme,gen_addons_icon,setuptools_odoo,mention_maintainer,
-#  merge_bot,rebase_bot,merge_bot_towncrier,tag_needs_review
+#  merge_bot,merge_bot_queue,rebase_bot,merge_bot_towncrier,tag_needs_review
 #BOT_TASKS=all
 
 # Coma separated list of task to ignore
