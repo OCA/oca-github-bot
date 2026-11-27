@@ -92,6 +92,13 @@ can be used to ask the bot to do the following:
 * when the version was bumped, generate a wheel, rsync it to a PEP 503
   simple index root, or upload it to one or more indexes with twine
 
+The bot merges one PR at a time per target branch. When a merge is already
+in progress on the target branch, the command is queued (``bot merge queued``
+label) and starts when the merge in progress finishes, whether it succeeds or
+fails. A merge older than ``MERGE_BOT_QUEUE_TIMEOUT`` hours (default 12) does
+not hold the queue anymore. The queue can be disabled by adding
+``merge_bot_queue`` to ``BOT_TASKS_DISABLED``.
+
 ``/ocabot rebase`` can be used to ask the bot to do the following:
 
 * rebase the PR on the target branch

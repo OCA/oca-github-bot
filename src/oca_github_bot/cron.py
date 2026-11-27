@@ -23,6 +23,11 @@ for org in GITHUB_ORG:
                 "kwargs": {"build_wheels": True},
                 "schedule": crontab(hour="2", minute="30"),
             },
+            "merge_bot_queue_sweep": {
+                "task": "oca_github_bot.tasks.merge_bot.merge_bot_queue_sweep",
+                "args": (org,),
+                "schedule": crontab(minute="*/15"),
+            },
             "tag_ready_to_merge": {
                 "task": "oca_github_bot.tasks.tag_ready_to_merge.tag_ready_to_merge",
                 "args": (org,),

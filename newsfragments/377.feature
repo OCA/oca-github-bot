@@ -1,0 +1,1 @@
+Merge bot: merge one PR at a time per target branch. A merge command issued while another merge is in progress on the same target branch is queued and starts when that merge finishes, instead of running the tests twice. When the final push is rejected because the target branch moved meanwhile, retry instead of failing.
